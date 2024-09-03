@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import { Bar, BarData } from "../components/graph/bar/bar";
+import { BarData } from "../components/graph/bar/bar";
+import { GraphLayout } from "../components/graph/layout/graph-layout";
 import "../global.css";
 
 export default function App() {
@@ -25,7 +26,7 @@ export default function App() {
     { count: 3, name: "Blue", color: "blue" },
     { count: 2, name: "Black", color: "black" },
     { count: 4, name: "Red", color: "red" },
-    { count: 2, name: "Green", color: "green" },
+    { count: 3, name: "Green", color: "green" },
   ];
 
   const data4: BarData[] = [
@@ -37,13 +38,8 @@ export default function App() {
   ];
 
   return (
-    <View className="flex-1 items-center justify-center bg-black">
-      <View className="flex flex-row gap-6">
-        <Bar data={data} ceiling={15}></Bar>
-        <Bar data={data2} ceiling={15}></Bar>
-        <Bar data={data3} ceiling={15}></Bar>
-        <Bar data={data4} ceiling={15}></Bar>
-      </View>
+    <View className="flex-1 items-center justify-center bg-[#1a1625]">
+      <GraphLayout data={[data, data2, data3, data4]}></GraphLayout>
     </View>
   );
 }
