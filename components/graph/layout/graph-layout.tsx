@@ -17,7 +17,12 @@ export function GraphLayout({
   stacked = true,
 }: GraphLayoutProps) {
   const maxValue = sets.reduce((acc, set) => {
-    const setValue = set.data.reduce((acc, entry) => acc + entry.count, 0);
+    const setValue = stacked
+      ? set.data.reduce((acc, entry) => acc + entry.count, 0)
+      : set.data.reduce((acc, entry) => {
+          if (entry.count > acc) return entry.count;
+          return acc;
+        }, 0);
 
     if (setValue > acc) return setValue;
     return acc;
@@ -37,7 +42,7 @@ export function GraphLayout({
       <View className="flex flex-row">
         <GraphVerticalAxis ceiling={ceiling}></GraphVerticalAxis>
 
-        <GraphPlot sets={sets} ceiling={ceiling}></GraphPlot>
+        <GraphPlot sets={sets} ceiling={ceiling} stacked={stacked}></GraphPlot>
 
         <View className="w-10 h-full"></View>
       </View>
@@ -55,3 +60,4 @@ export function GraphLayout({
     </View>
   );
 }
+export { SetData };

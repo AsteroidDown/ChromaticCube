@@ -3,19 +3,19 @@ import { MTGColor } from "../../../constants/colors";
 import { Tooltip } from "../../tooltip/tooltip";
 import { BarData } from "./bar";
 
-interface StackedBarViewProps {
+interface StackedBarLayoutProps {
   data: BarData[];
   total: number;
   topHeight: DimensionValue;
   barHeight: DimensionValue;
 }
 
-export function StackedBarView({
+export function StackedBarLayout({
   data,
   total,
   topHeight,
   barHeight,
-}: StackedBarViewProps) {
+}: StackedBarLayoutProps) {
   const greenHeight = getStackHeight("green", total, data);
   const redHeight = getStackHeight("red", total, data, greenHeight);
   const blackHeight = getStackHeight("black", total, data, redHeight);
@@ -33,6 +33,7 @@ export function StackedBarView({
         <Tooltip
           style={[
             { bottom: 0 },
+            { width: "100%" },
             { position: "absolute" },
             { height: `${whiteHeight}%` },
           ]}
@@ -50,6 +51,7 @@ export function StackedBarView({
         <Tooltip
           style={[
             { bottom: 0 },
+            { width: "100%" },
             { position: "absolute" },
             { height: `${blueHeight}%` },
           ]}
@@ -67,6 +69,7 @@ export function StackedBarView({
         <Tooltip
           style={[
             { bottom: 0 },
+            { width: "100%" },
             { position: "absolute" },
             { height: `${blackHeight}%` },
           ]}
@@ -84,6 +87,7 @@ export function StackedBarView({
         <Tooltip
           style={[
             { bottom: 0 },
+            { width: "100%" },
             { position: "absolute" },
             { height: `${redHeight}%` },
           ]}
@@ -101,6 +105,7 @@ export function StackedBarView({
         <Tooltip
           style={[
             { bottom: 0 },
+            { width: "100%" },
             { position: "absolute" },
             { height: `${greenHeight}%` },
           ]}

@@ -9,9 +9,10 @@ export interface SetData {
 export interface GraphPlotProps {
   sets: SetData[];
   ceiling: number;
+  stacked?: boolean;
 }
 
-export function GraphPlot({ ceiling, sets }: GraphPlotProps) {
+export function GraphPlot({ ceiling, sets, stacked = true }: GraphPlotProps) {
   const tickLength = ceiling > 10 ? 5 : 2;
   const tickCount = ceiling / tickLength;
 
@@ -36,7 +37,7 @@ export function GraphPlot({ ceiling, sets }: GraphPlotProps) {
 
       {sets.map((set, index) => (
         <View key={set.title + index}>
-          <Bar data={set.data} ceiling={ceiling}></Bar>
+          <Bar data={set.data} ceiling={ceiling} stacked={stacked}></Bar>
         </View>
       ))}
     </View>

@@ -31,7 +31,7 @@ export function Tooltip({
 
   return (
     <View
-      className="w-full h-full"
+      className="h-full w-full"
       style={style}
       onPointerEnter={showTip}
       onPointerLeave={hideTip}
@@ -40,7 +40,7 @@ export function Tooltip({
 
       {message && active && (
         <View
-          className="flex gap-1 absolute -top-2 left-[50%] bg-background-100 p-2 rounded-lg bg-opacity-85"
+          className="flex gap-1 absolute -top-2 left-[50%] bg-background-100 p-2 rounded-lg bg-opacity-85 z-10"
           style={[
             { transform: [{ translateX: "-50%" }, { translateY: "-100%" }] },
           ]}

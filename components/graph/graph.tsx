@@ -5,15 +5,22 @@ export interface GraphProps {
   title?: string;
   horizontalTitle?: string;
   data: SetData[];
+  stacked?: boolean;
 }
 
-export function Graph({ title, horizontalTitle, data }: GraphProps) {
+export function Graph({
+  title,
+  horizontalTitle,
+  data,
+  stacked = true,
+}: GraphProps) {
   return (
     <View className="px-6 py-3 rounded-lg bg-background-200">
       <GraphLayout
         sets={data}
         title={title}
         horizontalTitle={horizontalTitle}
+        stacked={stacked}
       ></GraphLayout>
     </View>
   );

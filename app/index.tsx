@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Graph, GraphProps } from "../components/graph/graph";
 import { SetData } from "../components/graph/layout/graph-plot";
 import "../global.css";
@@ -52,14 +52,21 @@ export default function App() {
   const graphData: GraphProps = {
     title: "Test Data",
     horizontalTitle: "Mana Cost",
-    data: [data1, data2, data3, data4],
+    data: [data1, data2],
   };
+
+  const [stacked, setStacked] = React.useState(false);
 
   return (
     <View className="flex gap-6 flex-1 items-center justify-center bg-background-100">
+      <Pressable onPress={() => setStacked(!stacked)}>
+        <Text className="color-white">{stacked ? "Stacked" : "Grouped"}</Text>
+      </Pressable>
+
       <Graph
         data={graphData.data}
         title={graphData.title}
+        stacked={stacked}
         horizontalTitle={graphData.horizontalTitle}
       ></Graph>
 
