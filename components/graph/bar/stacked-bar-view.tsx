@@ -21,29 +21,31 @@ export function StackedBarView({
   const blueHeight = getStackHeight("blue", total, data, blackHeight);
   const whiteHeight = getStackHeight("white", total, data, blueHeight);
 
+  const baseClass = "absolute bottom-0 w-full rounded-t-lg bg-gradient-to-t";
+
   return (
     <View className="flex w-10 h-56 border-white">
       <View style={[{ height: topHeight }]}></View>
 
       <View className="flex w-full" style={[{ height: barHeight }]}>
         <View
-          className="absolute bottom-0 w-full rounded-t-lg bg-mtg-white border-mtg-white-secondary"
+          className={`${baseClass} to-mtg-white from-mtg-white-secondary`}
           style={[{ height: `${whiteHeight}%` }]}
         ></View>
         <View
-          className="absolute bottom-0 w-full rounded-t-lg bg-mtg-blue border-mtg-blue-secondary"
+          className={`${baseClass} to-mtg-blue from-mtg-blue-secondary`}
           style={[{ height: `${blueHeight}%` }]}
         ></View>
         <View
-          className="absolute bottom-0 w-full rounded-t-lg bg-mtg-black border-mtg-black-secondary"
+          className={`${baseClass} to-mtg-black from-mtg-black-secondary`}
           style={[{ height: `${blackHeight}%` }]}
         ></View>
         <View
-          className="absolute bottom-0 w-full rounded-t-lg bg-mtg-red border-mtg-red-secondary"
+          className={`${baseClass} to-mtg-red from-mtg-red-secondary`}
           style={[{ height: `${redHeight}%` }]}
         ></View>
         <View
-          className="absolute bottom-0 w-full rounded-t-lg bg-mtg-green border-mtg-green-secondary"
+          className={`${baseClass} to-mtg-green from-mtg-green-secondary`}
           style={[{ height: `${greenHeight}%` }]}
         ></View>
       </View>
