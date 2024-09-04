@@ -69,27 +69,27 @@ export default function App() {
         data={[
           {
             title: "1",
-            data: [{ count: 2, name: "One-Drops", color: "green" }],
+            data: [{ count: 2, name: "One Cost", color: "green" }],
           },
           {
             title: "2",
-            data: [{ count: 6, name: "Two-Drops", color: "green" }],
+            data: [{ count: 6, name: "Two Cost", color: "green" }],
           },
           {
             title: "3",
-            data: [{ count: 4, name: "Three-Drops", color: "green" }],
+            data: [{ count: 4, name: "Three Cost", color: "green" }],
           },
           {
             title: "4",
-            data: [{ count: 3, name: "Four-Drops", color: "green" }],
+            data: [{ count: 3, name: "Four Cost", color: "green" }],
           },
           {
             title: "5",
-            data: [{ count: 2, name: "Five-Drops", color: "green" }],
+            data: [{ count: 2, name: "Five Cost", color: "green" }],
           },
           {
             title: "6+",
-            data: [{ count: 1, name: "Six-Drops", color: "green" }],
+            data: [{ count: 1, name: "Six+ Cost", color: "green" }],
           },
         ]}
       ></Graph>
