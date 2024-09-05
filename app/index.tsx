@@ -71,7 +71,7 @@ export default function App() {
   const [search, onSearchChange] = React.useState("");
 
   return (
-    <View className="flex gap-6 flex-1 items-center justify-center bg-background-100">
+    <View className="flex gap-6 flex-1 items-center justify-center bg-background-100 p-6">
       {/* <View className="flex flex-row gap-4">
         <Pressable onPress={() => setStacked(!stacked)}>
           <Text className="color-white">{stacked ? "Stacked" : "Grouped"}</Text>

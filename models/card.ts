@@ -9,9 +9,9 @@ export interface Card {
   colorIdentity: MTGColorSymbol[];
   manaCost: string;
   typeLine: string;
-  producedMana: string[];
-  oracleText: string;
-  images: ImageUris;
+  producedMana?: string[];
+  oracleText?: string;
+  images?: ImageUris;
   faces: { front: CardFace; back: CardFace } | null;
 }
 
@@ -29,5 +29,6 @@ export interface CardFace {
   name: string;
   typeLine: string;
   manaCost: string;
+  oracleText: string;
   imageUris: ImageUris;
 }

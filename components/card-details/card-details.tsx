@@ -22,7 +22,7 @@ export default function CardDetails({ card }: CardDetailsProps) {
   }
 
   return (
-    <Box classes="flex flex-row gap-3 !rounded-2xl">
+    <Box classes="flex flex-row flex-wrap justify-center gap-3 !rounded-2xl">
       <View>
         <Pressable
           onPress={() => (card.faces ? setShowFront(!showFront) : null)}
@@ -31,7 +31,7 @@ export default function CardDetails({ card }: CardDetailsProps) {
             className="h-[350px] hover:h-[355px] hover:-my-[2.5px] hover:-mx-[2px] aspect-[2.5/3.5] rounded transition-all"
             source={{
               uri:
-                card.images.png ||
+                card.images?.png ||
                 (showFront
                   ? card.faces?.front.imageUris.png
                   : card.faces?.back.imageUris.png),
@@ -41,20 +41,36 @@ export default function CardDetails({ card }: CardDetailsProps) {
         </Pressable>
       </View>
 
-      <Box classes="flex gap-3 w-[360px]" shade={300}>
+      <Box classes="flex gap-3 w-[350px]" shade={300}>
         <View className="flex flex-row gap-2">
           <Text className="text-white font-bold flex-1">Name</Text>
-          <Text className="text-white flex-[3]">{card.name}</Text>
+          <Text className="text-white flex-[3]">
+            {card.faces
+              ? showFront
+                ? card.faces.front.name
+                : card.faces.back.name
+              : card.name}
+          </Text>
         </View>
 
-        {card.manaCost && (
+        {(card.manaCost ||
+          (showFront && card.faces?.front.manaCost) ||
+          (!showFront && card.faces?.back.manaCost)) && (
           <>
             <Divider />
 
             <View className="flex flex-row gap-2">
               <Text className="text-white font-bold flex-1">Cost</Text>
               <View className="flex-[3]">
-                <CardCost cost={card.manaCost} />
+                <CardCost
+                  cost={
+                    card.faces
+                      ? showFront
+                        ? card.faces.front.manaCost
+                        : card.faces.back.manaCost
+                      : card.manaCost
+                  }
+                />
               </View>
             </View>
           </>
@@ -64,28 +80,44 @@ export default function CardDetails({ card }: CardDetailsProps) {
 
         <View className="flex flex-row gap-2">
           <Text className="text-white font-bold flex-1">Type</Text>
-          <Text className="text-white flex-[3]">{card.typeLine}</Text>
+          <Text className="text-white flex-[3]">
+            {card.faces
+              ? showFront
+                ? card.faces.front.typeLine
+                : card.faces.back.typeLine
+              : card.typeLine}
+          </Text>
         </View>
 
-        {card.producedMana && !card.typeLine.includes("Creature") && (
-          <>
-            <Divider />
+        {card.producedMana &&
+          (card.oracleText?.includes("add") ||
+            card.oracleText?.includes("Add")) && (
+            <>
+              <Divider />
 
-            <View className="flex flex-row gap-2">
-              <Text className="text-white font-bold flex-1">Produced Mana</Text>
-              <View className="flex-[3]">
-                <CardCost cost={"{" + card.producedMana.join("}{") + "}"} />
+              <View className="flex flex-row gap-2">
+                <Text className="text-white font-bold flex-1">Produces</Text>
+                <View className="flex-[3]">
+                  <CardCost cost={"{" + card.producedMana.join("}{") + "}"} />
+                </View>
               </View>
-            </View>
-          </>
-        )}
+            </>
+          )}
 
         <Divider />
 
         <View className="flex flex-row gap-2">
           <Text className="text-white font-bold flex-1">Text</Text>
           <View className="flex-[3]">
-            <CardText text={card.oracleText} />
+            <CardText
+              text={
+                card.oracleText ||
+                (showFront
+                  ? card.faces?.front.oracleText
+                  : card.faces?.back.oracleText) ||
+                ""
+              }
+            />
           </View>
         </View>
       </Box>

@@ -29,12 +29,14 @@ export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
             name: scryfallCard.card_faces[0].name,
             manaCost: scryfallCard.card_faces[0].mana_cost,
             typeLine: scryfallCard.card_faces[0].type_line,
+            oracleText: scryfallCard.card_faces[0].oracle_text,
             imageUris: transferImageUris(scryfallCard.card_faces[0].image_uris),
           },
           back: {
             name: scryfallCard.card_faces[1].name,
             manaCost: scryfallCard.card_faces[1].mana_cost,
             typeLine: scryfallCard.card_faces[1].type_line,
+            oracleText: scryfallCard.card_faces[1].oracle_text,
             imageUris: transferImageUris(scryfallCard.card_faces[1].image_uris),
           },
         }

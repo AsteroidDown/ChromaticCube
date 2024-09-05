@@ -27,5 +27,6 @@ export interface ScryfallCardFace {
   name: string;
   type_line: string;
   mana_cost: string;
+  oracle_text: string;
   image_uris: ScryfallImageUris;
 }

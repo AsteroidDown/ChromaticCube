@@ -6,7 +6,8 @@ export interface CardTextProps {
 }
 
 export default function CardText({ text }: CardTextProps) {
-  console.log(text);
+  text = text.replaceAll("\n", "\n\n");
+
   const foundSymbols = text.split("{");
   const sections = foundSymbols.reduce((acc, section) => {
     if (!section) return acc;
@@ -24,18 +25,22 @@ export default function CardText({ text }: CardTextProps) {
 
   return (
     <View className="flex flex-row flex-wrap gap-[2px] items-center">
-      {sections.map((section, index) => (
-        <Text key={section + index}>
-          {section[0] === "{" && (
-            <Image
-              className="h-4 w-4"
-              source={{ uri: SymbolMap.get(section) }}
-            />
-          )}
+      <Text className="items-center">
+        {sections.map((section, index) => (
+          <Text key={section + index}>
+            {section[0] === "{" && (
+              <Image
+                className="h-4 w-4 -mb-[3px] mx-px"
+                source={{ uri: SymbolMap.get(section) }}
+              />
+            )}
 
-          {section[0] !== "{" && <Text className="color-white">{section}</Text>}
-        </Text>
-      ))}
+            {section[0] !== "{" && (
+              <Text className="color-white">{section}</Text>
+            )}
+          </Text>
+        ))}
+      </Text>
     </View>
   );
 }
