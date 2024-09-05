@@ -1,1 +1,0 @@
-export type MTGColor = 'white' | 'blue' | 'black' | 'red' | 'green' | 'gold' | 'colorless' | 'land';
