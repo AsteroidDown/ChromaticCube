@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { View } from "react-native";
 import CardDetails from "../components/card-details/card-details";
 import { GraphProps } from "../components/graph/graph";
 import { SetData } from "../components/graph/layout/graph-plot";
@@ -64,11 +64,8 @@ export default function App() {
 
   function getCard() {
     CardsService.getCard(search)
-      .then((card) => {
-        console.log(card);
-        setCard(card);
-      })
-      .catch((error) => console.log(error));
+      .then((card) => setCard(card))
+      .catch((error) => console.error(error));
   }
 
   const [search, onSearchChange] = React.useState("");
@@ -85,15 +82,15 @@ export default function App() {
         </Pressable>
       </View> */}
 
-      <View className="flex flex-row gap-2 items-center">
-        <SearchBar search={search} onSearchChange={onSearchChange} />
+      <View className="flex gap-4 items-center max-w-fit mx-auto">
+        <SearchBar
+          search={search}
+          onSearchChange={onSearchChange}
+          searchAction={getCard}
+        />
 
-        <Pressable onPress={() => getCard()}>
-          <Text className="text-white">Search</Text>
-        </Pressable>
+        <CardDetails card={card} />
       </View>
-
-      <CardDetails card={card} />
 
       {/* <Graph
         data={graphData.data}

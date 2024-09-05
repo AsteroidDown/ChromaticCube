@@ -17,9 +17,9 @@ export default function CardDetails({ card }: CardDetailsProps) {
   }
 
   return (
-    <Box classes="flex flex-row gap-3">
+    <Box classes="flex flex-row gap-3 !rounded-2xl">
       <Image
-        className="h-[350px] aspect-[2.5/3.5]"
+        className="h-[350px] aspect-[2.5/3.5] rounded"
         source={{ uri: card.images.png }}
         style={[{ resizeMode: "contain" }]}
       />
