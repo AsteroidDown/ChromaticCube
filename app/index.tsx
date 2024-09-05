@@ -1,7 +1,9 @@
 import React from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
+import CardDetails from "../components/card-details/card-details";
 import { GraphProps } from "../components/graph/graph";
 import { SetData } from "../components/graph/layout/graph-plot";
+import SearchBar from "../components/ui/search-bar/search-bar";
 import "../global.css";
 import CardsService from "../hooks/cards.service";
 import { Card } from "../models/card";
@@ -61,7 +63,7 @@ export default function App() {
   const [card, setCard] = React.useState(null as Card | null);
 
   function getCard() {
-    CardsService.getCard("risen reef")
+    CardsService.getCard(search)
       .then((card) => {
         console.log(card);
         setCard(card);
@@ -69,9 +71,11 @@ export default function App() {
       .catch((error) => console.log(error));
   }
 
+  const [search, onSearchChange] = React.useState("");
+
   return (
     <View className="flex gap-6 flex-1 items-center justify-center bg-background-100">
-      <View className="flex flex-row gap-4">
+      {/* <View className="flex flex-row gap-4">
         <Pressable onPress={() => setStacked(!stacked)}>
           <Text className="color-white">{stacked ? "Stacked" : "Grouped"}</Text>
         </Pressable>
@@ -79,21 +83,17 @@ export default function App() {
         <Pressable onPress={() => getCard()}>
           <Text className="color-white">Get Card</Text>
         </Pressable>
+      </View> */}
+
+      <View className="flex flex-row gap-2 items-center">
+        <SearchBar search={search} onSearchChange={onSearchChange} />
+
+        <Pressable onPress={() => getCard()}>
+          <Text className="text-white">Search</Text>
+        </Pressable>
       </View>
 
-      <View className="flex gap-4 items-center">
-        <Text className="color-white">{card?.name || "No Card"}</Text>
-
-        <View className="min-h-96 w-[276px] ">
-          {card && (
-            <Image
-              className="w-full h-full"
-              source={{ uri: card.images.png }}
-              style={[{ resizeMode: "contain" }]}
-            />
-          )}
-        </View>
-      </View>
+      <CardDetails card={card} />
 
       {/* <Graph
         data={graphData.data}

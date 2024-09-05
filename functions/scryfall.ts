@@ -8,6 +8,7 @@ export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
     rarity: scryfallCard.rarity,
     colorIdentity: scryfallCard.color_identity,
     manaCost: scryfallCard.mana_cost,
+    typeLine: scryfallCard.type_line,
     images: {
       small: scryfallCard.image_uris.small,
       normal: scryfallCard.image_uris.normal,

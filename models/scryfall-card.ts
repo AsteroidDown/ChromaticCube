@@ -7,6 +7,7 @@ export interface ScryfallCard {
   cmc: number;
   color_identity: MTGColorSymbol[];
   mana_cost: string;
+  type_line: string;
   image_uris: ScryfallImageUris;
 }
 

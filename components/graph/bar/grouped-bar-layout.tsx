@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { MTGColor } from "../../../constants/colors";
-import { Tooltip } from "../../tooltip/tooltip";
+import { Tooltip } from "../../ui/tooltip/tooltip";
 import { BarData } from "./bar";
 
 interface GroupedBarLayoutProps {

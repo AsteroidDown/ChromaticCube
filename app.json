@@ -22,6 +22,13 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
+  },
+  "scheme": "chromatic-cube-scheme",
+  "web": {
+    "bundler": "metro"
   }
 }

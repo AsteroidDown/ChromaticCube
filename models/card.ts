@@ -8,6 +8,7 @@ export interface Card {
   cmc: number;
   colorIdentity: MTGColorSymbol[];
   manaCost: string;
+  typeLine: string;
   images: ImageUris;
 }
 
