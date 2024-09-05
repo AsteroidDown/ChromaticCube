@@ -22,7 +22,7 @@ export default function CardDetails({ card }: CardDetailsProps) {
   }
 
   return (
-    <Box classes="flex flex-row flex-wrap justify-center gap-3 !rounded-2xl">
+    <Box classes="flex flex-row flex-wrap justify-center gap-3">
       <View>
         <Pressable
           onPress={() => (card.faces ? setShowFront(!showFront) : null)}

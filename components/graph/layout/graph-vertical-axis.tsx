@@ -13,7 +13,7 @@ export function GraphVerticalAxis({ ceiling }: GraphVerticalAxisProps) {
     .map((_tick, index) => index * tickLength);
 
   return (
-    <View className="w-10 h-full">
+    <View className="w-10">
       <Text
         className="absolute top-0 right-0 w-full text-center text-white"
         style={{
