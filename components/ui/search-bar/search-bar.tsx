@@ -11,7 +11,7 @@ export interface SearchBarProps {
 }
 
 const baseClasses =
-  "relative flex flex-row gap-3 items-center !px-6 !py-4 w-full rounded-full color-background-500";
+  "relative flex flex-row gap-3 items-center !px-6 !py-4 w-full rounded-full color-background-500 transition-all";
 const hoverClasses =
   "hover:-m-[2px] hover:border-2 hover:border-background-500 focus:border-background-500";
 
