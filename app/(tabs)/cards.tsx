@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, View } from "react-native";
 import CardDetails from "../../components/card-details/card-details";
 import CardImage from "../../components/card-details/card-image";
@@ -11,6 +11,7 @@ export default function CardsPage() {
   const [search, onSearchChange] = React.useState("");
   const [card, setCard] = React.useState(undefined as Card | undefined);
   const [searchedCards, setSearchedCards] = React.useState([] as Card[]);
+  const [savedCards, setSavedCards] = React.useState([] as Card[]);
 
   const searchedCardsPlaceholder = Array(5).fill(undefined);
 
@@ -22,9 +23,32 @@ export default function CardsPage() {
     CardsService.findCards(search).then((cards) => setSearchedCards(cards));
   }
 
+  function getStoredCards() {
+    const storedCards: string[] = JSON.parse(
+      localStorage.getItem("cubeCards") || "[]"
+    );
+
+    return storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
+  }
+
+  function saveCard(card?: Card) {
+    if (!card) return;
+
+    const storedCards: string[] = JSON.parse(
+      localStorage.getItem("cubeCards") || "[]"
+    );
+    const newCards = JSON.stringify([...storedCards, JSON.stringify(card)]);
+    localStorage.setItem("cubeCards", newCards);
+
+    const cards = storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
+    setSavedCards([...cards, card]);
+  }
+
+  useEffect(() => setSavedCards(getStoredCards()));
+
   return (
-    <View className="flex px-6 py-4 w-full h-full bg-background-100">
-      <ScrollView>
+    <ScrollView>
+      <View className="flex gap-4 px-6 py-4 w-full h-full bg-background-100">
         <View className="flex flex-row flex-wrap gap-4">
           <View className="flex flex-1 gap-4 min-w-[500px]">
             <SearchBar
@@ -45,10 +69,10 @@ export default function CardsPage() {
 
                 {searchedCards?.length && (
                   <View className="flex flex-row gap-4">
-                    {searchedCards.map((card) => (
+                    {searchedCards.map((card, index) => (
                       <CardImage
                         card={card}
-                        key={card.id}
+                        key={card.id + index}
                         onClick={() => setCard(card)}
                       />
                     ))}
@@ -58,9 +82,19 @@ export default function CardsPage() {
             </Box>
           </View>
 
-          <CardDetails card={card} />
+          <CardDetails card={card} action={() => saveCard(card)} />
         </View>
-      </ScrollView>
-    </View>
+
+        <Box classes="w-full min-h-[500px]">
+          {savedCards?.length && (
+            <View className="flex flex-row flex-wrap gap-4">
+              {savedCards.map((card, index) => (
+                <CardImage card={card} key={card.id + index} />
+              ))}
+            </View>
+          )}
+        </Box>
+      </View>
+    </ScrollView>
   );
 }

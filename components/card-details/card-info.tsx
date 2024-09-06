@@ -97,7 +97,7 @@ export function CardFrontInfo({ card }: CardInfoProps) {
         </Text>
       </View>
 
-      {card?.producedMana &&
+      {/* {card?.producedMana &&
         card?.faces?.front?.oracleText.toLowerCase().includes("add") && (
           <>
             <Divider />
@@ -109,7 +109,7 @@ export function CardFrontInfo({ card }: CardInfoProps) {
               </View>
             </View>
           </>
-        )}
+        )} */}
 
       <Divider />
 
@@ -155,7 +155,7 @@ export function CardBackInfo({ card }: CardInfoProps) {
         </Text>
       </View>
 
-      {card?.producedMana &&
+      {/* {card?.producedMana &&
         card?.faces?.back?.oracleText.toLowerCase().includes("add") && (
           <>
             <Divider />
@@ -167,7 +167,9 @@ export function CardBackInfo({ card }: CardInfoProps) {
               </View>
             </View>
           </>
-        )}
+        )} */}
+
+      <Divider />
 
       <View className="flex flex-row gap-2">
         <Text className="text-white font-bold flex-1">Text</Text>

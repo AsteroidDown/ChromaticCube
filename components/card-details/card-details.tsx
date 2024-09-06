@@ -1,5 +1,7 @@
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Card } from "../../models/card";
 import Box from "../ui/box/box";
 import Divider from "../ui/divider/divider";
@@ -8,15 +10,41 @@ import { CardBackInfo, CardFrontInfo, CardInfo } from "./card-info";
 
 export interface CardDetailsProps {
   card?: Card;
+
+  action?: () => void;
 }
 
-export default function CardDetails({ card }: CardDetailsProps) {
+export default function CardDetails({ card, action }: CardDetailsProps) {
   return (
     <Box classes="flex flex-row flex-wrap justify-center gap-3">
-      <CardImage
-        card={card}
-        placeHolder="Search for a Card and it will be previewed here"
-      />
+      <View className="flex gap-3">
+        <CardImage
+          card={card}
+          placeHolder="Search for a Card and it will be previewed here"
+        />
+
+        {
+          <Pressable onPress={action} disabled={!card}>
+            <View
+              className={
+                "flex flex-row gap-2 justify-center items-center w-full h-10 rounded-md transition-all duration-300 " +
+                (card ? "bg-primary-500 hover:bg-primary-400" : "bg-dark-300")
+              }
+            >
+              <FontAwesomeIcon icon={faPlus} />
+
+              <Text
+                className={
+                  "text-md font-bold " +
+                  (card ? "text-dark-100" : "text-dark-600")
+                }
+              >
+                Add Card
+              </Text>
+            </View>
+          </Pressable>
+        }
+      </View>
 
       <Box classes="flex gap-3 w-[350px]" shade={300}>
         {!card?.faces && <CardInfo card={card} />}
