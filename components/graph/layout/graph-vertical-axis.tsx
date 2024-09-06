@@ -15,9 +15,9 @@ export function GraphVerticalAxis({ ceiling }: GraphVerticalAxisProps) {
   return (
     <View className="w-10">
       <Text
-        className="absolute top-0 right-0 w-full text-center text-white"
+        className="absolute top-0 left-0 w-full text-center text-white"
         style={{
-          transform: [{ translateY: `${-50}%` }],
+          transform: "translateY: -50%",
         }}
       >
         {ceiling}
@@ -28,7 +28,7 @@ export function GraphVerticalAxis({ ceiling }: GraphVerticalAxisProps) {
           key={tick}
           className="absolute right-0 w-full text-center text-white"
           style={{
-            transform: [{ translateY: `${50}%` }],
+            transform: "translateY: 50%",
             bottom: `${(tick / ceiling) * 100}%`,
           }}
         >

@@ -1,7 +1,8 @@
-import { MTGColorSymbol } from "../constants/colors";
-import { Rarity } from "./card";
+import { MTGColorSymbol } from "../../constants/colors";
+import { Rarity } from "../card";
 
 export interface ScryfallCard {
+  id: string;
   name: string;
   rarity: Rarity;
   cmc: number;

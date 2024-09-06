@@ -1,5 +1,8 @@
 import { Card, ImageUris } from "../models/card";
-import { ScryfallCard, ScryfallImageUris } from "../models/scryfall-card";
+import {
+  ScryfallCard,
+  ScryfallImageUris,
+} from "../models/scryfall/scryfall-card";
 
 export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
   function transferImageUris(imageUris: ScryfallImageUris): ImageUris {
@@ -14,6 +17,7 @@ export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
   }
 
   return {
+    id: scryfallCard.id,
     name: scryfallCard.name,
     cmc: scryfallCard.cmc,
     rarity: scryfallCard.rarity,

@@ -10,16 +10,18 @@ export interface SearchBarProps {
   searchAction: () => void;
 }
 
-const baseClasses =
-  "relative flex flex-row gap-3 items-center !px-6 !py-4 w-full rounded-full color-background-500 transition-all";
-const hoverClasses =
-  "hover:-m-[2px] hover:border-2 hover:border-background-500 focus:border-background-500";
-
 export default function SearchBar({
   search,
   onSearchChange,
   searchAction,
 }: SearchBarProps) {
+  const [searchHovered, setSearchHovered] = React.useState(false);
+
+  const baseClasses =
+    "relative flex flex-row gap-3 items-center border-2 border-background-200 !px-6 !py-4 w-full rounded-full color-background-500 transition-all";
+  const hoverClasses =
+    "hover:border-background-500 focus:border-background-500";
+
   return (
     <View className="mx-px w-full">
       <Box classes={`${baseClasses} ${hoverClasses}`}>
@@ -39,8 +41,17 @@ export default function SearchBar({
         <Pressable
           onPress={searchAction}
           className="rounded-full hover:bg-background-100 px-4 py-2 -mx-3 -my-2 transition-all"
+          onPointerEnter={() => setSearchHovered(true)}
+          onPointerLeave={() => setSearchHovered(false)}
         >
-          <Text className="text-base font-medium text-white">Search</Text>
+          <Text
+            className={
+              "text-base font-medium text-background-500 " +
+              (searchHovered ? "text-primary-500" : "")
+            }
+          >
+            Search
+          </Text>
         </Pressable>
       </Box>
     </View>

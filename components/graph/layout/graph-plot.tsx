@@ -28,7 +28,7 @@ export function GraphPlot({ ceiling, sets, stacked = true }: GraphPlotProps) {
             key={tick}
             className="absolute right-0 w-full border-b border-background-300"
             style={{
-              transform: [{ translateY: `${50}%` }],
+              transform: "translateY: 50%",
               bottom: `${(tick / ceiling) * 100}%`,
             }}
           ></View>

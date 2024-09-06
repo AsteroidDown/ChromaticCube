@@ -42,7 +42,9 @@ export function Tooltip({
         <View
           className="flex gap-1 absolute -top-2 left-[50%] bg-background-100 p-2 rounded-lg bg-opacity-85 z-10"
           style={[
-            { transform: [{ translateX: "-50%" }, { translateY: "-100%" }] },
+            {
+              transform: "translateX: -50%; translateY: 100%",
+            },
           ]}
         >
           {title && (
