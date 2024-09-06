@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 import { ScrollView, View } from "react-native";
 import CardDetails from "../../components/card-details/card-details";
 import CardImage from "../../components/card-details/card-image";
@@ -44,7 +45,26 @@ export default function CardsPage() {
     setSavedCards([...cards, card]);
   }
 
-  useEffect(() => setSavedCards(getStoredCards()));
+  function removeCard(card: Card) {
+    const storedCards = getStoredCards();
+
+    const index = storedCards.findIndex(
+      (storedCard) => storedCard.id === card.id
+    );
+    if (index >= 0) {
+      storedCards.splice(index, 1);
+      localStorage.setItem(
+        "cubeCards",
+        JSON.stringify(
+          storedCards.map((storedCard) => JSON.stringify(storedCard))
+        )
+      );
+
+      setSavedCards(storedCards);
+    }
+  }
+
+  // useEffect(() => setSavedCards(getStoredCards()));
 
   return (
     <ScrollView>
@@ -86,10 +106,15 @@ export default function CardsPage() {
         </View>
 
         <Box classes="w-full min-h-[500px]">
-          {savedCards?.length && (
+          {savedCards?.length > 0 && (
             <View className="flex flex-row flex-wrap gap-4">
               {savedCards.map((card, index) => (
-                <CardImage card={card} key={card.id + index} />
+                <CardImage
+                  card={card}
+                  key={card.id + index}
+                  actionIcon={faTrash}
+                  action={() => removeCard(card)}
+                />
               ))}
             </View>
           )}
