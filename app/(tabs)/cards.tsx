@@ -70,7 +70,7 @@ export default function CardsPage() {
     <ScrollView>
       <View className="flex gap-4 px-6 py-4 w-full h-full bg-background-100">
         <View className="flex flex-row flex-wrap gap-4">
-          <View className="flex flex-1 gap-4 min-w-[500px]">
+          <View className="flex flex-1 gap-4 min-w-[360px]">
             <SearchBar
               search={search}
               searchAction={findCards}
@@ -102,12 +102,14 @@ export default function CardsPage() {
             </Box>
           </View>
 
-          <CardDetails card={card} action={() => saveCard(card)} />
+          <View className="w-full">
+            <CardDetails card={card} action={() => saveCard(card)} />
+          </View>
         </View>
 
         <Box classes="w-full min-h-[500px]">
           {savedCards?.length > 0 && (
-            <View className="flex flex-row flex-wrap gap-4">
+            <View className="flex flex-row flex-wrap gap-4 justify-center items-center">
               {savedCards.map((card, index) => (
                 <CardImage
                   card={card}
