@@ -6,7 +6,7 @@ import { Text, View } from "react-native";
 
 export default function TabLayout() {
   return (
-    <View className="flex flex-col-reverse w-full h-full bg-background-100">
+    <View className="flex flex-row w-full h-full bg-background-100">
       <Tabs
         screenOptions={{
           headerShown: false,
@@ -26,7 +26,7 @@ export default function TabLayout() {
           options={{
             title: "Overview",
             tabBarLabel: ({ focused }) => (
-              <View className="flex flex-row gap-2">
+              <View className="flex flex-row gap-2 mb-3">
                 <FontAwesomeIcon
                   icon={faCube}
                   size={"lg"}
@@ -45,7 +45,7 @@ export default function TabLayout() {
           name="cards"
           options={{
             tabBarLabel: ({ focused }) => (
-              <View className="flex flex-row gap-2">
+              <View className="flex flex-row gap-2 mb-3">
                 <FontAwesomeIcon
                   icon={faLayerGroup}
                   size={"lg"}

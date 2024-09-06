@@ -24,7 +24,7 @@ export default function CardImage({
   actionIcon,
 }: CardImageProps) {
   const [showFront, setShowFront] = React.useState(true);
-  const [hovered, setHovered] = React.useState(true);
+  const [hovered, setHovered] = React.useState(false);
 
   const hoverClasses = "hover:h-[355px] hover:-my-[2.5px] hover:-mx-[2px]";
 

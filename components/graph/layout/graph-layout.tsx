@@ -33,16 +33,26 @@ export function GraphLayout({
       ? Math.ceil(maxValue / 5) * 5
       : Math.ceil(maxValue / 2) * 2 + 2;
 
+  const tickLength = ceiling > 10 ? 5 : 2;
+
   return (
-    <View className="flex">
+    <View className="flex min-w-fit">
       <View className="flex flex-row">
         <Text className="text-white w-full text-center p-4">{title}</Text>
       </View>
 
       <View className="flex flex-row">
-        <GraphVerticalAxis ceiling={ceiling}></GraphVerticalAxis>
+        <GraphVerticalAxis
+          ceiling={ceiling}
+          tickLength={tickLength}
+        ></GraphVerticalAxis>
 
-        <GraphPlot sets={sets} ceiling={ceiling} stacked={stacked}></GraphPlot>
+        <GraphPlot
+          sets={sets}
+          ceiling={ceiling}
+          tickLength={tickLength}
+          stacked={stacked}
+        ></GraphPlot>
 
         <View className="w-10 h-full"></View>
       </View>

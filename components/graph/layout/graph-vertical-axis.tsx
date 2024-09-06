@@ -2,10 +2,13 @@ import { Text, View } from "react-native";
 
 export interface GraphVerticalAxisProps {
   ceiling: number;
+  tickLength: number;
 }
 
-export function GraphVerticalAxis({ ceiling }: GraphVerticalAxisProps) {
-  const tickLength = ceiling > 10 ? 5 : 2;
+export function GraphVerticalAxis({
+  ceiling,
+  tickLength,
+}: GraphVerticalAxisProps) {
   const tickCount = ceiling / tickLength;
 
   const ticks = Array(tickCount)

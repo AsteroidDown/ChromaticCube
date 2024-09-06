@@ -16,7 +16,10 @@ export function StackedBarLayout({
   topHeight,
   barHeight,
 }: StackedBarLayoutProps) {
-  const greenHeight = getStackHeight("green", total, data);
+  const landHeight = getStackHeight("land", total, data);
+  const colorlessHeight = getStackHeight("colorless", total, data, landHeight);
+  const goldHeight = getStackHeight("gold", total, data, colorlessHeight);
+  const greenHeight = getStackHeight("green", total, data, goldHeight);
   const redHeight = getStackHeight("red", total, data, greenHeight);
   const blackHeight = getStackHeight("black", total, data, redHeight);
   const blueHeight = getStackHeight("blue", total, data, blackHeight);
@@ -118,6 +121,60 @@ export function StackedBarLayout({
           <View
             className={`${baseClass} to-mtg-green from-mtg-green-secondary`}
           ></View>
+        </Tooltip>
+
+        <Tooltip
+          style={[
+            { bottom: 0 },
+            { width: "100%" },
+            { position: "absolute" },
+            { height: `${goldHeight}%` },
+          ]}
+          title={data.find((entry) => entry.color === "gold")?.name}
+          message={
+            "Count: " +
+            (data.find((entry) => entry.color === "gold")?.count || 0)
+          }
+        >
+          <View
+            className={`${baseClass} to-mtg-gold from-mtg-gold-secondary`}
+          ></View>
+        </Tooltip>
+
+        <Tooltip
+          style={[
+            { bottom: 0 },
+            { width: "100%" },
+            { position: "absolute" },
+            { height: `${colorlessHeight}%` },
+          ]}
+          title={data.find((entry) => entry.color === "colorless")?.name}
+          message={
+            "Count: " +
+            (data.find((entry) => entry.color === "colorless")?.count || 0)
+          }
+        >
+          <View
+            className={`${baseClass} to-mtg-colorless from-mtg-colorless-secondary`}
+          ></View>
+
+          <Tooltip
+            style={[
+              { bottom: 0 },
+              { width: "100%" },
+              { position: "absolute" },
+              { height: `${landHeight}%` },
+            ]}
+            title={data.find((entry) => entry.color === "land")?.name}
+            message={
+              "Count: " +
+              (data.find((entry) => entry.color === "land")?.count || 0)
+            }
+          >
+            <View
+              className={`${baseClass} to-mtg-land from-mtg-land-secondary`}
+            ></View>
+          </Tooltip>
         </Tooltip>
       </View>
     </View>

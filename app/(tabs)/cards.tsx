@@ -1,5 +1,5 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, View } from "react-native";
 import CardDetails from "../../components/card-details/card-details";
 import CardImage from "../../components/card-details/card-image";
@@ -64,7 +64,7 @@ export default function CardsPage() {
     }
   }
 
-  // useEffect(() => setSavedCards(getStoredCards()));
+  useEffect(() => setSavedCards(getStoredCards()), []);
 
   return (
     <ScrollView>

@@ -16,6 +16,12 @@ module.exports = {
         "mtg-red-secondary": "#bf4d53",
         "mtg-green": "#00733d",
         "mtg-green-secondary": "#2a9664",
+        "mtg-gold": "#fcba03",
+        "mtg-gold-secondary": "#c49d2f",
+        "mtg-colorless": "#878787",
+        "mtg-colorless-secondary": "#ababab",
+        "mtg-land": "#592b14",
+        "mtg-land-secondary": "#784228",
 
         "primary-100": "#382bf0",
         "primary-200": "#5e43f3",

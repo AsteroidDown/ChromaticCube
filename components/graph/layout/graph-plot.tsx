@@ -9,11 +9,16 @@ export interface SetData {
 export interface GraphPlotProps {
   sets: SetData[];
   ceiling: number;
+  tickLength: number;
   stacked?: boolean;
 }
 
-export function GraphPlot({ ceiling, sets, stacked = true }: GraphPlotProps) {
-  const tickLength = ceiling > 10 ? 5 : 2;
+export function GraphPlot({
+  ceiling,
+  tickLength,
+  sets,
+  stacked = true,
+}: GraphPlotProps) {
   const tickCount = ceiling / tickLength;
 
   const ticks = Array(tickCount)
