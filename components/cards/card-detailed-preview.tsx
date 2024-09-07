@@ -20,7 +20,7 @@ export default function CardDetailedPreview({
 }: CardDetailedPreview) {
   return (
     <Box classes="flex flex-row flex-wrap justify-center gap-3 h-full">
-      <View className="flex gap-3">
+      <View className="flex gap-3 h-full min-w-[250px]">
         <CardImage
           card={card}
           placeHolder="Search for a Card and it will be previewed here"

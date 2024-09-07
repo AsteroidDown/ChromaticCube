@@ -15,7 +15,7 @@ export default function CardCondensedGallery({
   const sortedCards = sortCardsByCost(cards);
 
   return (
-    <Box classes="flex flex-row w-full min-h-[500px] overflow-x-scroll overflow-y-hidden">
+    <Box classes="flex flex-row w-full overflow-x-scroll overflow-y-hidden min-h-[500px]">
       {sortedCards.zero?.length > 0 && (
         <CardCondensedGalleryColumn title="0 Cost" cards={sortedCards.zero} />
       )}
@@ -46,9 +46,13 @@ export function CardCondensedGalleryColumn({
 
   return (
     <View className={columnClasses}>
-      <Text className="text-white font-bold text-lg text-center mx-2">
-        {title}
-      </Text>
+      <View className="flex justify-center items-center mx-2">
+        <Text className="text-white font-bold text-lg">{title}</Text>
+
+        <Text className="text-white font-semibold text-sm">
+          {cards.length} Card{cards.length !== 1 ? "s" : ""}
+        </Text>
+      </View>
 
       <Divider thick />
 

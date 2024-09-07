@@ -83,9 +83,9 @@ export default function CardsPage() {
             />
 
             <Box classes="flex-1">
-              <View className="overflow-x-auto overflow-y-hidden">
+              <View className="overflow-x-auto overflow-y-hidden h-full">
                 {!searchedCards?.length && (
-                  <View className="flex flex-row gap-4">
+                  <View className="flex flex-row gap-4 h-full">
                     {searchedCardsPlaceholder.map((_, index) => (
                       <CardImage key={index} />
                     ))}
@@ -93,7 +93,7 @@ export default function CardsPage() {
                 )}
 
                 {searchedCards?.length >= 1 && (
-                  <View className="flex flex-row gap-4">
+                  <View className="flex flex-row gap-4 h-full">
                     {searchedCards.map((card, index) => (
                       <CardImage
                         card={card}
@@ -107,9 +107,7 @@ export default function CardsPage() {
             </Box>
           </View>
 
-          <View>
-            <CardDetailedPreview card={card} action={() => saveCard(card)} />
-          </View>
+          <CardDetailedPreview card={card} action={() => saveCard(card)} />
         </View>
 
         <CardCondensedGallery cards={savedCards} />

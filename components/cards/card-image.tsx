@@ -37,15 +37,15 @@ export default function CardImage({
     >
       <View
         className={
-          "relative flex justify-center items-center h-[350px] aspect-[2.5/3.5] rounded-lg bg-background-100 transition-all " +
-          (hovered ? hoverClasses : "")
+          "relative flex justify-center items-center h-full max-h-[350px] aspect-[2.5/3.5] rounded-lg bg-background-100 transition-all "
+          //  + (hovered ? hoverClasses : "")
         }
       >
         {card ? (
           <Image
             className={
-              "h-[350px] aspect-[2.5/3.5] rounded transition-all " +
-              (hovered ? hoverClasses : "")
+              "h-full max-h-[350px] aspect-[2.5/3.5] rounded transition-all "
+              //  + (hovered ? hoverClasses : "")
             }
             source={{
               uri:
@@ -67,8 +67,8 @@ export default function CardImage({
         {card?.faces && (
           <View
             className={
-              "absolute bottom-0 right-0 bg-background-100 p-4 rounded-full transition-all " +
-              (hovered ? "m-[10px]" : "m-2")
+              "absolute m-2 bottom-0 right-0 bg-background-100 p-4 rounded-full transition-all " +
+              (hovered ? "bg-opacity-100" : "bg-opacity-85")
             }
           >
             <Pressable
