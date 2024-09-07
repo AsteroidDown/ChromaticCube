@@ -51,7 +51,10 @@ export function sortCardsByColor(cards: Card[]): CardsSortedByColor {
   return sortedCards;
 }
 
-export function sortCardsByCost(cards: Card[]): CardsSortedByCost {
+export function sortCardsByCost(
+  cards: Card[],
+  landsSeperate = true
+): CardsSortedByCost {
   const sortedCards: CardsSortedByCost = {
     zero: [],
     one: [],
@@ -61,10 +64,17 @@ export function sortCardsByCost(cards: Card[]): CardsSortedByCost {
     five: [],
     six: [],
     seven: [],
+    land: [],
   };
 
   cards.forEach((card) => {
-    if (card.cmc >= 7) sortedCards.seven.push(card);
+    if (
+      card.faces
+        ? card.faces?.front.typeLine.includes("Land")
+        : card.typeLine.includes("Land")
+    ) {
+      sortedCards.land.push(card);
+    } else if (card.cmc >= 7) sortedCards.seven.push(card);
     else {
       switch (card.cmc) {
         case 0:

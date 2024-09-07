@@ -8,7 +8,7 @@ export interface CardCondensedProps {
 
 export default function CardCondensed({ card }: CardCondensedProps) {
   return (
-    <View className="flex flex-row gap-2 justify-between items-center rounded-full bg-background-300 px-4 py-2">
+    <View className="flex flex-row gap-2 justify-between items-center rounded-full bg-background-300 px-4 py-2 max-h-[36px]">
       <Text className="text-white truncate">{card.name}</Text>
 
       {card.faces ? (

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Platform, ScrollView, View } from "react-native";
-import CardCondensed from "../../components/cards/card-condensed";
+import CardCondensedGallery from "../../components/cards/card-condensed-gallery";
 import CardDetailedPreview from "../../components/cards/card-detailed-preview";
 import CardImage from "../../components/cards/card-image";
 import Box from "../../components/ui/box/box";
@@ -112,20 +112,7 @@ export default function CardsPage() {
           </View>
         </View>
 
-        <Box classes="w-full min-h-[500px]">
-          {savedCards?.length > 0 && (
-            <View className="flex flex-row flex-wrap gap-4 justify-center items-center">
-              {savedCards.map((card, index) => (
-                <CardCondensed
-                  card={card}
-                  key={card.id + index}
-                  // actionIcon={faTrash}
-                  // action={() => removeCard(card)}
-                />
-              ))}
-            </View>
-          )}
-        </Box>
+        <CardCondensedGallery cards={savedCards} />
       </View>
     </ScrollView>
   );

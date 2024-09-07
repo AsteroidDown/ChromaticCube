@@ -1,15 +1,21 @@
-import { View } from "react-native";
+import { View, ViewProps } from "react-native";
 
-export interface DividerProps {
+export type DividerProps = ViewProps & {
+  thick?: boolean;
   vertical?: boolean;
-}
+};
 
-export default function Divider({ vertical = false }: DividerProps) {
+export default function Divider({
+  thick = false,
+  vertical = false,
+}: DividerProps) {
   return (
     <View
       className={
         "border-background-100 " +
-        (vertical ? "border-l h-full" : "border-b w-full")
+        (vertical
+          ? " h-full " + (thick ? "border-x" : "border-l")
+          : " w-full " + (thick ? "border-y" : "border-b"))
       }
     ></View>
   );

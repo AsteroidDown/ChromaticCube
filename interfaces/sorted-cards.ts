@@ -20,4 +20,5 @@ export interface CardsSortedByCost {
   five: Card[];
   six: Card[];
   seven: Card[];
+  land: Card[];
 }
