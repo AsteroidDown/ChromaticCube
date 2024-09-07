@@ -8,13 +8,16 @@ import Divider from "../ui/divider/divider";
 import CardImage from "./card-image";
 import { CardBackInfo, CardFrontInfo, CardInfo } from "./card-info";
 
-export interface CardDetailsProps {
+export interface CardDetailedPreview {
   card?: Card;
 
   action?: () => void;
 }
 
-export default function CardDetails({ card, action }: CardDetailsProps) {
+export default function CardDetailedPreview({
+  card,
+  action,
+}: CardDetailedPreview) {
   return (
     <Box classes="flex flex-row flex-wrap justify-center gap-3 h-full">
       <View className="flex gap-3">

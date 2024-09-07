@@ -1,8 +1,8 @@
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Platform, ScrollView, View } from "react-native";
-import CardDetails from "../../components/card-details/card-details";
-import CardImage from "../../components/card-details/card-image";
+import CardCondensed from "../../components/cards/card-condensed";
+import CardDetailedPreview from "../../components/cards/card-detailed-preview";
+import CardImage from "../../components/cards/card-image";
 import Box from "../../components/ui/box/box";
 import SearchBar from "../../components/ui/search-bar/search-bar";
 import CardsService from "../../hooks/cards.service";
@@ -108,7 +108,7 @@ export default function CardsPage() {
           </View>
 
           <View>
-            <CardDetails card={card} action={() => saveCard(card)} />
+            <CardDetailedPreview card={card} action={() => saveCard(card)} />
           </View>
         </View>
 
@@ -116,11 +116,11 @@ export default function CardsPage() {
           {savedCards?.length > 0 && (
             <View className="flex flex-row flex-wrap gap-4 justify-center items-center">
               {savedCards.map((card, index) => (
-                <CardImage
+                <CardCondensed
                   card={card}
                   key={card.id + index}
-                  actionIcon={faTrash}
-                  action={() => removeCard(card)}
+                  // actionIcon={faTrash}
+                  // action={() => removeCard(card)}
                 />
               ))}
             </View>
