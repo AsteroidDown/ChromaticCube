@@ -1,6 +1,6 @@
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
-import { ScrollView, View } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 import CardDetails from "../../components/card-details/card-details";
 import CardImage from "../../components/card-details/card-image";
 import Box from "../../components/ui/box/box";
@@ -25,6 +25,8 @@ export default function CardsPage() {
   }
 
   function getStoredCards() {
+    if (Platform.OS === "ios") return [];
+
     const storedCards: string[] = JSON.parse(
       localStorage.getItem("cubeCards") || "[]"
     );
@@ -33,6 +35,7 @@ export default function CardsPage() {
   }
 
   function saveCard(card?: Card) {
+    if (Platform.OS === "ios") return;
     if (!card) return;
 
     const storedCards: string[] = JSON.parse(
@@ -46,6 +49,8 @@ export default function CardsPage() {
   }
 
   function removeCard(card: Card) {
+    if (Platform.OS === "ios") return;
+
     const storedCards = getStoredCards();
 
     const index = storedCards.findIndex(
@@ -87,7 +92,7 @@ export default function CardsPage() {
                   </View>
                 )}
 
-                {searchedCards?.length && (
+                {searchedCards?.length > 1 && (
                   <View className="flex flex-row gap-4">
                     {searchedCards.map((card, index) => (
                       <CardImage
@@ -102,7 +107,7 @@ export default function CardsPage() {
             </Box>
           </View>
 
-          <View className="w-full">
+          <View>
             <CardDetails card={card} action={() => saveCard(card)} />
           </View>
         </View>

@@ -31,9 +31,8 @@ export function GraphPlot({
         {ticks.map((tick) => (
           <View
             key={tick}
-            className="absolute right-0 w-full border-b border-background-300"
+            className="absolute right-0 w-full border-b border-background-300 translate-y-[50%]"
             style={{
-              transform: "translateY: 50%",
               bottom: `${(tick / ceiling) * 100}%`,
             }}
           ></View>

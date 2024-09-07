@@ -16,7 +16,7 @@ export interface CardDetailsProps {
 
 export default function CardDetails({ card, action }: CardDetailsProps) {
   return (
-    <Box classes="flex flex-row flex-wrap justify-center gap-3">
+    <Box classes="flex flex-row flex-wrap justify-center gap-3 h-full">
       <View className="flex gap-3">
         <CardImage
           card={card}

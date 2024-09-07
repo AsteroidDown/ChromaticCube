@@ -2,7 +2,9 @@
   "name": "chromaticcube",
   "version": "1.0.0",
   "main": "expo-router/entry",
+  "homepage": "https://asteroiddown.github.io/ChromaticCube",
   "scripts": {
+    "deploy": "npx expo export -p web",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -31,6 +33,7 @@
     "@babel/core": "^7.20.0",
     "@expo/metro-runtime": "^3.2.3",
     "@types/react": "^18.3.5",
+    "gh-pages": "^6.1.1",
     "tailwindcss": "^3.4.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"

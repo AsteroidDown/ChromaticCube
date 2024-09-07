@@ -12,12 +12,18 @@ export function GraphHorizontalAxis({ title, sets }: GraphHorizontalAxisProps) {
       <View className="flex flex-row gap-2">
         {sets.map((set, index) => (
           <View className="flex-1 " key={set.title + index}>
-            <Text className="w-full text-center text-white">{set.title}</Text>
+            <Text className="w-full text-center text-white text-nowrap">
+              {set.title}
+            </Text>
           </View>
         ))}
       </View>
 
-      {title && <Text className="w-full text-center text-white">{title}</Text>}
+      {title && (
+        <Text className="w-full text-center text-white text-nowrap">
+          {title}
+        </Text>
+      )}
     </View>
   );
 }

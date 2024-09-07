@@ -17,21 +17,15 @@ export function GraphVerticalAxis({
 
   return (
     <View className="w-10">
-      <Text
-        className="absolute top-0 left-0 w-full text-center text-white"
-        style={{
-          transform: "translateY: -50%",
-        }}
-      >
+      <Text className="absolute top-0 left-0 w-full text-center text-white text-nowrap translate-y-[-50%]">
         {ceiling}
       </Text>
 
       {ticks.map((tick) => (
         <Text
           key={tick}
-          className="absolute right-0 w-full text-center text-white"
+          className="absolute right-0 w-full text-center text-white text-nowrap translate-y-[50%]"
           style={{
-            transform: "translateY: 50%",
             bottom: `${(tick / ceiling) * 100}%`,
           }}
         >
