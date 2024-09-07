@@ -92,7 +92,7 @@ export default function CardsPage() {
                   </View>
                 )}
 
-                {searchedCards?.length > 1 && (
+                {searchedCards?.length >= 1 && (
                   <View className="flex flex-row gap-4">
                     {searchedCards.map((card, index) => (
                       <CardImage

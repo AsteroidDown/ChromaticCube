@@ -6,10 +6,10 @@ import Api from "./api-methods";
 
 async function findCards(query: string): Promise<Card[]> {
   const response: ScryfallList = await Api.get(`cards/search`, {
-    q: query + " is:booster",
+    q: query + " game:paper",
   }).catch((error) => console.error(error));
 
-  return response.data.map((card) => ScryfallToCard(card));
+  return response ? response.data.map((card) => ScryfallToCard(card)) : [];
 }
 
 async function getCard(name: string, exact = false): Promise<Card> {
