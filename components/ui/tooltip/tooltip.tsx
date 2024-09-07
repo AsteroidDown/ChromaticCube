@@ -30,12 +30,7 @@ export function Tooltip({
   };
 
   return (
-    <View
-      className="h-full w-full"
-      style={style}
-      onPointerEnter={showTip}
-      onPointerLeave={hideTip}
-    >
+    <View style={style} onPointerEnter={showTip} onPointerLeave={hideTip}>
       {children}
 
       {message && active && (
