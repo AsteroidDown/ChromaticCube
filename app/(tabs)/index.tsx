@@ -5,6 +5,7 @@ import Box from "../../components/ui/box/box";
 import {
   graphCardsByColor,
   graphCardsByCost,
+  graphCardsByType
 } from "../../functions/card-graphing";
 import { Card } from "../../models/card";
 
@@ -40,10 +41,19 @@ export default function App() {
 
           <Box classes="max-w-full overflow-x-scroll overflow-y-hidden">
             <Graph
-              title="Cards by Color"
-              horizontalTitle="Color"
+              title="Cards by Cost"
+              horizontalTitle="Cost"
               stacked={stacked}
               data={graphCardsByCost(getStoredCards())}
+            />
+          </Box>
+
+          <Box classes="max-w-full overflow-x-scroll overflow-y-hidden">
+            <Graph
+              title="Cards by Type"
+              horizontalTitle="Type"
+              stacked={stacked}
+              data={graphCardsByType(getStoredCards())}
             />
           </Box>
         </View>
