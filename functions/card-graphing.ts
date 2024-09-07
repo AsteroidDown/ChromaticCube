@@ -116,9 +116,10 @@ export function graphCardsByCost(cards: Card[]): SetData[] {
 
 function createSetDataFromColor(
   title: string,
-  sortedCards: CardsSortedByColor
+  sortedCards: CardsSortedByColor,
+  excludeLand?: boolean
 ): SetData {
-  return {
+  const graphData: SetData = {
     title: title,
     data: [
       {
@@ -156,11 +157,16 @@ function createSetDataFromColor(
         color: "colorless",
         count: sortedCards.colorless.length,
       },
-      // {
-      //   name: "Land",
-      //   color: "land",
-      //   count: sortedCards.land.length,
-      // },
     ],
   };
+
+  if (!excludeLand) {
+    graphData.data.push({
+      name: "Land",
+      color: "land",
+      count: sortedCards.land.length,
+    });
+  }
+
+  return graphData;
 }
