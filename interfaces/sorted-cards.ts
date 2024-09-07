@@ -22,3 +22,25 @@ export interface CardsSortedByCost {
   seven: Card[];
   land: Card[];
 }
+
+export interface CardsSortedByType {
+  land: Card[],
+  enchantment: Card[],
+  artifact: Card[],
+  instant: Card[],
+  sorcery: Card[],
+  creature: Card[],
+  planeswalker: Card[],
+  battle: Card[]
+}
+
+export const CardTypes = {
+  CREATURE: "Creature",   
+  LAND: "Land",
+  ENCHANTMENT: "Enchantment",
+  ARTIFACT: "Artifact",
+  INSTANT: "Instant",
+  SORCERY: "Sorcery",
+  PLANESWALKER: "Planeswalker",
+  BATTLE: "Battle"
+} as const

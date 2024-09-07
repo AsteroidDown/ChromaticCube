@@ -1,6 +1,8 @@
 import {
   CardsSortedByColor,
   CardsSortedByCost,
+  CardsSortedByType,
+  CardTypes
 } from "../interfaces/sorted-cards";
 import { Card } from "../models/card";
 
@@ -103,4 +105,75 @@ export function sortCardsByCost(
   });
 
   return sortedCards;
+}
+
+export function sortCardsByType(cards: Card[]): CardsSortedByType {
+  const sortedCards: CardsSortedByType = {
+    land: [],
+    enchantment: [],
+    artifact: [],
+    instant: [],
+    sorcery: [],
+    creature: [],
+    planeswalker: [],
+    battle: []
+  }
+
+  cards.forEach((card) => {
+    let cardType: string;
+
+    if (card.faces?.front) {
+      cardType = getCardTypeFromTypeLine(card.faces.front.typeLine);
+    }
+    else {
+      cardType = getCardTypeFromTypeLine(card.typeLine);
+    }
+
+    switch (cardType.toLowerCase()) {
+      case CardTypes.ARTIFACT.toLowerCase():
+        sortedCards.artifact.push(card);
+        return;
+      case CardTypes.ENCHANTMENT.toLowerCase():
+        sortedCards.enchantment.push(card);
+        return;
+      case CardTypes.CREATURE.toLowerCase():
+        sortedCards.creature.push(card);
+        return;
+      case CardTypes.LAND.toLowerCase():
+        sortedCards.land.push(card);
+        return;
+      case CardTypes.BATTLE.toLowerCase():
+        sortedCards.battle.push(card);
+        return;
+      case CardTypes.PLANESWALKER.toLowerCase():
+        sortedCards.planeswalker.push(card);
+        return;
+      case CardTypes.SORCERY.toLowerCase():
+        sortedCards.sorcery.push(card);
+        return;
+    }
+  });
+
+  return sortedCards;
+}
+
+/**
+ * 
+ * @param typeLine the type line for a card as given by scryfall api
+ * @returns the creature type as given in CardTypes const (see sorted-cards.ts) or an empty string if the type could not be discerned
+ */
+function getCardTypeFromTypeLine(typeLine: string): string {
+  const cardTypeFromTypeLine = typeLine.split("-")[0].toLowerCase();
+
+  // creature type has priority in hybrid types so check for it first here
+  if (cardTypeFromTypeLine.includes(CardTypes.CREATURE.toLowerCase())) 
+    return CardTypes.CREATURE;
+  
+  for (const cardType in CardTypes) {
+    if (cardTypeFromTypeLine.includes(cardType.toLowerCase()))
+      return cardType;
+  }
+
+  // card type couldn't be found
+  return "";
 }
