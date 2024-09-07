@@ -33,14 +33,3 @@ export interface CardsSortedByType {
   planeswalker: Card[],
   battle: Card[]
 }
-
-export const CardTypes = {
-  CREATURE: "Creature",   
-  LAND: "Land",
-  ENCHANTMENT: "Enchantment",
-  ARTIFACT: "Artifact",
-  INSTANT: "Instant",
-  SORCERY: "Sorcery",
-  PLANESWALKER: "Planeswalker",
-  BATTLE: "Battle"
-} as const

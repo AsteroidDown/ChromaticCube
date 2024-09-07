@@ -1,5 +1,6 @@
 import { SetData } from "../components/graph/layout/graph-plot";
-import { CardsSortedByColor, CardTypes } from "../interfaces/sorted-cards";
+import { CardsSortedByColor } from "../interfaces/sorted-cards";
+import { CardTypes } from "../constants/card-types";
 import { Card } from "../models/card";
 import { sortCardsByColor, sortCardsByCost, sortCardsByType } from "./card-sorting";
 

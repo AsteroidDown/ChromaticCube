@@ -1,9 +1,9 @@
 import {
   CardsSortedByColor,
   CardsSortedByCost,
-  CardsSortedByType,
-  CardTypes
+  CardsSortedByType
 } from "../interfaces/sorted-cards";
+import { CardTypes } from "../constants/card-types";
 import { Card } from "../models/card";
 
 export function sortCardsByColor(cards: Card[]): CardsSortedByColor {
