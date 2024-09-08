@@ -1,4 +1,4 @@
-import { Card } from "../models/card";
+import { Card } from "../card/card";
 
 export interface CardsSortedByColor {
   white: Card[];
@@ -24,12 +24,12 @@ export interface CardsSortedByCost {
 }
 
 export interface CardsSortedByType {
-  land: Card[],
-  enchantment: Card[],
-  artifact: Card[],
-  instant: Card[],
-  sorcery: Card[],
-  creature: Card[],
-  planeswalker: Card[],
-  battle: Card[]
+  land: Card[];
+  enchantment: Card[];
+  artifact: Card[];
+  instant: Card[];
+  sorcery: Card[];
+  creature: Card[];
+  planeswalker: Card[];
+  battle: Card[];
 }

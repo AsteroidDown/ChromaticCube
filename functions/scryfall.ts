@@ -1,11 +1,11 @@
-import { Card, ImageUris } from "../models/card";
+import { Card, CardImageUris } from "../models/card/card";
 import {
   ScryfallCard,
   ScryfallImageUris,
 } from "../models/scryfall/scryfall-card";
 
 export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
-  function transferImageUris(imageUris: ScryfallImageUris): ImageUris {
+  function transferImageUris(imageUris: ScryfallImageUris): CardImageUris {
     return {
       small: imageUris?.small || "",
       normal: imageUris?.normal || "",
@@ -45,5 +45,18 @@ export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
           },
         }
       : null,
+    prices: {
+      usd: scryfallCard.prices.usd,
+      usdFoil: scryfallCard.prices.usd_foil,
+      usdEtched: scryfallCard.prices.usd_etched,
+      eur: scryfallCard.prices.eur,
+      eurFoil: scryfallCard.prices.eur,
+      tix: scryfallCard.prices.tix,
+    },
+    priceUris: {
+      tcgplayer: scryfallCard.purchase_uris.tcgplayer,
+      cardmarket: scryfallCard.purchase_uris.cardmarket,
+      cardhoarder: scryfallCard.purchase_uris.cardhoarder,
+    },
   };
 }

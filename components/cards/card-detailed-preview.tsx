@@ -1,7 +1,7 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { Text, View } from "react-native";
-import { Card } from "../../models/card";
+import { Card } from "../../models/card/card";
 import Box from "../ui/box/box";
 import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";

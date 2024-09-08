@@ -10,7 +10,7 @@ import {
   saveLocalStorageCard,
 } from "../../functions/local-storage";
 import CardsService from "../../hooks/cards.service";
-import { Card } from "../../models/card";
+import { Card } from "../../models/card/card";
 
 export default function CardsPage() {
   const [search, onSearchChange] = React.useState("");

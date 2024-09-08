@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 import { sortCardsByCost } from "../../functions/card-sorting";
-import { Card } from "../../models/card";
+import { Card } from "../../models/card/card";
 import Box from "../ui/box/box";
 import Divider from "../ui/divider/divider";
 import CardItem from "./card-item";

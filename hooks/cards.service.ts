@@ -1,5 +1,5 @@
 import { ScryfallToCard } from "../functions/scryfall";
-import { Card } from "../models/card";
+import { Card } from "../models/card/card";
 import { ScryfallCard } from "../models/scryfall/scryfall-card";
 import { ScryfallList } from "../models/scryfall/scryfall-list";
 import Api from "./api-methods";

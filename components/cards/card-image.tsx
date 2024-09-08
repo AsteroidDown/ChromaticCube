@@ -5,7 +5,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
-import { Card } from "../../models/card";
+import { Card } from "../../models/card/card";
 
 export interface CardImageProps {
   card?: Card;

@@ -5,9 +5,9 @@ import Box from "../../components/ui/box/box";
 import {
   graphCardsByColor,
   graphCardsByCost,
-  graphCardsByType
+  graphCardsByType,
 } from "../../functions/card-graphing";
-import { Card } from "../../models/card";
+import { Card } from "../../models/card/card";
 
 export default function App() {
   const [stacked, setStacked] = React.useState(true);

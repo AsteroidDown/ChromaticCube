@@ -1,8 +1,8 @@
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faShop, faTrash } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Linking, Pressable, Text, View } from "react-native";
 import { removeLocalStorageCard } from "../../functions/local-storage";
-import { Card } from "../../models/card";
+import { Card } from "../../models/card/card";
 import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";
 import CardCost from "./card-cost";
@@ -61,7 +61,7 @@ export default function CardItem({ card }: CardItemProps) {
         <CardImage card={card} />
       </View>
 
-      <Divider thick />
+      <Divider thick classes="-mt-2" />
 
       <View className="flex flex-row justify-end gap-2 px-2 pb-2">
         <Button
@@ -69,6 +69,24 @@ export default function CardItem({ card }: CardItemProps) {
           icon={faTrash}
           onClick={() => removeLocalStorageCard(card)}
         ></Button>
+      </View>
+
+      <View className="flex flex-row gap-2 px-2 pb-2">
+        <Button
+          action="info"
+          icon={faShop}
+          onClick={async () => await Linking.openURL(card.priceUris.tcgplayer)}
+        >
+          ${card.prices?.usd}
+        </Button>
+
+        <Button
+          action="info"
+          icon={faShop}
+          onClick={async () => await Linking.openURL(card.priceUris.cardmarket)}
+        >
+          €{card.prices?.eur}
+        </Button>
       </View>
     </Pressable>
   );

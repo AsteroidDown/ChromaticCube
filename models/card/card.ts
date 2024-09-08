@@ -1,4 +1,4 @@
-import { MTGColorSymbol } from "../constants/mtg-colors";
+import { MTGColorSymbol } from "../../constants/mtg-colors";
 
 export type Rarity = "common" | "uncommon" | "rare" | "mythic";
 
@@ -12,11 +12,13 @@ export interface Card {
   typeLine: string;
   producedMana?: string[];
   oracleText?: string;
-  images?: ImageUris;
+  images?: CardImageUris;
   faces: { front: CardFace; back: CardFace } | null;
+  prices: CardPrices;
+  priceUris: CardPriceUris;
 }
 
-export interface ImageUris {
+export interface CardImageUris {
   small: string;
   normal: string;
   large: string;
@@ -31,5 +33,20 @@ export interface CardFace {
   typeLine: string;
   manaCost: string;
   oracleText: string;
-  imageUris: ImageUris;
+  imageUris: CardImageUris;
+}
+
+export interface CardPrices {
+  usd: number | null;
+  usdFoil: number | null;
+  usdEtched: number | null;
+  eur: number | null;
+  eurFoil: number | null;
+  tix: number | null;
+}
+
+export interface CardPriceUris {
+  tcgplayer: string;
+  cardmarket: string;
+  cardhoarder: string;
 }

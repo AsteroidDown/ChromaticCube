@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { Card } from "../models/card";
+import { Card } from "../models/card/card";
 
 export function getLocalStorageStoredCards() {
   if (Platform.OS === "ios") return [];
