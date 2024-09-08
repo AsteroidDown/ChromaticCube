@@ -13,7 +13,7 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
   const sortedCards = sortCardsByCost(cards);
 
   return (
-    <Box classes="flex flex-row w-full overflow-x-scroll overflow-y-hidden min-h-[500px]">
+    <Box className="flex flex-row w-full overflow-x-scroll overflow-y-hidden min-h-[500px]">
       {sortedCards.zero?.length > 0 && (
         <CardCondensedGalleryColumn title="0 Cost" cards={sortedCards.zero} />
       )}

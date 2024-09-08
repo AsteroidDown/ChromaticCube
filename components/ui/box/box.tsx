@@ -1,11 +1,10 @@
 import { View, ViewProps } from "react-native";
 
 export type BoxProps = ViewProps & {
-  classes?: string;
   shade?: 100 | 200 | 300 | 400 | 500 | 600;
 };
 
-export default function Box({ classes, shade = 200, children }: BoxProps) {
+export default function Box({ className, shade = 200, children }: BoxProps) {
   const backgroundShade =
     shade === 100
       ? "bg-background-100"
@@ -18,7 +17,7 @@ export default function Box({ classes, shade = 200, children }: BoxProps) {
       : "bg-background-200";
 
   return (
-    <View className={(classes ?? "") + " rounded-2xl p-4 " + backgroundShade}>
+    <View className={`${className} rounded-2xl p-4 ${backgroundShade}`}>
       {children}
     </View>
   );

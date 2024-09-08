@@ -48,7 +48,7 @@ export default function CardsPage() {
               onSearchChange={onSearchChange}
             />
 
-            <Box classes="flex-1">
+            <Box className="flex-1">
               <View className="overflow-x-auto overflow-y-hidden h-full">
                 {!searchedCards?.length && (
                   <View className="flex flex-row gap-4 h-full">

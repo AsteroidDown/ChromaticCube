@@ -19,7 +19,7 @@ export default function CardDetailedPreview({
   action,
 }: CardDetailedPreview) {
   return (
-    <Box classes="flex flex-row flex-wrap justify-center gap-3 h-full">
+    <Box className="flex flex-row flex-wrap justify-center gap-3 h-full">
       <View className="flex gap-3 h-full min-w-[250px]">
         <CardImage
           card={card}
@@ -34,7 +34,7 @@ export default function CardDetailedPreview({
         />
       </View>
 
-      <Box classes="flex gap-3 w-[350px]" shade={300}>
+      <Box className="flex gap-3 w-[350px]" shade={300}>
         {!card?.faces && <CardInfo card={card} />}
 
         {card?.faces && (

@@ -55,13 +55,13 @@ export default function CardItem({ card }: CardItemProps) {
         )}
       </View>
 
-      <Divider thick classes="-mt-2" />
+      <Divider thick className="-mt-2" />
 
       <View className="flex gap-2 px-2 mb-2">
         <CardImage card={card} />
       </View>
 
-      <Divider thick classes="-mt-2" />
+      <Divider thick className="-mt-2" />
 
       <View className="flex flex-row justify-end gap-2 px-2 pb-2">
         <Button

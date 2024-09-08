@@ -30,7 +30,7 @@ export default function App() {
 
       <ScrollView>
         <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
-          <Box classes="max-w-full overflow-x-scroll overflow-y-hidden">
+          <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
             <Graph
               title="Cards by Color"
               horizontalTitle="Color"
@@ -39,7 +39,7 @@ export default function App() {
             />
           </Box>
 
-          <Box classes="max-w-full overflow-x-scroll overflow-y-hidden">
+          <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
             <Graph
               title="Cards by Cost"
               horizontalTitle="Cost"
@@ -48,7 +48,7 @@ export default function App() {
             />
           </Box>
 
-          <Box classes="max-w-full overflow-x-scroll overflow-y-hidden">
+          <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
             <Graph
               title="Cards by Type"
               horizontalTitle="Type"

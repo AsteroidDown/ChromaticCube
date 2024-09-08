@@ -24,7 +24,7 @@ export default function SearchBar({
 
   return (
     <View className="mx-px w-full">
-      <Box classes={`${baseClasses} ${hoverClasses}`}>
+      <Box className={`${baseClasses} ${hoverClasses}`}>
         <FontAwesomeIcon className="color-white" icon={faSearch} />
 
         <TextInput
