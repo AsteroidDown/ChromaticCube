@@ -186,6 +186,7 @@ export function graphCardsByType(cards: Card[]): SetData[] {
   const sortedPlaneswalkers = sortCardsByColor(sortedCards.planeswalker);
   const sortedArtifacts = sortCardsByColor(sortedCards.artifact);
   const sortedBattle = sortCardsByColor(sortedCards.battle);
+  const sortedInstants = sortCardsByColor(sortedCards.instant);
 
   return [
     createSetDataByColor(CardTypes.LAND, sortedLands),
@@ -195,5 +196,6 @@ export function graphCardsByType(cards: Card[]): SetData[] {
     createSetDataByColor(CardTypes.PLANESWALKER, sortedPlaneswalkers),
     createSetDataByColor(CardTypes.ARTIFACT, sortedArtifacts),
     createSetDataByColor(CardTypes.BATTLE, sortedBattle),
+    createSetDataByColor(CardTypes.INSTANT, sortedInstants)
   ];
 }

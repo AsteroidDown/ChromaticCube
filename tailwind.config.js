@@ -5,6 +5,28 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+      keyframes: {
+        bottomToTopGrow: {
+          '0%': {  height: '0' },
+          '100%': { height: '100%' },
+        }
+      },
+      animation: {
+        bottomToTopGrow: "bottomToTopGrow 2s ease-in-out forwards",
+      },
+      gridTemplateAreas: {
+        'graphLayout': [
+          'title title',
+          'verticalAxis plot',
+          '. horizontalAxis',
+        ],
+      },
+      gridTemplateColumns: {
+        'graphLayout': '1fr auto',
+      },
+      gridTemplateRows: {
+        'graphLayout': '1fr 5fr 1fr',
+      },
       colors: {
         "mtg-white": "#f9faf4",
         "mtg-white-secondary": "#f8e7b9",
@@ -81,5 +103,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@savvywombat/tailwindcss-grid-areas')
+  ],
 };

@@ -8,6 +8,7 @@ import {
   graphCardsByType,
 } from "../../functions/card-graphing";
 import { Card } from "../../models/card/card";
+import { GraphLayoutProps } from "../../components/graph/layout/graph-layout";
 
 export default function App() {
   const [stacked, setStacked] = React.useState(true);
@@ -22,6 +23,32 @@ export default function App() {
     return storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
   }
 
+  const numCardsTitle: string = "# of Cards";
+
+  const cardsByColourGraphLayoutProps: GraphLayoutProps = {
+    title: "Cards By Colour",
+    horizontalTitle: "Colour",
+    verticalTitle: numCardsTitle,
+    stacked: stacked,
+    sets: graphCardsByColor(getStoredCards())
+  }
+
+  const cardsByCostGraphLayoutProps: GraphLayoutProps = {
+    title: "Cards By Cost",
+    horizontalTitle: "Cost",
+    verticalTitle: numCardsTitle,
+    stacked: stacked,
+    sets: graphCardsByCost(getStoredCards())
+  }
+
+  const cardsByTypeGraphLayoutProps: GraphLayoutProps = {
+    title: "Cards By Type",
+    horizontalTitle: "Type",
+    verticalTitle: numCardsTitle,
+    stacked: stacked,
+    sets: graphCardsByType(getStoredCards())
+  }
+
   return (
     <View className="flex gap-6 flex-1 justify-center bg-background-100 p-6">
       <Pressable onPress={() => setStacked(!stacked)}>
@@ -30,30 +57,21 @@ export default function App() {
 
       <ScrollView>
         <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
-          <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
+          <Box className="min-w-max overflow-x-scroll overflow-y-hidden">
             <Graph
-              title="Cards by Color"
-              horizontalTitle="Color"
-              stacked={stacked}
-              data={graphCardsByColor(getStoredCards())}
+              graphLayoutProps={cardsByColourGraphLayoutProps}
             />
           </Box>
 
           <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
             <Graph
-              title="Cards by Cost"
-              horizontalTitle="Cost"
-              stacked={stacked}
-              data={graphCardsByCost(getStoredCards())}
+              graphLayoutProps={cardsByCostGraphLayoutProps}
             />
           </Box>
 
           <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
             <Graph
-              title="Cards by Type"
-              horizontalTitle="Type"
-              stacked={stacked}
-              data={graphCardsByType(getStoredCards())}
+              graphLayoutProps={cardsByTypeGraphLayoutProps}
             />
           </Box>
         </View>

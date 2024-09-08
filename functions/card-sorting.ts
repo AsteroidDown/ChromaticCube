@@ -150,6 +150,9 @@ export function sortCardsByType(cards: Card[]): CardsSortedByType {
       case CardTypes.SORCERY.toLowerCase():
         sortedCards.sorcery.push(card);
         return;
+      case CardTypes.INSTANT.toLowerCase():
+        sortedCards.instant.push(card);
+        return;
     }
   });
 

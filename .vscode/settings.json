@@ -3,6 +3,7 @@
         "cardhoarder",
         "cardmarket",
         "planeswalker",
-        "tcgplayer"
+        "tcgplayer",
+        "Colour"
     ]
 }

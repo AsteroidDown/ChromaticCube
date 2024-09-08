@@ -6,18 +6,14 @@ import { GraphVerticalAxis } from "./graph-vertical-axis";
 export interface GraphLayoutProps {
   title?: string;
   horizontalTitle?: string;
+  verticalTitle?: string;
   sets: SetData[];
   stacked?: boolean;
 }
 
-export function GraphLayout({
-  title,
-  horizontalTitle,
-  sets,
-  stacked = true,
-}: GraphLayoutProps) {
-  const maxValue = sets.reduce((acc, set) => {
-    const setValue = stacked
+export function GraphLayout(graphLayoutProps: GraphLayoutProps) {
+  const maxValue = graphLayoutProps.sets.reduce((acc, set) => {
+    const setValue = graphLayoutProps.stacked
       ? set.data.reduce((acc, entry) => acc + entry.count, 0)
       : set.data.reduce((acc, entry) => {
           if (entry.count > acc) return entry.count;
@@ -33,39 +29,34 @@ export function GraphLayout({
       ? Math.ceil(maxValue / 5) * 5
       : Math.ceil(maxValue / 2) * 2 + 2;
 
-  const tickLength = ceiling > 10 ? 5 : 2;
+  const yTickLength = ceiling > 12 ? 5 : 2;
 
   return (
-    <View className="flex min-w-fit">
-      <View className="flex flex-row">
-        <Text className="text-white w-full text-center p-4">{title}</Text>
-      </View>
-
-      <View className="flex flex-row">
+    <View className="grid grid-areas-graphLayout grid-cols-graphLayout grid-rows-graphLayout grid-flow-dense overflow-auto">
+      <Text className="text-white w-full text-center p-4 grid-in-title">{graphLayoutProps.title}</Text>
+      
+      <View className="grid-in-verticalAxis pr-1 min-w-max">
         <GraphVerticalAxis
+          title={graphLayoutProps.verticalTitle}
           ceiling={ceiling}
-          tickLength={tickLength}
+          tickLength={yTickLength}
         ></GraphVerticalAxis>
-
-        <GraphPlot
-          sets={sets}
-          ceiling={ceiling}
-          tickLength={tickLength}
-          stacked={stacked}
-        ></GraphPlot>
-
-        <View className="w-10 h-full"></View>
       </View>
 
-      <View className="flex flex-row">
-        <View className="w-10 h-full"></View>
+      <View className="grid-in-plot">
+        <GraphPlot
+          sets={graphLayoutProps.sets}
+          ceiling={ceiling}
+          yTickLength={yTickLength}
+          stacked={graphLayoutProps.stacked}
+        ></GraphPlot>
+      </View>
 
+      <View className="grid-in-horizontalAxis">
         <GraphHorizontalAxis
-          title={horizontalTitle}
-          sets={sets}
+          title={graphLayoutProps.horizontalTitle}
+          sets={graphLayoutProps.sets}
         ></GraphHorizontalAxis>
-
-        <View className="w-10 h-full"></View>
       </View>
     </View>
   );
