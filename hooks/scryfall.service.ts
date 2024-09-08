@@ -9,6 +9,8 @@ async function findCards(query: string): Promise<Card[]> {
     q: query + " game:paper",
   }).catch((error) => console.error(error));
 
+  console.log(response);
+
   return response ? response.data.map((card) => ScryfallToCard(card)) : [];
 }
 
@@ -28,10 +30,10 @@ async function getRandomCard(): Promise<Card> {
   return ScryfallToCard(card);
 }
 
-const CardsService = {
+const ScryfallService = {
   findCards,
   getCard,
   getRandomCard,
 };
 
-export default CardsService;
+export default ScryfallService;

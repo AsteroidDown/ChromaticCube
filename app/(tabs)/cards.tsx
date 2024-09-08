@@ -9,7 +9,7 @@ import {
   getLocalStorageStoredCards,
   saveLocalStorageCard,
 } from "../../functions/local-storage";
-import CardsService from "../../hooks/cards.service";
+import ScryfallService from "../../hooks/scryfall.service";
 import { Card } from "../../models/card/card";
 
 export default function CardsPage() {
@@ -21,11 +21,11 @@ export default function CardsPage() {
   const searchedCardsPlaceholder = Array(5).fill(undefined);
 
   function getCard() {
-    CardsService.getCard(search).then((card) => setCard(card));
+    ScryfallService.getCard(search).then((card) => setCard(card));
   }
 
   function findCards() {
-    CardsService.findCards(search).then((cards) => setSearchedCards(cards));
+    ScryfallService.findCards(search).then((cards) => setSearchedCards(cards));
   }
 
   function saveCard(card?: Card) {
@@ -48,7 +48,7 @@ export default function CardsPage() {
               onSearchChange={onSearchChange}
             />
 
-            <Box className="flex-1">
+            <Box className="flex-1 min-h-[350px]">
               <View className="overflow-x-auto overflow-y-hidden h-full">
                 {!searchedCards?.length && (
                   <View className="flex flex-row gap-4 h-full">
