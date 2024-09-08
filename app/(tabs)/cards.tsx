@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
-import { Platform, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import CardCondensedGallery from "../../components/cards/card-condensed-gallery";
 import CardDetailedPreview from "../../components/cards/card-detailed-preview";
 import CardImage from "../../components/cards/card-image";
 import Box from "../../components/ui/box/box";
 import SearchBar from "../../components/ui/search-bar/search-bar";
+import {
+  getLocalStorageStoredCards,
+  saveLocalStorageCard,
+} from "../../functions/local-storage";
 import CardsService from "../../hooks/cards.service";
 import { Card } from "../../models/card";
 
@@ -24,52 +28,14 @@ export default function CardsPage() {
     CardsService.findCards(search).then((cards) => setSearchedCards(cards));
   }
 
-  function getStoredCards() {
-    if (Platform.OS === "ios") return [];
-
-    const storedCards: string[] = JSON.parse(
-      localStorage.getItem("cubeCards") || "[]"
-    );
-
-    return storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
-  }
-
   function saveCard(card?: Card) {
-    if (Platform.OS === "ios") return;
     if (!card) return;
 
-    const storedCards: string[] = JSON.parse(
-      localStorage.getItem("cubeCards") || "[]"
-    );
-    const newCards = JSON.stringify([...storedCards, JSON.stringify(card)]);
-    localStorage.setItem("cubeCards", newCards);
-
-    const cards = storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
-    setSavedCards([...cards, card]);
+    const savedCards = saveLocalStorageCard(card);
+    if (savedCards) setSavedCards(savedCards);
   }
 
-  function removeCard(card: Card) {
-    if (Platform.OS === "ios") return;
-
-    const storedCards = getStoredCards();
-
-    const index = storedCards.findIndex(
-      (storedCard) => storedCard.id === card.id
-    );
-    if (index >= 0) {
-      storedCards.splice(index, 1);
-      localStorage.setItem(
-        "cubeCards",
-        JSON.stringify(
-          storedCards.map((storedCard) => JSON.stringify(storedCard))
-        )
-      );
-
-      setSavedCards(storedCards);
-    }
-  }
-
-  useEffect(() => setSavedCards(getStoredCards()), []);
+  useEffect(() => setSavedCards(getLocalStorageStoredCards()), []);
 
   return (
     <ScrollView>

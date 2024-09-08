@@ -1,9 +1,9 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { Card } from "../../models/card";
 import Box from "../ui/box/box";
+import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";
 import CardImage from "./card-image";
 import { CardBackInfo, CardFrontInfo, CardInfo } from "./card-info";
@@ -26,25 +26,12 @@ export default function CardDetailedPreview({
           placeHolder="Search for a Card and it will be previewed here"
         />
 
-        <Pressable onPress={action} disabled={!card}>
-          <View
-            className={
-              "flex flex-row gap-2 justify-center items-center w-full h-10 rounded-md transition-all duration-300 " +
-              (card ? "bg-primary-500 hover:bg-primary-400" : "bg-dark-300")
-            }
-          >
-            <FontAwesomeIcon icon={faPlus} />
-
-            <Text
-              className={
-                "text-md font-bold " +
-                (card ? "text-dark-100" : "text-dark-600")
-              }
-            >
-              Add Card
-            </Text>
-          </View>
-        </Pressable>
+        <Button
+          text="Add Card"
+          action={action}
+          disabled={!card}
+          icon={faPlus}
+        />
       </View>
 
       <Box classes="flex gap-3 w-[350px]" shade={300}>

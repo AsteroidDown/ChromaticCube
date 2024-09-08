@@ -1,6 +1,9 @@
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
+import { removeLocalStorageCard } from "../../functions/local-storage";
 import { Card } from "../../models/card";
+import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";
 import CardCost from "./card-cost";
 import CardImage from "./card-image";
@@ -54,8 +57,17 @@ export default function CardCondensed({ card }: CardCondensedProps) {
 
       <Divider thick classes="-mt-2" />
 
-      <View className="px-2 mb-2">
+      <View className="flex gap-2 px-2 mb-2">
         <CardImage card={card} />
+      </View>
+
+      <Divider thick />
+
+      <View className="flex flex-row justify-end gap-2 px-2 pb-2">
+        <Button
+          icon={faTrash}
+          action={() => removeLocalStorageCard(card)}
+        ></Button>
       </View>
     </Pressable>
   );
