@@ -10,11 +10,11 @@ import CardImage from "./card-image";
 
 export interface CardItemProps {
   card: Card;
+  hideImage?: boolean;
 }
 
-export default function CardItem({ card }: CardItemProps) {
+export default function CardItem({ card, hideImage = false }: CardItemProps) {
   const [expanded, setExpanded] = React.useState(false);
-  const [hovered, setHovered] = React.useState(false);
 
   return (
     <Pressable
@@ -24,45 +24,62 @@ export default function CardItem({ card }: CardItemProps) {
         (expanded ? "max-h-[1000px] " : "max-h-[36px] ")
       }
     >
-      <View
-        className={
-          "flex flex-row gap-1 justify-between items-center px-4 py-2 max-h-[36px] h-[36px] transition-all " +
-          (hovered ? "bg-primary-300" : "bg-background-300")
-        }
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
-      >
-        {/* <Tooltip style={[{ flex: 1 }]} message={card.name}> */}
-        <Text className="text-white truncate">{card.name}</Text>
-        {/* </Tooltip> */}
+      <CardItemHeader card={card} />
 
-        {card.faces ? (
-          <Text className="flex flex-row items-center gap-1">
-            {card.faces.front.manaCost && (
-              <CardCost size="sm" cost={card.faces.front.manaCost} />
-            )}
+      <Divider thick className="-mt-2" />
 
-            {card.faces.back.manaCost && (
-              <Text className="text-white"> // </Text>
-            )}
+      {!hideImage && (
+        <>
+          <View className="flex gap-2 px-2">
+            <CardImage card={card} />
+          </View>
 
-            {card.faces.back.manaCost && (
-              <CardCost size="sm" cost={card.faces.back.manaCost} />
-            )}
-          </Text>
-        ) : (
-          card.manaCost && <CardCost size="sm" cost={card.manaCost} />
-        )}
-      </View>
+          <Divider thick />
+        </>
+      )}
 
-      <Divider thick />
+      <CardItemFooter card={card} />
+    </Pressable>
+  );
+}
 
-      <View className="flex gap-2 px-2">
-        <CardImage card={card} />
-      </View>
+export function CardItemHeader({ card }: CardItemProps) {
+  const [hovered, setHovered] = React.useState(false);
+  return (
+    <View
+      className={
+        "flex flex-row gap-1 justify-between items-center px-4 max-h-[36px] h-[36px] transition-all " +
+        (hovered ? "bg-primary-300" : "bg-background-300")
+      }
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+    >
+      {/* <Tooltip style={[{ flex: 1 }]} message={card.name}> */}
+      <Text className="text-white truncate">{card.name}</Text>
+      {/* </Tooltip> */}
 
-      <Divider thick />
+      {card.faces ? (
+        <Text className="flex flex-row items-center gap-1">
+          {card.faces.front.manaCost && (
+            <CardCost size="sm" cost={card.faces.front.manaCost} />
+          )}
 
+          {card.faces.back.manaCost && <Text className="text-white"> // </Text>}
+
+          {card.faces.back.manaCost && (
+            <CardCost size="sm" cost={card.faces.back.manaCost} />
+          )}
+        </Text>
+      ) : (
+        card.manaCost && <CardCost size="sm" cost={card.manaCost} />
+      )}
+    </View>
+  );
+}
+
+export function CardItemFooter({ card }: CardItemProps) {
+  return (
+    <View className="flex gap-2">
       <View className="flex flex-row justify-end gap-2 px-2">
         <Button
           action="danger"
@@ -90,6 +107,6 @@ export default function CardItem({ card }: CardItemProps) {
           onClick={async () => await Linking.openURL(card.priceUris.cardmarket)}
         />
       </View>
-    </Pressable>
+    </View>
   );
 }
