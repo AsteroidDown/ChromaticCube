@@ -73,19 +73,23 @@ export default function CardItem({ card }: CardItemProps) {
 
       <View className="flex flex-row gap-2 px-2 pb-2">
         <Button
+          size="xs"
           action="info"
+          className="flex-1"
           icon={faShop}
           onClick={async () => await Linking.openURL(card.priceUris.tcgplayer)}
         >
-          ${card.prices?.usd}
+          <Text>${card.prices?.usd}</Text>
         </Button>
 
         <Button
+          size="xs"
           action="info"
+          className="flex-1"
           icon={faShop}
           onClick={async () => await Linking.openURL(card.priceUris.cardmarket)}
         >
-          €{card.prices?.eur}
+          <Text>€{card.prices?.eur}</Text>
         </Button>
       </View>
     </Pressable>

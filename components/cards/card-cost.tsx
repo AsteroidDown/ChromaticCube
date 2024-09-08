@@ -1,9 +1,10 @@
 import { Image, View } from "react-native";
+import { Size } from "../../constants/sizes";
 import { SymbolMap } from "../../constants/symbols";
 
 export interface CardCostProps {
   cost: string;
-  size?: "sm" | "md" | "lg";
+  size?: Size;
 }
 
 export default function CardCost({ cost, size = "md" }: CardCostProps) {
@@ -15,7 +16,15 @@ export default function CardCost({ cost, size = "md" }: CardCostProps) {
       {symbols.map((symbol, index) => (
         <Image
           className={
-            size === "sm" ? "h-4 w-4" : size === "md" ? "h-5 w-5" : "h-6 w-6"
+            size === "xs"
+              ? "h-3 w-3"
+              : size === "sm"
+              ? "h-4 w-4"
+              : size === "md"
+              ? "h-5 w-5"
+              : size === "lg"
+              ? "h-6 w-6"
+              : "h-7 w-7"
           }
           source={{ uri: symbol }}
           key={(symbol || "") + index}
