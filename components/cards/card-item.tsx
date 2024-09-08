@@ -8,11 +8,11 @@ import Divider from "../ui/divider/divider";
 import CardCost from "./card-cost";
 import CardImage from "./card-image";
 
-export interface CardCondensedProps {
+export interface CardItemProps {
   card: Card;
 }
 
-export default function CardCondensed({ card }: CardCondensedProps) {
+export default function CardItem({ card }: CardItemProps) {
   const [expanded, setExpanded] = React.useState(false);
   const [hovered, setHovered] = React.useState(false);
 

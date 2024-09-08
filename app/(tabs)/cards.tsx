@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { ScrollView, View } from "react-native";
-import CardCondensedGallery from "../../components/cards/card-condensed-gallery";
 import CardDetailedPreview from "../../components/cards/card-detailed-preview";
 import CardImage from "../../components/cards/card-image";
+import CardItemGallery from "../../components/cards/card-item-gallery";
 import Box from "../../components/ui/box/box";
 import SearchBar from "../../components/ui/search-bar/search-bar";
 import {
@@ -76,7 +76,7 @@ export default function CardsPage() {
           <CardDetailedPreview card={card} action={() => saveCard(card)} />
         </View>
 
-        <CardCondensedGallery cards={savedCards} />
+        <CardItemGallery cards={savedCards} />
       </View>
     </ScrollView>
   );

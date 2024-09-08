@@ -13,20 +13,15 @@ export interface CardImageProps {
   actionIcon?: IconDefinition;
 
   onClick?: () => any;
-  action?: () => any;
 }
 
 export default function CardImage({
   card,
   placeHolder,
   onClick,
-  action,
-  actionIcon,
 }: CardImageProps) {
   const [showFront, setShowFront] = React.useState(true);
   const [hovered, setHovered] = React.useState(false);
-
-  const hoverClasses = "hover:h-[355px] hover:-my-[2.5px] hover:-mx-[2px]";
 
   return (
     <Pressable
@@ -65,15 +60,15 @@ export default function CardImage({
         )}
 
         {card?.faces && (
-          <View
-            className={
-              "absolute m-2 bottom-0 right-0 bg-background-100 p-4 rounded-full transition-all " +
-              (hovered ? "bg-opacity-100" : "bg-opacity-85")
-            }
+          <Pressable
+            className="absolute m-2 bottom-0 right-0"
+            onPress={() => setShowFront(!showFront)}
           >
-            <Pressable
-              onPress={() => setShowFront(!showFront)}
-              onPointerEnter={() => setHovered(true)}
+            <View
+              className={
+                "bg-background-100 p-4 rounded-full transition-all " +
+                (hovered ? "bg-opacity-100" : "bg-opacity-85")
+              }
             >
               <FontAwesomeIcon
                 className={
@@ -82,24 +77,8 @@ export default function CardImage({
                 }
                 icon={faRotateRight}
               />
-            </Pressable>
-          </View>
-        )}
-
-        {action && hovered && (
-          <View
-            className={
-              "absolute bottom-2 right-[50%] translate-x-[70%] bg-red-500 border border-b-background-100 p-4 rounded-full transition-all " +
-              (hovered ? "m-[9px]" : "m-2")
-            }
-          >
-            <Pressable onPress={action} onPointerEnter={() => setHovered(true)}>
-              <FontAwesomeIcon
-                className="text-background-100"
-                icon={actionIcon ?? faRotateRight}
-              />
-            </Pressable>
-          </View>
+            </View>
+          </Pressable>
         )}
       </View>
     </Pressable>

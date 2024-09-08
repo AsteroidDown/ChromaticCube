@@ -3,15 +3,13 @@ import { sortCardsByCost } from "../../functions/card-sorting";
 import { Card } from "../../models/card";
 import Box from "../ui/box/box";
 import Divider from "../ui/divider/divider";
-import CardCondensed from "./card-condensed";
+import CardItem from "./card-item";
 
-export interface CardCondensedGalleryProps {
+export interface CardItemGalleryProps {
   cards: Card[];
 }
 
-export default function CardCondensedGallery({
-  cards,
-}: CardCondensedGalleryProps) {
+export default function CardItemGallery({ cards }: CardItemGalleryProps) {
   const sortedCards = sortCardsByCost(cards);
 
   return (
@@ -58,7 +56,7 @@ export function CardCondensedGalleryColumn({
 
       <View className="flex gap-2 mx-2">
         {cards.map((card, index) => (
-          <CardCondensed card={card} key={card.id + index} />
+          <CardItem card={card} key={card.id + index} />
         ))}
       </View>
     </View>

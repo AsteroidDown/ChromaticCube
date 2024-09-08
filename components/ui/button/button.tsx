@@ -24,13 +24,18 @@ export default function Button({
           (disabled ? "bg-dark-300" : "bg-primary-500 hover:bg-primary-400")
         }
       >
-        {icon && <FontAwesomeIcon icon={icon} />}
+        {icon && (
+          <FontAwesomeIcon
+            icon={icon}
+            className={disabled ? "text-dark-600" : "text-dark-100"}
+          />
+        )}
 
         {text && (
           <Text
             className={
               "text-md font-bold " +
-              (disabled ? "text-dark-100" : "text-dark-600")
+              (disabled ? "text-dark-600" : "text-dark-100")
             }
           >
             {text}
