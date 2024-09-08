@@ -28,9 +28,9 @@ export default function CardDetailedPreview({
 
         <Button
           text="Add Card"
-          action={action}
-          disabled={!card}
           icon={faPlus}
+          onClick={action}
+          disabled={!card}
         />
       </View>
 

@@ -1,5 +1,5 @@
 import { DimensionValue } from "react-native";
-import { MTGColor } from "../../../constants/colors";
+import { MTGColor } from "../../../constants/mtg-colors";
 import { GroupedBarLayout } from "./grouped-bar-layout";
 import { StackedBarLayout } from "./stacked-bar-layout";
 

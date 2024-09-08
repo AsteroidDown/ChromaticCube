@@ -65,8 +65,9 @@ export default function CardItem({ card }: CardItemProps) {
 
       <View className="flex flex-row justify-end gap-2 px-2 pb-2">
         <Button
+          action="danger"
           icon={faTrash}
-          action={() => removeLocalStorageCard(card)}
+          onClick={() => removeLocalStorageCard(card)}
         ></Button>
       </View>
     </Pressable>

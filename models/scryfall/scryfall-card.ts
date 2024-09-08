@@ -1,4 +1,4 @@
-import { MTGColorSymbol } from "../../constants/colors";
+import { MTGColorSymbol } from "../../constants/mtg-colors";
 import { Rarity } from "../card";
 
 export interface ScryfallCard {

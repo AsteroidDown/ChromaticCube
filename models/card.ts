@@ -1,4 +1,4 @@
-import { MTGColorSymbol } from "../constants/colors";
+import { MTGColorSymbol } from "../constants/mtg-colors";
 
 export type Rarity = "common" | "uncommon" | "rare" | "mythic";
 

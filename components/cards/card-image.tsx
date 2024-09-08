@@ -25,7 +25,7 @@ export default function CardImage({
 
   return (
     <Pressable
-      disabled={!card}
+      disabled={!card || !onClick}
       onPress={onClick}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}

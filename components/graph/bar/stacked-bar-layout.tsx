@@ -1,5 +1,5 @@
 import { DimensionValue, View } from "react-native";
-import { MTGColor } from "../../../constants/colors";
+import { MTGColor } from "../../../constants/mtg-colors";
 import { Tooltip } from "../../ui/tooltip/tooltip";
 import { BarData } from "./bar";
 
