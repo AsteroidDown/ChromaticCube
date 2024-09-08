@@ -4,11 +4,14 @@ import { Pressable, Text, View, ViewProps } from "react-native";
 import { ActionColor } from "../../../constants/colors";
 import { Size } from "../../../constants/sizes";
 
+export type ButtonType = "default" | "outlined" | "clear";
+
 export type ButtonProps = ViewProps & {
   text?: string;
   icon?: IconProp;
   action?: ActionColor;
   size?: Size;
+  type?: ButtonType;
   disabled?: boolean;
   onClick?: () => void;
 };
@@ -19,36 +22,37 @@ export default function Button({
   className,
   action = "primary",
   size = "md",
+  type = "default",
   onClick,
   children,
   disabled = false,
 }: ButtonProps) {
-  const baseColor = getButtonBaseColor(action);
-  const hoverColor = getButtonHoverColor(action);
+  const baseColor = getButtonBaseColor(action, type, disabled);
+  const hoverColor = getButtonHoverColor(action, type, disabled);
+  const textColor = getButtonTextColor(action, type, disabled);
 
   const buttonHeight = getButtonHeight(size);
   const buttonTextSize = getButtonTextSize(size);
 
+  const baseButtonClasses =
+    "flex flex-row px-4 py-2 gap-2 justify-center items-center w-full rounded-md transition-all";
+
   return (
     <Pressable className={className} onPress={onClick} disabled={disabled}>
       <View
-        className={`flex flex-row px-4 py-2 gap-2 justify-center items-center w-full rounded-md transition-all ${buttonHeight}
-          ${disabled ? "bg-dark-300" : baseColor + " " + hoverColor}`}
+        className={`${baseButtonClasses} ${buttonHeight}
+          ${baseColor} ${hoverColor}`}
       >
         {icon && (
           <FontAwesomeIcon
             icon={icon}
+            className={`${textColor}`}
             size={size !== "md" ? size : undefined}
-            className={disabled ? "text-dark-600" : "text-dark-100"}
           />
         )}
 
         {text && (
-          <Text
-            className={`
-               font-bold ${buttonTextSize}
-              ${disabled ? "text-dark-600" : "text-dark-100"}`}
-          >
+          <Text className={`font-bold ${buttonTextSize} ${textColor}`}>
             {text}
           </Text>
         )}
@@ -59,32 +63,90 @@ export default function Button({
   );
 }
 
-function getButtonBaseColor(action: ActionColor) {
-  return action === "primary"
-    ? "bg-primary-300"
-    : action === "secondary"
-    ? "bg-secondary-300"
-    : action === "success"
-    ? "bg-success-300"
-    : action === "danger"
-    ? "bg-danger-200"
-    : action === "info"
-    ? "bg-info-300"
-    : "bg-warning-300";
+function getButtonBaseColor(
+  action: ActionColor,
+  type: ButtonType,
+  disabled: boolean
+) {
+  if (type === "clear") return "";
+  else if (type === "outlined") {
+    if (disabled) return "border bg-dark-300 bg-opacity-30";
+
+    return (
+      "border " +
+      (action === "primary"
+        ? "border-primary-300"
+        : action === "secondary"
+        ? "border-secondary-200"
+        : action === "success"
+        ? "border-success-200"
+        : action === "danger"
+        ? "border-danger-200"
+        : action === "info"
+        ? "border-info-200"
+        : "border-warning-200")
+    );
+  } else {
+    if (disabled) return "bg-dark-300";
+
+    return action === "primary"
+      ? "bg-primary-300"
+      : action === "secondary"
+      ? "bg-secondary-200"
+      : action === "success"
+      ? "bg-success-200"
+      : action === "danger"
+      ? "bg-danger-200"
+      : action === "info"
+      ? "bg-info-200"
+      : "bg-warning-200";
+  }
 }
 
-function getButtonHoverColor(action: ActionColor) {
-  return action === "primary"
-    ? "hover:bg-primary-200"
-    : action === "secondary"
-    ? "hover:bg-secondary-200"
-    : action === "success"
-    ? "hover:bg-success-200"
-    : action === "danger"
-    ? "hover:bg-danger-100"
-    : action === "info"
-    ? "hover:bg-info-200"
-    : "hover:bg-warning-200";
+function getButtonHoverColor(
+  action: ActionColor,
+  type: ButtonType,
+  disabled: boolean
+) {
+  if (disabled) return;
+
+  return `${type !== "default" ? "hover:bg-opacity-30" : ""} ${
+    action === "primary"
+      ? "hover:bg-primary-200"
+      : action === "secondary"
+      ? "hover:bg-secondary-100"
+      : action === "success"
+      ? "hover:bg-success-100"
+      : action === "danger"
+      ? "hover:bg-danger-100"
+      : action === "info"
+      ? "hover:bg-info-100"
+      : "hover:bg-warning-100"
+  }`;
+}
+
+function getButtonTextColor(
+  action: ActionColor,
+  type: ButtonType,
+  disabled: boolean
+) {
+  if (disabled) return "text-dark-600";
+
+  return `${
+    type === "default"
+      ? "text-dark-100"
+      : action === "primary"
+      ? "text-primary-200"
+      : action === "secondary"
+      ? "text-secondary-100"
+      : action === "success"
+      ? "text-success-100"
+      : action === "danger"
+      ? "text-danger-100"
+      : action === "info"
+      ? "text-info-100"
+      : "text-warning-100"
+  }`;
 }
 
 function getButtonHeight(size: Size) {

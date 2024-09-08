@@ -26,7 +26,7 @@ export default function CardItem({ card }: CardItemProps) {
     >
       <View
         className={
-          "flex flex-row gap-2 justify-between items-center px-4 py-2 max-h-[36px] h-[36px] transition-all " +
+          "flex flex-row gap-1 justify-between items-center px-4 py-2 max-h-[36px] h-[36px] transition-all " +
           (hovered ? "bg-primary-300" : "bg-background-300")
         }
         onPointerEnter={() => setHovered(true)}
@@ -55,15 +55,15 @@ export default function CardItem({ card }: CardItemProps) {
         )}
       </View>
 
-      <Divider thick className="-mt-2" />
+      <Divider thick />
 
-      <View className="flex gap-2 px-2 mb-2">
+      <View className="flex gap-2 px-2">
         <CardImage card={card} />
       </View>
 
-      <Divider thick className="-mt-2" />
+      <Divider thick />
 
-      <View className="flex flex-row justify-end gap-2 px-2 pb-2">
+      <View className="flex flex-row justify-end gap-2 px-2">
         <Button
           action="danger"
           icon={faTrash}
@@ -77,20 +77,18 @@ export default function CardItem({ card }: CardItemProps) {
           action="info"
           className="flex-1"
           icon={faShop}
+          text={`$${card.prices?.usd}`}
           onClick={async () => await Linking.openURL(card.priceUris.tcgplayer)}
-        >
-          <Text>${card.prices?.usd}</Text>
-        </Button>
+        />
 
         <Button
           size="xs"
           action="info"
           className="flex-1"
           icon={faShop}
+          text={`€${card.prices?.eur}`}
           onClick={async () => await Linking.openURL(card.priceUris.cardmarket)}
-        >
-          <Text>€{card.prices?.eur}</Text>
-        </Button>
+        />
       </View>
     </Pressable>
   );
