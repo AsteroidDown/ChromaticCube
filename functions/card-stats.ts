@@ -1,10 +1,15 @@
 import { Card } from "../models/card/card";
 
 export function getTotalValueOfCards(cards: Card[], euro: boolean = false) {
-  return cards.reduce(
-    (acc, card) =>
-      acc + card.count * (euro ? card.prices.eur || 0 : card.prices.usd || 0),
-    0
+  return (
+    Math.round(
+      cards.reduce(
+        (acc, card) =>
+          acc +
+          card.count * (euro ? card.prices.eur || 0 : card.prices.usd || 0),
+        0
+      ) * 100
+    ) / 100
   );
 }
 

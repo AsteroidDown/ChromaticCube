@@ -76,8 +76,8 @@ export function CardItemHeader({ card }: CardItemProps) {
       onPointerLeave={() => setHovered(false)}
     >
       {/* <Tooltip style={[{ flex: 1 }]} message={card.name}> */}
-      <View className="flex flex-row gap-2">
-        <Text className="text-white truncate">{card.count}</Text>
+      <View className="flex flex-row gap-2 flex-1">
+        <Text className="text-white">{card.count}</Text>
         <Text className="text-white truncate">{card.name}</Text>
       </View>
       {/* </Tooltip> */}
