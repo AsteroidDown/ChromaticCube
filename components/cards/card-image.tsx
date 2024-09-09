@@ -5,6 +5,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
+import { CardBackIds } from "../../constants/scryfall/ids";
 import { Card } from "../../models/card/card";
 
 export interface CardImageProps {
@@ -59,7 +60,7 @@ export default function CardImage({
           </>
         )}
 
-        {card?.faces && (
+        {card?.faces && card.cardBackId !== CardBackIds.DEFAULT && (
           <Pressable
             className="absolute m-2 bottom-0 right-0"
             onPress={() => setShowFront(!showFront)}
