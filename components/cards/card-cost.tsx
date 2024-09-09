@@ -12,7 +12,12 @@ export default function CardCost({ cost, size = "md" }: CardCostProps) {
   const symbols = costs.map((manaCost) => SymbolMap.get("{" + manaCost + "}"));
 
   return (
-    <View className="flex flex-row gap-1">
+    <View
+      className={
+        "flex flex-row " +
+        (size === "sm" || size === "xs" ? "gap-[2px]" : "gap-1")
+      }
+    >
       {symbols.map((symbol, index) => (
         <Image
           className={

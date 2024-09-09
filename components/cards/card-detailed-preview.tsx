@@ -1,6 +1,6 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { Card } from "../../models/card/card";
 import Box from "../ui/box/box";
 import Button from "../ui/button/button";
@@ -19,7 +19,7 @@ export default function CardDetailedPreview({
   action,
 }: CardDetailedPreview) {
   return (
-    <Box className="flex flex-row flex-wrap justify-center gap-3 h-full">
+    <Box className="flex flex-row flex-wrap justify-center gap-3 h-fit">
       <View className="flex gap-3 h-full min-w-[250px]">
         <CardImage
           card={card}
@@ -39,14 +39,10 @@ export default function CardDetailedPreview({
 
         {card?.faces && (
           <View className="flex gap-3">
-            <Text className="text-white text-lg font-semibold">Front Face</Text>
-            <Divider />
             <CardFrontInfo card={card} />
 
-            <Text className="text-white text-lg font-semibold mt-3">
-              Back Face
-            </Text>
             <Divider />
+
             <CardBackInfo card={card} />
           </View>
         )}

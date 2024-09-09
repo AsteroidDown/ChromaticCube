@@ -64,7 +64,9 @@ export function CardItemHeader({ card }: CardItemProps) {
             <CardCost size="sm" cost={card.faces.front.manaCost} />
           )}
 
-          {card.faces.back.manaCost && <Text className="text-white"> // </Text>}
+          {card.faces.back.manaCost && (
+            <Text className="text-white h-[50px]"> // </Text>
+          )}
 
           {card.faces.back.manaCost && (
             <CardCost size="sm" cost={card.faces.back.manaCost} />
