@@ -1,6 +1,9 @@
 import { Text, View } from "react-native";
 import { sortCardsByCost } from "../../functions/card-sorting";
-import { getTotalValueOfCards } from "../../functions/card-stats";
+import {
+  getCountOfCards,
+  getTotalValueOfCards,
+} from "../../functions/card-stats";
 import { Card } from "../../models/card/card";
 import Box from "../ui/box/box";
 import Divider from "../ui/divider/divider";
@@ -17,6 +20,7 @@ export default function CardItemGallery({
 }: CardItemGalleryProps) {
   const sortedCards = sortCardsByCost(cards);
   const cardsValue = getTotalValueOfCards(cards);
+  const cardCount = getCountOfCards(cards);
 
   return (
     <Box className="flex gap-2 px-0 overflow-hidden">
@@ -26,7 +30,7 @@ export default function CardItemGallery({
         </Text>
 
         <Text className="text-dark-600 text-sm">
-          {cards.length} Card{cards.length !== 1 ? "s" : ""}
+          {cardCount} Card{cardCount !== 1 ? "s" : ""}
         </Text>
         <Text className="text-dark-600 text-sm">
           Total Value: ${cardsValue}

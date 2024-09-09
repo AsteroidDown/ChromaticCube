@@ -19,6 +19,7 @@ export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
   return {
     id: scryfallCard.id,
     name: scryfallCard.name,
+    count: 1,
     cardBackId: scryfallCard.card_back_id,
     cmc: scryfallCard.cmc,
     rarity: scryfallCard.rarity,

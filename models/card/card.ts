@@ -5,6 +5,7 @@ export type Rarity = "common" | "uncommon" | "rare" | "mythic";
 export interface Card {
   id: string;
   name: string;
+  count: number;
   cardBackId: string;
   rarity: Rarity;
   cmc: number;

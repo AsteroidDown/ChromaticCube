@@ -1,7 +1,16 @@
-import { faShop, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMinus,
+  faPlus,
+  faShop,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { Linking, Pressable, Text, View } from "react-native";
-import { removeLocalStorageCard } from "../../functions/local-storage";
+import {
+  addToLocalStorageCardCount,
+  removeFromLocalStorageCardCount,
+  removeLocalStorageCard,
+} from "../../functions/local-storage";
 import { Card } from "../../models/card/card";
 import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";
@@ -55,7 +64,10 @@ export function CardItemHeader({ card }: CardItemProps) {
       onPointerLeave={() => setHovered(false)}
     >
       {/* <Tooltip style={[{ flex: 1 }]} message={card.name}> */}
-      <Text className="text-white truncate">{card.name}</Text>
+      <View className="flex flex-row gap-2">
+        <Text className="text-white truncate">{card.count}</Text>
+        <Text className="text-white truncate">{card.name}</Text>
+      </View>
       {/* </Tooltip> */}
 
       {card.faces ? (
@@ -83,6 +95,24 @@ export function CardItemFooter({ card }: CardItemProps) {
   return (
     <View className="flex gap-2">
       <View className="flex flex-row justify-end gap-2 px-2">
+        <View className="flex flex-row gap-2 justify-center items-center">
+          <Button
+            type="clear"
+            action="danger"
+            icon={faMinus}
+            onClick={() => removeFromLocalStorageCardCount(card)}
+          />
+
+          <Text className="text-white mx-2">{card.count}</Text>
+
+          <Button
+            type="clear"
+            action="info"
+            icon={faPlus}
+            onClick={() => addToLocalStorageCardCount(card)}
+          />
+        </View>
+
         <Button
           action="danger"
           icon={faTrash}

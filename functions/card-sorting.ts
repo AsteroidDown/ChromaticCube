@@ -1,4 +1,4 @@
-import { CardTypes } from "../constants/mtg/mtg-types";
+import { MTGCardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import {
   CardsSortedByColor,
@@ -120,34 +120,30 @@ export function sortCardsByType(cards: Card[]): CardsSortedByType {
   };
 
   cards.forEach((card) => {
-    let cardType: string;
-
-    if (card.faces?.front) {
-      cardType = getCardTypeFromTypeLine(card.faces.front.typeLine);
-    } else {
-      cardType = getCardTypeFromTypeLine(card.typeLine);
-    }
+    const cardType = card.faces?.front
+      ? getCardTypeFromTypeLine(card.faces.front.typeLine)
+      : getCardTypeFromTypeLine(card.typeLine);
 
     switch (cardType.toLowerCase()) {
-      case CardTypes.ARTIFACT.toLowerCase():
+      case MTGCardTypes.ARTIFACT.toLowerCase():
         sortedCards.artifact.push(card);
         return;
-      case CardTypes.ENCHANTMENT.toLowerCase():
+      case MTGCardTypes.ENCHANTMENT.toLowerCase():
         sortedCards.enchantment.push(card);
         return;
-      case CardTypes.CREATURE.toLowerCase():
+      case MTGCardTypes.CREATURE.toLowerCase():
         sortedCards.creature.push(card);
         return;
-      case CardTypes.LAND.toLowerCase():
+      case MTGCardTypes.LAND.toLowerCase():
         sortedCards.land.push(card);
         return;
-      case CardTypes.BATTLE.toLowerCase():
+      case MTGCardTypes.BATTLE.toLowerCase():
         sortedCards.battle.push(card);
         return;
-      case CardTypes.PLANESWALKER.toLowerCase():
+      case MTGCardTypes.PLANESWALKER.toLowerCase():
         sortedCards.planeswalker.push(card);
         return;
-      case CardTypes.SORCERY.toLowerCase():
+      case MTGCardTypes.SORCERY.toLowerCase():
         sortedCards.sorcery.push(card);
         return;
     }
@@ -165,10 +161,11 @@ function getCardTypeFromTypeLine(typeLine: string): string {
   const cardTypeFromTypeLine = typeLine.split("-")[0].toLowerCase();
 
   // creature type has priority in hybrid types so check for it first here
-  if (cardTypeFromTypeLine.includes(CardTypes.CREATURE.toLowerCase()))
-    return CardTypes.CREATURE;
+  if (cardTypeFromTypeLine.includes(MTGCardTypes.CREATURE.toLowerCase())) {
+    return MTGCardTypes.CREATURE;
+  }
 
-  for (const cardType in CardTypes) {
+  for (const cardType in MTGCardTypes) {
     if (cardTypeFromTypeLine.includes(cardType.toLowerCase())) return cardType;
   }
 
