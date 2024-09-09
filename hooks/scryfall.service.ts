@@ -9,8 +9,6 @@ async function findCards(query: string): Promise<Card[]> {
     q: query + " game:paper",
   }).catch((error) => console.error(error));
 
-  console.log(response);
-
   return response ? response.data.map((card) => ScryfallToCard(card)) : [];
 }
 

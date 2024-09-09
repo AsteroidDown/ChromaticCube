@@ -1,5 +1,5 @@
 import { SetData } from "../components/graph/layout/graph-plot";
-import { CardTypes } from "../constants/card-types";
+import { CardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import { CardsSortedByColor } from "../models/sorted-cards/sorted-cards";
 import {

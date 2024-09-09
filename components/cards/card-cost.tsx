@@ -1,6 +1,6 @@
 import { Image, View } from "react-native";
-import { Size } from "../../constants/sizes";
-import { SymbolMap } from "../../constants/symbols";
+import { SymbolMap } from "../../constants/mtg/mtg-symbols";
+import { Size } from "../../constants/ui/sizes";
 
 export interface CardCostProps {
   cost: string;

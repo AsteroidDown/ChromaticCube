@@ -1,4 +1,4 @@
-import { CardTypes } from "../constants/card-types";
+import { CardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import {
   CardsSortedByColor,
