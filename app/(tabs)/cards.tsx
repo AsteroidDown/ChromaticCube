@@ -1,15 +1,17 @@
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { ScrollView, View } from "react-native";
 import CardDetailedPreview from "../../components/cards/card-detailed-preview";
 import CardImage from "../../components/cards/card-image";
 import CardItemGallery from "../../components/cards/card-item-gallery";
 import Box from "../../components/ui/box/box";
+import Button from "../../components/ui/button/button";
 import SearchBar from "../../components/ui/search-bar/search-bar";
 import {
   getLocalStorageStoredCards,
   saveLocalStorageCard,
 } from "../../functions/local-storage";
-import CardsService from "../../hooks/cards.service";
+import ScryfallService from "../../hooks/scryfall.service";
 import { Card } from "../../models/card/card";
 
 export default function CardsPage() {
@@ -21,11 +23,11 @@ export default function CardsPage() {
   const searchedCardsPlaceholder = Array(5).fill(undefined);
 
   function getCard() {
-    CardsService.getCard(search).then((card) => setCard(card));
+    ScryfallService.getCard(search).then((card) => setCard(card));
   }
 
   function findCards() {
-    CardsService.findCards(search).then((cards) => setSearchedCards(cards));
+    ScryfallService.findCards(search).then((cards) => setSearchedCards(cards));
   }
 
   function saveCard(card?: Card) {
@@ -48,7 +50,7 @@ export default function CardsPage() {
               onSearchChange={onSearchChange}
             />
 
-            <Box className="flex-1">
+            <Box className="flex-1 min-h-[350px]">
               <View className="overflow-x-auto overflow-y-hidden h-full">
                 {!searchedCards?.length && (
                   <View className="flex flex-row gap-4 h-full">
@@ -73,10 +75,17 @@ export default function CardsPage() {
             </Box>
           </View>
 
-          <CardDetailedPreview card={card} action={() => saveCard(card)} />
+          <CardDetailedPreview card={card}>
+            <Button
+              text="Add Card"
+              icon={faPlus}
+              onClick={() => saveCard(card)}
+              disabled={!card}
+            />
+          </CardDetailedPreview>
         </View>
 
-        <CardItemGallery hideImages cards={savedCards} />
+        <CardItemGallery cards={savedCards} />
       </View>
     </ScrollView>
   );

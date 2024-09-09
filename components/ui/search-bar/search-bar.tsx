@@ -15,16 +15,24 @@ export default function SearchBar({
   onSearchChange,
   searchAction,
 }: SearchBarProps) {
+  const [focused, setFocused] = React.useState(false);
   const [searchHovered, setSearchHovered] = React.useState(false);
+
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
 
   const baseClasses =
     "relative flex flex-row gap-3 items-center border-2 border-background-200 !px-6 !py-4 w-full rounded-full color-background-500 transition-all";
-  const hoverClasses =
-    "hover:border-background-500 focus:border-background-500";
+  const hoverClasses = "hover:border-primary-500";
+  const focusClasses = "border-primary-300";
 
   return (
     <View className="mx-px w-full">
-      <Box className={`${baseClasses} ${hoverClasses}`}>
+      <Box
+        className={`${
+          focused ? focusClasses : ""
+        } ${baseClasses} ${hoverClasses}`}
+      >
         <FontAwesomeIcon className="color-white" icon={faSearch} />
 
         <TextInput
@@ -32,6 +40,8 @@ export default function SearchBar({
           placeholderTextColor="#8b8b8b"
           className="flex-1 h-10 -my-4 color-white outline-none text-base"
           value={search}
+          onBlur={onBlur}
+          onFocus={onFocus}
           onChangeText={onSearchChange}
           onKeyPress={(event) =>
             (event as any)?.code === "Enter" ? searchAction() : null

@@ -19,6 +19,8 @@ export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
   return {
     id: scryfallCard.id,
     name: scryfallCard.name,
+    count: 1,
+    cardBackId: scryfallCard.card_back_id,
     cmc: scryfallCard.cmc,
     rarity: scryfallCard.rarity,
     colorIdentity: scryfallCard.color_identity,
@@ -46,12 +48,12 @@ export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
         }
       : null,
     prices: {
-      usd: scryfallCard.prices.usd,
-      usdFoil: scryfallCard.prices.usd_foil,
-      usdEtched: scryfallCard.prices.usd_etched,
-      eur: scryfallCard.prices.eur,
-      eurFoil: scryfallCard.prices.eur,
-      tix: scryfallCard.prices.tix,
+      usd: Number(scryfallCard.prices.usd),
+      usdFoil: Number(scryfallCard.prices.usd_foil),
+      usdEtched: Number(scryfallCard.prices.usd_etched),
+      eur: Number(scryfallCard.prices.eur),
+      eurFoil: Number(scryfallCard.prices.eur),
+      tix: Number(scryfallCard.prices.tix),
     },
     priceUris: {
       tcgplayer: scryfallCard.purchase_uris.tcgplayer,

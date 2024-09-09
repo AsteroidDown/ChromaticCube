@@ -1,5 +1,5 @@
 import { SetData } from "../components/graph/layout/graph-plot";
-import { CardTypes } from "../constants/card-types";
+import { MTGCardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import { CardsSortedByColor } from "../models/sorted-cards/sorted-cards";
 import {
@@ -7,6 +7,7 @@ import {
   sortCardsByCost,
   sortCardsByType,
 } from "./card-sorting";
+import { getCountOfCards } from "./card-stats";
 
 export function graphCardsByColor(cards: Card[]): SetData[] {
   const sortedCards = sortCardsByColor(cards);
@@ -18,7 +19,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "White",
           color: "white",
-          count: sortedCards.white.length,
+          count: getCountOfCards(sortedCards.white),
         },
       ],
     },
@@ -28,7 +29,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Blue",
           color: "blue",
-          count: sortedCards.blue.length,
+          count: getCountOfCards(sortedCards.blue),
         },
       ],
     },
@@ -38,7 +39,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Black",
           color: "black",
-          count: sortedCards.black.length,
+          count: getCountOfCards(sortedCards.black),
         },
       ],
     },
@@ -48,7 +49,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Red",
           color: "red",
-          count: sortedCards.red.length,
+          count: getCountOfCards(sortedCards.red),
         },
       ],
     },
@@ -58,7 +59,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Green",
           color: "green",
-          count: sortedCards.green.length,
+          count: getCountOfCards(sortedCards.green),
         },
       ],
     },
@@ -68,7 +69,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Gold",
           color: "gold",
-          count: sortedCards.gold.length,
+          count: getCountOfCards(sortedCards.gold),
         },
       ],
     },
@@ -78,7 +79,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Colorless",
           color: "colorless",
-          count: sortedCards.colorless.length,
+          count: getCountOfCards(sortedCards.colorless),
         },
       ],
     },
@@ -88,7 +89,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Land",
           color: "land",
-          count: sortedCards.land.length,
+          count: getCountOfCards(sortedCards.land),
         },
       ],
     },
@@ -119,6 +120,30 @@ export function graphCardsByCost(cards: Card[]): SetData[] {
   ];
 }
 
+export function graphCardsByType(cards: Card[]): SetData[] {
+  const sortedCards = sortCardsByType(cards);
+
+  const sortedLands = sortCardsByColor(sortedCards.land);
+  const sortedEnchantments = sortCardsByColor(sortedCards.enchantment);
+  const sortedCreatures = sortCardsByColor(sortedCards.creature);
+  const sortedSorceries = sortCardsByColor(sortedCards.sorcery);
+  const sortedPlaneswalkers = sortCardsByColor(sortedCards.planeswalker);
+  const sortedArtifacts = sortCardsByColor(sortedCards.artifact);
+  const sortedBattles = sortCardsByColor(sortedCards.battle);
+  const sortedInstants = sortCardsByColor(sortedCards.instant);
+
+  return [
+    createSetDataByColor(MTGCardTypes.LAND, sortedLands),
+    createSetDataByColor(MTGCardTypes.ENCHANTMENT, sortedEnchantments),
+    createSetDataByColor(MTGCardTypes.CREATURE, sortedCreatures),
+    createSetDataByColor(MTGCardTypes.SORCERY, sortedSorceries),
+    createSetDataByColor(MTGCardTypes.PLANESWALKER, sortedPlaneswalkers),
+    createSetDataByColor(MTGCardTypes.ARTIFACT, sortedArtifacts),
+    createSetDataByColor(MTGCardTypes.BATTLE, sortedBattles),
+    createSetDataByColor(MTGCardTypes.INSTANT, sortedInstants),
+  ];
+}
+
 function createSetDataByColor(
   title: string,
   sortedCards: CardsSortedByColor,
@@ -130,37 +155,37 @@ function createSetDataByColor(
       {
         name: "White",
         color: "white",
-        count: sortedCards.white.length,
+        count: getCountOfCards(sortedCards.white),
       },
       {
         name: "Blue",
         color: "blue",
-        count: sortedCards.blue.length,
+        count: getCountOfCards(sortedCards.blue),
       },
       {
         name: "Black",
         color: "black",
-        count: sortedCards.black.length,
+        count: getCountOfCards(sortedCards.black),
       },
       {
         name: "Red",
         color: "red",
-        count: sortedCards.red.length,
+        count: getCountOfCards(sortedCards.red),
       },
       {
         name: "Green",
         color: "green",
-        count: sortedCards.green.length,
+        count: getCountOfCards(sortedCards.green),
       },
       {
         name: "Gold",
         color: "gold",
-        count: sortedCards.gold.length,
+        count: getCountOfCards(sortedCards.gold),
       },
       {
         name: "Colorless",
         color: "colorless",
-        count: sortedCards.colorless.length,
+        count: getCountOfCards(sortedCards.colorless),
       },
     ],
   };
@@ -169,33 +194,9 @@ function createSetDataByColor(
     graphData.data.push({
       name: "Land",
       color: "land",
-      count: sortedCards.land.length,
+      count: getCountOfCards(sortedCards.land),
     });
   }
 
   return graphData;
-}
-
-export function graphCardsByType(cards: Card[]): SetData[] {
-  const sortedCards = sortCardsByType(cards);
-
-  const sortedLands = sortCardsByColor(sortedCards.land);
-  const sortedEnchantments = sortCardsByColor(sortedCards.enchantment);
-  const sortedCreatures = sortCardsByColor(sortedCards.creature);
-  const sortedSorceries = sortCardsByColor(sortedCards.sorcery);
-  const sortedPlaneswalkers = sortCardsByColor(sortedCards.planeswalker);
-  const sortedArtifacts = sortCardsByColor(sortedCards.artifact);
-  const sortedBattle = sortCardsByColor(sortedCards.battle);
-  const sortedInstants = sortCardsByColor(sortedCards.instant);
-
-  return [
-    createSetDataByColor(CardTypes.LAND, sortedLands),
-    createSetDataByColor(CardTypes.ENCHANTMENT, sortedEnchantments),
-    createSetDataByColor(CardTypes.CREATURE, sortedCreatures),
-    createSetDataByColor(CardTypes.SORCERY, sortedSorceries),
-    createSetDataByColor(CardTypes.PLANESWALKER, sortedPlaneswalkers),
-    createSetDataByColor(CardTypes.ARTIFACT, sortedArtifacts),
-    createSetDataByColor(CardTypes.BATTLE, sortedBattle),
-    createSetDataByColor(CardTypes.INSTANT, sortedInstants)
-  ];
 }

@@ -28,10 +28,10 @@ async function getRandomCard(): Promise<Card> {
   return ScryfallToCard(card);
 }
 
-const CardsService = {
+const ScryfallService = {
   findCards,
   getCard,
   getRandomCard,
 };
 
-export default CardsService;
+export default ScryfallService;
