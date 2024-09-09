@@ -47,56 +47,58 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
 
       <Divider thick />
 
-      <View className="flex flex-row gap-4 mx-6 w-full overflow-x-scroll overflow-y-hidden min-h-[500px]">
-        {sortedCards.zero?.length > 0 && (
+      <View className="px-6 overflow-x-scroll overflow-y-hidden">
+        <View className="flex flex-row gap-4 w-full min-h-[500px]">
+          {sortedCards.zero?.length > 0 && (
+            <CardCondensedGalleryColumn
+              title="0 Cost"
+              hideImages={hideImages}
+              cards={sortedCards.zero}
+            />
+          )}
           <CardCondensedGalleryColumn
-            title="0 Cost"
+            title="1 Cost"
             hideImages={hideImages}
-            cards={sortedCards.zero}
+            cards={sortedCards.one}
           />
-        )}
-        <CardCondensedGalleryColumn
-          title="1 Cost"
-          hideImages={hideImages}
-          cards={sortedCards.one}
-        />
-        <CardCondensedGalleryColumn
-          title="2 Cost"
-          hideImages={hideImages}
-          cards={sortedCards.two}
-        />
-        <CardCondensedGalleryColumn
-          title="3 Cost"
-          hideImages={hideImages}
-          cards={sortedCards.three}
-        />
-        <CardCondensedGalleryColumn
-          title="4 Cost"
-          hideImages={hideImages}
-          cards={sortedCards.four}
-        />
-        <CardCondensedGalleryColumn
-          title="5 Cost"
-          hideImages={hideImages}
-          cards={sortedCards.five}
-        />
-        <CardCondensedGalleryColumn
-          title="6 Cost"
-          hideImages={hideImages}
-          cards={sortedCards.six}
-        />
-        <CardCondensedGalleryColumn
-          title="7+ Cost"
-          hideImages={hideImages}
-          cards={sortedCards.seven}
-        />
-        {sortedCards.land?.length > 0 && (
           <CardCondensedGalleryColumn
-            title="Lands"
+            title="2 Cost"
             hideImages={hideImages}
-            cards={sortedCards.land}
+            cards={sortedCards.two}
           />
-        )}
+          <CardCondensedGalleryColumn
+            title="3 Cost"
+            hideImages={hideImages}
+            cards={sortedCards.three}
+          />
+          <CardCondensedGalleryColumn
+            title="4 Cost"
+            hideImages={hideImages}
+            cards={sortedCards.four}
+          />
+          <CardCondensedGalleryColumn
+            title="5 Cost"
+            hideImages={hideImages}
+            cards={sortedCards.five}
+          />
+          <CardCondensedGalleryColumn
+            title="6 Cost"
+            hideImages={hideImages}
+            cards={sortedCards.six}
+          />
+          <CardCondensedGalleryColumn
+            title="7+ Cost"
+            hideImages={hideImages}
+            cards={sortedCards.seven}
+          />
+          {sortedCards.land?.length > 0 && (
+            <CardCondensedGalleryColumn
+              title="Lands"
+              hideImages={hideImages}
+              cards={sortedCards.land}
+            />
+          )}
+        </View>
       </View>
     </Box>
   );
