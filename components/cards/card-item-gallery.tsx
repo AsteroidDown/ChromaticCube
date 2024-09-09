@@ -105,6 +105,8 @@ export function CardCondensedGalleryColumn({
   cards,
   hideImages = false,
 }: CardCondensedGalleryColumnProps) {
+  const cardCount = getCountOfCards(cards);
+
   const columnClasses =
     "my-2 bg-background-300 bg-opacity-30 py-2 rounded-xl flex gap-2 w-[256px] max-w-[256px]";
 
@@ -114,7 +116,7 @@ export function CardCondensedGalleryColumn({
         <Text className="text-white font-bold text-lg">{title}</Text>
 
         <Text className="text-white font-semibold text-sm">
-          {cards.length} Card{cards.length !== 1 ? "s" : ""}
+          {cardCount} Card{cardCount !== 1 ? "s" : ""}
         </Text>
       </View>
 

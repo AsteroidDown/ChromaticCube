@@ -1,5 +1,6 @@
 import {
   faMinus,
+  faPalette,
   faPlus,
   faShop,
   faTrash,
@@ -94,24 +95,28 @@ export function CardItemHeader({ card }: CardItemProps) {
 export function CardItemFooter({ card }: CardItemProps) {
   return (
     <View className="flex gap-2">
-      <View className="flex flex-row justify-end gap-2 px-2">
-        <View className="flex flex-row gap-2 justify-center items-center">
+      <View className="flex flex-row justify-between gap-2 px-2">
+        <View className="flex flex-row justify-center items-center">
           <Button
+            size="sm"
             type="clear"
             action="danger"
             icon={faMinus}
             onClick={() => removeFromLocalStorageCardCount(card)}
           />
 
-          <Text className="text-white mx-2">{card.count}</Text>
+          <Text className="text-white mx-2 font-bold">{card.count}</Text>
 
           <Button
+            size="sm"
             type="clear"
             action="info"
             icon={faPlus}
             onClick={() => addToLocalStorageCardCount(card)}
           />
         </View>
+
+        <Button icon={faPalette} />
 
         <Button
           action="danger"
