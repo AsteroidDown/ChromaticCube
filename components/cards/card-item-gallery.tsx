@@ -1,3 +1,4 @@
+import React from "react";
 import { Text, View } from "react-native";
 import { sortCardsByCost } from "../../functions/card-sorting";
 import {
@@ -6,35 +7,42 @@ import {
 } from "../../functions/card-stats";
 import { Card } from "../../models/card/card";
 import Box from "../ui/box/box";
+import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";
 import CardItem from "./card-item";
 
 export interface CardItemGalleryProps {
   cards: Card[];
-  hideImages?: boolean;
 }
 
-export default function CardItemGallery({
-  cards,
-  hideImages = false,
-}: CardItemGalleryProps) {
+export default function CardItemGallery({ cards }: CardItemGalleryProps) {
+  const [hideImages, setHideImages] = React.useState(false);
+
   const sortedCards = sortCardsByCost(cards);
   const cardsValue = getTotalValueOfCards(cards);
   const cardCount = getCountOfCards(cards);
 
   return (
     <Box className="flex gap-2 px-0 overflow-hidden">
-      <View className="flex mb-2 px-6">
-        <Text className="text-white font-bold text-2xl">
-          Cards Sorted by Cost
-        </Text>
+      <View className="flex flex-row justify-between items-center px-6">
+        <View className="flex mb-2 ">
+          <Text className="text-white font-bold text-2xl">
+            Cards Sorted by Cost
+          </Text>
 
-        <Text className="text-dark-600 text-sm">
-          {cardCount} Card{cardCount !== 1 ? "s" : ""}
-        </Text>
-        <Text className="text-dark-600 text-sm">
-          Total Value: ${cardsValue}
-        </Text>
+          <Text className="text-dark-600 text-sm">
+            {cardCount} Card{cardCount !== 1 ? "s" : ""}
+          </Text>
+          <Text className="text-dark-600 text-sm">
+            Total Value: ${cardsValue}
+          </Text>
+        </View>
+
+        <Button
+          type={hideImages ? "outlined" : "clear"}
+          text={hideImages ? "Show Card Images" : "Hide Card Images"}
+          onClick={() => setHideImages(!hideImages)}
+        />
       </View>
 
       <Divider thick />

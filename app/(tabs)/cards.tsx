@@ -76,7 +76,7 @@ export default function CardsPage() {
           <CardDetailedPreview card={card} action={() => saveCard(card)} />
         </View>
 
-        <CardItemGallery hideImages cards={savedCards} />
+        <CardItemGallery cards={savedCards} />
       </View>
     </ScrollView>
   );
