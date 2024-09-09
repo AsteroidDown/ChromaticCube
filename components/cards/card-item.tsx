@@ -15,7 +15,9 @@ import {
 import { Card } from "../../models/card/card";
 import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";
+import Modal from "../ui/modal/modal";
 import CardCost from "./card-cost";
+import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
 
 export interface CardItemProps {
@@ -25,31 +27,40 @@ export interface CardItemProps {
 
 export default function CardItem({ card, hideImage = false }: CardItemProps) {
   const [expanded, setExpanded] = React.useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
 
   return (
-    <Pressable
-      onPress={() => setExpanded(!expanded)}
-      className={
-        "flex gap-2 rounded-2xl bg-background-300 overflow-hidden transition-all duration-300 " +
-        (expanded ? "max-h-[1000px] " : "max-h-[36px] ")
-      }
-    >
-      <CardItemHeader card={card} />
+    <>
+      <Pressable
+        onPress={() => setExpanded(!expanded)}
+        className={
+          "flex gap-2 rounded-2xl bg-background-300 overflow-hidden transition-all duration-300 " +
+          (expanded ? "max-h-[1000px] " : "max-h-[36px] ")
+        }
+      >
+        <CardItemHeader card={card} />
 
-      <Divider thick className="-mt-2" />
+        <Divider thick className="-mt-2" />
 
-      {!hideImage && (
-        <>
-          <View className="flex gap-2 px-2">
-            <CardImage card={card} />
-          </View>
+        {!hideImage && (
+          <>
+            <View className="flex gap-2 px-2">
+              <CardImage card={card} onClick={() => setModalOpen(true)} />
+            </View>
 
-          <Divider thick />
-        </>
-      )}
+            <Divider thick />
+          </>
+        )}
 
-      <CardItemFooter card={card} />
-    </Pressable>
+        <CardItemFooter card={card} />
+      </Pressable>
+
+      <Modal transparent open={modalOpen} setIsOpen={setModalOpen}>
+        <CardDetailedPreview card={card}>
+          <CardItemFooter card={card} />
+        </CardDetailedPreview>
+      </Modal>
+    </>
   );
 }
 
@@ -125,7 +136,7 @@ export function CardItemFooter({ card }: CardItemProps) {
         ></Button>
       </View>
 
-      <View className="flex flex-row gap-2 px-2 pb-2">
+      <View className="flex flex-row flex-1 gap-2 px-2 pb-2">
         <Button
           size="xs"
           action="info"

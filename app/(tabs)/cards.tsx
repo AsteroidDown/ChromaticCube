@@ -1,9 +1,11 @@
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { ScrollView, View } from "react-native";
 import CardDetailedPreview from "../../components/cards/card-detailed-preview";
 import CardImage from "../../components/cards/card-image";
 import CardItemGallery from "../../components/cards/card-item-gallery";
 import Box from "../../components/ui/box/box";
+import Button from "../../components/ui/button/button";
 import SearchBar from "../../components/ui/search-bar/search-bar";
 import {
   getLocalStorageStoredCards,
@@ -73,7 +75,14 @@ export default function CardsPage() {
             </Box>
           </View>
 
-          <CardDetailedPreview card={card} action={() => saveCard(card)} />
+          <CardDetailedPreview card={card}>
+            <Button
+              text="Add Card"
+              icon={faPlus}
+              onClick={() => saveCard(card)}
+              disabled={!card}
+            />
+          </CardDetailedPreview>
         </View>
 
         <CardItemGallery cards={savedCards} />
