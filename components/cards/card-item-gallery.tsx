@@ -1,3 +1,4 @@
+import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { Text, View } from "react-native";
 import { sortCardsByCost } from "../../functions/card-sorting";
@@ -7,6 +8,7 @@ import {
 } from "../../functions/card-stats";
 import { Card } from "../../models/card/card";
 import Box from "../ui/box/box";
+import BoxHeader from "../ui/box/box-header";
 import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";
 import CardItem from "./card-item";
@@ -24,30 +26,22 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
 
   return (
     <Box className="flex gap-2 px-0 overflow-hidden">
-      <View className="flex flex-row justify-between items-center px-6">
-        <View className="flex mb-2 ">
-          <Text className="text-white font-bold text-2xl">
-            Cards Sorted by Cost
-          </Text>
+      <BoxHeader
+        title="Cards Sorted by Cost"
+        subtitle={`${cardCount} Card${
+          cardCount !== 1 ? "s" : ""
+        } | Total Value: $${cardsValue}`}
+        startIcon={faChartSimple}
+        end={
+          <Button
+            type={hideImages ? "outlined" : "clear"}
+            text={hideImages ? "Show Card Images" : "Hide Card Images"}
+            onClick={() => setHideImages(!hideImages)}
+          />
+        }
+      />
 
-          <Text className="text-dark-600 text-sm">
-            {cardCount} Card{cardCount !== 1 ? "s" : ""}
-          </Text>
-          <Text className="text-dark-600 text-sm">
-            Total Value: ${cardsValue}
-          </Text>
-        </View>
-
-        <Button
-          type={hideImages ? "outlined" : "clear"}
-          text={hideImages ? "Show Card Images" : "Hide Card Images"}
-          onClick={() => setHideImages(!hideImages)}
-        />
-      </View>
-
-      <Divider thick />
-
-      <View className="px-6 overflow-x-scroll overflow-y-hidden">
+      <View className="overflow-x-scroll overflow-y-hidden">
         <View className="flex flex-row gap-4 w-full min-h-[500px]">
           {sortedCards.zero?.length > 0 && (
             <CardCondensedGalleryColumn
