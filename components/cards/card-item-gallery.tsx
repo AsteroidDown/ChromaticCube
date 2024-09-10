@@ -1,4 +1,4 @@
-import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
+import { faChartSimple, faFilter } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { Text, View } from "react-native";
 import { sortCardsByCost } from "../../functions/card-sorting";
@@ -10,6 +10,7 @@ import { Card } from "../../models/card/card";
 import Box from "../ui/box/box";
 import BoxHeader from "../ui/box/box-header";
 import Button from "../ui/button/button";
+import Chip from "../ui/chip/chip";
 import Divider from "../ui/divider/divider";
 import CardItem from "./card-item";
 
@@ -40,6 +41,10 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
           />
         }
       />
+
+      <View className="flex flex-row gap-2">
+        <Chip type="outlined" startIcon={faFilter}></Chip>
+      </View>
 
       <View className="overflow-x-scroll overflow-y-hidden">
         <View className="flex flex-row gap-4 w-full min-h-[500px]">

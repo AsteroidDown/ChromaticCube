@@ -1,75 +1,77 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Pressable, Text, View, ViewProps } from "react-native";
+import { Text, View, ViewProps } from "react-native";
 import { ActionColor } from "../../../constants/ui/colors";
 import { Size } from "../../../constants/ui/sizes";
 
-export type ButtonType = "default" | "outlined" | "clear";
+export type ChipType = "default" | "outlined";
 
-export type ButtonProps = ViewProps & {
+export type ChipProps = ViewProps & {
   text?: string;
-  icon?: IconProp;
-  action?: ActionColor;
+  type?: ChipType;
   size?: Size;
-  type?: ButtonType;
+  action?: ActionColor;
   disabled?: boolean;
+
+  startIcon?: IconProp;
+  endIcon?: IconProp;
+
   onClick?: () => void;
 };
 
-export default function Button({
+export default function Chip({
   text,
-  icon,
-  className,
-  action = "primary",
-  size = "md",
   type = "default",
-  onClick,
-  children,
+  size = "md",
+  action = "primary",
   disabled = false,
-}: ButtonProps) {
-  const baseColor = getButtonBaseColor(action, type, disabled);
-  const hoverColor = getButtonHoverColor(action, type, disabled);
-  const textColor = getButtonTextColor(action, type, disabled);
+  startIcon,
+  endIcon,
+  onClick,
+}: ChipProps) {
+  const baseColor = getChipBaseColor(action, type, disabled);
+  const hoverColor = getChipHoverColor(action, type, disabled);
+  const textColor = getChipTextColor(action, type, disabled);
 
-  const buttonHeight = getButtonHeight(size);
-  const buttonTextSize = getButtonTextSize(size);
+  const chipHeight = getChipHeight(size);
+  const chipTextSize = getChipTextSize(size);
 
-  const baseButtonClasses =
-    "flex flex-row px-4 py-2 gap-2 justify-center items-center w-full rounded-md transition-all";
+  const baseChipClasses =
+    "flex flex-row px-4 py-2 gap-2 justify-center items-center rounded-full transition-all";
 
   return (
-    <Pressable className={className} onPress={onClick} disabled={disabled}>
-      <View
-        className={`${baseButtonClasses} ${buttonHeight}
-          ${baseColor} ${hoverColor}`}
-      >
-        {icon && (
-          <FontAwesomeIcon
-            icon={icon}
-            className={`${textColor}`}
-            size={size !== "md" ? size : undefined}
-          />
-        )}
+    <View
+      className={`${baseChipClasses} ${baseColor} ${hoverColor} ${chipHeight}`}
+    >
+      {startIcon && (
+        <FontAwesomeIcon
+          icon={startIcon}
+          className={`${textColor}`}
+          size={size !== "md" ? size : undefined}
+        />
+      )}
 
-        {text && (
-          <Text className={`font-bold ${buttonTextSize} ${textColor}`}>
-            {text}
-          </Text>
-        )}
+      {text && (
+        <Text className={`font-bold ${textColor} ${chipTextSize}`}>{text}</Text>
+      )}
 
-        {children}
-      </View>
-    </Pressable>
+      {endIcon && (
+        <FontAwesomeIcon
+          icon={endIcon}
+          className={`${textColor}`}
+          size={size !== "md" ? size : undefined}
+        />
+      )}
+    </View>
   );
 }
 
-function getButtonBaseColor(
+function getChipBaseColor(
   action: ActionColor,
-  type: ButtonType,
+  type: ChipType,
   disabled: boolean
 ) {
-  if (type === "clear") return "";
-  else if (type === "outlined") {
+  if (type === "outlined") {
     if (disabled) return "border-2 bg-dark-300 bg-opacity-30";
 
     return (
@@ -103,9 +105,9 @@ function getButtonBaseColor(
   }
 }
 
-function getButtonHoverColor(
+function getChipHoverColor(
   action: ActionColor,
-  type: ButtonType,
+  type: ChipType,
   disabled: boolean
 ) {
   if (disabled) return;
@@ -125,9 +127,9 @@ function getButtonHoverColor(
   }`;
 }
 
-function getButtonTextColor(
+function getChipTextColor(
   action: ActionColor,
-  type: ButtonType,
+  type: ChipType,
   disabled: boolean
 ) {
   if (disabled) return "text-dark-600";
@@ -149,7 +151,7 @@ function getButtonTextColor(
   }`;
 }
 
-function getButtonHeight(size: Size) {
+function getChipHeight(size: Size) {
   return size === "xs"
     ? "h-6"
     : size === "sm"
@@ -161,7 +163,7 @@ function getButtonHeight(size: Size) {
     : "h-14";
 }
 
-function getButtonTextSize(size: Size) {
+function getChipTextSize(size: Size) {
   return size === "xs"
     ? "text-xs"
     : size === "sm"
