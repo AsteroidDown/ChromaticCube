@@ -29,7 +29,7 @@ export function StackedBarLayout({
     "absolute bottom-0 w-full h-full rounded-t-lg bg-gradient-to-t";
 
   return (
-    <View className="flex w-10 h-56 border-white">
+    <View className="flex flex-1 h-full w-10 mx-auto border-white">
       <View style={[{ height: topHeight }]}></View>
 
       <View className="flex w-full" style={[{ height: barHeight }]}>

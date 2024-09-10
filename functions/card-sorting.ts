@@ -146,6 +146,9 @@ export function sortCardsByType(cards: Card[]): CardsSortedByType {
       case MTGCardTypes.SORCERY.toLowerCase():
         sortedCards.sorcery.push(card);
         return;
+      case CardTypes.INSTANT.toLowerCase():
+        sortedCards.instant.push(card);
+        return;
     }
   });
 

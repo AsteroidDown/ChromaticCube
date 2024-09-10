@@ -129,7 +129,8 @@ export function graphCardsByType(cards: Card[]): SetData[] {
   const sortedSorceries = sortCardsByColor(sortedCards.sorcery);
   const sortedPlaneswalkers = sortCardsByColor(sortedCards.planeswalker);
   const sortedArtifacts = sortCardsByColor(sortedCards.artifact);
-  const sortedBattle = sortCardsByColor(sortedCards.battle);
+  const sortedBattles = sortCardsByColor(sortedCards.battle);
+  const sortedInstants = sortCardsByColor(sortedCards.instant);
 
   return [
     createSetDataByColor(MTGCardTypes.LAND, sortedLands),
@@ -138,7 +139,8 @@ export function graphCardsByType(cards: Card[]): SetData[] {
     createSetDataByColor(MTGCardTypes.SORCERY, sortedSorceries),
     createSetDataByColor(MTGCardTypes.PLANESWALKER, sortedPlaneswalkers),
     createSetDataByColor(MTGCardTypes.ARTIFACT, sortedArtifacts),
-    createSetDataByColor(MTGCardTypes.BATTLE, sortedBattle),
+    createSetDataByColor(MTGCardTypes.BATTLE, sortedBattles),
+    createSetDataByColor(MTGCardTypes.INSTANT, sortedInstants),
   ];
 }
 

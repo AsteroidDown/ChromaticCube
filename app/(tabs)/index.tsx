@@ -1,6 +1,6 @@
 import React from "react";
 import { Platform, Pressable, ScrollView, Text, View } from "react-native";
-import { Graph } from "../../components/graph/graph";
+import { Graph, GraphProps } from "../../components/graph/graph";
 import Box from "../../components/ui/box/box";
 import {
   graphCardsByColor,
@@ -22,6 +22,27 @@ export default function App() {
     return storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
   }
 
+  const cardsByColorGraphProps: GraphProps = {
+    title: "Cards By Color",
+    horizontalTitle: "Color",
+    stacked: stacked,
+    sets: graphCardsByColor(getStoredCards()),
+  };
+
+  const cardsByCostGraphProps: GraphProps = {
+    title: "Cards By Cost",
+    horizontalTitle: "Cost",
+    stacked: stacked,
+    sets: graphCardsByCost(getStoredCards()),
+  };
+
+  const cardsByTypeGraphProps: GraphProps = {
+    title: "Cards By Type",
+    horizontalTitle: "Type",
+    stacked: stacked,
+    sets: graphCardsByType(getStoredCards()),
+  };
+
   return (
     <View className="flex gap-6 flex-1 justify-center bg-background-100 p-6">
       <Pressable onPress={() => setStacked(!stacked)}>
@@ -30,31 +51,16 @@ export default function App() {
 
       <ScrollView>
         <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
-          <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
-            <Graph
-              title="Cards by Color"
-              horizontalTitle="Color"
-              stacked={stacked}
-              data={graphCardsByColor(getStoredCards())}
-            />
+          <Box className="min-w-max overflow-x-scroll overflow-y-hidden">
+            <Graph {...cardsByColorGraphProps} />
           </Box>
 
           <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
-            <Graph
-              title="Cards by Cost"
-              horizontalTitle="Cost"
-              stacked={stacked}
-              data={graphCardsByCost(getStoredCards())}
-            />
+            <Graph {...cardsByCostGraphProps} />
           </Box>
 
           <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
-            <Graph
-              title="Cards by Type"
-              horizontalTitle="Type"
-              stacked={stacked}
-              data={graphCardsByType(getStoredCards())}
-            />
+            <Graph {...cardsByTypeGraphProps} />
           </Box>
         </View>
       </ScrollView>
