@@ -17,7 +17,7 @@ export default function Box({ className, shade = 200, children }: BoxProps) {
       : "bg-background-200";
 
   return (
-    <View className={`${className} rounded-2xl p-4 ${backgroundShade}`}>
+    <View className={`${className} rounded-2xl py-4 px-6 ${backgroundShade}`}>
       {children}
     </View>
   );

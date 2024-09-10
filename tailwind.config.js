@@ -7,25 +7,21 @@ module.exports = {
     extend: {
       keyframes: {
         bottomToTopGrow: {
-          '0%': {  height: '0' },
-          '100%': { height: '100%' },
-        }
+          "0%": { height: "0" },
+          "100%": { height: "100%" },
+        },
       },
       animation: {
-        bottomToTopGrow: "bottomToTopGrow 2s ease-in-out forwards",
+        bottomToTopGrow: "bottomToTopGrow 1s ease forwards",
       },
       gridTemplateAreas: {
-        'graphLayout': [
-          'title title',
-          'verticalAxis plot',
-          '. horizontalAxis',
-        ],
+        graphLayout: ["title title", "verticalAxis plot", ". horizontalAxis"],
       },
       gridTemplateColumns: {
-        'graphLayout': '1fr auto',
+        graphLayout: "1fr auto",
       },
       gridTemplateRows: {
-        'graphLayout': '1fr 5fr 1fr',
+        graphLayout: "1fr 5fr 1fr",
       },
       colors: {
         "mtg-white": "#f9faf4",
@@ -103,7 +99,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@savvywombat/tailwindcss-grid-areas')
-  ],
+  plugins: [require("@savvywombat/tailwindcss-grid-areas")],
 };

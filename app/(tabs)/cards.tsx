@@ -79,8 +79,8 @@ export default function CardsPage() {
             <Button
               text="Add Card"
               icon={faPlus}
-              onClick={() => saveCard(card)}
               disabled={!card}
+              onClick={() => saveCard(card)}
             />
           </CardDetailedPreview>
         </View>
