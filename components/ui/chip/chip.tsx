@@ -1,6 +1,6 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Text, View, ViewProps } from "react-native";
+import { Pressable, Text, ViewProps } from "react-native";
 import { ActionColor } from "../../../constants/ui/colors";
 import { Size } from "../../../constants/ui/sizes";
 
@@ -28,6 +28,8 @@ export default function Chip({
   startIcon,
   endIcon,
   onClick,
+  className,
+  style,
 }: ChipProps) {
   const baseColor = getChipBaseColor(action, type, disabled);
   const hoverColor = getChipHoverColor(action, type, disabled);
@@ -40,8 +42,10 @@ export default function Chip({
     "flex flex-row px-4 py-2 gap-2 justify-center items-center rounded-full transition-all";
 
   return (
-    <View
-      className={`${baseChipClasses} ${baseColor} ${hoverColor} ${chipHeight}`}
+    <Pressable
+      style={style}
+      className={`${className} ${baseChipClasses} ${baseColor} ${hoverColor} ${chipHeight}`}
+      onPress={onClick}
     >
       {startIcon && (
         <FontAwesomeIcon
@@ -62,7 +66,7 @@ export default function Chip({
           size={size !== "md" ? size : undefined}
         />
       )}
-    </View>
+    </Pressable>
   );
 }
 

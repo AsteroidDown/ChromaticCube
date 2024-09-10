@@ -1,4 +1,4 @@
-import { faChartSimple, faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { Text, View } from "react-native";
 import { sortCardsByCost } from "../../functions/card-sorting";
@@ -10,8 +10,9 @@ import { Card } from "../../models/card/card";
 import Box from "../ui/box/box";
 import BoxHeader from "../ui/box/box-header";
 import Button from "../ui/button/button";
-import Chip from "../ui/chip/chip";
 import Divider from "../ui/divider/divider";
+import { FilterProps } from "../ui/filters/filter";
+import FilterBar from "../ui/filters/filter-bar";
 import CardItem from "./card-item";
 
 export interface CardItemGalleryProps {
@@ -25,13 +26,52 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
   const cardsValue = getTotalValueOfCards(cards);
   const cardCount = getCountOfCards(cards);
 
+  const [filterByWhite, setFilterByWhite] = React.useState(false);
+  const [filterByBlue, setFilterByBlue] = React.useState(false);
+  const [filterByBlack, setFilterByBlack] = React.useState(false);
+  const [filterByRed, setFilterByRed] = React.useState(false);
+  const [filterByGreen, setFilterByGreen] = React.useState(false);
+
+  const filters: FilterProps[] = [
+    {
+      text: "White",
+      action: "warning",
+      applied: filterByWhite,
+      applyFilter: setFilterByWhite,
+    },
+    {
+      text: "Blue",
+      action: "info",
+      applied: filterByBlue,
+      applyFilter: setFilterByBlue,
+    },
+    {
+      text: "Black",
+      action: "primary",
+      applied: filterByBlack,
+      applyFilter: setFilterByBlack,
+    },
+    {
+      text: "Red",
+      action: "danger",
+      applied: filterByRed,
+      applyFilter: setFilterByRed,
+    },
+    {
+      text: "Green",
+      action: "success",
+      applied: filterByGreen,
+      applyFilter: setFilterByGreen,
+    },
+  ];
+
   return (
     <Box className="flex gap-2 px-0 overflow-hidden">
       <BoxHeader
         title="Cards Sorted by Cost"
         subtitle={`${cardCount} Card${
           cardCount !== 1 ? "s" : ""
-        } | Total Value: $${cardsValue}`}
+        } | Total Value: $${cardsValue.toFixed(2)}`}
         startIcon={faChartSimple}
         end={
           <Button
@@ -42,9 +82,7 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
         }
       />
 
-      <View className="flex flex-row gap-2">
-        <Chip type="outlined" startIcon={faFilter}></Chip>
-      </View>
+      <FilterBar filters={filters} />
 
       <View className="overflow-x-scroll overflow-y-hidden">
         <View className="flex flex-row gap-4 w-full min-h-[500px]">
