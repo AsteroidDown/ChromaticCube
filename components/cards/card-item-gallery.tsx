@@ -2,6 +2,7 @@ import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { MTGColor } from "../../constants/mtg/mtg-colors";
+import { MTGCardTypes } from "../../constants/mtg/mtg-types";
 import { sortCardsByCost } from "../../functions/card-sorting";
 import {
   getCountOfCards,
@@ -35,7 +36,16 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
   const [filterByRed, setFilterByRed] = React.useState(false);
   const [filterByGreen, setFilterByGreen] = React.useState(false);
 
-  const filters: FilterProps[] = [
+  const [filterByCreature, setFilterByCreature] = React.useState(false);
+  const [filterByInstant, setFilterByInstant] = React.useState(false);
+  const [filterBySorcery, setFilterBySorcery] = React.useState(false);
+  const [filterByArtifact, setFilterByArtifact] = React.useState(false);
+  const [filterByEnchantment, setFilterByEnchantment] = React.useState(false);
+  const [filterByPlaneswalker, setFilterByPlaneswalker] = React.useState(false);
+  const [filterByBattle, setFilterByBattle] = React.useState(false);
+  const [filterByLand, setFilterByLand] = React.useState(false);
+
+  const colorFilters: FilterProps[] = [
     {
       text: "White",
       action: "warning",
@@ -68,6 +78,55 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
     },
   ];
 
+  const typeFilters: FilterProps[] = [
+    {
+      text: "Creature",
+      applied: filterByCreature,
+      applyFilter: setFilterByCreature,
+    },
+    {
+      text: "Instant",
+      applied: filterByInstant,
+      applyFilter: setFilterByInstant,
+    },
+    {
+      text: "Sorcery",
+      applied: filterBySorcery,
+      applyFilter: setFilterBySorcery,
+    },
+    {
+      text: "Artifact",
+      applied: filterByArtifact,
+      applyFilter: setFilterByArtifact,
+    },
+    {
+      text: "Enchantment",
+      applied: filterByEnchantment,
+      applyFilter: setFilterByEnchantment,
+    },
+    {
+      text: "Planeswalker",
+      applied: filterByPlaneswalker,
+      applyFilter: setFilterByPlaneswalker,
+    },
+    {
+      text: "Battle",
+      applied: filterByBattle,
+      applyFilter: setFilterByBattle,
+    },
+    {
+      text: "Land",
+      applied: filterByLand,
+      applyFilter: setFilterByLand,
+    },
+  ];
+
+  useEffect(() => {
+    setSortedCards(sortCardsByCost(cards));
+    setCardCount(getCountOfCards(cards));
+    setCardsValue(getTotalValueOfCards(cards));
+  }, [cards]);
+
   useEffect(() => {
     const colorFilter = [
       ...(filterByWhite ? ["white"] : []),
@@ -77,10 +136,41 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
       ...(filterByGreen ? ["green"] : []),
     ] as MTGColor[];
 
-    setSortedCards(sortCardsByCost(cards, { color: colorFilter }));
-    setCardCount(getCountOfCards(cards, { color: colorFilter }));
-    setCardsValue(getTotalValueOfCards(cards, { color: colorFilter }));
-  }, [filterByWhite, filterByBlue, filterByBlack, filterByRed, filterByGreen]);
+    const typeFilter = [
+      ...(filterByCreature ? [MTGCardTypes.CREATURE] : []),
+      ...(filterByInstant ? [MTGCardTypes.INSTANT] : []),
+      ...(filterBySorcery ? [MTGCardTypes.SORCERY] : []),
+      ...(filterByArtifact ? [MTGCardTypes.ARTIFACT] : []),
+      ...(filterByEnchantment ? [MTGCardTypes.ENCHANTMENT] : []),
+      ...(filterByPlaneswalker ? [MTGCardTypes.PLANESWALKER] : []),
+      ...(filterByBattle ? [MTGCardTypes.BATTLE] : []),
+      ...(filterByLand ? [MTGCardTypes.LAND] : []),
+    ];
+
+    setSortedCards(
+      sortCardsByCost(cards, { color: colorFilter, types: typeFilter })
+    );
+    setCardCount(
+      getCountOfCards(cards, { color: colorFilter, types: typeFilter })
+    );
+    setCardsValue(
+      getTotalValueOfCards(cards, { color: colorFilter, types: typeFilter })
+    );
+  }, [
+    filterByWhite,
+    filterByBlue,
+    filterByBlack,
+    filterByRed,
+    filterByGreen,
+    filterByCreature,
+    filterByInstant,
+    filterBySorcery,
+    filterByArtifact,
+    filterByEnchantment,
+    filterByPlaneswalker,
+    filterByBattle,
+    filterByLand,
+  ]);
 
   return (
     <Box className="flex gap-2 px-0 overflow-hidden">
@@ -99,7 +189,7 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
         }
       />
 
-      <FilterBar filters={filters} />
+      <FilterBar filters={[...colorFilters, ...typeFilters]} />
 
       <View className="overflow-x-scroll overflow-y-hidden">
         <View className="flex flex-row gap-4 w-full min-h-[500px]">

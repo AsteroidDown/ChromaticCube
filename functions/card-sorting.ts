@@ -72,11 +72,18 @@ export function sortCardsByCost(
   };
 
   const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
+  const filteredTypes = filters?.types;
 
   cards.forEach((card) => {
     if (
-      filteredColors?.length &&
-      !filteredColors.some((color) => card.colorIdentity.includes(color!))
+      (filteredColors?.length &&
+        !filteredColors.some((color) => card.colorIdentity.includes(color!))) ||
+      (filteredTypes?.length &&
+        !filteredTypes.some((type) =>
+          card.faces?.front
+            ? card.faces.front.typeLine.includes(type)
+            : card.typeLine.includes(type)
+        ))
     ) {
       return;
     }

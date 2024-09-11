@@ -8,13 +8,22 @@ export function getTotalValueOfCards(
   euro: boolean = false
 ) {
   const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
+  const filteredTypes = filters?.types;
 
   return (
     Math.round(
       cards.reduce((acc, card) => {
         if (
-          filteredColors?.length &&
-          !filteredColors.some((color) => card.colorIdentity.includes(color!))
+          (filteredColors?.length &&
+            !filteredColors.some((color) =>
+              card.colorIdentity.includes(color!)
+            )) ||
+          (filteredTypes?.length &&
+            !filteredTypes.some((type) =>
+              card.faces?.front
+                ? card.faces.front.typeLine.includes(type)
+                : card.typeLine.includes(type)
+            ))
         ) {
           return acc;
         }
@@ -30,11 +39,18 @@ export function getTotalValueOfCards(
 
 export function getCountOfCards(cards: Card[], filters?: CardFilters) {
   const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
+  const filteredTypes = filters?.types;
 
   return cards.reduce((acc, card) => {
     if (
-      filteredColors?.length &&
-      !filteredColors.some((color) => card.colorIdentity.includes(color!))
+      (filteredColors?.length &&
+        !filteredColors.some((color) => card.colorIdentity.includes(color!))) ||
+      (filteredTypes?.length &&
+        !filteredTypes.some((type) =>
+          card.faces?.front
+            ? card.faces.front.typeLine.includes(type)
+            : card.typeLine.includes(type)
+        ))
     ) {
       return acc;
     }

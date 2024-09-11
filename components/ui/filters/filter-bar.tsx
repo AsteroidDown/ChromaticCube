@@ -24,16 +24,16 @@ export default function FilterBar({ filters }: FilterBarProps) {
       </View>
 
       <View
-        className={`flex flex-row gap-2 w-fit pl-4 rounded-r-full overflow-hidden transition-all duration-300 ${
-          showFilters ? "ml-0 max-w-[100%]" : "-ml-12 max-w-[0%]"
+        className={`flex flex-row gap-2 w-fit pl-4 rounded-full overflow-hidden transition-all duration-300 ${
+          showFilters ? "ml-0 max-w-[85%] overflow-x-auto" : "-ml-12 max-w-[0%]"
         }`}
       >
         {filters.map((filter, index) => (
           <Filter
             key={filter.text + index}
-            className={`transition-all duration-300 flex-1 max-w-min
-              ${showFilters ? "ml-[0%]" : "ml-[-20%]"}
-              `}
+            className={`flex-1 max-w-min min-w-min transition-all duration-300 ${
+              showFilters ? "ml-[0%]" : "ml-[-20%]"
+            }`}
             {...filter}
           />
         ))}

@@ -1,4 +1,5 @@
 import { MTGColor } from "../../constants/mtg/mtg-colors";
+import { MTGCardTypes } from "../../constants/mtg/mtg-types";
 import { Card } from "../card/card";
 
 export interface CardsSortedByColor {
@@ -37,4 +38,5 @@ export interface CardsSortedByType {
 
 export interface CardFilters {
   color?: MTGColor[];
+  types?: MTGCardTypes[];
 }
