@@ -11,8 +11,6 @@ export interface FilterBarProps {
 export default function FilterBar({ filters }: FilterBarProps) {
   const [showFilters, setShowFilters] = React.useState(false);
 
-  const filtersLength = filters.length;
-
   return (
     <View className="flex flex-row">
       <View className="z-10 bg-background-200 rounded-r-full">
@@ -30,7 +28,7 @@ export default function FilterBar({ filters }: FilterBarProps) {
       >
         {filters.map((filter, index) => (
           <Filter
-            key={filter.text + index}
+            key={filter.title + index}
             className={`flex-1 max-w-min min-w-min transition-all duration-300 ${
               showFilters ? "ml-[0%]" : "ml-[-20%]"
             }`}

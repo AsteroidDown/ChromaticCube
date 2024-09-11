@@ -28,8 +28,9 @@ export default function Chip({
   startIcon,
   endIcon,
   onClick,
-  className,
   style,
+  className,
+  children,
 }: ChipProps) {
   const baseColor = getChipBaseColor(action, type, disabled);
   const hoverColor = getChipHoverColor(action, type, disabled);
@@ -58,6 +59,8 @@ export default function Chip({
       {text && (
         <Text className={`font-bold ${textColor} ${chipTextSize}`}>{text}</Text>
       )}
+
+      {children}
 
       {endIcon && (
         <FontAwesomeIcon

@@ -55,7 +55,7 @@ function DropdownContent({
           ref={buttonRef}
           onLayout={() => {
             buttonRef.current?.measureInWindow((fx, fy) => {
-              setTop(fy);
+              setTop(fy + 4);
               setLeft(fx);
             });
           }}

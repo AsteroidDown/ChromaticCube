@@ -45,81 +45,87 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
   const [filterByBattle, setFilterByBattle] = React.useState(false);
   const [filterByLand, setFilterByLand] = React.useState(false);
 
-  const colorFilters: FilterProps[] = [
-    {
-      text: "White",
-      action: "warning",
-      applied: filterByWhite,
-      applyFilter: setFilterByWhite,
-    },
-    {
-      text: "Blue",
-      action: "info",
-      applied: filterByBlue,
-      applyFilter: setFilterByBlue,
-    },
-    {
-      text: "Black",
-      action: "primary",
-      applied: filterByBlack,
-      applyFilter: setFilterByBlack,
-    },
-    {
-      text: "Red",
-      action: "danger",
-      applied: filterByRed,
-      applyFilter: setFilterByRed,
-    },
-    {
-      text: "Green",
-      action: "success",
-      applied: filterByGreen,
-      applyFilter: setFilterByGreen,
-    },
-  ];
+  const colorFilters: FilterProps = {
+    title: "Color",
+    options: [
+      {
+        title: "White",
+        action: "warning",
+        applied: filterByWhite,
+        applyFilter: setFilterByWhite,
+      },
+      {
+        title: "Blue",
+        action: "info",
+        applied: filterByBlue,
+        applyFilter: setFilterByBlue,
+      },
+      {
+        title: "Black",
+        action: "primary",
+        applied: filterByBlack,
+        applyFilter: setFilterByBlack,
+      },
+      {
+        title: "Red",
+        action: "danger",
+        applied: filterByRed,
+        applyFilter: setFilterByRed,
+      },
+      {
+        title: "Green",
+        action: "success",
+        applied: filterByGreen,
+        applyFilter: setFilterByGreen,
+      },
+    ],
+  };
 
-  const typeFilters: FilterProps[] = [
-    {
-      text: "Creature",
-      applied: filterByCreature,
-      applyFilter: setFilterByCreature,
-    },
-    {
-      text: "Instant",
-      applied: filterByInstant,
-      applyFilter: setFilterByInstant,
-    },
-    {
-      text: "Sorcery",
-      applied: filterBySorcery,
-      applyFilter: setFilterBySorcery,
-    },
-    {
-      text: "Artifact",
-      applied: filterByArtifact,
-      applyFilter: setFilterByArtifact,
-    },
-    {
-      text: "Enchantment",
-      applied: filterByEnchantment,
-      applyFilter: setFilterByEnchantment,
-    },
-    {
-      text: "Planeswalker",
-      applied: filterByPlaneswalker,
-      applyFilter: setFilterByPlaneswalker,
-    },
-    {
-      text: "Battle",
-      applied: filterByBattle,
-      applyFilter: setFilterByBattle,
-    },
-    {
-      text: "Land",
-      applied: filterByLand,
-      applyFilter: setFilterByLand,
-    },
-  ];
+  const typeFilters: FilterProps = {
+    title: "Type",
+    options: [
+      {
+        title: "Creature",
+        applied: filterByCreature,
+        applyFilter: setFilterByCreature,
+      },
+      {
+        title: "Instant",
+        applied: filterByInstant,
+        applyFilter: setFilterByInstant,
+      },
+      {
+        title: "Sorcery",
+        applied: filterBySorcery,
+        applyFilter: setFilterBySorcery,
+      },
+      {
+        title: "Artifact",
+        applied: filterByArtifact,
+        applyFilter: setFilterByArtifact,
+      },
+      {
+        title: "Enchantment",
+        applied: filterByEnchantment,
+        applyFilter: setFilterByEnchantment,
+      },
+      {
+        title: "Planeswalker",
+        applied: filterByPlaneswalker,
+        applyFilter: setFilterByPlaneswalker,
+      },
+      {
+        title: "Battle",
+        applied: filterByBattle,
+        applyFilter: setFilterByBattle,
+      },
+      {
+        title: "Land",
+        applied: filterByLand,
+        applyFilter: setFilterByLand,
+      },
+    ],
+  };
 
   useEffect(() => {
     setSortedCards(sortCardsByCost(cards));
@@ -142,9 +148,9 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
       ...(filterBySorcery ? [MTGCardTypes.SORCERY] : []),
       ...(filterByArtifact ? [MTGCardTypes.ARTIFACT] : []),
       ...(filterByEnchantment ? [MTGCardTypes.ENCHANTMENT] : []),
+      ...(filterByLand ? [MTGCardTypes.LAND] : []),
       ...(filterByPlaneswalker ? [MTGCardTypes.PLANESWALKER] : []),
       ...(filterByBattle ? [MTGCardTypes.BATTLE] : []),
-      ...(filterByLand ? [MTGCardTypes.LAND] : []),
     ];
 
     setSortedCards(
@@ -189,7 +195,7 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
         }
       />
 
-      <FilterBar filters={[...colorFilters, ...typeFilters]} />
+      <FilterBar filters={[colorFilters, typeFilters]} />
 
       <View className="overflow-x-scroll overflow-y-hidden">
         <View className="flex flex-row gap-4 w-full min-h-[500px]">

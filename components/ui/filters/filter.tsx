@@ -1,33 +1,91 @@
 import React from "react";
-import { ViewProps } from "react-native";
+import { Text, View, ViewProps } from "react-native";
 import { ActionColor } from "../../../constants/ui/colors";
 import Chip from "../chip/chip";
+import { Dropdown } from "../dropdown/dropdown";
+import FilterOption, { FilterOptionProps } from "./filter-option";
 
 export type FilterProps = ViewProps & {
-  text: string;
-
-  applied: boolean;
-  applyFilter: React.Dispatch<React.SetStateAction<boolean>>;
-
+  title: string;
+  options: FilterOptionProps[];
   action?: ActionColor;
+  disabled?: boolean;
 };
 
 export default function Filter({
-  text,
-  applied,
-  applyFilter,
+  title,
+  options,
   action = "primary",
+  disabled = false,
   className,
   style,
 }: FilterProps) {
-  return (
-    <Chip
-      style={style}
-      className={className}
-      text={text}
-      action={action}
-      type={applied ? "default" : "outlined"}
-      onClick={() => applyFilter(!applied)}
-    />
+  const [expanded, setExpanded] = React.useState(false);
+
+  const appliedFilterCount = options?.reduce(
+    (acc, option) => (option.applied ? acc + 1 : acc),
+    0
   );
+  const textColor = getFilterTextColor(action, disabled);
+
+  return (
+    <View>
+      <Chip
+        type="outlined"
+        text={title}
+        style={style}
+        action={action}
+        className={className}
+        onClick={() => setExpanded(!expanded)}
+      >
+        <View
+          className={`overflow-hidden transition-all duration-300 ${
+            appliedFilterCount > 0 ? "ml-0 max-w-[100px]" : "-ml-2 max-w-[0px]"
+          }`}
+        >
+          <Text
+            className={`font-semibold text-dark-100 rounded-full px-[7px] py-[3px] ${textColor}`}
+          >
+            {appliedFilterCount}
+          </Text>
+        </View>
+      </Chip>
+
+      <Dropdown
+        expanded={expanded}
+        setExpanded={setExpanded}
+        className={`max-w-[360px] px-4 py-2 border-2 border-primary-300 bg-dark-200 rounded-2xl shadow-lg`}
+      >
+        <View className="flex flex-row flex-wrap gap-2">
+          {options.map((option, index) => (
+            <FilterOption
+              key={option.title + index}
+              title={option.title}
+              action={option.action}
+              applied={option.applied}
+              applyFilter={option.applyFilter}
+            />
+          ))}
+        </View>
+      </Dropdown>
+    </View>
+  );
+}
+
+function getFilterTextColor(action: ActionColor, disabled: boolean) {
+  if (disabled) return "text-dark-600";
+
+  return `${
+    action === "primary"
+      ? "bg-primary-200"
+      : action === "secondary"
+      ? "bg-secondary-100"
+      : action === "success"
+      ? "bg-success-100"
+      : action === "danger"
+      ? "bg-danger-100"
+      : action === "info"
+      ? "bg-info-100"
+      : "bg-warning-100"
+  }`;
 }
