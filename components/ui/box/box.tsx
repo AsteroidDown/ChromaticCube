@@ -4,7 +4,12 @@ export type BoxProps = ViewProps & {
   shade?: 100 | 200 | 300 | 400 | 500 | 600;
 };
 
-export default function Box({ className, shade = 200, children }: BoxProps) {
+export default function Box({
+  shade = 200,
+  style,
+  className,
+  children,
+}: BoxProps) {
   const backgroundShade =
     shade === 100
       ? "bg-background-100"
@@ -17,7 +22,10 @@ export default function Box({ className, shade = 200, children }: BoxProps) {
       : "bg-background-200";
 
   return (
-    <View className={`${className} rounded-2xl py-4 px-6 ${backgroundShade}`}>
+    <View
+      style={style}
+      className={`${className} rounded-2xl py-4 px-6 ${backgroundShade}`}
+    >
       {children}
     </View>
   );
