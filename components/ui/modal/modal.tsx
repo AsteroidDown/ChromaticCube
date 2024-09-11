@@ -27,7 +27,7 @@ export default function Modal({
           <ReactModal transparent style={[{ opacity: 0 }]}>
             <View
               className={
-                "flex justify-center items-center bg-dark-100 w-full h-full " +
+                "flex justify-center items-center bg-dark-100 w-full h-full backdrop-blur-sm " +
                 (open ? "bg-opacity-30" : "bg-opacity-0")
               }
             >
