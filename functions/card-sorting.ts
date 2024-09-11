@@ -1,6 +1,8 @@
+import { MTGColorMap } from "../constants/mtg/mtg-colors";
 import { MTGCardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import {
+  CardFilters,
   CardsSortedByColor,
   CardsSortedByCost,
   CardsSortedByType,
@@ -55,7 +57,7 @@ export function sortCardsByColor(cards: Card[]): CardsSortedByColor {
 
 export function sortCardsByCost(
   cards: Card[],
-  landsSeperate = true
+  filters?: CardFilters
 ): CardsSortedByCost {
   const sortedCards: CardsSortedByCost = {
     zero: [],
@@ -69,7 +71,16 @@ export function sortCardsByCost(
     land: [],
   };
 
+  const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
+
   cards.forEach((card) => {
+    if (
+      filteredColors?.length &&
+      !filteredColors.some((color) => card.colorIdentity.includes(color!))
+    ) {
+      return;
+    }
+
     if (
       card.faces
         ? card.faces?.front.typeLine.includes("Land")
@@ -146,7 +157,7 @@ export function sortCardsByType(cards: Card[]): CardsSortedByType {
       case MTGCardTypes.SORCERY.toLowerCase():
         sortedCards.sorcery.push(card);
         return;
-      case CardTypes.INSTANT.toLowerCase():
+      case MTGCardTypes.INSTANT.toLowerCase():
         sortedCards.instant.push(card);
         return;
     }

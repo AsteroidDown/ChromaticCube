@@ -1,3 +1,4 @@
+import { MTGColor } from "../../constants/mtg/mtg-colors";
 import { Card } from "../card/card";
 
 export interface CardsSortedByColor {
@@ -32,4 +33,8 @@ export interface CardsSortedByType {
   creature: Card[];
   planeswalker: Card[];
   battle: Card[];
+}
+
+export interface CardFilters {
+  color?: MTGColor[];
 }

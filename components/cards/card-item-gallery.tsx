@@ -1,6 +1,7 @@
 import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
+import { MTGColor } from "../../constants/mtg/mtg-colors";
 import { sortCardsByCost } from "../../functions/card-sorting";
 import {
   getCountOfCards,
@@ -22,9 +23,11 @@ export interface CardItemGalleryProps {
 export default function CardItemGallery({ cards }: CardItemGalleryProps) {
   const [hideImages, setHideImages] = React.useState(false);
 
-  const sortedCards = sortCardsByCost(cards);
-  const cardsValue = getTotalValueOfCards(cards);
-  const cardCount = getCountOfCards(cards);
+  const [sortedCards, setSortedCards] = React.useState(sortCardsByCost(cards));
+  const [cardsValue, setCardsValue] = React.useState(
+    getTotalValueOfCards(cards)
+  );
+  const [cardCount, setCardCount] = React.useState(getCountOfCards(cards));
 
   const [filterByWhite, setFilterByWhite] = React.useState(false);
   const [filterByBlue, setFilterByBlue] = React.useState(false);
@@ -64,6 +67,20 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
       applyFilter: setFilterByGreen,
     },
   ];
+
+  useEffect(() => {
+    const colorFilter = [
+      ...(filterByWhite ? ["white"] : []),
+      ...(filterByBlue ? ["blue"] : []),
+      ...(filterByBlack ? ["black"] : []),
+      ...(filterByRed ? ["red"] : []),
+      ...(filterByGreen ? ["green"] : []),
+    ] as MTGColor[];
+
+    setSortedCards(sortCardsByCost(cards, { color: colorFilter }));
+    setCardCount(getCountOfCards(cards, { color: colorFilter }));
+    setCardsValue(getTotalValueOfCards(cards, { color: colorFilter }));
+  }, [filterByWhite, filterByBlue, filterByBlack, filterByRed, filterByGreen]);
 
   return (
     <Box className="flex gap-2 px-0 overflow-hidden">
