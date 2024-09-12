@@ -72,7 +72,8 @@ export function sortCardsByCost(
   };
 
   const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
-  const filteredTypes = filters?.types;
+  const filteredTypes = filters?.type;
+  const filteredRarity = filters?.rarity;
 
   cards.forEach((card) => {
     if (
@@ -83,7 +84,9 @@ export function sortCardsByCost(
           card.faces?.front
             ? card.faces.front.typeLine.includes(type)
             : card.typeLine.includes(type)
-        ))
+        )) ||
+      (filteredRarity?.length &&
+        !filteredRarity.some((rarity) => card.rarity === rarity))
     ) {
       return;
     }

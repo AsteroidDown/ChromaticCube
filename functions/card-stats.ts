@@ -8,7 +8,8 @@ export function getTotalValueOfCards(
   euro: boolean = false
 ) {
   const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
-  const filteredTypes = filters?.types;
+  const filteredTypes = filters?.type;
+  const filteredRarity = filters?.rarity;
 
   return (
     Math.round(
@@ -23,7 +24,9 @@ export function getTotalValueOfCards(
               card.faces?.front
                 ? card.faces.front.typeLine.includes(type)
                 : card.typeLine.includes(type)
-            ))
+            )) ||
+          (filteredRarity?.length &&
+            !filteredRarity.some((rarity) => card.rarity === rarity))
         ) {
           return acc;
         }
@@ -39,7 +42,8 @@ export function getTotalValueOfCards(
 
 export function getCountOfCards(cards: Card[], filters?: CardFilters) {
   const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
-  const filteredTypes = filters?.types;
+  const filteredTypes = filters?.type;
+  const filteredRarity = filters?.rarity;
 
   return cards.reduce((acc, card) => {
     if (
@@ -50,7 +54,9 @@ export function getCountOfCards(cards: Card[], filters?: CardFilters) {
           card.faces?.front
             ? card.faces.front.typeLine.includes(type)
             : card.typeLine.includes(type)
-        ))
+        )) ||
+      (filteredRarity?.length &&
+        !filteredRarity.some((rarity) => card.rarity === rarity))
     ) {
       return acc;
     }

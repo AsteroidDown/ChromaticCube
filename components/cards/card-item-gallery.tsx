@@ -2,6 +2,7 @@ import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { MTGColor } from "../../constants/mtg/mtg-colors";
+import { MTGRarity } from "../../constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "../../constants/mtg/mtg-types";
 import { sortCardsByCost } from "../../functions/card-sorting";
 import {
@@ -44,6 +45,11 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
   const [filterByPlaneswalker, setFilterByPlaneswalker] = React.useState(false);
   const [filterByBattle, setFilterByBattle] = React.useState(false);
   const [filterByLand, setFilterByLand] = React.useState(false);
+
+  const [filterByCommon, setFilterByCommon] = React.useState(false);
+  const [filterByUncommon, setFilterByUncommon] = React.useState(false);
+  const [filterByRare, setFilterByRare] = React.useState(false);
+  const [filterByMythic, setFilterByMythic] = React.useState(false);
 
   const colorFilters: FilterProps = {
     title: "Color",
@@ -127,6 +133,32 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
     ],
   };
 
+  const rarityFilters: FilterProps = {
+    title: "Rarity",
+    options: [
+      {
+        title: "Common",
+        applied: filterByCommon,
+        applyFilter: setFilterByCommon,
+      },
+      {
+        title: "Uncommon",
+        applied: filterByUncommon,
+        applyFilter: setFilterByUncommon,
+      },
+      {
+        title: "Rare",
+        applied: filterByRare,
+        applyFilter: setFilterByRare,
+      },
+      {
+        title: "Mythic",
+        applied: filterByMythic,
+        applyFilter: setFilterByMythic,
+      },
+    ],
+  };
+
   useEffect(() => {
     setSortedCards(sortCardsByCost(cards));
     setCardCount(getCountOfCards(cards));
@@ -153,14 +185,33 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
       ...(filterByBattle ? [MTGCardTypes.BATTLE] : []),
     ];
 
+    const rarityFilter = [
+      ...(filterByCommon ? ["common"] : []),
+      ...(filterByUncommon ? ["uncommon"] : []),
+      ...(filterByRare ? ["rare"] : []),
+      ...(filterByMythic ? ["mythic"] : []),
+    ] as MTGRarity[];
+
     setSortedCards(
-      sortCardsByCost(cards, { color: colorFilter, types: typeFilter })
+      sortCardsByCost(cards, {
+        color: colorFilter,
+        type: typeFilter,
+        rarity: rarityFilter,
+      })
     );
     setCardCount(
-      getCountOfCards(cards, { color: colorFilter, types: typeFilter })
+      getCountOfCards(cards, {
+        color: colorFilter,
+        type: typeFilter,
+        rarity: rarityFilter,
+      })
     );
     setCardsValue(
-      getTotalValueOfCards(cards, { color: colorFilter, types: typeFilter })
+      getTotalValueOfCards(cards, {
+        color: colorFilter,
+        type: typeFilter,
+        rarity: rarityFilter,
+      })
     );
   }, [
     filterByWhite,
@@ -176,6 +227,10 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
     filterByPlaneswalker,
     filterByBattle,
     filterByLand,
+    filterByCommon,
+    filterByUncommon,
+    filterByRare,
+    filterByMythic,
   ]);
 
   return (
@@ -195,7 +250,7 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
         }
       />
 
-      <FilterBar filters={[colorFilters, typeFilters]} />
+      <FilterBar filters={[colorFilters, typeFilters, rarityFilters]} />
 
       <View className="overflow-x-scroll overflow-y-hidden">
         <View className="flex flex-row gap-4 w-full min-h-[500px]">
