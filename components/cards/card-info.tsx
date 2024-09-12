@@ -75,7 +75,7 @@ export function CardFrontInfo({ card }: CardInfoProps) {
         </Text>
       </View>
 
-      {card?.faces?.front.manaCost && (
+      {!!card?.faces?.front.manaCost && (
         <>
           <Divider />
 
@@ -133,7 +133,7 @@ export function CardBackInfo({ card }: CardInfoProps) {
         </Text>
       </View>
 
-      {card?.faces?.back.manaCost && (
+      {!!card?.faces?.back.manaCost && (
         <>
           <Divider />
 
