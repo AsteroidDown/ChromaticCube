@@ -89,7 +89,7 @@ export function CardItemHeader({ card }: CardItemProps) {
           )}
 
           {card.faces.back.manaCost && (
-            <Text className="text-white h-[50px]"> // </Text>
+            <Text className="text-white h-[20px]"> // </Text>
           )}
 
           {card.faces.back.manaCost && (

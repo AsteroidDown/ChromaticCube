@@ -7,6 +7,7 @@ import CardItemGallery from "../../components/cards/card-item-gallery";
 import Box from "../../components/ui/box/box";
 import Button from "../../components/ui/button/button";
 import SearchBar from "../../components/ui/search-bar/search-bar";
+import { ActionColor } from "../../constants/ui/colors";
 import {
   getLocalStorageStoredCards,
   saveLocalStorageCard,
@@ -19,6 +20,11 @@ export default function CardsPage() {
   const [card, setCard] = React.useState(undefined as Card | undefined);
   const [searchedCards, setSearchedCards] = React.useState([] as Card[]);
   const [savedCards, setSavedCards] = React.useState([] as Card[]);
+
+  const [buttonText, setButtonText] = React.useState("Add Card");
+  const [buttonAction, setButtonAction] = React.useState(
+    "primary" as ActionColor
+  );
 
   const searchedCardsPlaceholder = Array(5).fill(undefined);
 
@@ -39,6 +45,14 @@ export default function CardsPage() {
 
     const savedCards = saveLocalStorageCard(card);
     if (savedCards) setSavedCards(savedCards);
+
+    setButtonText("Card Added!");
+    setButtonAction("success");
+
+    setTimeout(() => {
+      setButtonText("Add Card");
+      setButtonAction("primary");
+    }, 3000);
   }
 
   useEffect(() => setSavedCards(getLocalStorageStoredCards()), []);
@@ -81,9 +95,10 @@ export default function CardsPage() {
 
           <CardDetailedPreview card={card}>
             <Button
-              text="Add Card"
               icon={faPlus}
               disabled={!card}
+              text={buttonText}
+              action={buttonAction}
               onClick={() => saveCard(card)}
             />
           </CardDetailedPreview>
