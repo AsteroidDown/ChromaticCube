@@ -119,7 +119,7 @@ export function sortCardsByCost(
           sortedCards.five.push(card);
           return;
         case 6:
-          sortedCards.four.push(card);
+          sortedCards.six.push(card);
           return;
       }
     }
