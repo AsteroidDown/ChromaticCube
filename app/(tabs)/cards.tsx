@@ -27,7 +27,11 @@ export default function CardsPage() {
   }
 
   function findCards() {
-    ScryfallService.findCards(search).then((cards) => setSearchedCards(cards));
+    ScryfallService.findCards(search).then((cards) => {
+      setSearchedCards(cards);
+
+      if (cards.length === 1) setCard(cards[0]);
+    });
   }
 
   function saveCard(card?: Card) {
