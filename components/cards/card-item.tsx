@@ -96,9 +96,9 @@ export function CardItemHeader({ card }: CardItemProps) {
             <CardCost size="sm" cost={card.faces.back.manaCost} />
           )}
         </Text>
-      ) : (
-        card.manaCost && <CardCost size="sm" cost={card.manaCost} />
-      )}
+      ) : card.manaCost ? (
+        <CardCost size="sm" cost={card.manaCost} />
+      ) : null}
     </View>
   );
 }
