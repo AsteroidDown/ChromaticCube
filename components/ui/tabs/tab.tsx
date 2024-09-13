@@ -1,9 +1,11 @@
+import { Href } from "expo-router";
 import React from "react";
 import { Text, View, ViewProps } from "react-native";
 
 export type TabProps = ViewProps & {
   title: string;
-  link?: string;
+  link: Href;
+  name: string;
   index?: number;
   focused?: boolean;
   focusedIndex?: number;

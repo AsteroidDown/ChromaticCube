@@ -1,4 +1,4 @@
-import { Navigator } from "expo-router";
+import { Stack } from "expo-router";
 import React from "react";
 import { Pressable, View, ViewProps } from "react-native";
 import Tab, { TabProps } from "./tab";
@@ -9,7 +9,6 @@ export type TabBarProps = ViewProps & {
 
 export default function TabBar({ tabs, className }: TabBarProps) {
   const [focusedIndex, setFocusedIndex] = React.useState(0);
-  const [selectedTab, setSelectedTab] = React.useState(tabs[0]);
 
   return (
     <View className="flex">
@@ -32,17 +31,17 @@ export default function TabBar({ tabs, className }: TabBarProps) {
       </View>
 
       <View
-        className={`w-full h-40 rounded-b-xl rounded-tr-xl border-2 border-primary-200 bg-background-100`}
+        className={`px-6 py-4 w-full min-h-40 rounded-b-xl rounded-tr-xl border-2 border-primary-200`}
       >
-        <Navigator>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           {tabs.map((tab, index) => (
-            <Navigator.Screen
-              key={tab.title + index}
-              name={tab.link}
-              options={{ title: "Test" }}
-            />
+            <Stack.Screen key={tab.title + index} name={tab.link?.toString()} />
           ))}
-        </Navigator>
+        </Stack>
       </View>
     </View>
   );
