@@ -16,7 +16,7 @@ export default function CardDetailedPreview({
 }: CardDetailedPreview) {
   return (
     <Box className="flex flex-row flex-wrap flex-1 max-w-max justify-center gap-3 h-fit">
-      <View className="flex gap-3 h-full min-w-[250px]">
+      <View className="flex gap-3  min-w-[250px]">
         <CardImage
           card={card}
           placeHolder="Search for a Card and it will be previewed here"

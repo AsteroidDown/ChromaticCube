@@ -12,9 +12,10 @@ export default function FilterBar({ filters }: FilterBarProps) {
   const [showFilters, setShowFilters] = React.useState(false);
 
   return (
-    <View className="flex flex-row">
-      <View className="z-10 bg-background-200 rounded-r-full">
+    <View className="flex flex-row-reverse h-11">
+      <View className="bg-background-200 rounded-l-full z-10">
         <Chip
+          className="min-h-11"
           startIcon={faFilter}
           type={showFilters ? "default" : "outlined"}
           onClick={() => setShowFilters(!showFilters)}
@@ -22,15 +23,17 @@ export default function FilterBar({ filters }: FilterBarProps) {
       </View>
 
       <View
-        className={`flex flex-row gap-2 w-fit pl-4 rounded-full overflow-hidden transition-all duration-300 ${
-          showFilters ? "ml-0 max-w-[85%] overflow-x-auto" : "-ml-12 max-w-[0%]"
+        className={`flex flex-row gap-2 w-fit pr-4 rounded-full overflow-hidden transition-all duration-300 ${
+          showFilters
+            ? "mr-0 max-w-[100%] overflow-x-auto"
+            : "-mr-12 max-w-[0%]"
         }`}
       >
         {filters.map((filter, index) => (
           <Filter
             key={filter.title + index}
             className={`flex-1 max-w-min min-w-min transition-all duration-300 ${
-              showFilters ? "ml-[0%]" : "ml-[-20%]"
+              showFilters ? "mr-[0%]" : "mr-[-20%]"
             }`}
             {...filter}
           />

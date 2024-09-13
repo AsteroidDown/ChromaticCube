@@ -22,9 +22,9 @@ export default function Tab({
     "px-8 py-2 -ml-[2px] rounded-t-xl border-t-2 border-x-2 transition-all duration-300";
 
   const focusedClasses =
-    "border-primary-200 bg-opacity-0 hover:bg-opacity-30 bg-primary-200";
+    "border-background-200 bg-background-200 hover:bg-primary-300 hover:bg-opacity-30";
   const unfocusedClasses =
-    "border-b-2 border-t-background-600 border-x-background-600 border-b-primary-200 bg-opacity-0 hover:bg-opacity-50 bg-primary-200";
+    "border-b-2 border-t-background-400 border-x-background-400 border-b-primary-200 bg-opacity-0 hover:bg-opacity-50 bg-primary-200";
 
   return (
     <View
@@ -35,7 +35,7 @@ export default function Tab({
     >
       <Text
         className={`${
-          focused ? "text-primary-300" : "text-background-600"
+          focused ? "text-primary-200" : "text-background-400"
         } font-semibold text-lg`}
       >
         {title}

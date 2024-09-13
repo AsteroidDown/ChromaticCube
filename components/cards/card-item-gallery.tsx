@@ -9,6 +9,7 @@ import {
   getCountOfCards,
   getTotalValueOfCards,
 } from "../../functions/card-stats";
+import { getLocalStorageStoredCards } from "../../functions/local-storage";
 import { Card } from "../../models/card/card";
 import Box from "../ui/box/box";
 import BoxHeader from "../ui/box/box-header";
@@ -18,11 +19,9 @@ import { FilterProps } from "../ui/filters/filter";
 import FilterBar from "../ui/filters/filter-bar";
 import CardItem from "./card-item";
 
-export interface CardItemGalleryProps {
-  cards: Card[];
-}
+export default function CardItemGallery() {
+  const [cards, setCards] = React.useState([] as Card[]);
 
-export default function CardItemGallery({ cards }: CardItemGalleryProps) {
   const [hideImages, setHideImages] = React.useState(false);
 
   const [sortedCards, setSortedCards] = React.useState(sortCardsByCost(cards));
@@ -159,6 +158,8 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
     ],
   };
 
+  useEffect(() => setCards(getLocalStorageStoredCards()), []);
+
   useEffect(() => {
     setSortedCards(sortCardsByCost(cards));
     setCardCount(getCountOfCards(cards));
@@ -234,23 +235,25 @@ export default function CardItemGallery({ cards }: CardItemGalleryProps) {
   ]);
 
   return (
-    <Box className="flex gap-2 px-0 overflow-hidden">
+    <Box className="!rounded-tl-none flex gap-2 px-0 overflow-hidden">
       <BoxHeader
         title="Cards Sorted by Cost"
+        startIcon={faChartSimple}
         subtitle={`${cardCount} Card${
           cardCount !== 1 ? "s" : ""
         } | Total Value: $${cardsValue.toFixed(2)}`}
-        startIcon={faChartSimple}
         end={
-          <Button
-            type={hideImages ? "outlined" : "clear"}
-            text={hideImages ? "Show Card Images" : "Hide Card Images"}
-            onClick={() => setHideImages(!hideImages)}
-          />
+          <View className="flex flex-row gap-4">
+            <FilterBar filters={[colorFilters, typeFilters, rarityFilters]} />
+
+            <Button
+              type={hideImages ? "outlined" : "clear"}
+              text={hideImages ? "Show Card Images" : "Hide Card Images"}
+              onClick={() => setHideImages(!hideImages)}
+            />
+          </View>
         }
       />
-
-      <FilterBar filters={[colorFilters, typeFilters, rarityFilters]} />
 
       <View className="overflow-x-scroll overflow-y-hidden">
         <View className="flex flex-row gap-4 w-full min-h-[500px]">

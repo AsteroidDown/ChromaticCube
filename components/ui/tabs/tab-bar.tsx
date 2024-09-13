@@ -1,6 +1,6 @@
-import { Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
 import React from "react";
-import { Pressable, View, ViewProps } from "react-native";
+import { View, ViewProps } from "react-native";
 import Tab, { TabProps } from "./tab";
 
 export type TabBarProps = ViewProps & {
@@ -11,14 +11,17 @@ export default function TabBar({ tabs, className }: TabBarProps) {
   const [focusedIndex, setFocusedIndex] = React.useState(0);
 
   return (
-    <View className="flex">
+    <View className={`${className} flex mb-4`}>
       <View
-        className={`${className} flex flex-row max-w-full -mb-[2px] pl-[2px] overflow-x-auto overflow-y-hidden`}
+        className={`flex flex-1 flex-row w-full min-h-[46px] max-h-[46px] -mb-[2px] pl-[2px] overflow-x-auto overflow-y-hidden`}
       >
         {tabs.map((tab, index) => (
-          <Pressable
+          <Link
             key={tab.title + index}
-            onPress={() => setFocusedIndex(index)}
+            href={tab.link}
+            onPress={() => {
+              setFocusedIndex(index);
+            }}
           >
             <Tab
               {...tab}
@@ -26,23 +29,28 @@ export default function TabBar({ tabs, className }: TabBarProps) {
               focused={index === focusedIndex}
               focusedIndex={focusedIndex}
             />
-          </Pressable>
+          </Link>
         ))}
       </View>
 
-      <View
-        className={`px-6 py-4 w-full min-h-40 rounded-b-xl rounded-tr-xl border-2 border-primary-200`}
+      {/* <View
+        className={`flex flex-1 w-full rounded-b-xl rounded-tr-xl border-2 border-primary-200 overflow-hidden`}
+      > */}
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          // contentStyle: { flex: 1, height: 100, minHeight: 100 },
+        }}
       >
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {tabs.map((tab, index) => (
-            <Stack.Screen key={tab.title + index} name={tab.link?.toString()} />
-          ))}
-        </Stack>
-      </View>
+        {tabs.map((tab, index) => (
+          <Stack.Screen
+            key={tab.title + index}
+            name={tab.link?.toString()}
+            // options={{ contentStyle: { height: 100, flex: 1 } }}
+          />
+        ))}
+      </Stack>
     </View>
+    // </View>
   );
 }

@@ -54,7 +54,7 @@ export default function Filter({
       <Dropdown
         expanded={expanded}
         setExpanded={setExpanded}
-        className={`max-w-[360px] px-4 py-2 border-2 border-primary-300 bg-dark-200 rounded-2xl shadow-lg`}
+        className={`!max-w-[360px] px-4 py-2 border-2 border-primary-300 bg-dark-200 rounded-2xl shadow-lg`}
       >
         <View className="flex flex-row flex-wrap gap-2">
           {options.map((option, index) => (
