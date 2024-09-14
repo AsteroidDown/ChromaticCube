@@ -1,6 +1,7 @@
 import { MTGColor } from "../../constants/mtg/mtg-colors";
 import { MTGRarity } from "../../constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "../../constants/mtg/mtg-types";
+import { SortDirection } from "../../constants/sorting";
 import { Card } from "../card/card";
 
 export interface CardsSortedByColor {
@@ -38,7 +39,8 @@ export interface CardsSortedByType {
 }
 
 export interface CardFilters {
-  color?: MTGColor[];
-  type?: MTGCardTypes[];
-  rarity?: MTGRarity[];
+  colorFilter?: MTGColor[];
+  typeFilter?: MTGCardTypes[];
+  rarityFilter?: MTGRarity[];
+  priceSort?: SortDirection;
 }

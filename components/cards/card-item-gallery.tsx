@@ -1,7 +1,11 @@
 import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { sortCardsByCost } from "../../functions/card-sorting";
+import {
+  sortCardsAlphabetically,
+  sortCardsByCost,
+  sortCardsByPrice,
+} from "../../functions/card-sorting";
 import {
   getCountOfCards,
   getTotalValueOfCards,
@@ -21,7 +25,9 @@ export default function CardItemGallery() {
 
   const [hideImages, setHideImages] = React.useState(false);
 
-  const [sortedCards, setSortedCards] = React.useState(sortCardsByCost(cards));
+  const [cardsSortedByCost, setCardsSortedByCost] = React.useState(
+    sortCardsByCost(sortCardsAlphabetically(cards))
+  );
   const [cardsValue, setCardsValue] = React.useState(
     getTotalValueOfCards(cards)
   );
@@ -32,15 +38,22 @@ export default function CardItemGallery() {
   useEffect(() => setCards(getLocalStorageStoredCards()), []);
 
   useEffect(() => {
-    setSortedCards(sortCardsByCost(cards));
+    setCardsSortedByCost(sortCardsByCost(cards));
     setCardCount(getCountOfCards(cards));
     setCardsValue(getTotalValueOfCards(cards));
   }, [cards]);
 
   useEffect(() => {
-    setSortedCards(sortCardsByCost(cards, filters));
-    setCardCount(getCountOfCards(cards, filters));
-    setCardsValue(getTotalValueOfCards(cards, filters));
+    const sortedCards =
+      filters.priceSort === "ASC"
+        ? sortCardsByPrice(cards)
+        : filters.priceSort === "DESC"
+        ? sortCardsByPrice(cards, false)
+        : cards;
+
+    setCardsSortedByCost(sortCardsByCost(sortedCards, filters));
+    setCardCount(getCountOfCards(sortedCards, filters));
+    setCardsValue(getTotalValueOfCards(sortedCards, filters));
   }, [filters]);
 
   return (
@@ -66,53 +79,53 @@ export default function CardItemGallery() {
 
       <View className="overflow-x-scroll overflow-y-hidden">
         <View className="flex flex-row gap-4 w-full min-h-[500px]">
-          {sortedCards.zero?.length > 0 && (
+          {cardsSortedByCost.zero?.length > 0 && (
             <CardCondensedGalleryColumn
               title="0 Cost"
               hideImages={hideImages}
-              cards={sortedCards.zero}
+              cards={cardsSortedByCost.zero}
             />
           )}
           <CardCondensedGalleryColumn
             title="1 Cost"
             hideImages={hideImages}
-            cards={sortedCards.one}
+            cards={cardsSortedByCost.one}
           />
           <CardCondensedGalleryColumn
             title="2 Cost"
             hideImages={hideImages}
-            cards={sortedCards.two}
+            cards={cardsSortedByCost.two}
           />
           <CardCondensedGalleryColumn
             title="3 Cost"
             hideImages={hideImages}
-            cards={sortedCards.three}
+            cards={cardsSortedByCost.three}
           />
           <CardCondensedGalleryColumn
             title="4 Cost"
             hideImages={hideImages}
-            cards={sortedCards.four}
+            cards={cardsSortedByCost.four}
           />
           <CardCondensedGalleryColumn
             title="5 Cost"
             hideImages={hideImages}
-            cards={sortedCards.five}
+            cards={cardsSortedByCost.five}
           />
           <CardCondensedGalleryColumn
             title="6 Cost"
             hideImages={hideImages}
-            cards={sortedCards.six}
+            cards={cardsSortedByCost.six}
           />
           <CardCondensedGalleryColumn
             title="7+ Cost"
             hideImages={hideImages}
-            cards={sortedCards.seven}
+            cards={cardsSortedByCost.seven}
           />
-          {sortedCards.land?.length > 0 && (
+          {cardsSortedByCost.land?.length > 0 && (
             <CardCondensedGalleryColumn
               title="Lands"
               hideImages={hideImages}
-              cards={sortedCards.land}
+              cards={cardsSortedByCost.land}
             />
           )}
         </View>

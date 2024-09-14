@@ -7,9 +7,11 @@ export function getTotalValueOfCards(
   filters?: CardFilters,
   euro: boolean = false
 ) {
-  const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
-  const filteredTypes = filters?.type;
-  const filteredRarity = filters?.rarity;
+  const filteredColors = filters?.colorFilter?.map((color) =>
+    MTGColorMap.get(color)
+  );
+  const filteredTypes = filters?.typeFilter;
+  const filteredRarity = filters?.rarityFilter;
 
   return (
     Math.round(
@@ -41,9 +43,11 @@ export function getTotalValueOfCards(
 }
 
 export function getCountOfCards(cards: Card[], filters?: CardFilters) {
-  const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
-  const filteredTypes = filters?.type;
-  const filteredRarity = filters?.rarity;
+  const filteredColors = filters?.colorFilter?.map((color) =>
+    MTGColorMap.get(color)
+  );
+  const filteredTypes = filters?.typeFilter;
+  const filteredRarity = filters?.rarityFilter;
 
   return cards.reduce((acc, card) => {
     if (

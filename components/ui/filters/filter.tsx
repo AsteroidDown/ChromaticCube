@@ -81,7 +81,7 @@ export default function Filter({
   );
 }
 
-function getFilterTextColor(action: ActionColor, disabled: boolean) {
+export function getFilterTextColor(action: ActionColor, disabled: boolean) {
   if (disabled) return "text-dark-600";
 
   return `${
