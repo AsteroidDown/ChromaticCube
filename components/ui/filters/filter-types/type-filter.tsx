@@ -20,10 +20,12 @@ export default function TypeFilter({ setTypeFilters }: TypeFilterProps) {
   const [battleApplied, setBattleApplied] = React.useState(false);
   const [landApplied, setLandApplied] = React.useState(false);
 
-  let appliedFilters: MTGCardTypes[] = [];
+  const [appliedFilters, setAppliedFilters] = React.useState(
+    [] as MTGCardTypes[]
+  );
 
   useEffect(() => {
-    appliedFilters = [
+    setAppliedFilters([
       ...(creatureApplied ? [MTGCardTypes.CREATURE] : []),
       ...(instantApplied ? [MTGCardTypes.INSTANT] : []),
       ...(sorceryApplied ? [MTGCardTypes.SORCERY] : []),
@@ -32,9 +34,7 @@ export default function TypeFilter({ setTypeFilters }: TypeFilterProps) {
       ...(landApplied ? [MTGCardTypes.LAND] : []),
       ...(planeswalkerApplied ? [MTGCardTypes.PLANESWALKER] : []),
       ...(battleApplied ? [MTGCardTypes.BATTLE] : []),
-    ] as MTGCardTypes[];
-
-    setTypeFilters(appliedFilters);
+    ] as MTGCardTypes[]);
   }, [
     creatureApplied,
     instantApplied,
@@ -45,6 +45,8 @@ export default function TypeFilter({ setTypeFilters }: TypeFilterProps) {
     planeswalkerApplied,
     battleApplied,
   ]);
+
+  useEffect(() => setTypeFilters(appliedFilters), [appliedFilters]);
 
   return (
     <View>

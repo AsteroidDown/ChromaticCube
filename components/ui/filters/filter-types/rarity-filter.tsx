@@ -16,18 +16,18 @@ export default function RarityFilter({ setRarityFilters }: RarityFilterProps) {
   const [rareApplied, setRareApplied] = React.useState(false);
   const [mythicApplied, setMythicApplied] = React.useState(false);
 
-  let appliedFilters: MTGRarity[] = [];
+  const [appliedFilters, setAppliedFilters] = React.useState([] as MTGRarity[]);
 
   useEffect(() => {
-    appliedFilters = [
+    setAppliedFilters([
       ...(commonApplied ? ["common"] : []),
       ...(uncommonApplied ? ["uncommon"] : []),
       ...(rareApplied ? ["rare"] : []),
       ...(mythicApplied ? ["mythic"] : []),
-    ] as MTGRarity[];
-
-    setRarityFilters(appliedFilters);
+    ] as MTGRarity[]);
   }, [commonApplied, uncommonApplied, rareApplied, mythicApplied]);
+
+  useEffect(() => setRarityFilters(appliedFilters), [appliedFilters]);
 
   return (
     <View>

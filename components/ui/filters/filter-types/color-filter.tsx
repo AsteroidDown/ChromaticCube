@@ -20,10 +20,10 @@ export default function ColorFilter({ setColorFilters }: ColorFilterProps) {
   const [colorlessApplied, setColorlessApplied] = React.useState(false);
   const [monoColorApplied, setMonoColorApplied] = React.useState(false);
 
-  let appliedFilters: MTGColor[] = [];
+  const [appliedFilters, setAppliedFilters] = React.useState([] as MTGColor[]);
 
   useEffect(() => {
-    appliedFilters = [
+    setAppliedFilters([
       ...(whiteApplied ? ["white"] : []),
       ...(blueApplied ? ["blue"] : []),
       ...(blackApplied ? ["black"] : []),
@@ -32,9 +32,7 @@ export default function ColorFilter({ setColorFilters }: ColorFilterProps) {
       ...(goldApplied ? ["gold"] : []),
       ...(colorlessApplied ? ["colorless"] : []),
       ...(monoColorApplied ? ["mono"] : []),
-    ] as MTGColor[];
-
-    setColorFilters(appliedFilters);
+    ] as MTGColor[]);
   }, [
     whiteApplied,
     blueApplied,
@@ -45,6 +43,8 @@ export default function ColorFilter({ setColorFilters }: ColorFilterProps) {
     colorlessApplied,
     monoColorApplied,
   ]);
+
+  useEffect(() => setColorFilters(appliedFilters), [appliedFilters]);
 
   return (
     <View>
