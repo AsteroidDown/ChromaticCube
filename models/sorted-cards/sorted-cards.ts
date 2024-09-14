@@ -28,14 +28,14 @@ export interface CardsSortedByCost {
 }
 
 export interface CardsSortedByType {
-  land: Card[];
-  enchantment: Card[];
-  artifact: Card[];
+  creature: Card[];
   instant: Card[];
   sorcery: Card[];
-  creature: Card[];
+  artifact: Card[];
+  enchantment: Card[];
   planeswalker: Card[];
   battle: Card[];
+  land: Card[];
 }
 
 export interface CardFilters {

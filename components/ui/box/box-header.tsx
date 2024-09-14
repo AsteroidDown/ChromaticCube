@@ -27,7 +27,7 @@ export default function BoxHeader({
 }: BoxHeaderProps) {
   return (
     <View className="flex-1 -mx-6">
-      <View className="flex flex-row flex-wrap justify-between items-center px-6 pb-4">
+      <View className="flex flex-row flex-wrap gap-2 justify-between items-center px-6 pb-4">
         <View className="flex flex-row items-center gap-4">
           {start}
           {startIcon && (

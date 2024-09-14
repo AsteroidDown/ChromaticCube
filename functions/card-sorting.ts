@@ -96,7 +96,12 @@ export function sortCardsByCost(
   cards.forEach((card) => {
     if (
       (filteredColors?.length &&
-        !filteredColors.some((color) => card.colorIdentity.includes(color!))) ||
+        !filteredColors.some(
+          (color) =>
+            (color == "M" && card.colorIdentity.length > 1) ||
+            (color === "C" && !card.colorIdentity.length) ||
+            card.colorIdentity.includes(color!)
+        )) ||
       (filteredTypes?.length &&
         !filteredTypes.some((type) =>
           card.faces?.front
