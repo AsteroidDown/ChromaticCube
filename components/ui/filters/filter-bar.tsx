@@ -1,6 +1,6 @@
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { MTGColor } from "../../../constants/mtg/mtg-colors";
 import { MTGRarity } from "../../../constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "../../../constants/mtg/mtg-types";
@@ -18,6 +18,7 @@ export interface FilterBarProps {
 
 export default function FilterBar({ setFilters }: FilterBarProps) {
   const [showFilters, setShowFilters] = React.useState(false);
+  const [filterLength, setFilterLength] = React.useState(0);
 
   const [colorFilter, setColorFilter] = React.useState([] as MTGColor[]);
   const [typeFilter, setTypeFilter] = React.useState([] as MTGCardTypes[]);
@@ -32,6 +33,10 @@ export default function FilterBar({ setFilters }: FilterBarProps) {
       rarityFilter,
       priceSort,
     });
+
+    setFilterLength(
+      colorFilter.length + typeFilter.length + rarityFilter.length
+    );
   }, [colorFilter, typeFilter, rarityFilter, priceSort]);
 
   return (
@@ -42,6 +47,18 @@ export default function FilterBar({ setFilters }: FilterBarProps) {
           type={showFilters ? "default" : "outlined"}
           onClick={() => setShowFilters(!showFilters)}
         ></Chip>
+
+        <View
+          className={`${
+            filterLength ? "max-w-[100px]" : "max-w-[0px]"
+          } absolute -bottom-1 -right-1 overflow-hidden transition-all duration-300`}
+        >
+          <Text
+            className={`text-sm font-bold bg-primary-200 py-px px-[7px] rounded-full`}
+          >
+            {filterLength}
+          </Text>
+        </View>
       </View>
 
       <View
