@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { MTGRarity } from "../../constants/mtg/mtg-rarity";
-import Chip from "../ui/chip/chip";
-import { Dropdown } from "../ui/dropdown/dropdown";
+import { MTGRarity } from "../../../../constants/mtg/mtg-rarity";
+import Chip from "../../chip/chip";
+import { Dropdown } from "../../dropdown/dropdown";
 
 export interface RarityFilterProps {
   setRarityFilters: React.Dispatch<React.SetStateAction<MTGRarity[]>>;

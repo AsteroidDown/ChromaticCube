@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { MTGCardTypes } from "../../constants/mtg/mtg-types";
-import Chip from "../ui/chip/chip";
-import { Dropdown } from "../ui/dropdown/dropdown";
+import { MTGCardTypes } from "../../../../constants/mtg/mtg-types";
+import Chip from "../../chip/chip";
+import { Dropdown } from "../../dropdown/dropdown";
 
 export interface TypeFilterProps {
   setTypeFilters: React.Dispatch<React.SetStateAction<MTGCardTypes[]>>;

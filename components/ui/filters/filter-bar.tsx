@@ -5,10 +5,10 @@ import { MTGColor } from "../../../constants/mtg/mtg-colors";
 import { MTGRarity } from "../../../constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "../../../constants/mtg/mtg-types";
 import { CardFilters } from "../../../models/sorted-cards/sorted-cards";
-import ColorFilter from "../../filtering/color-filter";
-import RarityFilter from "../../filtering/rarity-filter";
-import TypeFilter from "../../filtering/type-filter";
 import Chip from "../chip/chip";
+import ColorFilter from "./filter-types/color-filter";
+import RarityFilter from "./filter-types/rarity-filter";
+import TypeFilter from "./filter-types/type-filter";
 
 export interface FilterBarProps {
   setFilters: React.Dispatch<React.SetStateAction<CardFilters>>;
