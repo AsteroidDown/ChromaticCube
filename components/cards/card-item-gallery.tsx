@@ -1,6 +1,7 @@
 import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
+import { filterCards } from "../../functions/card-filtering";
 import {
   sortCardsAlphabetically,
   sortCardsByCost,
@@ -44,6 +45,8 @@ export default function CardItemGallery() {
   }, [cards]);
 
   useEffect(() => {
+    setTimeout(() => {}, 300);
+
     const sortedCards =
       filters.priceSort === "ASC"
         ? sortCardsByPrice(cards)
@@ -51,9 +54,11 @@ export default function CardItemGallery() {
         ? sortCardsByPrice(cards, false)
         : cards;
 
-    setCardsSortedByCost(sortCardsByCost(sortedCards, filters));
-    setCardCount(getCountOfCards(sortedCards, filters));
-    setCardsValue(getTotalValueOfCards(sortedCards, filters));
+    const filteredCards = filterCards(sortedCards, filters);
+
+    setCardsSortedByCost(sortCardsByCost(filteredCards));
+    setCardCount(getCountOfCards(filteredCards));
+    setCardsValue(getTotalValueOfCards(filteredCards));
   }, [filters]);
 
   return (

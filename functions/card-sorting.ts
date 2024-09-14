@@ -1,12 +1,10 @@
 import { MTGCardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import {
-  CardFilters,
   CardsSortedByColor,
   CardsSortedByCost,
   CardsSortedByType,
 } from "../models/sorted-cards/sorted-cards";
-import { filterCard } from "./card-filtering";
 
 export function sortCardsAlphabetically(cards: Card[]) {
   return cards.sort((a, b) => a.name.localeCompare(b.name));
@@ -71,10 +69,7 @@ export function sortCardsByColor(cards: Card[]): CardsSortedByColor {
   return sortedCards;
 }
 
-export function sortCardsByCost(
-  cards: Card[],
-  filters?: CardFilters
-): CardsSortedByCost {
+export function sortCardsByCost(cards: Card[]): CardsSortedByCost {
   const sortedCards: CardsSortedByCost = {
     zero: [],
     one: [],
@@ -88,8 +83,6 @@ export function sortCardsByCost(
   };
 
   cards.forEach((card) => {
-    if (filters && filterCard(card, filters)) return;
-
     if (
       card.faces
         ? card.faces?.front.typeLine.includes("Land")

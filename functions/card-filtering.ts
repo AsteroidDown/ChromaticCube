@@ -8,6 +8,20 @@ import { MTGCardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import { CardFilters } from "../models/sorted-cards/sorted-cards";
 
+const baseColors: MTGColorSymbol[] = ["W", "U", "B", "R", "G"];
+
+export function filterCards(cards: Card[], filters: CardFilters) {
+  return cards.reduce((acc, card) => {
+    const shouldFilterCard = filterCard(card, filters);
+
+    if (shouldFilterCard) return acc;
+    else {
+      acc.push(card);
+      return acc;
+    }
+  }, [] as Card[]);
+}
+
 export function filterCard(card: Card, filters: CardFilters) {
   return (
     (filters.colorFilter?.length &&
@@ -22,10 +36,17 @@ export function filterCard(card: Card, filters: CardFilters) {
 export function filterCardByColor(card: Card, colors: MTGColor[]) {
   const filterColors = colors?.map((color) => MTGColorMap.get(color));
 
-  const baseColors: MTGColorSymbol[] = ["W", "U", "B", "R", "G"];
   const filteredBaseColors = baseColors.filter((color) =>
     filterColors.includes(color)
   );
+
+  // Filter cards with a color
+  if (
+    filteredBaseColors.length &&
+    !filteredBaseColors.some((color) => card.colorIdentity.includes(color!))
+  ) {
+    return true;
+  }
 
   // Filter multi colored cards exclusively
   const multiColored = filterColors?.includes("M");
@@ -38,8 +59,10 @@ export function filterCardByColor(card: Card, colors: MTGColor[]) {
     if (multiColoredAndColor) {
       if (
         filteredBaseColors.length > 1 &&
-        card.colorIdentity.length !== filteredBaseColors.length &&
-        !card.colorIdentity.every((color) => filteredBaseColors.includes(color))
+        (card.colorIdentity.length !== filteredBaseColors.length ||
+          !card.colorIdentity.every((color) =>
+            filteredBaseColors.includes(color)
+          ))
       ) {
         return true;
       } else if (
@@ -68,14 +91,6 @@ export function filterCardByColor(card: Card, colors: MTGColor[]) {
 
   // Filter colorless
   if (filterColors.includes("C") && card.colorIdentity.length !== 0) {
-    return true;
-  }
-
-  // Filter cards with a color
-  if (
-    filteredBaseColors.length &&
-    !filteredBaseColors.some((color) => card.colorIdentity.includes(color!))
-  ) {
     return true;
   }
 
