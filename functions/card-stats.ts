@@ -13,18 +13,32 @@ export function getTotalValueOfCards(
   const filteredTypes = filters?.typeFilter;
   const filteredRarity = filters?.rarityFilter;
 
+  const monoColored = filteredColors?.includes("1");
+  const monoColoredAndColor =
+    monoColored &&
+    (filteredColors?.includes("W") ||
+      filteredColors?.includes("U") ||
+      filteredColors?.includes("B") ||
+      filteredColors?.includes("R") ||
+      filteredColors?.includes("G"));
+
   return (
     Math.round(
       cards.reduce((acc, card) => {
         if (
           (filteredColors?.length &&
-            !filteredColors.some(
-              (color) =>
+            !filteredColors.some((color) => {
+              return (
                 (color === "C" && card.colorIdentity.length == 0) ||
-                (color === "1" && card.colorIdentity.length === 1) ||
                 (color === "M" && card.colorIdentity.length > 1) ||
-                card.colorIdentity.includes(color!)
-            )) ||
+                (monoColored
+                  ? monoColoredAndColor
+                    ? card.colorIdentity.length === 1 &&
+                      card.colorIdentity.includes(color!)
+                    : card.colorIdentity.length === 1
+                  : card.colorIdentity.includes(color!))
+              );
+            })) ||
           (filteredTypes?.length &&
             !filteredTypes.some((type) =>
               card.faces?.front
@@ -53,16 +67,30 @@ export function getCountOfCards(cards: Card[], filters?: CardFilters) {
   const filteredTypes = filters?.typeFilter;
   const filteredRarity = filters?.rarityFilter;
 
+  const monoColored = filteredColors?.includes("1");
+  const monoColoredAndColor =
+    monoColored &&
+    (filteredColors?.includes("W") ||
+      filteredColors?.includes("U") ||
+      filteredColors?.includes("B") ||
+      filteredColors?.includes("R") ||
+      filteredColors?.includes("G"));
+
   return cards.reduce((acc, card) => {
     if (
       (filteredColors?.length &&
-        !filteredColors.some(
-          (color) =>
+        !filteredColors.some((color) => {
+          return (
             (color === "C" && card.colorIdentity.length == 0) ||
-            (color === "1" && card.colorIdentity.length === 1) ||
             (color === "M" && card.colorIdentity.length > 1) ||
-            card.colorIdentity.includes(color!)
-        )) ||
+            (monoColored
+              ? monoColoredAndColor
+                ? card.colorIdentity.length === 1 &&
+                  card.colorIdentity.includes(color!)
+                : card.colorIdentity.length === 1
+              : card.colorIdentity.includes(color!))
+          );
+        })) ||
       (filteredTypes?.length &&
         !filteredTypes.some((type) =>
           card.faces?.front
