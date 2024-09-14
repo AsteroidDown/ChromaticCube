@@ -1,0 +1,64 @@
+import { faDownLong, faUpLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
+import { View, ViewProps } from "react-native";
+import { SortDirection } from "../../../constants/sorting";
+import { ActionColor } from "../../../constants/ui/colors";
+import Chip from "../chip/chip";
+import { getFilterTextColor } from "./filter";
+
+export type SortingFilterProps = ViewProps & {
+  title: string;
+  action?: ActionColor;
+  disabled?: boolean;
+
+  sortDirection: SortDirection;
+  setSortDirection: React.Dispatch<React.SetStateAction<SortDirection>>;
+};
+
+export default function SortingFilter({
+  title,
+  action = "primary",
+  disabled = false,
+  sortDirection,
+  setSortDirection,
+  className,
+  style,
+}: SortingFilterProps) {
+  const textColor = getFilterTextColor(action, disabled);
+
+  function changeDirection() {
+    if (sortDirection === "ASC") setSortDirection("DESC");
+    else if (sortDirection === "DESC") setSortDirection(null);
+    else setSortDirection("ASC");
+  }
+
+  return (
+    <Chip
+      type="outlined"
+      text={title}
+      style={style}
+      action={action}
+      className={className}
+      onClick={() => changeDirection()}
+    >
+      <View
+        className={`overflow-hidden transition-all duration-300 ${
+          sortDirection ? "ml-0 max-w-[100px]" : "-ml-2 max-w-[0px]"
+        }`}
+      >
+        <View
+          className={`text-dark-100 rounded-full px-[7px] py-[3px] ${textColor}`}
+        >
+          <FontAwesomeIcon
+            size="sm"
+            icon={sortDirection === "ASC" ? faUpLong : faDownLong}
+            className={`${textColor} ${
+              sortDirection === "ASC" ? "rotate-0" : "rotate-[360deg]"
+            } transition-all`}
+          />
+        </View>
+      </View>
+    </Chip>
+  );
+}

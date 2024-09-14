@@ -8,6 +8,22 @@ import {
   CardsSortedByType,
 } from "../models/sorted-cards/sorted-cards";
 
+export function sortCardsAlphabetically(cards: Card[]) {
+  return cards.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export function sortCardsByPrice(
+  cards: Card[],
+  ascending = true,
+  euro = false
+) {
+  return cards.sort((a, b) =>
+    euro
+      ? ((a.prices.eur || 0) - (b.prices.eur || 0)) * (ascending ? 1 : -1)
+      : ((a.prices.usd || 0) - (b.prices.usd || 0)) * (ascending ? 1 : -1)
+  );
+}
+
 export function sortCardsByColor(cards: Card[]): CardsSortedByColor {
   const sortedCards: CardsSortedByColor = {
     white: [],
@@ -71,9 +87,11 @@ export function sortCardsByCost(
     land: [],
   };
 
-  const filteredColors = filters?.color?.map((color) => MTGColorMap.get(color));
-  const filteredTypes = filters?.type;
-  const filteredRarity = filters?.rarity;
+  const filteredColors = filters?.colorFilter?.map((color) =>
+    MTGColorMap.get(color)
+  );
+  const filteredTypes = filters?.typeFilter;
+  const filteredRarity = filters?.rarityFilter;
 
   cards.forEach((card) => {
     if (
