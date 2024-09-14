@@ -1,55 +1,16 @@
-import { MTGColorMap } from "../constants/mtg/mtg-colors";
 import { Card } from "../models/card/card";
 import { CardFilters } from "../models/sorted-cards/sorted-cards";
+import { filterCard } from "./card-filtering";
 
 export function getTotalValueOfCards(
   cards: Card[],
   filters?: CardFilters,
   euro: boolean = false
 ) {
-  const filteredColors = filters?.colorFilter?.map((color) =>
-    MTGColorMap.get(color)
-  );
-  const filteredTypes = filters?.typeFilter;
-  const filteredRarity = filters?.rarityFilter;
-
-  const monoColored = filteredColors?.includes("1");
-  const monoColoredAndColor =
-    monoColored &&
-    (filteredColors?.includes("W") ||
-      filteredColors?.includes("U") ||
-      filteredColors?.includes("B") ||
-      filteredColors?.includes("R") ||
-      filteredColors?.includes("G"));
-
   return (
     Math.round(
       cards.reduce((acc, card) => {
-        if (
-          (filteredColors?.length &&
-            !filteredColors.some((color) => {
-              return (
-                (color === "C" && card.colorIdentity.length == 0) ||
-                (color === "M" && card.colorIdentity.length > 1) ||
-                (monoColored
-                  ? monoColoredAndColor
-                    ? card.colorIdentity.length === 1 &&
-                      card.colorIdentity.includes(color!)
-                    : card.colorIdentity.length === 1
-                  : card.colorIdentity.includes(color!))
-              );
-            })) ||
-          (filteredTypes?.length &&
-            !filteredTypes.some((type) =>
-              card.faces?.front
-                ? card.faces.front.typeLine.includes(type)
-                : card.typeLine.includes(type)
-            )) ||
-          (filteredRarity?.length &&
-            !filteredRarity.some((rarity) => card.rarity === rarity))
-        ) {
-          return acc;
-        }
+        if (filters && filterCard(card, filters)) return acc;
 
         return (
           acc +
@@ -61,47 +22,8 @@ export function getTotalValueOfCards(
 }
 
 export function getCountOfCards(cards: Card[], filters?: CardFilters) {
-  const filteredColors = filters?.colorFilter?.map((color) =>
-    MTGColorMap.get(color)
-  );
-  const filteredTypes = filters?.typeFilter;
-  const filteredRarity = filters?.rarityFilter;
-
-  const monoColored = filteredColors?.includes("1");
-  const monoColoredAndColor =
-    monoColored &&
-    (filteredColors?.includes("W") ||
-      filteredColors?.includes("U") ||
-      filteredColors?.includes("B") ||
-      filteredColors?.includes("R") ||
-      filteredColors?.includes("G"));
-
   return cards.reduce((acc, card) => {
-    if (
-      (filteredColors?.length &&
-        !filteredColors.some((color) => {
-          return (
-            (color === "C" && card.colorIdentity.length == 0) ||
-            (color === "M" && card.colorIdentity.length > 1) ||
-            (monoColored
-              ? monoColoredAndColor
-                ? card.colorIdentity.length === 1 &&
-                  card.colorIdentity.includes(color!)
-                : card.colorIdentity.length === 1
-              : card.colorIdentity.includes(color!))
-          );
-        })) ||
-      (filteredTypes?.length &&
-        !filteredTypes.some((type) =>
-          card.faces?.front
-            ? card.faces.front.typeLine.includes(type)
-            : card.typeLine.includes(type)
-        )) ||
-      (filteredRarity?.length &&
-        !filteredRarity.some((rarity) => card.rarity === rarity))
-    ) {
-      return acc;
-    }
+    if (filters && filterCard(card, filters)) return acc;
 
     return acc + card.count;
   }, 0);

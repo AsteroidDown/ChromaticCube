@@ -1,4 +1,3 @@
-import { MTGColorMap } from "../constants/mtg/mtg-colors";
 import { MTGCardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import {
@@ -7,6 +6,7 @@ import {
   CardsSortedByCost,
   CardsSortedByType,
 } from "../models/sorted-cards/sorted-cards";
+import { filterCard } from "./card-filtering";
 
 export function sortCardsAlphabetically(cards: Card[]) {
   return cards.sort((a, b) => a.name.localeCompare(b.name));
@@ -87,47 +87,8 @@ export function sortCardsByCost(
     land: [],
   };
 
-  const filteredColors = filters?.colorFilter?.map((color) =>
-    MTGColorMap.get(color)
-  );
-  const filteredTypes = filters?.typeFilter;
-  const filteredRarity = filters?.rarityFilter;
-
-  const monoColored = filteredColors?.includes("1");
-  const monoColoredAndColor =
-    monoColored &&
-    (filteredColors?.includes("W") ||
-      filteredColors?.includes("U") ||
-      filteredColors?.includes("B") ||
-      filteredColors?.includes("R") ||
-      filteredColors?.includes("G"));
-
   cards.forEach((card) => {
-    if (
-      (filteredColors?.length &&
-        !filteredColors.some((color) => {
-          return (
-            (color === "C" && card.colorIdentity.length == 0) ||
-            (color === "M" && card.colorIdentity.length > 1) ||
-            (monoColored
-              ? monoColoredAndColor
-                ? card.colorIdentity.length === 1 &&
-                  card.colorIdentity.includes(color!)
-                : card.colorIdentity.length === 1
-              : card.colorIdentity.includes(color!))
-          );
-        })) ||
-      (filteredTypes?.length &&
-        !filteredTypes.some((type) =>
-          card.faces?.front
-            ? card.faces.front.typeLine.includes(type)
-            : card.typeLine.includes(type)
-        )) ||
-      (filteredRarity?.length &&
-        !filteredRarity.some((rarity) => card.rarity === rarity))
-    ) {
-      return;
-    }
+    if (filters && filterCard(card, filters)) return;
 
     if (
       card.faces
