@@ -3,7 +3,15 @@ import { Text, View, ViewProps } from "react-native";
 import { ActionColor } from "../../../constants/ui/colors";
 import Chip from "../chip/chip";
 import { Dropdown } from "../dropdown/dropdown";
-import FilterOption, { FilterOptionProps } from "./filter-option";
+
+export type FilterOptionProps = ViewProps & {
+  title: string;
+
+  applied: boolean;
+  applyFilter: React.Dispatch<React.SetStateAction<boolean>>;
+
+  action?: ActionColor;
+};
 
 export type FilterProps = ViewProps & {
   title: string;
@@ -58,12 +66,13 @@ export default function Filter({
       >
         <View className="flex flex-row flex-wrap gap-2">
           {options.map((option, index) => (
-            <FilterOption
-              key={option.title + index}
-              title={option.title}
+            <Chip
+              text={option.title}
               action={option.action}
-              applied={option.applied}
-              applyFilter={option.applyFilter}
+              className={className}
+              key={option.title + index}
+              type={option.applied ? "default" : "outlined"}
+              onClick={() => option.applyFilter?.(!option.applied)}
             />
           ))}
         </View>
