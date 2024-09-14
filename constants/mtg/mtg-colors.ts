@@ -6,9 +6,10 @@ export type MTGColor =
   | "green"
   | "gold"
   | "colorless"
-  | "land";
+  | "land"
+  | "mono";
 
-export type MTGColorSymbol = "W" | "U" | "B" | "R" | "G" | "M" | "C";
+export type MTGColorSymbol = "W" | "U" | "B" | "R" | "G" | "M" | "C" | "1";
 
 export const MTGColorMap = new Map<MTGColor, MTGColorSymbol>([
   ["white", "W"],
@@ -16,6 +17,7 @@ export const MTGColorMap = new Map<MTGColor, MTGColorSymbol>([
   ["black", "B"],
   ["red", "R"],
   ["green", "G"],
-  ["colorless", "C"],
   ["gold", "M"],
+  ["colorless", "C"],
+  ["mono", "1"],
 ]);

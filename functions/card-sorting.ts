@@ -98,8 +98,9 @@ export function sortCardsByCost(
       (filteredColors?.length &&
         !filteredColors.some(
           (color) =>
-            (color == "M" && card.colorIdentity.length > 1) ||
-            (color === "C" && !card.colorIdentity.length) ||
+            (color === "C" && card.colorIdentity.length == 0) ||
+            (color === "1" && card.colorIdentity.length === 1) ||
+            (color === "M" && card.colorIdentity.length > 1) ||
             card.colorIdentity.includes(color!)
         )) ||
       (filteredTypes?.length &&

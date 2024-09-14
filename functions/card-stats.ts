@@ -18,8 +18,12 @@ export function getTotalValueOfCards(
       cards.reduce((acc, card) => {
         if (
           (filteredColors?.length &&
-            !filteredColors.some((color) =>
-              card.colorIdentity.includes(color!)
+            !filteredColors.some(
+              (color) =>
+                (color === "C" && card.colorIdentity.length == 0) ||
+                (color === "1" && card.colorIdentity.length === 1) ||
+                (color === "M" && card.colorIdentity.length > 1) ||
+                card.colorIdentity.includes(color!)
             )) ||
           (filteredTypes?.length &&
             !filteredTypes.some((type) =>
@@ -52,7 +56,13 @@ export function getCountOfCards(cards: Card[], filters?: CardFilters) {
   return cards.reduce((acc, card) => {
     if (
       (filteredColors?.length &&
-        !filteredColors.some((color) => card.colorIdentity.includes(color!))) ||
+        !filteredColors.some(
+          (color) =>
+            (color === "C" && card.colorIdentity.length == 0) ||
+            (color === "1" && card.colorIdentity.length === 1) ||
+            (color === "M" && card.colorIdentity.length > 1) ||
+            card.colorIdentity.includes(color!)
+        )) ||
       (filteredTypes?.length &&
         !filteredTypes.some((type) =>
           card.faces?.front

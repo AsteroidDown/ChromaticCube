@@ -18,6 +18,7 @@ export default function ColorFilter({ setColorFilters }: ColorFilterProps) {
   const [greenApplied, setGreenApplied] = React.useState(false);
   const [goldApplied, setGoldApplied] = React.useState(false);
   const [colorlessApplied, setColorlessApplied] = React.useState(false);
+  const [monoColorApplied, setMonoColorApplied] = React.useState(false);
 
   let appliedFilters: MTGColor[] = [];
 
@@ -30,6 +31,7 @@ export default function ColorFilter({ setColorFilters }: ColorFilterProps) {
       ...(greenApplied ? ["green"] : []),
       ...(goldApplied ? ["gold"] : []),
       ...(colorlessApplied ? ["colorless"] : []),
+      ...(monoColorApplied ? ["mono"] : []),
     ] as MTGColor[];
 
     setColorFilters(appliedFilters);
@@ -41,6 +43,7 @@ export default function ColorFilter({ setColorFilters }: ColorFilterProps) {
     greenApplied,
     goldApplied,
     colorlessApplied,
+    monoColorApplied,
   ]);
 
   return (
@@ -112,6 +115,12 @@ export default function ColorFilter({ setColorFilters }: ColorFilterProps) {
             action="colorless"
             type={colorlessApplied ? "default" : "outlined"}
             onClick={() => setColorlessApplied(!colorlessApplied)}
+          />
+
+          <Chip
+            text="Mono"
+            type={monoColorApplied ? "default" : "outlined"}
+            onClick={() => setMonoColorApplied(!monoColorApplied)}
           />
         </View>
       </Dropdown>
