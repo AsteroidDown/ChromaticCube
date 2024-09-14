@@ -1,21 +1,38 @@
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
+import { MTGColor } from "../../../constants/mtg/mtg-colors";
+import { MTGRarity } from "../../../constants/mtg/mtg-rarity";
+import { MTGCardTypes } from "../../../constants/mtg/mtg-types";
+import { CardFilters } from "../../../models/sorted-cards/sorted-cards";
+import ColorFilter from "../../filtering/color-filter";
+import RarityFilter from "../../filtering/rarity-filter";
+import TypeFilter from "../../filtering/type-filter";
 import Chip from "../chip/chip";
-import Filter, { FilterProps } from "./filter";
 
 export interface FilterBarProps {
-  filters: FilterProps[];
+  setFilters: React.Dispatch<React.SetStateAction<CardFilters>>;
 }
 
-export default function FilterBar({ filters }: FilterBarProps) {
+export default function FilterBar({ setFilters }: FilterBarProps) {
   const [showFilters, setShowFilters] = React.useState(false);
 
+  const [colorFilters, setColorFilters] = React.useState([] as MTGColor[]);
+  const [typeFilters, setTypeFilters] = React.useState([] as MTGCardTypes[]);
+  const [rarityFilters, setRarityFilters] = React.useState([] as MTGRarity[]);
+
+  useEffect(() => {
+    setFilters({
+      color: colorFilters,
+      type: typeFilters,
+      rarity: rarityFilters,
+    });
+  }, [colorFilters, typeFilters, rarityFilters]);
+
   return (
-    <View className="flex flex-row-reverse h-11">
+    <View className="flex flex-row-reverse">
       <View className="bg-background-200 rounded-l-full z-10">
         <Chip
-          className="min-h-11"
           startIcon={faFilter}
           type={showFilters ? "default" : "outlined"}
           onClick={() => setShowFilters(!showFilters)}
@@ -29,15 +46,11 @@ export default function FilterBar({ filters }: FilterBarProps) {
             : "-mr-12 max-w-[0%]"
         }`}
       >
-        {filters.map((filter, index) => (
-          <Filter
-            key={filter.title + index}
-            className={`flex-1 max-w-min min-w-min transition-all duration-300 ${
-              showFilters ? "mr-[0%]" : "mr-[-20%]"
-            }`}
-            {...filter}
-          />
-        ))}
+        <ColorFilter setColorFilters={setColorFilters} />
+
+        <TypeFilter setTypeFilters={setTypeFilters} />
+
+        <RarityFilter setRarityFilters={setRarityFilters} />
       </View>
     </View>
   );

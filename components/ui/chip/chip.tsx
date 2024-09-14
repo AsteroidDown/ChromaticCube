@@ -1,6 +1,7 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Pressable, Text, ViewProps } from "react-native";
+import { MTGColor } from "../../../constants/mtg/mtg-colors";
 import { ActionColor } from "../../../constants/ui/colors";
 import { Size } from "../../../constants/ui/sizes";
 
@@ -10,7 +11,7 @@ export type ChipProps = ViewProps & {
   text?: string;
   type?: ChipType;
   size?: Size;
-  action?: ActionColor;
+  action?: ActionColor | MTGColor;
   disabled?: boolean;
 
   startIcon?: IconProp;
@@ -74,7 +75,7 @@ export default function Chip({
 }
 
 function getChipBaseColor(
-  action: ActionColor,
+  action: ActionColor | MTGColor,
   type: ChipType,
   disabled: boolean
 ) {
@@ -93,7 +94,23 @@ function getChipBaseColor(
         ? "border-danger-200"
         : action === "info"
         ? "border-info-200"
-        : "border-warning-200")
+        : action === "warning"
+        ? "border-warning-200"
+        : action === "white"
+        ? "border-mtg-white-secondary"
+        : action === "blue"
+        ? "border-mtg-blue-secondary"
+        : action === "black"
+        ? "border-mtg-black-secondary"
+        : action === "red"
+        ? "border-mtg-red-secondary"
+        : action === "green"
+        ? "border-mtg-green-secondary"
+        : action === "gold"
+        ? "border-mtg-gold-secondary"
+        : action === "colorless"
+        ? "border-mtg-colorless-secondary"
+        : "border-mtg-blue-secondary")
     );
   } else {
     if (disabled) return "bg-dark-300";
@@ -108,12 +125,28 @@ function getChipBaseColor(
       ? "bg-danger-200"
       : action === "info"
       ? "bg-info-200"
-      : "bg-warning-200";
+      : action === "warning"
+      ? "bg-warning-200"
+      : action === "white"
+      ? "bg-mtg-white-secondary"
+      : action === "blue"
+      ? "bg-mtg-blue-secondary"
+      : action === "black"
+      ? "bg-mtg-black-secondary"
+      : action === "red"
+      ? "bg-mtg-red-secondary"
+      : action === "green"
+      ? "bg-mtg-green-secondary"
+      : action === "gold"
+      ? "bg-mtg-gold-secondary"
+      : action === "colorless"
+      ? "bg-mtg-colorless-secondary"
+      : "bg-mtg-blue-secondary";
   }
 }
 
 function getChipHoverColor(
-  action: ActionColor,
+  action: ActionColor | MTGColor,
   type: ChipType,
   disabled: boolean
 ) {
@@ -130,12 +163,28 @@ function getChipHoverColor(
       ? "hover:bg-danger-100"
       : action === "info"
       ? "hover:bg-info-100"
-      : "hover:bg-warning-100"
+      : action === "warning"
+      ? "hover:bg-warning-100"
+      : action === "white"
+      ? "hover:bg-mtg-white"
+      : action === "blue"
+      ? "hover:bg-mtg-blue"
+      : action === "black"
+      ? "hover:bg-mtg-black"
+      : action === "red"
+      ? "hover:bg-mtg-red"
+      : action === "green"
+      ? "hover:bg-mtg-green"
+      : action === "gold"
+      ? "hover:bg-mtg-gold"
+      : action === "colorless"
+      ? "hover:bg-mtg-colorless"
+      : "hover:bg-mtg-blue"
   }`;
 }
 
 function getChipTextColor(
-  action: ActionColor,
+  action: ActionColor | MTGColor,
   type: ChipType,
   disabled: boolean
 ) {
@@ -154,7 +203,23 @@ function getChipTextColor(
       ? "text-danger-100"
       : action === "info"
       ? "text-info-100"
-      : "text-warning-100"
+      : action === "warning"
+      ? "text-warning-100"
+      : action === "white"
+      ? "text-mtg-white"
+      : action === "blue"
+      ? "text-mtg-blue"
+      : action === "black"
+      ? "text-mtg-black"
+      : action === "red"
+      ? "text-mtg-red"
+      : action === "green"
+      ? "text-mtg-green"
+      : action === "gold"
+      ? "text-mtg-gold"
+      : action === "colorless"
+      ? "text-mtg-colorless"
+      : "text-mtg-blue"
   }`;
 }
 

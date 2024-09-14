@@ -1,9 +1,6 @@
 import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { MTGColor } from "../../constants/mtg/mtg-colors";
-import { MTGRarity } from "../../constants/mtg/mtg-rarity";
-import { MTGCardTypes } from "../../constants/mtg/mtg-types";
 import { sortCardsByCost } from "../../functions/card-sorting";
 import {
   getCountOfCards,
@@ -11,11 +8,11 @@ import {
 } from "../../functions/card-stats";
 import { getLocalStorageStoredCards } from "../../functions/local-storage";
 import { Card } from "../../models/card/card";
+import { CardFilters } from "../../models/sorted-cards/sorted-cards";
 import Box from "../ui/box/box";
 import BoxHeader from "../ui/box/box-header";
 import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";
-import { FilterProps } from "../ui/filters/filter";
 import FilterBar from "../ui/filters/filter-bar";
 import CardItem from "./card-item";
 
@@ -30,133 +27,7 @@ export default function CardItemGallery() {
   );
   const [cardCount, setCardCount] = React.useState(getCountOfCards(cards));
 
-  const [filterByWhite, setFilterByWhite] = React.useState(false);
-  const [filterByBlue, setFilterByBlue] = React.useState(false);
-  const [filterByBlack, setFilterByBlack] = React.useState(false);
-  const [filterByRed, setFilterByRed] = React.useState(false);
-  const [filterByGreen, setFilterByGreen] = React.useState(false);
-
-  const [filterByCreature, setFilterByCreature] = React.useState(false);
-  const [filterByInstant, setFilterByInstant] = React.useState(false);
-  const [filterBySorcery, setFilterBySorcery] = React.useState(false);
-  const [filterByArtifact, setFilterByArtifact] = React.useState(false);
-  const [filterByEnchantment, setFilterByEnchantment] = React.useState(false);
-  const [filterByPlaneswalker, setFilterByPlaneswalker] = React.useState(false);
-  const [filterByBattle, setFilterByBattle] = React.useState(false);
-  const [filterByLand, setFilterByLand] = React.useState(false);
-
-  const [filterByCommon, setFilterByCommon] = React.useState(false);
-  const [filterByUncommon, setFilterByUncommon] = React.useState(false);
-  const [filterByRare, setFilterByRare] = React.useState(false);
-  const [filterByMythic, setFilterByMythic] = React.useState(false);
-
-  const colorFilters: FilterProps = {
-    title: "Color",
-    options: [
-      {
-        title: "White",
-        action: "warning",
-        applied: filterByWhite,
-        applyFilter: setFilterByWhite,
-      },
-      {
-        title: "Blue",
-        action: "info",
-        applied: filterByBlue,
-        applyFilter: setFilterByBlue,
-      },
-      {
-        title: "Black",
-        action: "primary",
-        applied: filterByBlack,
-        applyFilter: setFilterByBlack,
-      },
-      {
-        title: "Red",
-        action: "danger",
-        applied: filterByRed,
-        applyFilter: setFilterByRed,
-      },
-      {
-        title: "Green",
-        action: "success",
-        applied: filterByGreen,
-        applyFilter: setFilterByGreen,
-      },
-    ],
-  };
-
-  const typeFilters: FilterProps = {
-    title: "Type",
-    options: [
-      {
-        title: "Creature",
-        applied: filterByCreature,
-        applyFilter: setFilterByCreature,
-      },
-      {
-        title: "Instant",
-        applied: filterByInstant,
-        applyFilter: setFilterByInstant,
-      },
-      {
-        title: "Sorcery",
-        applied: filterBySorcery,
-        applyFilter: setFilterBySorcery,
-      },
-      {
-        title: "Artifact",
-        applied: filterByArtifact,
-        applyFilter: setFilterByArtifact,
-      },
-      {
-        title: "Enchantment",
-        applied: filterByEnchantment,
-        applyFilter: setFilterByEnchantment,
-      },
-      {
-        title: "Planeswalker",
-        applied: filterByPlaneswalker,
-        applyFilter: setFilterByPlaneswalker,
-      },
-      {
-        title: "Battle",
-        applied: filterByBattle,
-        applyFilter: setFilterByBattle,
-      },
-      {
-        title: "Land",
-        applied: filterByLand,
-        applyFilter: setFilterByLand,
-      },
-    ],
-  };
-
-  const rarityFilters: FilterProps = {
-    title: "Rarity",
-    options: [
-      {
-        title: "Common",
-        applied: filterByCommon,
-        applyFilter: setFilterByCommon,
-      },
-      {
-        title: "Uncommon",
-        applied: filterByUncommon,
-        applyFilter: setFilterByUncommon,
-      },
-      {
-        title: "Rare",
-        applied: filterByRare,
-        applyFilter: setFilterByRare,
-      },
-      {
-        title: "Mythic",
-        applied: filterByMythic,
-        applyFilter: setFilterByMythic,
-      },
-    ],
-  };
+  const [filters, setFilters] = React.useState({} as CardFilters);
 
   useEffect(() => setCards(getLocalStorageStoredCards()), []);
 
@@ -167,72 +38,10 @@ export default function CardItemGallery() {
   }, [cards]);
 
   useEffect(() => {
-    const colorFilter = [
-      ...(filterByWhite ? ["white"] : []),
-      ...(filterByBlue ? ["blue"] : []),
-      ...(filterByBlack ? ["black"] : []),
-      ...(filterByRed ? ["red"] : []),
-      ...(filterByGreen ? ["green"] : []),
-    ] as MTGColor[];
-
-    const typeFilter = [
-      ...(filterByCreature ? [MTGCardTypes.CREATURE] : []),
-      ...(filterByInstant ? [MTGCardTypes.INSTANT] : []),
-      ...(filterBySorcery ? [MTGCardTypes.SORCERY] : []),
-      ...(filterByArtifact ? [MTGCardTypes.ARTIFACT] : []),
-      ...(filterByEnchantment ? [MTGCardTypes.ENCHANTMENT] : []),
-      ...(filterByLand ? [MTGCardTypes.LAND] : []),
-      ...(filterByPlaneswalker ? [MTGCardTypes.PLANESWALKER] : []),
-      ...(filterByBattle ? [MTGCardTypes.BATTLE] : []),
-    ];
-
-    const rarityFilter = [
-      ...(filterByCommon ? ["common"] : []),
-      ...(filterByUncommon ? ["uncommon"] : []),
-      ...(filterByRare ? ["rare"] : []),
-      ...(filterByMythic ? ["mythic"] : []),
-    ] as MTGRarity[];
-
-    setSortedCards(
-      sortCardsByCost(cards, {
-        color: colorFilter,
-        type: typeFilter,
-        rarity: rarityFilter,
-      })
-    );
-    setCardCount(
-      getCountOfCards(cards, {
-        color: colorFilter,
-        type: typeFilter,
-        rarity: rarityFilter,
-      })
-    );
-    setCardsValue(
-      getTotalValueOfCards(cards, {
-        color: colorFilter,
-        type: typeFilter,
-        rarity: rarityFilter,
-      })
-    );
-  }, [
-    filterByWhite,
-    filterByBlue,
-    filterByBlack,
-    filterByRed,
-    filterByGreen,
-    filterByCreature,
-    filterByInstant,
-    filterBySorcery,
-    filterByArtifact,
-    filterByEnchantment,
-    filterByPlaneswalker,
-    filterByBattle,
-    filterByLand,
-    filterByCommon,
-    filterByUncommon,
-    filterByRare,
-    filterByMythic,
-  ]);
+    setSortedCards(sortCardsByCost(cards, filters));
+    setCardCount(getCountOfCards(cards, filters));
+    setCardsValue(getTotalValueOfCards(cards, filters));
+  }, [filters]);
 
   return (
     <Box className="!rounded-tl-none flex gap-2 px-0 overflow-hidden">
@@ -244,7 +53,7 @@ export default function CardItemGallery() {
         } | Total Value: $${cardsValue.toFixed(2)}`}
         end={
           <View className="flex flex-row gap-4">
-            <FilterBar filters={[colorFilters, typeFilters, rarityFilters]} />
+            <FilterBar setFilters={setFilters} />
 
             <Button
               type={hideImages ? "outlined" : "clear"}

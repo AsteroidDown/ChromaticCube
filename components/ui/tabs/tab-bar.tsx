@@ -36,18 +36,9 @@ export default function TabBar({ tabs, className }: TabBarProps) {
       {/* <View
         className={`flex flex-1 w-full rounded-b-xl rounded-tr-xl border-2 border-primary-200 overflow-hidden`}
       > */}
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          // contentStyle: { flex: 1, height: 100, minHeight: 100 },
-        }}
-      >
+      <Stack screenOptions={{ headerShown: false }}>
         {tabs.map((tab, index) => (
-          <Stack.Screen
-            key={tab.title + index}
-            name={tab.link?.toString()}
-            // options={{ contentStyle: { height: 100, flex: 1 } }}
-          />
+          <Stack.Screen key={tab.title + index} name={tab.link?.toString()} />
         ))}
       </Stack>
     </View>
