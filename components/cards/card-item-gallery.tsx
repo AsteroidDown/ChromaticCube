@@ -1,52 +1,59 @@
 import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { filterCards } from "../../functions/card-filtering";
 import {
   sortCardsAlphabetically,
+  sortCardsByColor,
   sortCardsByCost,
   sortCardsByPrice,
+  sortCardsByType,
 } from "../../functions/card-sorting";
 import {
   getCountOfCards,
   getTotalValueOfCards,
 } from "../../functions/card-stats";
 import { getLocalStorageStoredCards } from "../../functions/local-storage";
-import { Card } from "../../models/card/card";
-import { CardFilters } from "../../models/sorted-cards/sorted-cards";
+import {
+  CardFilters,
+  CardsSortedByColor,
+  CardsSortedByCost,
+  CardsSortedByType,
+} from "../../models/sorted-cards/sorted-cards";
 import Box from "../ui/box/box";
 import BoxHeader from "../ui/box/box-header";
 import Button from "../ui/button/button";
-import Divider from "../ui/divider/divider";
 import FilterBar from "../ui/filters/filter-bar";
-import CardItem from "./card-item";
+import CardItemGalleryColumn from "./card-item-gallery-column";
 
-export default function CardItemGallery() {
-  const [cards, setCards] = React.useState([] as Card[]);
+export type CardItemGalleryType = "cost" | "color" | "type";
+
+export interface CardItemGalleryProps {
+  type: CardItemGalleryType;
+}
+
+export default function CardItemGallery({
+  type = "cost",
+}: CardItemGalleryProps) {
+  const cards = sortCardsAlphabetically(getLocalStorageStoredCards());
+
+  const [cardCount, setCardCount] = React.useState(0);
+  const [cardsValue, setCardsValue] = React.useState(0);
 
   const [hideImages, setHideImages] = React.useState(false);
-
-  const [cardsSortedByCost, setCardsSortedByCost] = React.useState(
-    sortCardsByCost(sortCardsAlphabetically(cards))
-  );
-  const [cardsValue, setCardsValue] = React.useState(
-    getTotalValueOfCards(cards)
-  );
-  const [cardCount, setCardCount] = React.useState(getCountOfCards(cards));
-
   const [filters, setFilters] = React.useState({} as CardFilters);
 
-  useEffect(() => setCards(getLocalStorageStoredCards()), []);
+  const [cardsSortedByCost, setCardsSortedByCost] = React.useState(
+    {} as CardsSortedByCost
+  );
+  const [cardsSortedByColor, setCardsSortedByColor] = React.useState(
+    {} as CardsSortedByColor
+  );
+  const [cardsSortedByType, setCardsSortedByType] = React.useState(
+    {} as CardsSortedByType
+  );
 
   useEffect(() => {
-    setCardsSortedByCost(sortCardsByCost(cards));
-    setCardCount(getCountOfCards(cards));
-    setCardsValue(getTotalValueOfCards(cards));
-  }, [cards]);
-
-  useEffect(() => {
-    setTimeout(() => {}, 300);
-
     const sortedCards =
       filters.priceSort === "ASC"
         ? sortCardsByPrice(cards)
@@ -56,9 +63,18 @@ export default function CardItemGallery() {
 
     const filteredCards = filterCards(sortedCards, filters);
 
-    setCardsSortedByCost(sortCardsByCost(filteredCards));
     setCardCount(getCountOfCards(filteredCards));
     setCardsValue(getTotalValueOfCards(filteredCards));
+
+    if (type === "cost") {
+      setCardsSortedByCost(sortCardsByCost(filteredCards));
+    }
+    if (type === "color") {
+      setCardsSortedByColor(sortCardsByColor(filteredCards));
+    }
+    if (type === "type") {
+      setCardsSortedByType(sortCardsByType(filteredCards));
+    }
   }, [filters]);
 
   return (
@@ -83,95 +99,154 @@ export default function CardItemGallery() {
       />
 
       <View className="overflow-x-scroll overflow-y-hidden">
-        <View className="flex flex-row gap-4 w-full min-h-[500px]">
-          {cardsSortedByCost.zero?.length > 0 && (
-            <CardCondensedGalleryColumn
-              title="0 Cost"
+        {type === "cost" && cardsSortedByCost.one && (
+          <View className="flex flex-row gap-4 w-full min-h-[500px]">
+            {cardsSortedByCost.zero?.length > 0 && (
+              <CardItemGalleryColumn
+                title="0 Cost"
+                hideImages={hideImages}
+                cards={cardsSortedByCost.zero}
+              />
+            )}
+            <CardItemGalleryColumn
+              title="1 Cost"
               hideImages={hideImages}
-              cards={cardsSortedByCost.zero}
+              cards={cardsSortedByCost.one}
             />
-          )}
-          <CardCondensedGalleryColumn
-            title="1 Cost"
-            hideImages={hideImages}
-            cards={cardsSortedByCost.one}
-          />
-          <CardCondensedGalleryColumn
-            title="2 Cost"
-            hideImages={hideImages}
-            cards={cardsSortedByCost.two}
-          />
-          <CardCondensedGalleryColumn
-            title="3 Cost"
-            hideImages={hideImages}
-            cards={cardsSortedByCost.three}
-          />
-          <CardCondensedGalleryColumn
-            title="4 Cost"
-            hideImages={hideImages}
-            cards={cardsSortedByCost.four}
-          />
-          <CardCondensedGalleryColumn
-            title="5 Cost"
-            hideImages={hideImages}
-            cards={cardsSortedByCost.five}
-          />
-          <CardCondensedGalleryColumn
-            title="6 Cost"
-            hideImages={hideImages}
-            cards={cardsSortedByCost.six}
-          />
-          <CardCondensedGalleryColumn
-            title="7+ Cost"
-            hideImages={hideImages}
-            cards={cardsSortedByCost.seven}
-          />
-          {cardsSortedByCost.land?.length > 0 && (
-            <CardCondensedGalleryColumn
-              title="Lands"
+            <CardItemGalleryColumn
+              title="2 Cost"
               hideImages={hideImages}
-              cards={cardsSortedByCost.land}
+              cards={cardsSortedByCost.two}
             />
-          )}
-        </View>
+            <CardItemGalleryColumn
+              title="3 Cost"
+              hideImages={hideImages}
+              cards={cardsSortedByCost.three}
+            />
+            <CardItemGalleryColumn
+              title="4 Cost"
+              hideImages={hideImages}
+              cards={cardsSortedByCost.four}
+            />
+            <CardItemGalleryColumn
+              title="5 Cost"
+              hideImages={hideImages}
+              cards={cardsSortedByCost.five}
+            />
+            <CardItemGalleryColumn
+              title="6 Cost"
+              hideImages={hideImages}
+              cards={cardsSortedByCost.six}
+            />
+            <CardItemGalleryColumn
+              title="7+ Cost"
+              hideImages={hideImages}
+              cards={cardsSortedByCost.seven}
+            />
+            {cardsSortedByCost.land?.length > 0 && (
+              <CardItemGalleryColumn
+                title="Lands"
+                hideImages={hideImages}
+                cards={cardsSortedByCost.land}
+              />
+            )}
+          </View>
+        )}
+
+        {type === "color" && cardsSortedByColor.white && (
+          <View className="flex flex-row gap-4 w-full min-h-[500px]">
+            <CardItemGalleryColumn
+              title="White"
+              hideImages={hideImages}
+              cards={cardsSortedByColor.white}
+            />
+            <CardItemGalleryColumn
+              title="Blue"
+              hideImages={hideImages}
+              cards={cardsSortedByColor.blue}
+            />
+            <CardItemGalleryColumn
+              title="Black"
+              hideImages={hideImages}
+              cards={cardsSortedByColor.black}
+            />
+            <CardItemGalleryColumn
+              title="Red"
+              hideImages={hideImages}
+              cards={cardsSortedByColor.red}
+            />
+            <CardItemGalleryColumn
+              title="Green"
+              hideImages={hideImages}
+              cards={cardsSortedByColor.green}
+            />
+            <CardItemGalleryColumn
+              title="Gold"
+              hideImages={hideImages}
+              cards={cardsSortedByColor.gold}
+            />
+            <CardItemGalleryColumn
+              title="Colorless"
+              hideImages={hideImages}
+              cards={cardsSortedByColor.colorless}
+            />
+            <CardItemGalleryColumn
+              title="Land"
+              hideImages={hideImages}
+              cards={cardsSortedByColor.land}
+            />
+          </View>
+        )}
+
+        {type === "type" && cardsSortedByType.creature && (
+          <View className="flex flex-row gap-4 w-full min-h-[500px]">
+            <CardItemGalleryColumn
+              title="Creature"
+              hideImages={hideImages}
+              cards={cardsSortedByType.creature}
+            />
+            <CardItemGalleryColumn
+              title="Instant"
+              hideImages={hideImages}
+              cards={cardsSortedByType.instant}
+            />
+            <CardItemGalleryColumn
+              title="Sorcery"
+              hideImages={hideImages}
+              cards={cardsSortedByType.sorcery}
+            />
+            <CardItemGalleryColumn
+              title="Artifact"
+              hideImages={hideImages}
+              cards={cardsSortedByType.artifact}
+            />
+            <CardItemGalleryColumn
+              title="Enchantment"
+              hideImages={hideImages}
+              cards={cardsSortedByType.enchantment}
+            />
+            <CardItemGalleryColumn
+              title="Land"
+              hideImages={hideImages}
+              cards={cardsSortedByType.land}
+            />
+            {cardsSortedByType.planeswalker?.length > 0 && (
+              <CardItemGalleryColumn
+                title="Colorless"
+                hideImages={hideImages}
+                cards={cardsSortedByType.planeswalker}
+              />
+            )}
+            {cardsSortedByType.battle?.length > 0 && (
+              <CardItemGalleryColumn
+                title="Land"
+                hideImages={hideImages}
+                cards={cardsSortedByType.battle}
+              />
+            )}
+          </View>
+        )}
       </View>
     </Box>
-  );
-}
-
-export interface CardCondensedGalleryColumnProps {
-  title: string;
-  cards: Card[];
-  hideImages?: boolean;
-}
-
-export function CardCondensedGalleryColumn({
-  title,
-  cards,
-  hideImages = false,
-}: CardCondensedGalleryColumnProps) {
-  const cardCount = getCountOfCards(cards);
-
-  const columnClasses =
-    "my-2 bg-background-300 bg-opacity-30 py-2 rounded-xl flex gap-2 w-[256px] max-w-[256px]";
-
-  return (
-    <View className={columnClasses}>
-      <View className="flex justify-center items-center mx-2">
-        <Text className="text-white font-bold text-lg">{title}</Text>
-
-        <Text className="text-white font-semibold text-sm">
-          {cardCount} Card{cardCount !== 1 ? "s" : ""}
-        </Text>
-      </View>
-
-      <Divider thick />
-
-      <View className="flex gap-2 mx-2">
-        {cards.map((card, index) => (
-          <CardItem card={card} hideImage={hideImages} key={card.id + index} />
-        ))}
-      </View>
-    </View>
   );
 }

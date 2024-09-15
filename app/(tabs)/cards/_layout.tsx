@@ -7,7 +7,7 @@ export default function CardsLayout() {
   const tabs: TabProps[] = [
     { title: "Cards by Cost", link: "(tabs)/cards", name: "cost" },
     { title: "Cards by Color", link: "(tabs)/cards/color", name: "color" },
-    // { title: "Cards by Type" },
+    { title: "Cards by Type", link: "(tabs)/cards/type", name: "type" },
   ];
 
   return (

@@ -1,6 +1,6 @@
 import {
+  faCircleInfo,
   faMinus,
-  faPalette,
   faPlus,
   faShop,
   faTrash,
@@ -52,7 +52,11 @@ export default function CardItem({ card, hideImage = false }: CardItemProps) {
           </>
         )}
 
-        <CardItemFooter card={card} />
+        <CardItemFooter
+          card={card}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+        />
       </Pressable>
 
       <Modal transparent open={modalOpen} setIsOpen={setModalOpen}>
@@ -103,7 +107,7 @@ export function CardItemHeader({ card }: CardItemProps) {
   );
 }
 
-export function CardItemFooter({ card }: CardItemProps) {
+export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
   return (
     <View className="flex gap-2">
       <View className="flex flex-row justify-between gap-2 px-2">
@@ -127,7 +131,10 @@ export function CardItemFooter({ card }: CardItemProps) {
           />
         </View>
 
-        <Button icon={faPalette} />
+        <Button
+          icon={faCircleInfo}
+          onClick={() => setModalOpen(!modalOpen)}
+        ></Button>
 
         <Button
           action="danger"
