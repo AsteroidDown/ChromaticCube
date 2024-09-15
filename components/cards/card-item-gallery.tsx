@@ -1,6 +1,7 @@
 import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
+import StoredCardsContext from "../../contexts/cards/stored-cards.context";
 import { filterCards } from "../../functions/card-filtering";
 import {
   sortCardsAlphabetically,
@@ -14,6 +15,7 @@ import {
   getTotalValueOfCards,
 } from "../../functions/card-stats";
 import { getLocalStorageStoredCards } from "../../functions/local-storage";
+import { Card } from "../../models/card/card";
 import {
   CardFilters,
   CardsSortedByColor,
@@ -35,7 +37,9 @@ export interface CardItemGalleryProps {
 export default function CardItemGallery({
   type = "cost",
 }: CardItemGalleryProps) {
-  const cards = sortCardsAlphabetically(getLocalStorageStoredCards());
+  const { storedCards } = useContext(StoredCardsContext);
+
+  const [cards, setCards] = React.useState([] as Card[]);
 
   const [cardCount, setCardCount] = React.useState(0);
   const [cardsValue, setCardsValue] = React.useState(0);
@@ -52,6 +56,14 @@ export default function CardItemGallery({
   const [cardsSortedByType, setCardsSortedByType] = React.useState(
     {} as CardsSortedByType
   );
+
+  useEffect(() => {
+    setCards(sortCardsAlphabetically(storedCards));
+  }, [storedCards]);
+
+  useEffect(() => {
+    setCards(sortCardsAlphabetically(getLocalStorageStoredCards()));
+  }, []);
 
   useEffect(() => {
     const sortedCards =
@@ -75,7 +87,7 @@ export default function CardItemGallery({
     if (type === "type") {
       setCardsSortedByType(sortCardsByType(filteredCards));
     }
-  }, [filters]);
+  }, [cards, filters]);
 
   return (
     <Box className="!rounded-tl-none flex gap-2 px-0 overflow-hidden">

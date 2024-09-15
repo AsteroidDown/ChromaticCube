@@ -1,7 +1,8 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { useContext } from "react";
 import { View } from "react-native";
 import { ActionColor } from "../../constants/ui/colors";
+import StoredCardsContext from "../../contexts/cards/stored-cards.context";
 import { saveLocalStorageCard } from "../../functions/local-storage";
 import ScryfallService from "../../hooks/scryfall.service";
 import { Card } from "../../models/card/card";
@@ -12,6 +13,8 @@ import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
 
 export default function CardSearch() {
+  const { setStoredCards } = useContext(StoredCardsContext);
+
   const [search, onSearchChange] = React.useState("");
 
   const [card, setCard] = React.useState(undefined as Card | undefined);
@@ -39,7 +42,8 @@ export default function CardSearch() {
   function saveCard(card?: Card) {
     if (!card) return;
 
-    saveLocalStorageCard(card);
+    const storedCards = saveLocalStorageCard(card);
+    if (storedCards) setStoredCards(storedCards);
 
     setButtonText("Card Added!");
     setButtonAction("success");

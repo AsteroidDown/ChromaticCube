@@ -5,10 +5,12 @@ import {
   faShop,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { useContext } from "react";
 import { Linking, Pressable, Text, View } from "react-native";
+import StoredCardsContext from "../../contexts/cards/stored-cards.context";
 import {
   addToLocalStorageCardCount,
+  getLocalStorageStoredCards,
   removeFromLocalStorageCardCount,
   removeLocalStorageCard,
 } from "../../functions/local-storage";
@@ -108,6 +110,23 @@ export function CardItemHeader({ card }: CardItemProps) {
 }
 
 export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
+  const { setStoredCards } = useContext(StoredCardsContext);
+
+  function addToCount(card: Card) {
+    addToLocalStorageCardCount(card);
+    setStoredCards(getLocalStorageStoredCards());
+  }
+
+  function removeFromCount(card: Card) {
+    removeFromLocalStorageCardCount(card);
+    setStoredCards(getLocalStorageStoredCards());
+  }
+
+  function removeCard(card: Card) {
+    removeLocalStorageCard(card);
+    setStoredCards(getLocalStorageStoredCards());
+  }
+
   return (
     <View className="flex gap-2">
       <View className="flex flex-row justify-between gap-2 px-2">
@@ -117,7 +136,7 @@ export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
             type="clear"
             action="danger"
             icon={faMinus}
-            onClick={() => removeFromLocalStorageCardCount(card)}
+            onClick={() => removeFromCount}
           />
 
           <Text className="text-white mx-2 font-bold">{card.count}</Text>
@@ -127,7 +146,7 @@ export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
             type="clear"
             action="info"
             icon={faPlus}
-            onClick={() => addToLocalStorageCardCount(card)}
+            onClick={() => addToCount(card)}
           />
         </View>
 
@@ -139,7 +158,7 @@ export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
         <Button
           action="danger"
           icon={faTrash}
-          onClick={() => removeLocalStorageCard(card)}
+          onClick={() => removeCard(card)}
         ></Button>
       </View>
 

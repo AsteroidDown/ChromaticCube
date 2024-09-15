@@ -75,6 +75,7 @@ export function removeLocalStorageCard(card: Card) {
   const index = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
   );
+
   if (index >= 0) {
     storedCards.splice(index, 1);
     localStorage.setItem(
