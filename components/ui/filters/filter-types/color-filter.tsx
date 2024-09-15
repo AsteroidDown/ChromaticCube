@@ -5,10 +5,14 @@ import Chip from "../../chip/chip";
 import { Dropdown } from "../../dropdown/dropdown";
 
 export interface ColorFilterProps {
+  reset: boolean;
   setColorFilters: React.Dispatch<React.SetStateAction<MTGColor[]>>;
 }
 
-export default function ColorFilter({ setColorFilters }: ColorFilterProps) {
+export default function ColorFilter({
+  setColorFilters,
+  reset,
+}: ColorFilterProps) {
   const [expanded, setExpanded] = React.useState(false);
 
   const [whiteApplied, setWhiteApplied] = React.useState(false);
@@ -45,6 +49,18 @@ export default function ColorFilter({ setColorFilters }: ColorFilterProps) {
   ]);
 
   useEffect(() => setColorFilters(appliedFilters), [appliedFilters]);
+
+  useEffect(() => {
+    setWhiteApplied(false);
+    setBlueApplied(false);
+    setBlackApplied(false);
+    setRedApplied(false);
+    setGreenApplied(false);
+    setGoldApplied(false);
+    setColorlessApplied(false);
+    setMonoColorApplied(false);
+    setAppliedFilters([]);
+  }, [reset]);
 
   return (
     <View>

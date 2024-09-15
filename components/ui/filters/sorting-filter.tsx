@@ -1,6 +1,6 @@
 import { faDownLong, faUpLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect } from "react";
 import { View, ViewProps } from "react-native";
 import { SortDirection } from "../../../constants/sorting";
 import { ActionColor } from "../../../constants/ui/colors";
@@ -12,6 +12,7 @@ export type SortingFilterProps = ViewProps & {
   action?: ActionColor;
   disabled?: boolean;
 
+  reset: boolean;
   sortDirection: SortDirection;
   setSortDirection: React.Dispatch<React.SetStateAction<SortDirection>>;
 };
@@ -20,6 +21,7 @@ export default function SortingFilter({
   title,
   action = "primary",
   disabled = false,
+  reset,
   sortDirection,
   setSortDirection,
   className,
@@ -32,6 +34,8 @@ export default function SortingFilter({
     else if (sortDirection === "DESC") setSortDirection(null);
     else setSortDirection("ASC");
   }
+
+  useEffect(() => setSortDirection(null), [reset]);
 
   return (
     <Chip

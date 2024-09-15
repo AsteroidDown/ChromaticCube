@@ -1,4 +1,4 @@
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { MTGColor } from "../../../constants/mtg/mtg-colors";
@@ -19,6 +19,7 @@ export interface FilterBarProps {
 export default function FilterBar({ setFilters }: FilterBarProps) {
   const [showFilters, setShowFilters] = React.useState(false);
   const [filterLength, setFilterLength] = React.useState(0);
+  const [resetFilters, setResetFilters] = React.useState(false);
 
   const [colorFilter, setColorFilter] = React.useState([] as MTGColor[]);
   const [typeFilter, setTypeFilter] = React.useState([] as MTGCardTypes[]);
@@ -38,6 +39,14 @@ export default function FilterBar({ setFilters }: FilterBarProps) {
       colorFilter.length + typeFilter.length + rarityFilter.length
     );
   }, [colorFilter, typeFilter, rarityFilter, priceSort]);
+
+  function clearFilters() {
+    setColorFilter([]);
+    setTypeFilter([]);
+    setRarityFilter([]);
+    setPriceSort(null);
+    setResetFilters(!resetFilters);
+  }
 
   return (
     <View className="flex flex-row-reverse">
@@ -68,14 +77,23 @@ export default function FilterBar({ setFilters }: FilterBarProps) {
             : "-mr-12 max-w-[0%]"
         }`}
       >
-        <ColorFilter setColorFilters={setColorFilter} />
+        {colorFilter?.length > 0 && (
+          <Chip
+            type="outlined"
+            startIcon={faRotateRight}
+            onClick={() => clearFilters()}
+          />
+        )}
 
-        <TypeFilter setTypeFilters={setTypeFilter} />
+        <ColorFilter setColorFilters={setColorFilter} reset={resetFilters} />
 
-        <RarityFilter setRarityFilters={setRarityFilter} />
+        <TypeFilter setTypeFilters={setTypeFilter} reset={resetFilters} />
+
+        <RarityFilter setRarityFilters={setRarityFilter} reset={resetFilters} />
 
         <SortingFilter
           title="Price"
+          reset={resetFilters}
           sortDirection={priceSort}
           setSortDirection={setPriceSort}
         />

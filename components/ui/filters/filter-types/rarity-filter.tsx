@@ -5,10 +5,14 @@ import Chip from "../../chip/chip";
 import { Dropdown } from "../../dropdown/dropdown";
 
 export interface RarityFilterProps {
+  reset: boolean;
   setRarityFilters: React.Dispatch<React.SetStateAction<MTGRarity[]>>;
 }
 
-export default function RarityFilter({ setRarityFilters }: RarityFilterProps) {
+export default function RarityFilter({
+  setRarityFilters,
+  reset,
+}: RarityFilterProps) {
   const [expanded, setExpanded] = React.useState(false);
 
   const [commonApplied, setCommonApplied] = React.useState(false);
@@ -28,6 +32,14 @@ export default function RarityFilter({ setRarityFilters }: RarityFilterProps) {
   }, [commonApplied, uncommonApplied, rareApplied, mythicApplied]);
 
   useEffect(() => setRarityFilters(appliedFilters), [appliedFilters]);
+
+  useEffect(() => {
+    setCommonApplied(false);
+    setUncommonApplied(false);
+    setRareApplied(false);
+    setMythicApplied(false);
+    setAppliedFilters([]);
+  }, [reset]);
 
   return (
     <View>

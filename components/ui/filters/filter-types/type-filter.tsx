@@ -5,10 +5,11 @@ import Chip from "../../chip/chip";
 import { Dropdown } from "../../dropdown/dropdown";
 
 export interface TypeFilterProps {
+  reset: boolean;
   setTypeFilters: React.Dispatch<React.SetStateAction<MTGCardTypes[]>>;
 }
 
-export default function TypeFilter({ setTypeFilters }: TypeFilterProps) {
+export default function TypeFilter({ setTypeFilters, reset }: TypeFilterProps) {
   const [expanded, setExpanded] = React.useState(false);
 
   const [creatureApplied, setCreatureApplied] = React.useState(false);
@@ -47,6 +48,18 @@ export default function TypeFilter({ setTypeFilters }: TypeFilterProps) {
   ]);
 
   useEffect(() => setTypeFilters(appliedFilters), [appliedFilters]);
+
+  useEffect(() => {
+    setCreatureApplied(false);
+    setInstantApplied(false);
+    setSorceryApplied(false);
+    setArtifactApplied(false);
+    setEnchantmentApplied(false);
+    setLandApplied(false);
+    setPlaneswalkerApplied(false);
+    setBattleApplied(false);
+    setAppliedFilters([]);
+  }, [reset]);
 
   return (
     <View>
