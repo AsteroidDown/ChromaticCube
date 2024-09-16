@@ -109,14 +109,14 @@ export function graphCardsByCost(cards: Card[]): SetData[] {
   const sortedSeven = sortCardsByColor(sortedCards.seven);
 
   return [
-    createSetDataByColor("0 Cost", sortedZero),
-    createSetDataByColor("1 Cost", sortedOne),
-    createSetDataByColor("2 Cost", sortedTwo),
-    createSetDataByColor("3 Cost", sortedThree),
-    createSetDataByColor("4 Cost", sortedFour),
-    createSetDataByColor("5 Cost", sortedFive),
-    createSetDataByColor("6 Cost", sortedSix),
-    createSetDataByColor("7+ Cost", sortedSeven),
+    createSetDataByColor("0", sortedZero),
+    createSetDataByColor("1", sortedOne),
+    createSetDataByColor("2", sortedTwo),
+    createSetDataByColor("3", sortedThree),
+    createSetDataByColor("4", sortedFour),
+    createSetDataByColor("5", sortedFive),
+    createSetDataByColor("6", sortedSix),
+    createSetDataByColor("7+", sortedSeven),
   ];
 }
 

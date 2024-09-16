@@ -9,39 +9,47 @@ export interface SetData {
 export interface GraphPlotProps {
   sets: SetData[];
   ceiling: number;
-  yTickLength: number;
+  numVerticalTicks: number;
   stacked?: boolean;
+  barsVertical: boolean;
 }
 
 export function GraphPlot({
   sets,
   ceiling,
-  yTickLength,
+  numVerticalTicks,
   stacked = true,
+  barsVertical,
 }: GraphPlotProps) {
-  const verticalTickCount = ceiling / yTickLength;
-
-  const verticalTicks = Array(verticalTickCount + 1)
-    .fill(0)
-    .map((_tick, index) => index * yTickLength);
+  const verticalTickIterator: number[] = Array.from(
+    { length: numVerticalTicks },
+    (_, index) => index
+  );
 
   return (
-    <View className="flex flex-row flex-1 h-full border-b-background-600 border-b border-l-background-600 border-l">
-      {
-        <View className="justify-between absolute w-full h-full">
-          {verticalTicks.map((tick) => (
-            <View key={tick} className="border-b border-background-300"></View>
-          ))}
-        </View>
-      }
+    <View className={`w-full h-full flex ${barsVertical ? "border-b-background-600 border-b" : "border-l border-l-background-600"}`}>
 
-      <View className="flex flex-row flex-1 w-full justify-between">
+      {/* background graph lines */}
+      <View className={`justify-between w-full h-full ${barsVertical ? "flex-col" : "flex-row"}`}>
+        {verticalTickIterator.map((tick) => (
+          <View key={tick} className={`${barsVertical ? "border-b" : "border-l h-full"} border-background-300`}></View>
+        ))}
+      </View>
+
+      <View className={`absolute flex h-full w-full justify-between ${barsVertical ? "flex-row" : "flex-col"}`}>
         {sets.map((set, index) => (
           <View
             key={set.title + index}
-            className="flex flex-1 justify-end h-full items-center animate-bottomToTopGrow mt-auto"
+            className="flex flex-1 items-center"
           >
-            <Bar data={set.data} ceiling={ceiling} stacked={stacked}></Bar>
+            <Bar
+              data={set.data}
+              ceiling={ceiling}
+              stacked={stacked}
+              className={barsVertical ? "h-full w-4/5 mx-auto justify-end" : "w-full h-4/5 my-auto"}
+              barsVertical={barsVertical}
+              barStyle={barsVertical ? "absolute bottom-0 w-full h-full rounded-t-lg bg-gradient-to-t animate-bottomToTopGrow" : "absolute left-0 w-full h-full rounded-r-lg bg-gradient-to-r animate-leftToRightGrow"}
+            ></Bar>
           </View>
         ))}
       </View>

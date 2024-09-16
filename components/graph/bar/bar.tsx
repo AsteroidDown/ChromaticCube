@@ -13,9 +13,12 @@ export interface BarProps {
   data: BarData[];
   ceiling: number;
   stacked?: boolean;
+  className?: string;
+  barsVertical: boolean;
+  barStyle: string
 }
 
-export function Bar({ data, ceiling, stacked = true }: BarProps) {
+export function Bar({ data, ceiling, stacked = true, className, barsVertical = true, barStyle }: BarProps) {
   if (stacked) {
     const total = data.reduce((acc, entry) => acc + entry.count, 0);
 
@@ -24,7 +27,7 @@ export function Bar({ data, ceiling, stacked = true }: BarProps) {
 
     const topHeight: DimensionValue = `${topSpace * 100}%`;
     const barHeight: DimensionValue = `${barSpace * 100}%`;
-    return StackedBarLayout({ data, total, topHeight, barHeight });
+    return StackedBarLayout({ data, total, topHeight, barHeight, className, barStyle, barsVertical });
   } else {
     return GroupedBarLayout({ data, ceiling });
   }

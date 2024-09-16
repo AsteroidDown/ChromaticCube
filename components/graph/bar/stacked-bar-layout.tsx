@@ -8,6 +8,9 @@ interface StackedBarLayoutProps {
   total: number;
   topHeight: DimensionValue;
   barHeight: DimensionValue;
+  className?: string;
+  barStyle: string;
+  barsVertical: boolean;
 }
 
 export function StackedBarLayout({
@@ -15,30 +18,33 @@ export function StackedBarLayout({
   total,
   topHeight,
   barHeight,
+  className,
+  barStyle,
+  barsVertical,
 }: StackedBarLayoutProps) {
-  const landHeight = getStackHeight("land", total, data);
-  const colorlessHeight = getStackHeight("colorless", total, data, landHeight);
-  const goldHeight = getStackHeight("gold", total, data, colorlessHeight);
-  const greenHeight = getStackHeight("green", total, data, goldHeight);
-  const redHeight = getStackHeight("red", total, data, greenHeight);
-  const blackHeight = getStackHeight("black", total, data, redHeight);
-  const blueHeight = getStackHeight("blue", total, data, blackHeight);
-  const whiteHeight = getStackHeight("white", total, data, blueHeight);
-
-  const baseClass =
-    "absolute bottom-0 w-full h-full rounded-t-lg bg-gradient-to-t";
+  // is there a way to do this dynamically? Attempted a few method but couldn't find a solution because of dynamic class name limitations with Tailwind: https://stackoverflow.com/questions/69687530/dynamically-build-classnames-in-tailwindcss
+  const landHeight = getStackHeight(MTGColor.LAND, total, data);
+  const colorlessHeight = getStackHeight(MTGColor.COLORLESS, total, data, landHeight);
+  const goldHeight = getStackHeight(MTGColor.GOLD, total, data, colorlessHeight);
+  const greenHeight = getStackHeight(MTGColor.GREEN, total, data, goldHeight);
+  const redHeight = getStackHeight(MTGColor.RED, total, data, greenHeight);
+  const blackHeight = getStackHeight(MTGColor.BLACK, total, data, redHeight);
+  const blueHeight = getStackHeight(MTGColor.BLUE, total, data, blackHeight);
+  const whiteHeight = getStackHeight(MTGColor.WHITE, total, data, blueHeight);
+  const barContainerHeightStyle = barsVertical
+    ? { height: barHeight }
+    : { width: barHeight };
 
   return (
-    <View className="flex flex-1 h-full w-10 mx-auto border-white">
-      <View style={[{ height: topHeight }]}></View>
+    <View className={"flex border-white " + className ?? ""}>
 
-      <View className="flex w-full" style={[{ height: barHeight }]}>
+      <View className="flex w-full h-full" style={[barContainerHeightStyle]}>
         <Tooltip
           style={[
             { bottom: 0 },
-            { width: "100%" },
+            { width: barsVertical ? "100%" : `${whiteHeight}%`},
             { position: "absolute" },
-            { height: `${whiteHeight}%` },
+            { height: barsVertical ? `${whiteHeight}%`: "100%" },
           ]}
           title={data.find((entry) => entry.color === "white")?.name}
           message={
@@ -47,16 +53,16 @@ export function StackedBarLayout({
           }
         >
           <View
-            className={`${baseClass} to-mtg-white from-mtg-white-secondary`}
+            className={`${barStyle} to-mtg-white from-mtg-white-secondary`}
           ></View>
         </Tooltip>
 
         <Tooltip
           style={[
             { bottom: 0 },
-            { width: "100%" },
+            { width: barsVertical ? "100%" : `${blueHeight}%`},
             { position: "absolute" },
-            { height: `${blueHeight}%` },
+            { height: barsVertical ? `${blueHeight}%`: "100%" },
           ]}
           title={data.find((entry) => entry.color === "blue")?.name}
           message={
@@ -65,16 +71,16 @@ export function StackedBarLayout({
           }
         >
           <View
-            className={`${baseClass} to-mtg-blue from-mtg-blue-secondary`}
+            className={`${barStyle} to-mtg-blue from-mtg-blue-secondary`}
           ></View>
         </Tooltip>
 
         <Tooltip
           style={[
             { bottom: 0 },
-            { width: "100%" },
+            { width: barsVertical ? "100%" : `${blackHeight}%`},
             { position: "absolute" },
-            { height: `${blackHeight}%` },
+            { height: barsVertical ? `${blackHeight}%`: "100%" },
           ]}
           title={data.find((entry) => entry.color === "black")?.name}
           message={
@@ -83,16 +89,16 @@ export function StackedBarLayout({
           }
         >
           <View
-            className={`${baseClass} to-mtg-black from-mtg-black-secondary`}
+            className={`${barStyle} to-mtg-black from-mtg-black-secondary`}
           ></View>
         </Tooltip>
 
         <Tooltip
           style={[
             { bottom: 0 },
-            { width: "100%" },
+            { width: barsVertical ? "100%" : `${redHeight}%`},
             { position: "absolute" },
-            { height: `${redHeight}%` },
+            { height: barsVertical ? `${redHeight}%`: "100%" },
           ]}
           title={data.find((entry) => entry.color === "red")?.name}
           message={
@@ -101,16 +107,16 @@ export function StackedBarLayout({
           }
         >
           <View
-            className={`${baseClass} to-mtg-red from-mtg-red-secondary`}
+            className={`${barStyle} to-mtg-red from-mtg-red-secondary`}
           ></View>
         </Tooltip>
 
         <Tooltip
           style={[
             { bottom: 0 },
-            { width: "100%" },
+            { width: barsVertical ? "100%" : `${greenHeight}%`},
             { position: "absolute" },
-            { height: `${greenHeight}%` },
+            { height: barsVertical ? `${greenHeight}%`: "100%" },
           ]}
           title={data.find((entry) => entry.color === "green")?.name}
           message={
@@ -119,16 +125,16 @@ export function StackedBarLayout({
           }
         >
           <View
-            className={`${baseClass} to-mtg-green from-mtg-green-secondary`}
+            className={`${barStyle} to-mtg-green from-mtg-green-secondary`}
           ></View>
         </Tooltip>
 
         <Tooltip
           style={[
             { bottom: 0 },
-            { width: "100%" },
+            { width: barsVertical ? "100%" : `${goldHeight}%`},
             { position: "absolute" },
-            { height: `${goldHeight}%` },
+            { height: barsVertical ? `${goldHeight}%`: "100%" },
           ]}
           title={data.find((entry) => entry.color === "gold")?.name}
           message={
@@ -137,16 +143,16 @@ export function StackedBarLayout({
           }
         >
           <View
-            className={`${baseClass} to-mtg-gold from-mtg-gold-secondary`}
+            className={`${barStyle} to-mtg-gold from-mtg-gold-secondary`}
           ></View>
         </Tooltip>
 
         <Tooltip
           style={[
             { bottom: 0 },
-            { width: "100%" },
+            { width: barsVertical ? "100%" : `${colorlessHeight}%`},
             { position: "absolute" },
-            { height: `${colorlessHeight}%` },
+            { height: barsVertical ? `${colorlessHeight}%`: "100%" },
           ]}
           title={data.find((entry) => entry.color === "colorless")?.name}
           message={
@@ -155,15 +161,15 @@ export function StackedBarLayout({
           }
         >
           <View
-            className={`${baseClass} to-mtg-colorless from-mtg-colorless-secondary`}
+            className={`${barStyle} to-mtg-colorless from-mtg-colorless-secondary`}
           ></View>
 
           <Tooltip
             style={[
               { bottom: 0 },
-              { width: "100%" },
+              { width: barsVertical ? "100%" : `${landHeight}%`},
               { position: "absolute" },
-              { height: `${landHeight}%` },
+              { height: barsVertical ? `${landHeight}%`: "100%" },
             ]}
             title={data.find((entry) => entry.color === "land")?.name}
             message={
@@ -172,7 +178,7 @@ export function StackedBarLayout({
             }
           >
             <View
-              className={`${baseClass} to-mtg-land from-mtg-land-secondary`}
+              className={`${barStyle} to-mtg-land from-mtg-land-secondary`}
             ></View>
           </Tooltip>
         </Tooltip>

@@ -5,23 +5,23 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+      flex: {
+        '5': '5 5 0%',
+        '3': '3 3 0%',
+      },
       keyframes: {
         bottomToTopGrow: {
           "0%": { height: "0" },
           "100%": { height: "100%" },
         },
+        leftToRightGrow: {
+          "0%": { width: "0" },
+          "100%": { width: "100%" },
+        }
       },
       animation: {
         bottomToTopGrow: "bottomToTopGrow 1s ease forwards",
-      },
-      gridTemplateAreas: {
-        graphLayout: ["title title", "verticalAxis plot", ". horizontalAxis"],
-      },
-      gridTemplateColumns: {
-        graphLayout: "1fr auto",
-      },
-      gridTemplateRows: {
-        graphLayout: "1fr 5fr 1fr",
+        leftToRightGrow: "leftToRightGrow 1s ease forwards"
       },
       colors: {
         "mtg-white": "#f9faf4",

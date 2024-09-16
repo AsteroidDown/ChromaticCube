@@ -10,8 +10,9 @@ import {
 import { Card } from "../../models/card/card";
 
 export default function App() {
-  const [stacked, setStacked] = React.useState(true);
-
+  /**
+   * Functions
+   */
   function getStoredCards(): Card[] {
     if (Platform.OS === "ios") return [];
 
@@ -21,6 +22,11 @@ export default function App() {
 
     return storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
   }
+
+  /**
+   * Constants
+   */
+  const [stacked, setStacked] = React.useState(true);
 
   const cardsByColorGraphProps: GraphProps = {
     title: "Cards By Color",
@@ -49,17 +55,17 @@ export default function App() {
         <Text className="color-white">{stacked ? "Stacked" : "Grouped"}</Text>
       </Pressable>
 
-      <ScrollView>
+      <ScrollView className="overflow-x-scroll">
         <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
-          <Box className="min-w-max overflow-x-scroll overflow-y-hidden">
+          <Box className="overflow-scroll">
             <Graph {...cardsByColorGraphProps} />
           </Box>
 
-          <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
+          <Box className="overflow-hidden">
             <Graph {...cardsByCostGraphProps} />
           </Box>
 
-          <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
+          <Box className="overflow-hidden">
             <Graph {...cardsByTypeGraphProps} />
           </Box>
         </View>
