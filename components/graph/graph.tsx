@@ -158,13 +158,12 @@ function computeGraphCeiling(
   let ceiling: number;
   let tickLength: number;
 
-  if (maxValue > tickLengthThresholdChange) {
+  if (maxValue > tickLengthThresholdChange)
     tickLength = 5;
-    ceiling = Math.ceil(maxValue / tickLength) * tickLength;
-  } else {
+  else 
     tickLength = 2;
-    ceiling = Math.ceil(maxValue / tickLength) * tickLength;
-  }
+
+  ceiling = Math.ceil(maxValue / tickLength) * tickLength;
 
   if (maxValue % tickLength == 0) {
     ceiling += tickLength;
@@ -174,9 +173,9 @@ function computeGraphCeiling(
 }
 
 /**
- * Computes an array of vertical tick labels based on the cardSets to be rendered on the plot.
- * @param cardSets the sets of card information to be rendered in the plot
- * @param stacked true if the bar graph is a stacked plot, false otherwise
+ * Computes an array of vertical tick labels based on the ceiling of the plot.
+ * @param ceiling the maximum vertical value to be displayed
+ * @param tickLengthThresholdChange when to change the vertical interval separation value
  *
  * @return a list of vertical tick labels
  */

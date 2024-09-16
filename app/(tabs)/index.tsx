@@ -57,7 +57,7 @@ export default function App() {
 
       <ScrollView className="overflow-x-scroll">
         <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
-          <Box className="overflow-scroll">
+          <Box className="overflow-hidden">
             <Graph {...cardsByColorGraphProps} />
           </Box>
 
