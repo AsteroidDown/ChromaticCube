@@ -39,8 +39,6 @@ export default function Button({
   const baseButtonClasses =
     "flex flex-row px-4 py-2 gap-2 justify-center items-center w-full rounded-md transition-all";
 
-  if (!text && icon) rounded = true;
-
   return (
     <Pressable className={className} onPress={onClick} disabled={disabled}>
       <View
