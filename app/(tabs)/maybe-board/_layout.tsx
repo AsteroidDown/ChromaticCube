@@ -10,9 +10,13 @@ export default function CardsLayout() {
   const [storedCards, setStoredCards] = React.useState([] as Card[]);
 
   const tabs: TabProps[] = [
-    { title: "Cards by Cost", link: "(tabs)/cards", name: "cost" },
-    { title: "Cards by Color", link: "(tabs)/cards/color", name: "color" },
-    { title: "Cards by Type", link: "(tabs)/cards/type", name: "type" },
+    { title: "Cards by Cost", link: "(tabs)/maybe-board", name: "cost" },
+    {
+      title: "Cards by Color",
+      link: "(tabs)/maybe-board/color",
+      name: "color",
+    },
+    { title: "Cards by Type", link: "(tabs)/maybe-board/type", name: "type" },
   ];
 
   return (
