@@ -24,10 +24,15 @@ import CardImage from "./card-image";
 
 export interface CardItemProps {
   card: Card;
+  condensed?: boolean;
   hideImage?: boolean;
 }
 
-export default function CardItem({ card, hideImage = false }: CardItemProps) {
+export default function CardItem({
+  card,
+  condensed = false,
+  hideImage = false,
+}: CardItemProps) {
   const [expanded, setExpanded] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -35,18 +40,27 @@ export default function CardItem({ card, hideImage = false }: CardItemProps) {
     <>
       <Pressable
         onPress={() => setExpanded(!expanded)}
-        className={
-          "flex gap-2 rounded-2xl bg-background-300 overflow-hidden transition-all duration-300 " +
-          (expanded ? "max-h-[1000px] " : "max-h-[36px] ")
-        }
+        className={`flex gap-2 rounded-2xl overflow-hidden transition-all duration-300 ${
+          expanded
+            ? "max-h-[1000px] "
+            : condensed
+            ? "max-h-[24px]"
+            : "max-h-[36px]"
+        } ${
+          expanded
+            ? "bg-background-300"
+            : condensed
+            ? "bg-none"
+            : "bg-background-300"
+        }`}
       >
-        <CardItemHeader card={card} />
+        <CardItemHeader card={card} condensed={condensed} />
 
         <Divider thick className="-mt-2" />
 
         {!hideImage && (
           <>
-            <View className="flex gap-2 px-2">
+            <View className={"flex gap-2 px-2"}>
               <CardImage card={card} onClick={() => setModalOpen(true)} />
             </View>
 
@@ -70,14 +84,21 @@ export default function CardItem({ card, hideImage = false }: CardItemProps) {
   );
 }
 
-export function CardItemHeader({ card }: CardItemProps) {
+export function CardItemHeader({ card, condensed }: CardItemProps) {
   const [hovered, setHovered] = React.useState(false);
+
   return (
     <View
-      className={
-        "flex flex-row gap-1 justify-between items-center px-4 max-h-[36px] h-[36px] transition-all " +
-        (hovered ? "bg-primary-300" : "bg-background-300")
+      className={`flex flex-row gap-1 justify-between items-center transition-all ${
+        condensed ? "px-2 max-h-[24px] h-[24px]" : "px-4 max-h-[36px] h-[36px]"
       }
+        ${
+          hovered
+            ? "bg-primary-300"
+            : condensed
+            ? "bg-none"
+            : "bg-background-300"
+        }`}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
     >

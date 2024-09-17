@@ -8,21 +8,23 @@ import CardItem from "./card-item";
 export interface CardItemGalleryColumnProps {
   title: string;
   cards: Card[];
+  condensed?: boolean;
   hideImages?: boolean;
 }
 
 export default function CardItemGalleryColumn({
   title,
   cards,
+  condensed = false,
   hideImages = false,
 }: CardItemGalleryColumnProps) {
   const cardCount = getCountOfCards(cards);
 
   const columnClasses =
-    "my-2 bg-background-300 bg-opacity-30 py-2 rounded-xl flex gap-2 w-[256px] max-w-[256px]";
+    "flex gap-2 py-2 my-2 w-[256px] max-w-[256px] rounded-xl bg-background-300 bg-opacity-30";
 
   return (
-    <View className={columnClasses}>
+    <View className={`${columnClasses}`}>
       <View className="flex justify-center items-center mx-2">
         <Text className="text-white font-bold text-lg">{title}</Text>
 
@@ -33,9 +35,14 @@ export default function CardItemGalleryColumn({
 
       <Divider thick />
 
-      <View className="flex gap-2 mx-2">
+      <View className={`flex ${condensed ? "gap-1 mx-0" : "gap-2 mx-2"}`}>
         {cards.map((card, index) => (
-          <CardItem card={card} hideImage={hideImages} key={card.id + index} />
+          <CardItem
+            card={card}
+            condensed={condensed}
+            hideImage={hideImages}
+            key={card.id + index}
+          />
         ))}
       </View>
     </View>
