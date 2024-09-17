@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { Graph, GraphProps } from "../../components/graph/graph";
 import Box from "../../components/ui/box/box";
 import {
@@ -7,6 +7,7 @@ import {
   graphCardsByCost,
   graphCardsByType,
 } from "../../functions/card-graphing";
+import { getLocalStorageStoredCards } from "../../functions/local-storage";
 import { Card } from "../../models/card/card";
 
 export default function App() {
@@ -14,13 +15,7 @@ export default function App() {
    * Functions
    */
   function getStoredCards(): Card[] {
-    if (Platform.OS === "ios") return [];
-
-    const storedCards: string[] = JSON.parse(
-      localStorage.getItem("cubeCards") || "[]"
-    );
-
-    return storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
+    return getLocalStorageStoredCards();
   }
 
   /**

@@ -28,7 +28,7 @@ import Button from "../ui/button/button";
 import FilterBar from "../ui/filters/filter-bar";
 import CardItemGalleryColumn from "./card-item-gallery-column";
 
-export type CardItemGalleryType = "cost" | "color" | "type";
+export type CardItemGalleryType = "cost" | "color" | "type" | "maybe";
 
 export interface CardItemGalleryProps {
   type: CardItemGalleryType;
@@ -37,7 +37,7 @@ export interface CardItemGalleryProps {
 export default function CardItemGallery({
   type = "cost",
 }: CardItemGalleryProps) {
-  const { storedCards } = useContext(StoredCardsContext);
+  const { maybeBoard, storedCards } = useContext(StoredCardsContext);
 
   const [cards, setCards] = React.useState([] as Card[]);
 
@@ -62,7 +62,7 @@ export default function CardItemGallery({
   }, [storedCards]);
 
   useEffect(() => {
-    setCards(sortCardsAlphabetically(getLocalStorageStoredCards()));
+    setCards(sortCardsAlphabetically(getLocalStorageStoredCards(maybeBoard)));
   }, []);
 
   useEffect(() => {

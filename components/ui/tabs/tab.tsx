@@ -24,7 +24,7 @@ export default function Tab({
   const focusedClasses =
     "border-background-200 bg-background-200 hover:bg-primary-300 hover:bg-opacity-30";
   const unfocusedClasses =
-    "border-b-2 border-t-background-400 border-x-background-400 border-b-primary-200 bg-opacity-0 hover:bg-opacity-50 bg-primary-200";
+    "border-b-2 border-t-background-200 border-x-background-200 border-b-primary-200 bg-opacity-0 hover:bg-opacity-50 bg-primary-200";
 
   return (
     <View
