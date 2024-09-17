@@ -115,6 +115,7 @@ export default function CardItemGallery({
               }
             >
               <Button
+                rounded
                 className="-rotate-45"
                 type={condensed ? "outlined" : "clear"}
                 icon={
@@ -130,6 +131,7 @@ export default function CardItemGallery({
               title={hideImages ? "Show Card Images" : "Hide Card Images"}
             >
               <Button
+                rounded
                 type={hideImages ? "outlined" : "clear"}
                 icon={hideImages ? faEye : faEyeSlash}
                 onClick={() => setHideImages(!hideImages)}
