@@ -1,4 +1,8 @@
-import { faCube, faLayerGroup } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClipboardQuestion,
+  faCube,
+  faLayerGroup,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tabs } from "expo-router";
 import React from "react";
@@ -26,7 +30,7 @@ export default function TabLayout() {
           options={{
             title: "Overview",
             tabBarLabel: ({ focused }) => (
-              <View className="flex flex-row gap-2 mb-3">
+              <View className="flex flex-row justify-center items-center gap-2">
                 <FontAwesomeIcon
                   icon={faCube}
                   size={"lg"}
@@ -42,10 +46,12 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
-          name="cards"
+          name="main-board"
           options={{
             tabBarLabel: ({ focused }) => (
-              <View className="flex flex-row gap-2 mb-3">
+              <View
+                className={`flex flex-row justify-center items-center gap-2`}
+              >
                 <FontAwesomeIcon
                   icon={faLayerGroup}
                   size={"lg"}
@@ -56,8 +62,39 @@ export default function TabLayout() {
                   }
                 />
 
-                <Text className={focused ? "color-white" : "color-primary-400"}>
-                  Cards
+                <Text
+                  className={`whitespace-nowrap ${
+                    focused ? "color-white" : "color-primary-400"
+                  }`}
+                >
+                  Main Board
+                </Text>
+              </View>
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="maybe-board"
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <View className="flex flex-row justify-center items-center gap-2">
+                <FontAwesomeIcon
+                  icon={faClipboardQuestion}
+                  size={"lg"}
+                  className={
+                    focused
+                      ? "color-white rounded-t-lg w-full"
+                      : "color-primary-400"
+                  }
+                />
+
+                <Text
+                  className={`whitespace-nowrap ${
+                    focused ? "color-white" : "color-primary-400"
+                  }`}
+                >
+                  Maybe Board
                 </Text>
               </View>
             ),
