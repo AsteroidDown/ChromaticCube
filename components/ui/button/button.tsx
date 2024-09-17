@@ -12,6 +12,7 @@ export type ButtonProps = ViewProps & {
   action?: ActionColor;
   size?: Size;
   type?: ButtonType;
+  rounded?: boolean;
   disabled?: boolean;
   onClick?: () => void;
 };
@@ -25,6 +26,7 @@ export default function Button({
   type = "default",
   onClick,
   children,
+  rounded = false,
   disabled = false,
 }: ButtonProps) {
   const baseColor = getButtonBaseColor(action, type, disabled);
@@ -37,11 +39,15 @@ export default function Button({
   const baseButtonClasses =
     "flex flex-row px-4 py-2 gap-2 justify-center items-center w-full rounded-md transition-all";
 
+  if (!text && icon) rounded = true;
+
   return (
     <Pressable className={className} onPress={onClick} disabled={disabled}>
       <View
         className={`${baseButtonClasses} ${buttonHeight}
-          ${baseColor} ${hoverColor}`}
+          ${baseColor} ${hoverColor} ${
+          rounded ? "!rounded-full !w-10 !h-10" : ""
+        }`}
       >
         {icon && (
           <FontAwesomeIcon

@@ -1,4 +1,10 @@
-import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartSimple,
+  faDownLeftAndUpRightToCenter,
+  faEye,
+  faEyeSlash,
+  faUpRightAndDownLeftFromCenter,
+} from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import StoredCardsContext from "../../contexts/cards/stored-cards.context";
@@ -26,6 +32,7 @@ import Box from "../ui/box/box";
 import BoxHeader from "../ui/box/box-header";
 import Button from "../ui/button/button";
 import FilterBar from "../ui/filters/filter-bar";
+import { Tooltip } from "../ui/tooltip/tooltip";
 import CardItemGalleryColumn from "./card-item-gallery-column";
 
 export type CardItemGalleryType = "cost" | "color" | "type" | "maybe";
@@ -45,6 +52,7 @@ export default function CardItemGallery({
   const [cardsValue, setCardsValue] = React.useState(0);
 
   const [hideImages, setHideImages] = React.useState(false);
+  const [condensed, setCondensed] = React.useState(false);
   const [filters, setFilters] = React.useState({} as CardFilters);
 
   const [cardsSortedByCost, setCardsSortedByCost] = React.useState(
@@ -101,11 +109,32 @@ export default function CardItemGallery({
           <View className="flex flex-row gap-4">
             <FilterBar setFilters={setFilters} />
 
-            <Button
-              type={hideImages ? "outlined" : "clear"}
-              text={hideImages ? "Show Card Images" : "Hide Card Images"}
-              onClick={() => setHideImages(!hideImages)}
-            />
+            <Tooltip
+              title={
+                hideImages ? "Expand Card Gallery" : "Condense Card Gallery"
+              }
+            >
+              <Button
+                className="-rotate-45"
+                type={condensed ? "outlined" : "clear"}
+                icon={
+                  condensed
+                    ? faDownLeftAndUpRightToCenter
+                    : faUpRightAndDownLeftFromCenter
+                }
+                onClick={() => setCondensed(!condensed)}
+              />
+            </Tooltip>
+
+            <Tooltip
+              title={hideImages ? "Show Card Images" : "Hide Card Images"}
+            >
+              <Button
+                type={hideImages ? "outlined" : "clear"}
+                icon={hideImages ? faEye : faEyeSlash}
+                onClick={() => setHideImages(!hideImages)}
+              />
+            </Tooltip>
           </View>
         }
       />
@@ -116,48 +145,57 @@ export default function CardItemGallery({
             {cardsSortedByCost.zero?.length > 0 && (
               <CardItemGalleryColumn
                 title="0 Cost"
+                condensed={condensed}
                 hideImages={hideImages}
                 cards={cardsSortedByCost.zero}
               />
             )}
             <CardItemGalleryColumn
               title="1 Cost"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.one}
             />
             <CardItemGalleryColumn
               title="2 Cost"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.two}
             />
             <CardItemGalleryColumn
               title="3 Cost"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.three}
             />
             <CardItemGalleryColumn
               title="4 Cost"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.four}
             />
             <CardItemGalleryColumn
               title="5 Cost"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.five}
             />
             <CardItemGalleryColumn
               title="6 Cost"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.six}
             />
             <CardItemGalleryColumn
               title="7+ Cost"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.seven}
             />
             {cardsSortedByCost.land?.length > 0 && (
               <CardItemGalleryColumn
                 title="Lands"
+                condensed={condensed}
                 hideImages={hideImages}
                 cards={cardsSortedByCost.land}
               />
@@ -169,41 +207,49 @@ export default function CardItemGallery({
           <View className="flex flex-row gap-4 w-full min-h-[500px]">
             <CardItemGalleryColumn
               title="White"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.white}
             />
             <CardItemGalleryColumn
               title="Blue"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.blue}
             />
             <CardItemGalleryColumn
               title="Black"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.black}
             />
             <CardItemGalleryColumn
               title="Red"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.red}
             />
             <CardItemGalleryColumn
               title="Green"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.green}
             />
             <CardItemGalleryColumn
               title="Gold"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.gold}
             />
             <CardItemGalleryColumn
               title="Colorless"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.colorless}
             />
             <CardItemGalleryColumn
               title="Land"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.land}
             />
@@ -214,37 +260,44 @@ export default function CardItemGallery({
           <View className="flex flex-row gap-4 w-full min-h-[500px]">
             <CardItemGalleryColumn
               title="Creature"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.creature}
             />
             <CardItemGalleryColumn
               title="Instant"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.instant}
             />
             <CardItemGalleryColumn
               title="Sorcery"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.sorcery}
             />
             <CardItemGalleryColumn
               title="Artifact"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.artifact}
             />
             <CardItemGalleryColumn
               title="Enchantment"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.enchantment}
             />
             <CardItemGalleryColumn
               title="Land"
+              condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.land}
             />
             {cardsSortedByType.planeswalker?.length > 0 && (
               <CardItemGalleryColumn
                 title="Colorless"
+                condensed={condensed}
                 hideImages={hideImages}
                 cards={cardsSortedByType.planeswalker}
               />
@@ -252,6 +305,7 @@ export default function CardItemGallery({
             {cardsSortedByType.battle?.length > 0 && (
               <CardItemGalleryColumn
                 title="Land"
+                condensed={condensed}
                 hideImages={hideImages}
                 cards={cardsSortedByType.battle}
               />
