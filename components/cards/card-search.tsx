@@ -13,7 +13,7 @@ import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
 
 export default function CardSearch() {
-  const { setStoredCards } = useContext(StoredCardsContext);
+  const { maybeBoard, setStoredCards } = useContext(StoredCardsContext);
 
   const [search, onSearchChange] = React.useState("");
 
@@ -42,7 +42,7 @@ export default function CardSearch() {
   function saveCard(card?: Card) {
     if (!card) return;
 
-    const storedCards = saveLocalStorageCard(card);
+    const storedCards = saveLocalStorageCard(card, maybeBoard);
     if (storedCards) setStoredCards(storedCards);
 
     setButtonText("Card Added!");

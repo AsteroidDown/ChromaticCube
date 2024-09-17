@@ -110,21 +110,21 @@ export function CardItemHeader({ card }: CardItemProps) {
 }
 
 export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
-  const { setStoredCards } = useContext(StoredCardsContext);
+  const { maybeBoard, setStoredCards } = useContext(StoredCardsContext);
 
   function addToCount(card: Card) {
-    addToLocalStorageCardCount(card);
-    setStoredCards(getLocalStorageStoredCards());
+    addToLocalStorageCardCount(card, maybeBoard);
+    setStoredCards(getLocalStorageStoredCards(maybeBoard));
   }
 
   function removeFromCount(card: Card) {
-    removeFromLocalStorageCardCount(card);
-    setStoredCards(getLocalStorageStoredCards());
+    removeFromLocalStorageCardCount(card, maybeBoard);
+    setStoredCards(getLocalStorageStoredCards(maybeBoard));
   }
 
   function removeCard(card: Card) {
-    removeLocalStorageCard(card);
-    setStoredCards(getLocalStorageStoredCards());
+    removeLocalStorageCard(card, maybeBoard);
+    setStoredCards(getLocalStorageStoredCards(maybeBoard));
   }
 
   return (

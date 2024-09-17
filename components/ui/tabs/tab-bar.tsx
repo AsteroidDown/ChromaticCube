@@ -26,8 +26,8 @@ export default function TabBar({ tabs, className }: TabBarProps) {
             <Tab
               {...tab}
               index={index}
-              focused={index === focusedIndex}
               focusedIndex={focusedIndex}
+              focused={index === focusedIndex}
             />
           </Link>
         ))}

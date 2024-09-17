@@ -17,7 +17,9 @@ export default function CardsLayout() {
 
   return (
     <ScrollView>
-      <StoredCardsContext.Provider value={{ storedCards, setStoredCards }}>
+      <StoredCardsContext.Provider
+        value={{ maybeBoard: false, storedCards, setStoredCards }}
+      >
         <View className="flex gap-4 px-6 py-4 w-full h-[100vh] pb-4 bg-background-100 overflow-y-scroll">
           <CardSearch />
           <TabBar tabs={tabs}></TabBar>
