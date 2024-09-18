@@ -26,6 +26,31 @@ export function saveLocalStorageCard(card: Card, maybeBoard?: boolean) {
   ];
 }
 
+export function switchLocalStorageCardPrint(
+  card: Card,
+  print: Card,
+  maybeBoard?: boolean
+) {
+  const storedCards = getLocalStorageStoredCards(maybeBoard);
+
+  const cardIndex = storedCards.findIndex(
+    (storedCard) => storedCard.id === card.id
+  );
+
+  if (cardIndex >= 0) {
+    const storedCard = storedCards[cardIndex];
+    print.count = storedCard.count;
+    storedCards[cardIndex] = print;
+
+    localStorage.setItem(
+      maybeBoard ? "cubeCardsMaybe" : "cubeCards",
+      JSON.stringify(
+        storedCards.map((storedCard) => JSON.stringify(storedCard))
+      )
+    );
+  }
+}
+
 export function addToLocalStorageCardCount(card: Card, maybeBoard?: boolean) {
   const storedCards = getLocalStorageStoredCards(maybeBoard);
 

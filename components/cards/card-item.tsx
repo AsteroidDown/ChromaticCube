@@ -1,13 +1,12 @@
 import {
   faCircleInfo,
   faMinus,
-  faPalette,
   faPlus,
   faRightFromBracket,
   faShop,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Linking, Pressable, Text, View } from "react-native";
 import StoredCardsContext from "../../contexts/cards/stored-cards.context";
 import {
@@ -16,6 +15,7 @@ import {
   removeFromLocalStorageCardCount,
   removeLocalStorageCard,
   saveLocalStorageCard,
+  switchLocalStorageCardPrint,
 } from "../../functions/local-storage";
 import { Card } from "../../models/card/card";
 import Button from "../ui/button/button";
@@ -25,6 +25,7 @@ import { Tooltip } from "../ui/tooltip/tooltip";
 import CardCost from "./card-cost";
 import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
+import CardPrints from "./card-prints";
 
 export interface CardItemProps {
   card: Card;
@@ -74,6 +75,7 @@ export default function CardItem({
 
         <CardItemFooter
           card={card}
+          expanded={expanded}
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
         />
@@ -134,8 +136,21 @@ export function CardItemHeader({ card, condensed }: CardItemProps) {
   );
 }
 
-export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
+export function CardItemFooter({
+  card,
+  expanded,
+  modalOpen,
+  setModalOpen,
+}: any) {
   const { maybeBoard, setStoredCards } = useContext(StoredCardsContext);
+
+  const [print, setPrint] = React.useState(undefined as Card | undefined);
+
+  useEffect(() => {
+    if (!print) return;
+
+    switchPrint(card, print);
+  }, [print]);
 
   function addToCount(card: Card) {
     addToLocalStorageCardCount(card, maybeBoard);
@@ -149,6 +164,11 @@ export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
 
   function removeCard(card: Card) {
     removeLocalStorageCard(card, maybeBoard);
+    setStoredCards(getLocalStorageStoredCards(maybeBoard));
+  }
+
+  function switchPrint(card: Card, print: Card) {
+    switchLocalStorageCardPrint(card, print, maybeBoard);
     setStoredCards(getLocalStorageStoredCards(maybeBoard));
   }
 
@@ -168,11 +188,12 @@ export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
           onClick={() => setModalOpen(!modalOpen)}
         ></Button>
 
-        <Button
-          className="flex-1"
-          icon={faPalette}
-          // onClick={() => removeCard(card)}
-        ></Button>
+        <CardPrints
+          iconOnly
+          card={card}
+          setCard={setPrint}
+          disabled={!expanded}
+        />
 
         <Tooltip title="Move to Maybe Board">
           <Button

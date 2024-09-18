@@ -11,6 +11,7 @@ import Button from "../ui/button/button";
 import SearchBar from "../ui/search-bar/search-bar";
 import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
+import CardPrints from "./card-prints";
 
 export default function CardSearch() {
   const { maybeBoard, setStoredCards } = useContext(StoredCardsContext);
@@ -26,10 +27,6 @@ export default function CardSearch() {
   );
 
   const searchedCardsPlaceholder = Array(5).fill(undefined);
-
-  function getCard() {
-    ScryfallService.getCard(search).then((card) => setCard(card));
-  }
 
   function findCards() {
     ScryfallService.findCards(search).then((cards) => {
@@ -89,6 +86,8 @@ export default function CardSearch() {
       </View>
 
       <CardDetailedPreview card={card}>
+        <CardPrints card={card} setCard={setCard} />
+
         <Button
           icon={faPlus}
           disabled={!card}
