@@ -1,11 +1,11 @@
+import { MTGColor } from "@/constants/mtg/mtg-colors";
+import { MTGRarity } from "@/constants/mtg/mtg-rarity";
+import { MTGCardTypes } from "@/constants/mtg/mtg-types";
+import { SortDirection } from "@/constants/sorting";
+import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import { faFilter, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { MTGColor } from "../../../constants/mtg/mtg-colors";
-import { MTGRarity } from "../../../constants/mtg/mtg-rarity";
-import { MTGCardTypes } from "../../../constants/mtg/mtg-types";
-import { SortDirection } from "../../../constants/sorting";
-import { CardFilters } from "../../../models/sorted-cards/sorted-cards";
 import Chip from "../chip/chip";
 import ColorFilter from "./filter-types/color-filter";
 import RarityFilter from "./filter-types/rarity-filter";

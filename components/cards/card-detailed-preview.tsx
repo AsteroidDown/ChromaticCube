@@ -1,8 +1,8 @@
+import Box from "@/components/ui/box/box";
+import Divider from "@/components/ui/divider/divider";
+import { Card } from "@/models/card/card";
 import React from "react";
 import { View, ViewProps } from "react-native";
-import { Card } from "../../models/card/card";
-import Box from "../ui/box/box";
-import Divider from "../ui/divider/divider";
 import CardImage from "./card-image";
 import { CardBackInfo, CardFrontInfo, CardInfo } from "./card-info";
 

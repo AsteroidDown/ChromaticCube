@@ -1,6 +1,6 @@
+import { Tooltip } from "@/components/ui/tooltip/tooltip";
+import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { View } from "react-native";
-import { MTGColor } from "../../../constants/mtg/mtg-colors";
-import { Tooltip } from "../../ui/tooltip/tooltip";
 import { BarData } from "./bar";
 
 interface GroupedBarLayoutProps {

@@ -1,8 +1,8 @@
+import { ActionColor } from "@/constants/ui/colors";
+import { Size } from "@/constants/ui/sizes";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Pressable, Text, View, ViewProps } from "react-native";
-import { ActionColor } from "../../../constants/ui/colors";
-import { Size } from "../../../constants/ui/sizes";
 
 export type ButtonType = "default" | "outlined" | "clear";
 

@@ -1,3 +1,5 @@
+import { CardBackIds } from "@/constants/scryfall/ids";
+import { Card } from "@/models/card/card";
 import {
   faRotateRight,
   IconDefinition,
@@ -5,8 +7,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
-import { CardBackIds } from "../../constants/scryfall/ids";
-import { Card } from "../../models/card/card";
 
 export interface CardImageProps {
   card?: Card;

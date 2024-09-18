@@ -1,8 +1,8 @@
+import Chip from "@/components/ui/chip/chip";
+import Dropdown from "@/components/ui/dropdown/dropdown";
+import { ActionColor } from "@/constants/ui/colors";
 import React from "react";
 import { Text, View, ViewProps } from "react-native";
-import { ActionColor } from "../../../constants/ui/colors";
-import Chip from "../chip/chip";
-import { Dropdown } from "../dropdown/dropdown";
 
 export type FilterOptionProps = ViewProps & {
   title: string;
