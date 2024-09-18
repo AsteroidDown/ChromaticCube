@@ -6,6 +6,8 @@ export interface Card {
   id: string;
   name: string;
   count: number;
+  set: string;
+  collectorNumber: string;
   cardBackId: string;
   rarity: Rarity;
   cmc: number;

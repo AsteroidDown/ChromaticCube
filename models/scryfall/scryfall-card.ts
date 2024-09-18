@@ -4,6 +4,8 @@ import { Rarity } from "../card/card";
 export interface ScryfallCard {
   id: string;
   name: string;
+  set: string;
+  collector_number: string;
   card_back_id: string;
   rarity: Rarity;
   cmc: number;

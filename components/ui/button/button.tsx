@@ -43,7 +43,7 @@ export default function Button({
   const buttonTextSize = getButtonTextSize(size);
 
   const baseButtonClasses =
-    "flex flex-row px-4 py-2 gap-2 justify-center items-center w-full rounded-md transition-all";
+    "flex flex-row px-4 py-2 justify-center items-center w-full rounded-md transition-all";
 
   return (
     <Pressable className={className} onPress={onClick} disabled={disabled}>
@@ -58,13 +58,17 @@ export default function Button({
         {icon && (
           <FontAwesomeIcon
             icon={icon}
-            className={`${textColor}`}
+            className={`${textColor} ${text || children ? "mr-2" : ""}`}
             size={size !== "md" ? size : undefined}
           />
         )}
 
         {text && (
-          <Text className={`font-bold ${buttonTextSize} ${textColor}`}>
+          <Text
+            className={`font-bold ${buttonTextSize} ${textColor} ${
+              children ? "mr-2" : ""
+            }`}
+          >
             {text}
           </Text>
         )}

@@ -20,6 +20,10 @@ async function getCard(name: string, exact = false): Promise<Card> {
   return ScryfallToCard(card);
 }
 
+async function getCardPrints(name: string): Promise<Card[]> {
+  return await findCards(`name:/^${name}$/ unique:prints game:paper`);
+}
+
 async function getRandomCard(): Promise<Card> {
   const card: ScryfallCard = await Api.get(`cards/random`).catch((error) =>
     console.error(error)
@@ -31,6 +35,7 @@ async function getRandomCard(): Promise<Card> {
 const ScryfallService = {
   findCards,
   getCard,
+  getCardPrints,
   getRandomCard,
 };
 
