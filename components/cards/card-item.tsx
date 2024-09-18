@@ -1,7 +1,9 @@
 import {
   faCircleInfo,
   faMinus,
+  faPalette,
   faPlus,
+  faRightFromBracket,
   faShop,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -13,11 +15,13 @@ import {
   getLocalStorageStoredCards,
   removeFromLocalStorageCardCount,
   removeLocalStorageCard,
+  saveLocalStorageCard,
 } from "../../functions/local-storage";
 import { Card } from "../../models/card/card";
 import Button from "../ui/button/button";
 import Divider from "../ui/divider/divider";
 import Modal from "../ui/modal/modal";
+import { Tooltip } from "../ui/tooltip/tooltip";
 import CardCost from "./card-cost";
 import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
@@ -148,39 +152,69 @@ export function CardItemFooter({ card, modalOpen, setModalOpen }: any) {
     setStoredCards(getLocalStorageStoredCards(maybeBoard));
   }
 
+  function moveCard(card: Card) {
+    saveLocalStorageCard(card, !maybeBoard);
+    removeLocalStorageCard(card, maybeBoard);
+    setStoredCards(getLocalStorageStoredCards(maybeBoard));
+  }
+
   return (
     <View className="flex gap-2">
-      <View className="flex flex-row justify-between gap-2 px-2">
-        <View className="flex flex-row justify-center items-center">
-          <Button
-            size="sm"
-            type="clear"
-            action="danger"
-            icon={faMinus}
-            onClick={() => removeFromCount}
-          />
-
-          <Text className="text-white mx-2 font-bold">{card.count}</Text>
-
-          <Button
-            size="sm"
-            type="clear"
-            action="info"
-            icon={faPlus}
-            onClick={() => addToCount(card)}
-          />
-        </View>
-
+      <View className="flex flex-row justify-center items-center gap-2 px-2">
         <Button
+          action="info"
+          className="flex-1"
           icon={faCircleInfo}
           onClick={() => setModalOpen(!modalOpen)}
         ></Button>
 
         <Button
+          className="flex-1"
+          icon={faPalette}
+          // onClick={() => removeCard(card)}
+        ></Button>
+
+        <Tooltip title="Move to Maybe Board">
+          <Button
+            action="warning"
+            className="flex-1"
+            icon={faRightFromBracket}
+            onClick={() => moveCard(card)}
+          ></Button>
+        </Tooltip>
+
+        <Button
           action="danger"
+          className="flex-1"
           icon={faTrash}
           onClick={() => removeCard(card)}
         ></Button>
+      </View>
+
+      <View className="flex flex-row justify-between items-center px-2">
+        <Button
+          hideRightBorder
+          size="sm"
+          type="outlined"
+          action="danger"
+          className="flex-1"
+          icon={faMinus}
+          onClick={() => removeFromCount}
+        />
+
+        <View className="flex justify-center items-center px-2 h-full border-2 border-x-0 border-dark-600">
+          <Text className="text-white font-bold">{card.count}</Text>
+        </View>
+
+        <Button
+          hideLeftBorder
+          size="sm"
+          type="outlined"
+          action="info"
+          className="flex-1"
+          icon={faPlus}
+          onClick={() => addToCount(card)}
+        />
       </View>
 
       <View className="flex flex-row flex-1 gap-2 px-2 pb-2">
