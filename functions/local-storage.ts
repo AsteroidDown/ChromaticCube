@@ -27,7 +27,7 @@ export function saveLocalStorageCard(card: Card, maybeBoard?: boolean) {
 }
 
 export function addToLocalStorageCardCount(card: Card, maybeBoard?: boolean) {
-  const storedCards = getLocalStorageStoredCards();
+  const storedCards = getLocalStorageStoredCards(maybeBoard);
 
   const cardIndex = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
@@ -49,7 +49,7 @@ export function removeFromLocalStorageCardCount(
   card: Card,
   maybeBoard?: boolean
 ) {
-  const storedCards = getLocalStorageStoredCards();
+  const storedCards = getLocalStorageStoredCards(maybeBoard);
 
   const cardIndex = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
@@ -73,7 +73,7 @@ export function removeFromLocalStorageCardCount(
 export function removeLocalStorageCard(card: Card, maybeBoard?: boolean) {
   if (Platform.OS === "ios") return;
 
-  const storedCards = getLocalStorageStoredCards();
+  const storedCards = getLocalStorageStoredCards(maybeBoard);
 
   const index = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id

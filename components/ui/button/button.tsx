@@ -13,6 +13,10 @@ export type ButtonProps = ViewProps & {
   size?: Size;
   type?: ButtonType;
   rounded?: boolean;
+
+  hideLeftBorder?: boolean;
+  hideRightBorder?: boolean;
+
   disabled?: boolean;
   onClick?: () => void;
 };
@@ -26,6 +30,8 @@ export default function Button({
   type = "default",
   onClick,
   children,
+  hideLeftBorder = false,
+  hideRightBorder = false,
   rounded = false,
   disabled = false,
 }: ButtonProps) {
@@ -45,6 +51,8 @@ export default function Button({
         className={`${baseButtonClasses} ${buttonHeight}
           ${baseColor} ${hoverColor} ${
           rounded ? "!rounded-full !w-10 !h-10" : ""
+        } ${hideLeftBorder ? "!rounded-l-none !border-l-0" : ""} ${
+          hideRightBorder ? "!rounded-r-none !border-r-0" : ""
         }`}
       >
         {icon && (
