@@ -1,8 +1,8 @@
+import Divider from "@/components/ui/divider/divider";
+import { getCountOfCards } from "@/functions/card-stats";
+import { Card } from "@/models/card/card";
 import React from "react";
 import { Text, View } from "react-native";
-import { getCountOfCards } from "../../functions/card-stats";
-import { Card } from "../../models/card/card";
-import Divider from "../ui/divider/divider";
 import CardItem from "./card-item";
 
 export interface CardItemGalleryColumnProps {

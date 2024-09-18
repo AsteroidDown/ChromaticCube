@@ -1,6 +1,6 @@
+import Divider from "@/components/ui/divider/divider";
+import { Card } from "@/models/card/card";
 import { Text, View } from "react-native";
-import { Card } from "../../models/card/card";
-import Divider from "../ui/divider/divider";
 import CardCost from "./card-cost";
 import CardText from "./card-text";
 

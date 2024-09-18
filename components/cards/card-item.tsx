@@ -1,3 +1,17 @@
+import Button from "@/components/ui/button/button";
+import Divider from "@/components/ui/divider/divider";
+import Modal from "@/components/ui/modal/modal";
+import { Tooltip } from "@/components/ui/tooltip/tooltip";
+import StoredCardsContext from "@/contexts/cards/stored-cards.context";
+import {
+  addToLocalStorageCardCount,
+  getLocalStorageStoredCards,
+  removeFromLocalStorageCardCount,
+  removeLocalStorageCard,
+  saveLocalStorageCard,
+  switchLocalStorageCardPrint,
+} from "@/functions/local-storage";
+import { Card } from "@/models/card/card";
 import {
   faCircleInfo,
   faMinus,
@@ -8,20 +22,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { Linking, Pressable, Text, View } from "react-native";
-import StoredCardsContext from "../../contexts/cards/stored-cards.context";
-import {
-  addToLocalStorageCardCount,
-  getLocalStorageStoredCards,
-  removeFromLocalStorageCardCount,
-  removeLocalStorageCard,
-  saveLocalStorageCard,
-  switchLocalStorageCardPrint,
-} from "../../functions/local-storage";
-import { Card } from "../../models/card/card";
-import Button from "../ui/button/button";
-import Divider from "../ui/divider/divider";
-import Modal from "../ui/modal/modal";
-import { Tooltip } from "../ui/tooltip/tooltip";
 import CardCost from "./card-cost";
 import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";

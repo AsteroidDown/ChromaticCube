@@ -1,9 +1,9 @@
+import { MTGColor } from "@/constants/mtg/mtg-colors";
+import { ActionColor } from "@/constants/ui/colors";
+import { Size } from "@/constants/ui/sizes";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Pressable, Text, ViewProps } from "react-native";
-import { MTGColor } from "../../../constants/mtg/mtg-colors";
-import { ActionColor } from "../../../constants/ui/colors";
-import { Size } from "../../../constants/ui/sizes";
 
 export type ChipType = "default" | "outlined";
 

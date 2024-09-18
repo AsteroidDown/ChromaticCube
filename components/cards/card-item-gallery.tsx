@@ -1,3 +1,26 @@
+import Box from "@/components/ui/box/box";
+import BoxHeader from "@/components/ui/box/box-header";
+import Button from "@/components/ui/button/button";
+import FilterBar from "@/components/ui/filters/filter-bar";
+import { Tooltip } from "@/components/ui/tooltip/tooltip";
+import StoredCardsContext from "@/contexts/cards/stored-cards.context";
+import { filterCards } from "@/functions/card-filtering";
+import {
+  sortCardsAlphabetically,
+  sortCardsByColor,
+  sortCardsByCost,
+  sortCardsByPrice,
+  sortCardsByType,
+} from "@/functions/card-sorting";
+import { getCountOfCards, getTotalValueOfCards } from "@/functions/card-stats";
+import { getLocalStorageStoredCards } from "@/functions/local-storage";
+import { Card } from "@/models/card/card";
+import {
+  CardFilters,
+  CardsSortedByColor,
+  CardsSortedByCost,
+  CardsSortedByType,
+} from "@/models/sorted-cards/sorted-cards";
 import {
   faChartSimple,
   faDownLeftAndUpRightToCenter,
@@ -7,32 +30,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
-import StoredCardsContext from "../../contexts/cards/stored-cards.context";
-import { filterCards } from "../../functions/card-filtering";
-import {
-  sortCardsAlphabetically,
-  sortCardsByColor,
-  sortCardsByCost,
-  sortCardsByPrice,
-  sortCardsByType,
-} from "../../functions/card-sorting";
-import {
-  getCountOfCards,
-  getTotalValueOfCards,
-} from "../../functions/card-stats";
-import { getLocalStorageStoredCards } from "../../functions/local-storage";
-import { Card } from "../../models/card/card";
-import {
-  CardFilters,
-  CardsSortedByColor,
-  CardsSortedByCost,
-  CardsSortedByType,
-} from "../../models/sorted-cards/sorted-cards";
-import Box from "../ui/box/box";
-import BoxHeader from "../ui/box/box-header";
-import Button from "../ui/button/button";
-import FilterBar from "../ui/filters/filter-bar";
-import { Tooltip } from "../ui/tooltip/tooltip";
 import CardItemGalleryColumn from "./card-item-gallery-column";
 
 export type CardItemGalleryType = "cost" | "color" | "type" | "maybe";

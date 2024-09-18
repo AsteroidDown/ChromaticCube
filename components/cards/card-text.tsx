@@ -1,5 +1,5 @@
+import { SymbolMap } from "@/constants/mtg/mtg-symbols";
 import { Image, Text, View } from "react-native";
-import { SymbolMap } from "../../constants/mtg/mtg-symbols";
 
 export interface CardTextProps {
   text: string;

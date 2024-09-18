@@ -1,6 +1,6 @@
+import DropdownContext from "@/contexts/ui/dropdown.context";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Modal, Pressable, View, ViewProps } from "react-native";
-import DropdownContext from "../../../contexts/ui/dropdown.context";
 
 export type DropdownProps = ViewProps & {
   expanded: boolean;
@@ -8,7 +8,7 @@ export type DropdownProps = ViewProps & {
   disableCloseOnClick?: boolean;
 };
 
-export function Dropdown({
+export default function Dropdown({
   expanded,
   setExpanded,
   disableCloseOnClick = false,

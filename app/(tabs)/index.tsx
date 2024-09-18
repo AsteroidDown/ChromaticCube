@@ -1,14 +1,14 @@
-import React from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
-import { Graph, GraphProps } from "../../components/graph/graph";
-import Box from "../../components/ui/box/box";
+import { Graph, GraphProps } from "@/components/graph/graph";
+import Box from "@/components/ui/box/box";
 import {
   graphCardsByColor,
   graphCardsByCost,
   graphCardsByType,
-} from "../../functions/card-graphing";
-import { getLocalStorageStoredCards } from "../../functions/local-storage";
-import { Card } from "../../models/card/card";
+} from "@/functions/card-graphing";
+import { getLocalStorageStoredCards } from "@/functions/local-storage";
+import { Card } from "@/models/card/card";
+import React from "react";
+import { Pressable, ScrollView, Text, View } from "react-native";
 
 export default function App() {
   /**

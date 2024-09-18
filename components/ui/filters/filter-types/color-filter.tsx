@@ -1,8 +1,8 @@
+import Chip from "@/components/ui/chip/chip";
+import Dropdown from "@/components/ui/dropdown/dropdown";
+import { MTGColor } from "@/constants/mtg/mtg-colors";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { MTGColor } from "../../../../constants/mtg/mtg-colors";
-import Chip from "../../chip/chip";
-import { Dropdown } from "../../dropdown/dropdown";
 
 export interface ColorFilterProps {
   reset: boolean;

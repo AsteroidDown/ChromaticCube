@@ -1,8 +1,8 @@
+import Chip from "@/components/ui/chip/chip";
+import Dropdown from "@/components/ui/dropdown/dropdown";
+import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { MTGRarity } from "../../../../constants/mtg/mtg-rarity";
-import Chip from "../../chip/chip";
-import { Dropdown } from "../../dropdown/dropdown";
 
 export interface RarityFilterProps {
   reset: boolean;

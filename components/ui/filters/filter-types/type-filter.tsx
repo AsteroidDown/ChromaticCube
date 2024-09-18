@@ -1,8 +1,8 @@
+import Chip from "@/components/ui/chip/chip";
+import Dropdown from "@/components/ui/dropdown/dropdown";
+import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
-import { MTGCardTypes } from "../../../../constants/mtg/mtg-types";
-import Chip from "../../chip/chip";
-import { Dropdown } from "../../dropdown/dropdown";
 
 export interface TypeFilterProps {
   reset: boolean;

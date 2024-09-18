@@ -1,11 +1,11 @@
+import Box from "@/components/ui/box/box";
+import Button from "@/components/ui/button/button";
+import Dropdown from "@/components/ui/dropdown/dropdown";
+import ScryfallService from "@/hooks/scryfall.service";
+import { Card } from "@/models/card/card";
 import { faPalette } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Image, Pressable, Text, View } from "react-native";
-import ScryfallService from "../../hooks/scryfall.service";
-import { Card } from "../../models/card/card";
-import Box from "../ui/box/box";
-import Button from "../ui/button/button";
-import { Dropdown } from "../ui/dropdown/dropdown";
 
 export interface CardPrintsProps {
   card?: Card;

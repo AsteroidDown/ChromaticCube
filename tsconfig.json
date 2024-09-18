@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
-  "extends": "expo/tsconfig.base",
-  "paths": {
-    "@/*": [
-      "./*"
-    ]
-  }
+  "extends": "expo/tsconfig.base"
 }

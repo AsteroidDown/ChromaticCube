@@ -1,10 +1,10 @@
+import Chip from "@/components/ui/chip/chip";
+import { SortDirection } from "@/constants/sorting";
+import { ActionColor } from "@/constants/ui/colors";
 import { faDownLong, faUpLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { View, ViewProps } from "react-native";
-import { SortDirection } from "../../../constants/sorting";
-import { ActionColor } from "../../../constants/ui/colors";
-import Chip from "../chip/chip";
 import { getFilterTextColor } from "./filter";
 
 export type SortingFilterProps = ViewProps & {

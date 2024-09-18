@@ -1,10 +1,10 @@
+import CardSearch from "@/components/cards/card-search";
+import { TabProps } from "@/components/ui/tabs/tab";
+import TabBar from "@/components/ui/tabs/tab-bar";
+import StoredCardsContext from "@/contexts/cards/stored-cards.context";
+import { Card } from "@/models/card/card";
 import React from "react";
 import { ScrollView, View } from "react-native";
-import CardSearch from "../../../components/cards/card-search";
-import { TabProps } from "../../../components/ui/tabs/tab";
-import TabBar from "../../../components/ui/tabs/tab-bar";
-import StoredCardsContext from "../../../contexts/cards/stored-cards.context";
-import { Card } from "../../../models/card/card";
 
 export default function CardsLayout() {
   const [storedCards, setStoredCards] = React.useState([] as Card[]);
