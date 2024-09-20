@@ -35,7 +35,7 @@ export default function CardImage({
       onPointerLeave={() => setHovered(false)}
     >
       <View className={baseClasses}>
-        {card && !card.faces?.front && (
+        {card && !card.faces?.back.imageUris.png && (
           <Image
             className={
               "h-full max-h-[350px] aspect-[2.5/3.5] rounded transition-all "
@@ -45,7 +45,7 @@ export default function CardImage({
           />
         )}
 
-        {card && card.faces?.front && (
+        {card && card.faces?.back.imageUris.png && (
           <View className="bg-transparent w-full h-full">
             <View
               className="relative w-full h-full transition-all duration-700"
