@@ -25,14 +25,17 @@ export default function CardDetailedPreview({
         {children}
       </View>
 
-      <Box className="flex gap-3 w-[350px]" shade={300}>
+      <Box
+        className="flex gap-3 w-[350px] max-h-[458px] overflow-y-auto"
+        shade={300}
+      >
         {!card?.faces && <CardInfo card={card} />}
 
         {card?.faces && (
           <View className="flex gap-3">
             <CardFrontInfo card={card} />
 
-            <Divider />
+            <Divider className="my-3" />
 
             <CardBackInfo card={card} />
           </View>
