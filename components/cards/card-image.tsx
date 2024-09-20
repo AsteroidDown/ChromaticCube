@@ -24,6 +24,9 @@ export default function CardImage({
   const [showFront, setShowFront] = React.useState(true);
   const [hovered, setHovered] = React.useState(false);
 
+  const baseClasses =
+    "justify-center items-center h-full max-h-[350px] aspect-[2.5/3.5] rounded-lg overflow-hidden";
+
   return (
     <Pressable
       disabled={!card || !onClick}
@@ -31,33 +34,68 @@ export default function CardImage({
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
     >
-      <View
-        className={
-          "relative flex justify-center items-center h-full max-h-[350px] aspect-[2.5/3.5] rounded-lg bg-background-100 transition-all "
-          //  + (hovered ? hoverClasses : "")
-        }
-      >
-        {card ? (
+      <View className={baseClasses}>
+        {card && !card.faces?.front && (
           <Image
             className={
               "h-full max-h-[350px] aspect-[2.5/3.5] rounded transition-all "
-              //  + (hovered ? hoverClasses : "")
             }
-            source={{
-              uri:
-                card.images?.png ||
-                (showFront
-                  ? card.faces?.front.imageUris.png
-                  : card.faces?.back.imageUris.png),
-            }}
+            source={{ uri: card.images?.png }}
             style={[{ resizeMode: "contain" }]}
           />
-        ) : (
-          <>
+        )}
+
+        {card && card.faces?.front && (
+          <View className="bg-transparent w-full h-full">
+            <View
+              className="relative w-full h-full transition-all duration-700"
+              style={!showFront ? { transform: [{ rotateY: "180deg" }] } : {}}
+            >
+              <View
+                className="absolute w-full h-full"
+                style={{ backfaceVisibility: "hidden" }}
+              >
+                <Image
+                  className={
+                    "h-full max-h-[350px] aspect-[2.5/3.5] rounded transition-all "
+                  }
+                  source={{ uri: card.faces.front.imageUris.png }}
+                  style={[{ resizeMode: "contain" }]}
+                />
+              </View>
+
+              <View
+                className="absolute w-full h-full transition-all duration-[625ms]"
+                style={
+                  showFront
+                    ? [
+                        { transform: [{ rotateY: "180deg" }, { scaleX: -1 }] },
+                        { backfaceVisibility: "hidden" },
+                      ]
+                    : [
+                        { transform: [{ rotateY: "0deg" }, { scaleX: -1 }] },
+                        { backfaceVisibility: "hidden" },
+                      ]
+                }
+              >
+                <Image
+                  className={
+                    "h-full max-h-[350px] aspect-[2.5/3.5] rounded transition-all "
+                  }
+                  source={{ uri: card.faces.back.imageUris.png }}
+                  style={[{ resizeMode: "contain" }]}
+                />{" "}
+              </View>
+            </View>
+          </View>
+        )}
+
+        {!card && (
+          <View className="flex justify-center items-center w-full h-full bg-background-100">
             {placeHolder && (
               <Text className="text-white text-center">{placeHolder}</Text>
             )}
-          </>
+          </View>
         )}
 
         {card?.faces && card.cardBackId !== CardBackIds.DEFAULT && (
