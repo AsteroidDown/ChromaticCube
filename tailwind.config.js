@@ -10,9 +10,14 @@ module.exports = {
           "0%": { height: "0" },
           "100%": { height: "100%" },
         },
+        fadeIn: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 }
+        }
       },
       animation: {
         bottomToTopGrow: "bottomToTopGrow 1s ease forwards",
+        fadeIn: "fadeIn 1s ease forwards",
       },
       gridTemplateAreas: {
         graphLayout: ["title title", "verticalAxis plot", ". horizontalAxis"],
