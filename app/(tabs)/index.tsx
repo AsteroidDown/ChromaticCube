@@ -5,7 +5,7 @@ import {
   graphCardsByCost,
   graphCardsByType,
 } from "@/functions/card-graphing";
-import { getLocalStorageStoredCards } from "@/functions/local-storage";
+import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { Card } from "@/models/card/card";
 import React from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";

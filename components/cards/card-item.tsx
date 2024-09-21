@@ -10,7 +10,7 @@ import {
   removeLocalStorageCard,
   saveLocalStorageCard,
   switchLocalStorageCardPrint,
-} from "@/functions/local-storage";
+} from "@/functions/local-storage/card-local-storage";
 import { Card } from "@/models/card/card";
 import {
   faCircleInfo,
