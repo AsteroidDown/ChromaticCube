@@ -3,7 +3,7 @@ import Button from "@/components/ui/button/button";
 import SearchBar from "@/components/ui/search-bar/search-bar";
 import { ActionColor } from "@/constants/ui/colors";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
-import { saveLocalStorageCard } from "@/functions/local-storage";
+import { saveLocalStorageCard } from "@/functions/local-storage/card-local-storage";
 import ScryfallService from "@/hooks/scryfall.service";
 import { Card } from "@/models/card/card";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";

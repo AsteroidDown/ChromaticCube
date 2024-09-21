@@ -13,7 +13,11 @@ import {
   sortCardsByType,
 } from "@/functions/card-sorting";
 import { getCountOfCards, getTotalValueOfCards } from "@/functions/card-stats";
-import { getLocalStorageStoredCards } from "@/functions/local-storage";
+import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
+import {
+  getLocalStoragePreferences,
+  setLocalStoragePreferences,
+} from "@/functions/local-storage/preferences-local-storage";
 import { Card } from "@/models/card/card";
 import {
   CardFilters,
@@ -68,6 +72,13 @@ export default function CardItemGallery({
 
   useEffect(() => {
     setCards(sortCardsAlphabetically(getLocalStorageStoredCards(maybeBoard)));
+
+    const preferences = getLocalStoragePreferences();
+    if (preferences?.cardsCondensed) setCondensed(true);
+    else setCondensed(false);
+
+    if (preferences?.hideCardImages) setHideImages(true);
+    else setHideImages(false);
   }, []);
 
   useEffect(() => {
@@ -93,6 +104,66 @@ export default function CardItemGallery({
       setCardsSortedByType(sortCardsByType(filteredCards));
     }
   }, [cards, filters]);
+
+  function condenseCards() {
+    setCondensed(true);
+
+    const preferences = getLocalStoragePreferences();
+    if (!preferences) {
+      setLocalStoragePreferences({
+        cardsCondensed: true,
+      });
+    } else {
+      setLocalStoragePreferences({
+        ...preferences,
+        cardsCondensed: true,
+      });
+    }
+  }
+
+  function expandCards() {
+    setCondensed(false);
+
+    const preferences = getLocalStoragePreferences();
+    if (!preferences) {
+      setLocalStoragePreferences({ cardsCondensed: false });
+    } else {
+      setLocalStoragePreferences({
+        ...preferences,
+        cardsCondensed: false,
+      });
+    }
+  }
+
+  function hideCardImages() {
+    setHideImages(true);
+
+    const preferences = getLocalStoragePreferences();
+    if (!preferences) {
+      setLocalStoragePreferences({
+        hideCardImages: true,
+      });
+    } else {
+      setLocalStoragePreferences({
+        ...preferences,
+        hideCardImages: true,
+      });
+    }
+  }
+
+  function showCardImages() {
+    setHideImages(false);
+
+    const preferences = getLocalStoragePreferences();
+    if (!preferences) {
+      setLocalStoragePreferences({ hideCardImages: false });
+    } else {
+      setLocalStoragePreferences({
+        ...preferences,
+        hideCardImages: false,
+      });
+    }
+  }
 
   return (
     <Box className="!rounded-tl-none flex gap-2 px-0 overflow-hidden">
@@ -120,7 +191,7 @@ export default function CardItemGallery({
                     ? faDownLeftAndUpRightToCenter
                     : faUpRightAndDownLeftFromCenter
                 }
-                onClick={() => setCondensed(!condensed)}
+                onClick={() => (condensed ? expandCards() : condenseCards())}
               />
             </Tooltip>
 
@@ -131,7 +202,9 @@ export default function CardItemGallery({
                 rounded
                 type={hideImages ? "outlined" : "clear"}
                 icon={hideImages ? faEye : faEyeSlash}
-                onClick={() => setHideImages(!hideImages)}
+                onClick={() =>
+                  hideImages ? showCardImages() : hideCardImages()
+                }
               />
             </Tooltip>
           </View>
