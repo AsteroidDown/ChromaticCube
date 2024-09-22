@@ -4,14 +4,14 @@ import Box from "../box/box";
 
 export type ModalProps = ViewProps & {
   open: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   transparent?: boolean;
 };
 
 export default function Modal({
   open,
-  setIsOpen,
+  setOpen,
   transparent = false,
   className,
   children,
@@ -23,7 +23,7 @@ export default function Modal({
   return (
     <>
       {open && (
-        <Pressable onPress={() => setIsOpen(false)}>
+        <Pressable onPress={() => setOpen(false)}>
           <ReactModal transparent style={[{ opacity: 0 }]}>
             <View
               className={
@@ -34,7 +34,7 @@ export default function Modal({
               <Box
                 className={`
                   ${className} ${transParentClasses}
-                   bg-background-400 shadow-lg border-dark-200 border-2 
+                   bg-background-200 shadow-lg border-dark-200 border-2 
                   ${open ? "opacity-100" : "opacity-0"}`}
               >
                 {children}

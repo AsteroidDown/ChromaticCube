@@ -81,7 +81,7 @@ export default function CardItem({
         />
       </Pressable>
 
-      <Modal transparent open={modalOpen} setIsOpen={setModalOpen}>
+      <Modal transparent open={modalOpen} setOpen={setModalOpen}>
         <CardDetailedPreview card={card}>
           <CardItemFooter card={card} />
         </CardDetailedPreview>
