@@ -27,8 +27,20 @@ async function Get(url: string, query?: Record<string, any>) {
   );
 }
 
+async function Post(url: string, data?: Record<string, any>) {
+  const headers = getHeaders();
+
+  return handleResponse(
+    await axios.post(`${ScryfallURL}/${url}`, {
+      headers,
+      ...data,
+    })
+  );
+}
+
 const Api = {
   get: Get,
+  post: Post,
 };
 
 export default Api;
