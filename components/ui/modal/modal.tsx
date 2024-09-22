@@ -31,14 +31,16 @@ export default function Modal({
                 (open ? "bg-opacity-30" : "bg-opacity-0")
               }
             >
-              <Box
-                className={`
-                  ${className} ${transParentClasses}
-                   bg-background-200 shadow-lg border-dark-200 border-2 
-                  ${open ? "opacity-100" : "opacity-0"}`}
-              >
-                {children}
-              </Box>
+              <Pressable className="!cursor-default" tabIndex={-1}>
+                <Box
+                  className={`
+                    ${className} ${transParentClasses}
+                    bg-background-200 shadow-lg border-dark-200 border-2 
+                    ${open ? "opacity-100" : "opacity-0"}`}
+                >
+                  {children}
+                </Box>
+              </Pressable>
             </View>
           </ReactModal>
         </Pressable>
