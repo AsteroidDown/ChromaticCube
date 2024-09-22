@@ -9,10 +9,10 @@ module.exports = {
         bottomToTopGrow: {
           "0%": { height: "0" },
           "100%": { height: "100%" },
-        },
+        }
       },
       animation: {
-        bottomToTopGrow: "bottomToTopGrow 1s ease forwards",
+        bottomToTopGrow: "bottomToTopGrow 1s ease forwards"
       },
       gridTemplateAreas: {
         graphLayout: ["title title", "verticalAxis plot", ". horizontalAxis"],
