@@ -24,6 +24,42 @@ async function getCardPrints(name: string): Promise<Card[]> {
   return await findCards(`name:/^${name}$/ unique:prints game:paper`);
 }
 
+async function getCardsFromCollection(
+  cardsIdentifiers: { set: string; collectorNumber: string }[]
+) {
+  const bundles: { set: string; collector_number: string }[][] = [];
+
+  cardsIdentifiers.forEach((identifier, index) => {
+    const bundleNumber = Math.floor(index / 75);
+
+    if (bundles.length <= bundleNumber) bundles.push([]);
+
+    bundles[bundleNumber].push({
+      set: identifier.set,
+      collector_number: identifier.collectorNumber,
+    });
+  });
+
+  const scryfallCards: ScryfallCard[] = [];
+
+  await Promise.all(
+    bundles.map(
+      async (bundle) =>
+        await Api.post(`cards/collection`, {
+          identifiers: bundle,
+        })
+          .then((response: ScryfallList) =>
+            response.data.forEach((scryfallCard) =>
+              scryfallCards.push(scryfallCard)
+            )
+          )
+          .catch((error) => console.error(error))
+    )
+  );
+
+  return scryfallCards.map((scryfallCard) => ScryfallToCard(scryfallCard));
+}
+
 async function getRandomCard(): Promise<Card> {
   const card: ScryfallCard = await Api.get(`cards/random`).catch((error) =>
     console.error(error)
@@ -36,6 +72,7 @@ const ScryfallService = {
   findCards,
   getCard,
   getCardPrints,
+  getCardsFromCollection,
   getRandomCard,
 };
 
