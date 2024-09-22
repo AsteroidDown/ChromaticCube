@@ -11,6 +11,13 @@ export function getLocalStorageStoredCards(maybeBoard?: boolean) {
   return storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
 }
 
+export function setLocalStorageCards(cards: Card[], maybeBoard?: boolean) {
+  localStorage.setItem(
+    maybeBoard ? "cubeCardsMaybe" : "cubeCards",
+    JSON.stringify(cards.map((card) => JSON.stringify(card)))
+  );
+}
+
 export function saveLocalStorageCard(card: Card, maybeBoard?: boolean) {
   if (Platform.OS === "ios") return;
 
