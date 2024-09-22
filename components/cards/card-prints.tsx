@@ -49,9 +49,8 @@ export default function CardPrints({
       ></Button>
 
       <Dropdown
-        className={`!max-w-[412px] border-2 border-primary-200 rounded-2xl shadow-xl ${
-          iconOnly ? "-ml-40" : "-ml-20"
-        }`}
+        className={`!max-w-[412px] border-2 border-primary-200 rounded-2xl shadow-xl`}
+        xOffset={iconOnly ? -160 : -80}
         expanded={expanded}
         setExpanded={setExpanded}
       >
