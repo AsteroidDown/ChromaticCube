@@ -50,7 +50,11 @@ export default function Button({
       <View
         className={`${baseButtonClasses} ${buttonHeight}
           ${baseColor} ${hoverColor} ${
-          rounded ? "!rounded-full !w-10 !h-10" : ""
+          rounded && text
+            ? "!rounded-full"
+            : rounded
+            ? "!rounded-full !w-10 !h-10"
+            : ""
         } ${hideLeftBorder ? "!rounded-l-none !border-l-0" : ""} ${
           hideRightBorder ? "!rounded-r-none !border-r-0" : ""
         }`}
