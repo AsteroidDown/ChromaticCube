@@ -8,8 +8,6 @@ export function getLocalStoragePreferences(): Preferences | null {
     localStorage.getItem("preferences") || "{}"
   );
 
-  console.log(preferences);
-
   return preferences;
 }
 
