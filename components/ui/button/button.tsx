@@ -1,6 +1,7 @@
 import { ActionColor } from "@/constants/ui/colors";
 import { Size } from "@/constants/ui/sizes";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Pressable, Text, View, ViewProps } from "react-native";
 
@@ -62,7 +63,9 @@ export default function Button({
         {icon && (
           <FontAwesomeIcon
             icon={icon}
-            className={`${textColor} ${text || children ? "mr-2" : ""}`}
+            className={`${textColor} ${text || children ? "mr-2" : ""} ${
+              icon === faRotate ? "animate-spin" : ""
+            }`}
             size={size !== "md" ? size : undefined}
           />
         )}
