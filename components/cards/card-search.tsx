@@ -7,7 +7,7 @@ import { saveLocalStorageCard } from "@/functions/local-storage/card-local-stora
 import ScryfallService from "@/hooks/scryfall.service";
 import { Card } from "@/models/card/card";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { View } from "react-native";
 import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
@@ -25,16 +25,15 @@ export default function CardSearch() {
   const [buttonAction, setButtonAction] = useState("primary" as ActionColor);
 
   const [noSearchResults, setNoSearchResults] = useState(false);
-  const [noSearchResultsTimer, setNoSearchResultsTimer] =
-    useState<NodeJS.Timeout>();
-  const [badSearch, setBadSearch] = useState("");
-  const [newSearch, setNewSearch] = useState(false);
+  const [noSearchResultsTimer, setNoSearchResultsTimer] = useState<NodeJS.Timeout>();
+  const [noResultsSearch, setNoResultsSearch] = useState("");
+  const [newSearch, setNewSearch] = useState(false); 
 
   const searchedCardsPlaceholder = Array(5).fill(undefined);
 
   function findCards() {
     ScryfallService.findCards(search).then((cards) => {
-      // if a no search results message is currently rendered, clear the disappear timeout
+      // if a no search results message is currently rendered, clear the disappear message timeout
       if (noSearchResultsTimer) {
         clearTimeout(noSearchResultsTimer);
         setNoSearchResults(false);
@@ -43,16 +42,15 @@ export default function CardSearch() {
       // one result returned, auto-populate the card-detailed-preview with it
       if (cards.length === 1) setCard(cards[0]);
 
-      // no results
       if (cards.length === 0) {
         // show "No search results" message for a short period of time
         setNoSearchResults(true);
         const noResultsTimer = setTimeout(() => {
           setNoSearchResults(false);
-        }, 3000);
+        }, 2500);
 
         setNoSearchResultsTimer(noResultsTimer);
-        setBadSearch(search);
+        setNoResultsSearch(search);
       } else {
         setSearchedCards(cards);
 
@@ -120,15 +118,12 @@ export default function CardSearch() {
               </View>
             )}
           </View>
-          {
-            <View
-              className={`absolute bottom-2 flex w-full justify-center text-primary-500 font-bold items-center opacity-0 ${
-                noSearchResults ? "animate-fadeIn" : "animate-fadeOut"
-              }`}
+            {noSearchResults && <View
+              className="absolute bottom-2 flex w-full justify-center text-red-500 font-bold items-center transition-all ease-in-out duration-1000"
             >
-              No cards found matching: "{badSearch}"
-            </View>
-          }
+              No cards found matching: "{noResultsSearch}"
+            </View>}
+          
         </Box>
       </View>
 

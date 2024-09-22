@@ -24,16 +24,17 @@ export default function SearchBar({
   const onBlur = () => setFocused(false);
 
   const baseClasses =
-    "relative flex flex-row gap-3 items-center border-2 border-background-200 !px-6 !py-4 w-full rounded-full color-background-500 transition-all";
+    "relative flex flex-row gap-3 items-center border-2 border-background-200 !px-6 !py-4 w-full rounded-full color-background-500 transition-colors ease-in-out duration-200";
   const hoverClasses = "hover:border-primary-500";
   const focusClasses = "border-primary-300";
+  const noSearchResultClasses = "border-red-500";
 
   return (
     <View className="mx-px w-full">
       <Box
         className={`${
           focused ? focusClasses : ""
-        } ${baseClasses} ${noSearchResults ? "border-2 border-red rounded-full animate-borderPulse" : hoverClasses}`}
+        } ${baseClasses} ${noSearchResults ? noSearchResultClasses : hoverClasses}`}
       >
         <FontAwesomeIcon className="color-white" icon={faSearch} />
 
