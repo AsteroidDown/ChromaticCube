@@ -7,7 +7,7 @@ export type TabBarProps = ViewProps & {
   tabs: TabProps[];
 };
 
-export default function TabBar({ tabs, className }: TabBarProps) {
+export default function TabBar({ tabs, className, children }: TabBarProps) {
   const [focusedIndex, setFocusedIndex] = React.useState(0);
 
   return (
@@ -31,6 +31,8 @@ export default function TabBar({ tabs, className }: TabBarProps) {
             />
           </Link>
         ))}
+
+        <View className="ml-auto">{children}</View>
       </View>
 
       {/* <View
