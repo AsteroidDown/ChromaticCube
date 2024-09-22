@@ -7,7 +7,7 @@ import { saveLocalStorageCard } from "@/functions/local-storage/card-local-stora
 import ScryfallService from "@/hooks/scryfall.service";
 import { Card } from "@/models/card/card";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { View } from "react-native";
 import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
@@ -25,7 +25,8 @@ export default function CardSearch() {
   const [buttonAction, setButtonAction] = useState("primary" as ActionColor);
 
   const [noSearchResults, setNoSearchResults] = useState(false);
-  const [noSearchResultsTimer, setNoSearchResultsTimer] = useState<NodeJS.Timeout>();
+  const [noSearchResultsTimer, setNoSearchResultsTimer] =
+    useState<NodeJS.Timeout>();
   const [badSearch, setBadSearch] = useState("");
   const [newSearch, setNewSearch] = useState(false);
 
@@ -33,8 +34,6 @@ export default function CardSearch() {
 
   function findCards() {
     ScryfallService.findCards(search).then((cards) => {
-      setSearchedCards(cards);
-
       // if a no search results message is currently rendered, clear the disappear timeout
       if (noSearchResultsTimer) {
         clearTimeout(noSearchResultsTimer);
@@ -50,12 +49,13 @@ export default function CardSearch() {
         setNoSearchResults(true);
         const noResultsTimer = setTimeout(() => {
           setNoSearchResults(false);
-        }, 5000);
+        }, 3000);
 
         setNoSearchResultsTimer(noResultsTimer);
         setBadSearch(search);
-      }
-      else {
+      } else {
+        setSearchedCards(cards);
+
         // toggle card animation condition so cards fade in on each new search
         setNewSearch(false);
         setTimeout(() => {
@@ -87,25 +87,29 @@ export default function CardSearch() {
           search={search}
           searchAction={findCards}
           onSearchChange={onSearchChange}
+          noSearchResults={noSearchResults}
         />
 
         <Box className="flex-[2] min-h-[350px] h-full">
-          <View className={`${noSearchResults ? "overflow-x-hidden" : "overflow-x-auto"} overflow-y-hidden h-full`}>
-            {noSearchResults && (
-                <View className={`flex h-full w-full justify-center text-primary-500 font-bold items-center ${noSearchResults ? "animate-fadeIn" : ""}`}>
-                  No cards found matching: "{badSearch}"
-                </View>
-            )}
+          <View className="flex gap-2 overflow-x-auto overflow-y-hidden h-full">
             {!searchedCards?.length && (
-              <View className={`flex flex-row gap-4 h-full ${!noSearchResults ? "animate-fadeIn" : ""}`}>
+              <View
+                className={`flex flex-row flex-1 gap-4 ${
+                  newSearch ? "animate-fadeIn" : ""
+                }`}
+              >
                 {searchedCardsPlaceholder.map((_, index) => (
                   <CardImage key={index} />
                 ))}
               </View>
             )}
 
-            {searchedCards?.length && (
-              <View className={`flex flex-row gap-4 h-full ${newSearch ? "animate-fadeIn": ""}`}>
+            {searchedCards?.length > 0 && (
+              <View
+                className={`flex flex-row gap-4 h-full ${
+                  newSearch ? "animate-fadeIn" : ""
+                }`}
+              >
                 {searchedCards.map((card, index) => (
                   <CardImage
                     card={card}
@@ -116,6 +120,15 @@ export default function CardSearch() {
               </View>
             )}
           </View>
+          {
+            <View
+              className={`absolute bottom-2 flex w-full justify-center text-primary-500 font-bold items-center opacity-0 ${
+                noSearchResults ? "animate-fadeIn" : "animate-fadeOut"
+              }`}
+            >
+              No cards found matching: "{badSearch}"
+            </View>
+          }
         </Box>
       </View>
 

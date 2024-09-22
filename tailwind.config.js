@@ -13,11 +13,23 @@ module.exports = {
         fadeIn: {
           "0%": { opacity: 0 },
           "100%": { opacity: 1 }
+        },
+        fadeOut: {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 }
+        },
+        borderPulse: {
+          "0%":  { "border-color": "rgba(0, 255, 255, 0)" },
+          "25%":   { "border-color": "rgba(220,20,60, 1)" },
+          "50%":  { "border-color": "rgba(0, 255, 255, 0)" },
+          "75%": { "border-color": "rgba(220,20,60, 1)" }
         }
       },
       animation: {
         bottomToTopGrow: "bottomToTopGrow 1s ease forwards",
         fadeIn: "fadeIn 1s ease forwards",
+        fadeOut: "fadeOut 1s ease forwards",
+        borderPulse: "borderPulse 2s ease-in-out 1"
       },
       gridTemplateAreas: {
         graphLayout: ["title title", "verticalAxis plot", ". horizontalAxis"],

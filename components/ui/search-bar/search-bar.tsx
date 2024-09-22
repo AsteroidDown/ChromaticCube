@@ -8,12 +8,14 @@ export interface SearchBarProps {
   search: string;
   onSearchChange: React.Dispatch<React.SetStateAction<string>>;
   searchAction: () => void;
+  noSearchResults?: boolean;
 }
 
 export default function SearchBar({
   search,
   onSearchChange,
   searchAction,
+  noSearchResults
 }: SearchBarProps) {
   const [focused, setFocused] = React.useState(false);
   const [searchHovered, setSearchHovered] = React.useState(false);
@@ -31,7 +33,7 @@ export default function SearchBar({
       <Box
         className={`${
           focused ? focusClasses : ""
-        } ${baseClasses} ${hoverClasses}`}
+        } ${baseClasses} ${noSearchResults ? "border-2 border-red rounded-full animate-borderPulse" : hoverClasses}`}
       >
         <FontAwesomeIcon className="color-white" icon={faSearch} />
 
