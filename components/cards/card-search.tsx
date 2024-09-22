@@ -25,9 +25,9 @@ export default function CardSearch() {
   const [buttonAction, setButtonAction] = useState("primary" as ActionColor);
 
   const [noSearchResults, setNoSearchResults] = useState(false);
-  const [noSearchResultsTimer, setNoSearchResultsTimer] = useState<NodeJS.Timeout>();
+  const [noSearchResultsTimer, setNoSearchResultsTimer] =
+    useState<NodeJS.Timeout>();
   const [noResultsSearch, setNoResultsSearch] = useState("");
-  const [newSearch, setNewSearch] = useState(false); 
 
   const searchedCardsPlaceholder = Array(5).fill(undefined);
 
@@ -53,12 +53,6 @@ export default function CardSearch() {
         setNoResultsSearch(search);
       } else {
         setSearchedCards(cards);
-
-        // toggle card animation condition so cards fade in on each new search
-        setNewSearch(false);
-        setTimeout(() => {
-          setNewSearch(true);
-        }, 20);
       }
     });
   }
@@ -89,12 +83,10 @@ export default function CardSearch() {
         />
 
         <Box className="flex-[2] min-h-[350px] h-full">
-          <View className="flex gap-2 overflow-x-auto overflow-y-hidden h-full">
+          <View className="overflow-x-auto overflow-y-hidden h-full">
             {!searchedCards?.length && (
               <View
-                className={`flex flex-row flex-1 gap-4 ${
-                  newSearch ? "animate-fadeIn" : ""
-                }`}
+                className="flex flex-row flex-1 gap-4"
               >
                 {searchedCardsPlaceholder.map((_, index) => (
                   <CardImage key={index} />
@@ -104,9 +96,7 @@ export default function CardSearch() {
 
             {searchedCards?.length > 0 && (
               <View
-                className={`flex flex-row gap-4 h-full ${
-                  newSearch ? "animate-fadeIn" : ""
-                }`}
+                className="flex flex-row gap-4 h-full"
               >
                 {searchedCards.map((card, index) => (
                   <CardImage
@@ -118,12 +108,12 @@ export default function CardSearch() {
               </View>
             )}
           </View>
-            {noSearchResults && <View
-              className="absolute bottom-2 flex w-full justify-center text-red-500 font-bold items-center transition-all ease-in-out duration-1000"
-            >
+
+          {noSearchResults && (
+            <View className="absolute bottom-2 flex w-full justify-center text-red-500 font-bold items-center transition-all ease-in-out duration-1000">
               No cards found matching: "{noResultsSearch}"
-            </View>}
-          
+            </View>
+          )}
         </Box>
       </View>
 

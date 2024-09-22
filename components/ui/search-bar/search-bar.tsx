@@ -15,7 +15,7 @@ export default function SearchBar({
   search,
   onSearchChange,
   searchAction,
-  noSearchResults
+  noSearchResults,
 }: SearchBarProps) {
   const [focused, setFocused] = React.useState(false);
   const [searchHovered, setSearchHovered] = React.useState(false);
@@ -32,9 +32,9 @@ export default function SearchBar({
   return (
     <View className="mx-px w-full">
       <Box
-        className={`${
-          focused ? focusClasses : ""
-        } ${baseClasses} ${noSearchResults ? noSearchResultClasses : hoverClasses}`}
+        className={`${focused ? focusClasses : ""} ${baseClasses} ${
+          noSearchResults ? noSearchResultClasses : hoverClasses
+        }`}
       >
         <FontAwesomeIcon className="color-white" icon={faSearch} />
 
