@@ -15,13 +15,19 @@ export type TextProps = ViewProps & {
   action?: ActionColor | "default";
   thickness?: TextThickness;
   mono?: boolean;
+  center?: boolean;
+  noWrap?: boolean;
+  truncate?: boolean;
 };
 
 export default function Text({
-  size = "md",
+  size = "sm",
   action = "default",
   thickness = "normal",
   mono = false,
+  center = false,
+  noWrap = false,
+  truncate = false,
   className,
   children,
 }: TextProps) {
@@ -33,6 +39,8 @@ export default function Text({
     <ReactText
       className={`${className} ${textSize} ${textColor} ${textThickness} ${
         mono ? "font-mono" : ""
+      } ${noWrap ? "text-nowrap" : ""} ${truncate ? "truncate" : ""} ${
+        center ? "text-center" : ""
       }`}
     >
       {children}

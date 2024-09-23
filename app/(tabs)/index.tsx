@@ -1,5 +1,6 @@
 import { Graph, GraphProps } from "@/components/graph/graph";
 import Box from "@/components/ui/box/box";
+import Text from "@/components/ui/text/text";
 import {
   graphCardsByColor,
   graphCardsByCost,
@@ -8,7 +9,7 @@ import {
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { Card } from "@/models/card/card";
 import React from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 
 export default function App() {
   const [stacked, setStacked] = React.useState(true);
@@ -41,7 +42,7 @@ export default function App() {
   return (
     <View className="flex gap-6 flex-1 justify-center bg-background-100 p-6">
       <Pressable onPress={() => setStacked(!stacked)}>
-        <Text className="color-white">{stacked ? "Stacked" : "Grouped"}</Text>
+        <Text>{stacked ? "Stacked" : "Grouped"}</Text>
       </Pressable>
 
       <ScrollView>

@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import Text from "@/components/ui/text/text";
+import { View } from "react-native";
 import { SetData } from "./graph-plot";
 
 export interface GraphHorizontalAxisProps {
@@ -12,7 +13,7 @@ export function GraphHorizontalAxis({ title, sets }: GraphHorizontalAxisProps) {
       <View className="flex flex-row">
         {sets.map((set, index) => (
           <View className="min-w-24" key={set.title + index}>
-            <Text className="text-center text-white text-nowrap">
+            <Text noWrap center>
               {set.title}
             </Text>
           </View>
@@ -20,7 +21,7 @@ export function GraphHorizontalAxis({ title, sets }: GraphHorizontalAxisProps) {
       </View>
 
       {title && (
-        <Text className="w-full text-center text-white text-nowrap">
+        <Text center noWrap className="text-nowrap">
           {title}
         </Text>
       )}

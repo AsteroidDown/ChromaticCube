@@ -1,3 +1,4 @@
+import Text from "@/components/ui/text/text";
 import {
   faClipboardQuestion,
   faCube,
@@ -6,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tabs } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 export default function TabLayout() {
   return (
@@ -37,7 +38,7 @@ export default function TabLayout() {
                   className={focused ? "color-white" : "color-primary-400"}
                 />
 
-                <Text className={focused ? "color-white" : "color-primary-400"}>
+                <Text className={focused ? "" : "color-primary-400"}>
                   Overview
                 </Text>
               </View>
@@ -64,7 +65,7 @@ export default function TabLayout() {
 
                 <Text
                   className={`whitespace-nowrap ${
-                    focused ? "color-white" : "color-primary-400"
+                    focused ? "" : "color-primary-400"
                   }`}
                 >
                   Main Board
@@ -91,7 +92,7 @@ export default function TabLayout() {
 
                 <Text
                   className={`whitespace-nowrap ${
-                    focused ? "color-white" : "color-primary-400"
+                    focused ? "" : "color-primary-400"
                   }`}
                 >
                   Maybe Board

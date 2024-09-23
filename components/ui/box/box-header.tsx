@@ -1,7 +1,8 @@
+import Text from "@/components/ui/text/text";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactNode } from "react";
-import { Text, View, ViewProps } from "react-native";
+import { View, ViewProps } from "react-native";
 import Divider from "../divider/divider";
 
 export type BoxHeaderProps = ViewProps & {
@@ -39,10 +40,11 @@ export default function BoxHeader({
           )}
 
           <View className="flex flex-1">
-            <Text className="text-white font-bold text-2xl text-wrap">
+            <Text size="2xl" thickness="bold">
               {title}
             </Text>
-            <Text className="text-dark-600 text-sm">{subtitle}</Text>
+
+            <Text className="text-dark-600">{subtitle}</Text>
           </View>
 
           {titleEnd}

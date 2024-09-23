@@ -1,7 +1,8 @@
+import Text from "@/components/ui/text/text";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, TextInput, View } from "react-native";
 import Box from "../box/box";
 
 export interface SearchBarProps {
@@ -58,9 +59,11 @@ export default function SearchBar({
           onPointerLeave={() => setSearchHovered(false)}
         >
           <Text
+            size="md"
+            thickness="medium"
             className={
-              "text-base font-medium text-background-500 " +
-              (searchHovered ? "text-primary-500" : "")
+              "!text-background-500 " +
+              (searchHovered ? "!text-primary-500" : "")
             }
           >
             Search

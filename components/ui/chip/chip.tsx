@@ -1,9 +1,10 @@
+import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { ActionColor } from "@/constants/ui/colors";
 import { Size } from "@/constants/ui/sizes";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Pressable, Text, ViewProps } from "react-native";
+import { Pressable, ViewProps } from "react-native";
 
 export type ChipType = "default" | "outlined";
 
@@ -38,7 +39,6 @@ export default function Chip({
   const textColor = getChipTextColor(action, type, disabled);
 
   const chipHeight = getChipHeight(size);
-  const chipTextSize = getChipTextSize(size);
 
   const baseChipClasses =
     "flex flex-row px-4 py-2 gap-2 justify-center items-center rounded-full transition-all";
@@ -58,7 +58,9 @@ export default function Chip({
       )}
 
       {text && (
-        <Text className={`font-bold ${textColor} ${chipTextSize}`}>{text}</Text>
+        <Text size={size} thickness="bold" className={`${textColor}`}>
+          {text}
+        </Text>
       )}
 
       {children}
@@ -188,38 +190,38 @@ function getChipTextColor(
   type: ChipType,
   disabled: boolean
 ) {
-  if (disabled) return "text-dark-600";
+  if (disabled) return "!text-dark-600";
 
   return `${
     type === "default"
-      ? "text-dark-100"
+      ? "!text-dark-100"
       : action === "primary"
-      ? "text-primary-200"
+      ? "!text-primary-200"
       : action === "secondary"
-      ? "text-secondary-100"
+      ? "!text-secondary-100"
       : action === "success"
-      ? "text-success-100"
+      ? "!text-success-100"
       : action === "danger"
-      ? "text-danger-100"
+      ? "!text-danger-100"
       : action === "info"
-      ? "text-info-100"
+      ? "!text-info-100"
       : action === "warning"
-      ? "text-warning-100"
+      ? "!text-warning-100"
       : action === "white"
-      ? "text-mtg-white"
+      ? "!text-mtg-white"
       : action === "blue"
-      ? "text-mtg-blue"
+      ? "!text-mtg-blue"
       : action === "black"
-      ? "text-mtg-black"
+      ? "!text-mtg-black"
       : action === "red"
-      ? "text-mtg-red"
+      ? "!text-mtg-red"
       : action === "green"
-      ? "text-mtg-green"
+      ? "!text-mtg-green"
       : action === "gold"
-      ? "text-mtg-gold"
+      ? "!text-mtg-gold"
       : action === "colorless"
-      ? "text-mtg-colorless"
-      : "text-mtg-blue"
+      ? "!text-mtg-colorless"
+      : "!text-mtg-blue"
   }`;
 }
 
@@ -233,16 +235,4 @@ function getChipHeight(size: Size) {
     : size === "lg"
     ? "h-12"
     : "h-14";
-}
-
-function getChipTextSize(size: Size) {
-  return size === "xs"
-    ? "text-xs"
-    : size === "sm"
-    ? "text-sm"
-    : size === "md"
-    ? "text-base"
-    : size === "lg"
-    ? "text-lg"
-    : "text-xl";
 }

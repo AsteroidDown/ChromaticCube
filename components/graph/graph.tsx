@@ -1,4 +1,5 @@
-import { Text, View, ViewProps } from "react-native";
+import Text from "@/components/ui/text/text";
+import { View, ViewProps } from "react-native";
 import { GraphHorizontalAxis } from "./layout/graph-horizontal-axis";
 import { GraphPlot, SetData } from "./layout/graph-plot";
 import { GraphVerticalAxis } from "./layout/graph-vertical-axis";
@@ -45,7 +46,11 @@ export function Graph({
         " flex-1 grid grid-areas-graphLayout grid-cols-graphLayout grid-rows-graphLayout grid-flow-dense overflow-auto"
       }
     >
-      <Text className="text-white font-bold text-xl w-full text-center p-4 grid-in-title">
+      <Text
+        size="xl"
+        thickness="bold"
+        className="w-full text-center p-4 grid-in-title"
+      >
         {title}
       </Text>
 

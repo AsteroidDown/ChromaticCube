@@ -1,3 +1,4 @@
+import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
@@ -5,7 +6,7 @@ import { SortDirection } from "@/constants/sorting";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import { faFilter, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Chip from "../chip/chip";
 import ColorFilter from "./filter-types/color-filter";
 import RarityFilter from "./filter-types/rarity-filter";
@@ -63,7 +64,8 @@ export default function FilterBar({ setFilters }: FilterBarProps) {
           } absolute -bottom-1 -right-1 overflow-hidden transition-all duration-300`}
         >
           <Text
-            className={`text-sm font-bold bg-primary-200 py-px px-[7px] rounded-full`}
+            thickness="bold"
+            className={`!text-dark-100 bg-primary-200 py-px px-[7px] rounded-full`}
           >
             {filterLength}
           </Text>

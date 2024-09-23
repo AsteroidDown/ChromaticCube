@@ -1,3 +1,4 @@
+import Text from "@/components/ui/text/text";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import {
   getLocalStorageStoredCards,
@@ -12,7 +13,7 @@ import {
   faRotate,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Button from "../ui/button/button";
 import Modal from "../ui/modal/modal";
 
@@ -98,16 +99,16 @@ export default function CardImportExportModal({
   return (
     <Modal open={open} setOpen={setOpen}>
       <View className="flex gap-3">
-        <Text className="text-white text-xl">Import/Export Cards</Text>
+        <Text size="xl">Import/Export Cards</Text>
 
         <View className="bg-background-100 p-4 rounded-xl overflow-hidden">
           <View className="max-h-40 overflow-y-auto">
-            <Text className="text-white font-mono">{cards}</Text>
+            <Text mono>{cards}</Text>
           </View>
         </View>
 
-        <Text className="text-white pl-3">For importing use the standard:</Text>
-        <Text className="text-white font-mono -mt-2 px-2.5 py-1.5 bg-background-100 rounded-lg">
+        <Text className="pl-3">For importing use the standard:</Text>
+        <Text mono className="-mt-2 px-2.5 py-1.5 bg-background-100 rounded-lg">
           1 name (set) collection_number
         </Text>
 

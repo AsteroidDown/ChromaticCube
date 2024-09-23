@@ -1,8 +1,9 @@
 import Chip from "@/components/ui/chip/chip";
 import Dropdown from "@/components/ui/dropdown/dropdown";
+import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 export interface ColorFilterProps {
   reset: boolean;
@@ -71,7 +72,8 @@ export default function ColorFilter({
           }`}
         >
           <Text
-            className={`font-semibold text-dark-100 rounded-full px-[7px] py-[3px] bg-primary-200`}
+            thickness="semi"
+            className={`!text-dark-100 rounded-full px-[9px] py-[3px] bg-primary-200`}
           >
             {appliedFilters.length}
           </Text>

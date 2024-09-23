@@ -1,8 +1,9 @@
 import Divider from "@/components/ui/divider/divider";
+import Text from "@/components/ui/text/text";
 import { getCountOfCards } from "@/functions/card-stats";
 import { Card } from "@/models/card/card";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import CardItem from "./card-item";
 
 export interface CardItemGalleryColumnProps {
@@ -26,9 +27,11 @@ export default function CardItemGalleryColumn({
   return (
     <View className={`${columnClasses}`}>
       <View className="flex justify-center items-center mx-2">
-        <Text className="text-white font-bold text-lg">{title}</Text>
+        <Text size="lg" thickness="bold">
+          {title}
+        </Text>
 
-        <Text className="text-white font-semibold text-sm">
+        <Text thickness="semi">
           {cardCount} Card{cardCount !== 1 ? "s" : ""}
         </Text>
       </View>

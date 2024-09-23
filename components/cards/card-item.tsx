@@ -1,6 +1,7 @@
 import Button from "@/components/ui/button/button";
 import Divider from "@/components/ui/divider/divider";
 import Modal from "@/components/ui/modal/modal";
+import Text from "@/components/ui/text/text";
 import { Tooltip } from "@/components/ui/tooltip/tooltip";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import {
@@ -21,7 +22,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
-import { Linking, Pressable, Text, View } from "react-native";
+import { Linking, Pressable, View } from "react-native";
 import CardCost from "./card-cost";
 import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
@@ -108,12 +109,10 @@ export function CardItemHeader({ card, condensed }: CardItemProps) {
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
     >
-      {/* <Tooltip style={[{ flex: 1 }]} message={card.name}> */}
       <View className="flex flex-row gap-2 flex-1">
-        <Text className="text-white">{card.count}</Text>
-        <Text className="text-white truncate">{card.name}</Text>
+        <Text>{card.count}</Text>
+        <Text className="truncate">{card.name}</Text>
       </View>
-      {/* </Tooltip> */}
 
       {card.faces ? (
         <Text className="flex flex-row items-center gap-1">
@@ -121,9 +120,7 @@ export function CardItemHeader({ card, condensed }: CardItemProps) {
             <CardCost size="sm" cost={card.faces.front.manaCost} />
           )}
 
-          {card.faces.back.manaCost && (
-            <Text className="text-white h-[20px]"> // </Text>
-          )}
+          {card.faces.back.manaCost && <Text className="h-[20px]"> // </Text>}
 
           {card.faces.back.manaCost && (
             <CardCost size="sm" cost={card.faces.back.manaCost} />
@@ -224,7 +221,7 @@ export function CardItemFooter({
         />
 
         <View className="flex justify-center items-center px-2 h-full border-2 border-x-0 border-dark-600">
-          <Text className="text-white font-bold">{card.count}</Text>
+          <Text thickness="bold">{card.count}</Text>
         </View>
 
         <Button

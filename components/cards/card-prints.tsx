@@ -1,11 +1,12 @@
 import Box from "@/components/ui/box/box";
 import Button from "@/components/ui/button/button";
 import Dropdown from "@/components/ui/dropdown/dropdown";
+import Text from "@/components/ui/text/text";
 import ScryfallService from "@/hooks/scryfall.service";
 import { Card } from "@/models/card/card";
 import { faPalette } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, View } from "react-native";
 
 export interface CardPrintsProps {
   card?: Card;
@@ -55,7 +56,9 @@ export default function CardPrints({
         setExpanded={setExpanded}
       >
         <Box className="pb-6 overflow-hidden">
-          <Text className="text-lg font-bold text-white mb-2">{`Available Prints (${cardPrints.length})`}</Text>
+          <Text size="lg" thickness="bold" className="mb-2">
+            {`Available Prints (${cardPrints.length})`}
+          </Text>
 
           <View className="flex flex-row flex-wrap gap-2 max-h-[300px] rounded-xl overflow-y-auto ">
             {cardPrints.map((print, index) => (
@@ -79,11 +82,8 @@ export default function CardPrints({
                 />
 
                 <View className="flex flex-row justify-center items-center gap-2">
-                  <Text className="text-white font-semibold">
-                    {print.set.toUpperCase()}
-                  </Text>
-
-                  <Text className="text-white font-semibold">
+                  <Text thickness="semi">
+                    {print.set.toUpperCase()}{" "}
                     {print.collectorNumber.toUpperCase()}
                   </Text>
                 </View>

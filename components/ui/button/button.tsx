@@ -1,9 +1,10 @@
+import Text from "@/components/ui/text/text";
 import { ActionColor } from "@/constants/ui/colors";
 import { Size } from "@/constants/ui/sizes";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Pressable, Text, View, ViewProps } from "react-native";
+import { Pressable, View, ViewProps } from "react-native";
 
 export type ButtonType = "default" | "outlined" | "clear";
 
@@ -41,7 +42,6 @@ export default function Button({
   const textColor = getButtonTextColor(action, type, disabled);
 
   const buttonHeight = getButtonHeight(size);
-  const buttonTextSize = getButtonTextSize(size);
 
   const baseButtonClasses =
     "flex flex-row px-4 py-2 justify-center items-center w-full rounded-md transition-all";
@@ -72,9 +72,9 @@ export default function Button({
 
         {text && (
           <Text
-            className={`font-bold ${buttonTextSize} ${textColor} ${
-              children ? "mr-2" : ""
-            }`}
+            thickness="bold"
+            size={size}
+            className={`${textColor} ${children ? "mr-2" : ""}`}
           >
             {text}
           </Text>
@@ -157,18 +157,18 @@ function getButtonTextColor(
 
   return `${
     type === "default"
-      ? "text-dark-100"
+      ? "!text-dark-100"
       : action === "primary"
-      ? "text-primary-200"
+      ? "!text-primary-200"
       : action === "secondary"
-      ? "text-secondary-100"
+      ? "!text-secondary-100"
       : action === "success"
-      ? "text-success-100"
+      ? "!text-success-100"
       : action === "danger"
-      ? "text-danger-100"
+      ? "!text-danger-100"
       : action === "info"
-      ? "text-info-100"
-      : "text-warning-100"
+      ? "!text-info-100"
+      : "!text-warning-100"
   }`;
 }
 
@@ -182,16 +182,4 @@ function getButtonHeight(size: Size) {
     : size === "lg"
     ? "h-12"
     : "h-14";
-}
-
-function getButtonTextSize(size: Size) {
-  return size === "xs"
-    ? "text-xs"
-    : size === "sm"
-    ? "text-sm"
-    : size === "md"
-    ? "text-base"
-    : size === "lg"
-    ? "text-lg"
-    : "text-xl";
 }

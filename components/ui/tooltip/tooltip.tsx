@@ -1,5 +1,6 @@
+import Text from "@/components/ui/text/text";
 import { useState } from "react";
-import { Text, View, type ViewProps } from "react-native";
+import { View, type ViewProps } from "react-native";
 
 export type TooltipProps = ViewProps & {
   title?: string;
@@ -36,13 +37,11 @@ export function Tooltip({
       {message && active && (
         <View className="flex gap-1 absolute -top-2 left-[50%] bg-background-100 p-2 rounded-lg bg-opacity-85 translate-x-[-50%] translate-y-[-100%] z-10">
           {title && (
-            <Text className="color-white font-bold whitespace-nowrap">
+            <Text noWrap thickness="bold">
               {title}
             </Text>
           )}
-          {message && (
-            <Text className="color-white whitespace-nowrap">{message}</Text>
-          )}
+          {message && <Text noWrap>{message}</Text>}
         </View>
       )}
     </View>

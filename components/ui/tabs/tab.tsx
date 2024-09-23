@@ -1,6 +1,7 @@
+import Text from "@/components/ui/text/text";
 import { Href } from "expo-router";
 import React from "react";
-import { Text, View, ViewProps } from "react-native";
+import { View, ViewProps } from "react-native";
 
 export type TabProps = ViewProps & {
   title: string;
@@ -34,9 +35,9 @@ export default function Tab({
       }`}
     >
       <Text
-        className={`${
-          focused ? "text-primary-200" : "text-background-400"
-        } font-semibold text-lg`}
+        size="lg"
+        thickness="semi"
+        className={`${focused ? "!text-primary-200" : "!text-background-400"}`}
       >
         {title}
       </Text>

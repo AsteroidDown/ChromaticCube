@@ -1,6 +1,7 @@
 import Divider from "@/components/ui/divider/divider";
+import Text from "@/components/ui/text/text";
 import { Card } from "@/models/card/card";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import CardCost from "./card-cost";
 import CardText from "./card-text";
 
@@ -12,8 +13,10 @@ export function CardInfo({ card }: CardInfoProps) {
   return (
     <View className="flex gap-3">
       <View className="flex flex-row gap-2">
-        <Text className="text-white font-bold flex-1">Name</Text>
-        <Text className="text-white flex-[3]">
+        <Text thickness="bold" className="flex-1">
+          Name
+        </Text>
+        <Text className="flex-[3]">
           {card?.name || "Something cool probably"}
         </Text>
       </View>
@@ -23,7 +26,9 @@ export function CardInfo({ card }: CardInfoProps) {
           <Divider />
 
           <View className="flex flex-row gap-2">
-            <Text className="text-white font-bold flex-1">Cost</Text>
+            <Text thickness="bold" className="flex-1">
+              Cost
+            </Text>
             <View className="flex-[3]">
               <CardCost cost={card.manaCost} />
             </View>
@@ -34,8 +39,10 @@ export function CardInfo({ card }: CardInfoProps) {
       <Divider />
 
       <View className="flex flex-row gap-2">
-        <Text className="text-white font-bold flex-1">Type</Text>
-        <Text className="text-white flex-[3]">
+        <Text thickness="bold" className="flex-1">
+          Type
+        </Text>
+        <Text className="flex-[3]">
           {card?.typeLine || "Creature - Awesome"}
         </Text>
       </View>
@@ -45,7 +52,9 @@ export function CardInfo({ card }: CardInfoProps) {
           <Divider />
 
           <View className="flex flex-row gap-2">
-            <Text className="text-white font-bold flex-1">Produces</Text>
+            <Text thickness="bold" className="flex-1">
+              Produces
+            </Text>
             <View className="flex-[3]">
               <CardCost cost={"{" + card.producedMana.join("}{") + "}"} />
             </View>
@@ -56,7 +65,9 @@ export function CardInfo({ card }: CardInfoProps) {
       <Divider />
 
       <View className="flex flex-row gap-2">
-        <Text className="text-white font-bold flex-1">Text</Text>
+        <Text thickness="bold" className="flex-1">
+          Text
+        </Text>
         <View className="flex-[3]">
           <CardText text={card?.oracleText || "{T}: You win the game!"} />
         </View>
@@ -69,10 +80,10 @@ export function CardFrontInfo({ card }: CardInfoProps) {
   return (
     <View className="flex gap-3">
       <View className="flex flex-row gap-2">
-        <Text className="text-white font-bold flex-1">Name</Text>
-        <Text className="text-white flex-[3]">
-          {card?.faces?.front.name || ""}
+        <Text thickness="bold" className="flex-1">
+          Name
         </Text>
+        <Text className="flex-[3]">{card?.faces?.front.name || ""}</Text>
       </View>
 
       {!!card?.faces?.front.manaCost && (
@@ -80,7 +91,9 @@ export function CardFrontInfo({ card }: CardInfoProps) {
           <Divider />
 
           <View className="flex flex-row gap-2">
-            <Text className="text-white font-bold flex-1">Cost</Text>
+            <Text thickness="bold" className="flex-1">
+              Cost
+            </Text>
             <View className="flex-[3]">
               <CardCost cost={card?.faces?.front?.manaCost || ""} />
             </View>
@@ -91,10 +104,10 @@ export function CardFrontInfo({ card }: CardInfoProps) {
       <Divider />
 
       <View className="flex flex-row gap-2">
-        <Text className="text-white font-bold flex-1">Type</Text>
-        <Text className="text-white flex-[3]">
-          {card?.faces?.front.typeLine || ""}
+        <Text thickness="bold" className="flex-1">
+          Type
         </Text>
+        <Text className="flex-[3]">{card?.faces?.front.typeLine || ""}</Text>
       </View>
 
       {/* {card?.producedMana &&
@@ -103,7 +116,7 @@ export function CardFrontInfo({ card }: CardInfoProps) {
             <Divider />
 
             <View className="flex flex-row gap-2">
-              <Text className="text-white font-bold flex-1">Produces</Text>
+              <Text thickness="bold" className="flex-1">Produces</Text>
               <View className="flex-[3]">
                 <CardCost cost={"{" + card.producedMana.join("}{") + "}"} />
               </View>
@@ -114,7 +127,9 @@ export function CardFrontInfo({ card }: CardInfoProps) {
       <Divider />
 
       <View className="flex flex-row gap-2">
-        <Text className="text-white font-bold flex-1">Text</Text>
+        <Text thickness="bold" className="flex-1">
+          Text
+        </Text>
         <View className="flex-[3]">
           <CardText text={card?.faces?.front.oracleText || ""} />
         </View>
@@ -127,10 +142,10 @@ export function CardBackInfo({ card }: CardInfoProps) {
   return (
     <View className="flex gap-3">
       <View className="flex flex-row gap-2">
-        <Text className="text-white font-bold flex-1">Name</Text>
-        <Text className="text-white flex-[3]">
-          {card?.faces?.back.name || ""}
+        <Text thickness="bold" className="flex-1">
+          Name
         </Text>
+        <Text className="flex-[3]">{card?.faces?.back.name || ""}</Text>
       </View>
 
       {!!card?.faces?.back.manaCost && (
@@ -138,7 +153,9 @@ export function CardBackInfo({ card }: CardInfoProps) {
           <Divider />
 
           <View className="flex flex-row gap-2">
-            <Text className="text-white font-bold flex-1">Cost</Text>
+            <Text thickness="bold" className="flex-1">
+              Cost
+            </Text>
             <View className="flex-[3]">
               <CardCost cost={card?.faces?.back?.manaCost || ""} />
             </View>
@@ -149,10 +166,10 @@ export function CardBackInfo({ card }: CardInfoProps) {
       <Divider />
 
       <View className="flex flex-row gap-2">
-        <Text className="text-white font-bold flex-1">Type</Text>
-        <Text className="text-white flex-[3]">
-          {card?.faces?.back.typeLine || ""}
+        <Text thickness="bold" className="flex-1">
+          Type
         </Text>
+        <Text className="flex-[3]">{card?.faces?.back.typeLine || ""}</Text>
       </View>
 
       {/* {card?.producedMana &&
@@ -161,7 +178,7 @@ export function CardBackInfo({ card }: CardInfoProps) {
             <Divider />
 
             <View className="flex flex-row gap-2">
-              <Text className="text-white font-bold flex-1">Produces</Text>
+              <Text thickness="bold" className="flex-1">Produces</Text>
               <View className="flex-[3]">
                 <CardCost cost={"{" + card.producedMana.join("}{") + "}"} />
               </View>
@@ -172,7 +189,9 @@ export function CardBackInfo({ card }: CardInfoProps) {
       <Divider />
 
       <View className="flex flex-row gap-2">
-        <Text className="text-white font-bold flex-1">Text</Text>
+        <Text thickness="bold" className="flex-1">
+          Text
+        </Text>
         <View className="flex-[3]">
           <CardText text={card?.faces?.back.oracleText || ""} />
         </View>

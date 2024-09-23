@@ -1,3 +1,4 @@
+import Text from "@/components/ui/text/text";
 import { CardBackIds } from "@/constants/scryfall/ids";
 import { Card } from "@/models/card/card";
 import {
@@ -6,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, View } from "react-native";
 
 export interface CardImageProps {
   card?: Card;
@@ -93,7 +94,9 @@ export default function CardImage({
         {!card && (
           <View className="flex justify-center items-center w-full h-full bg-background-100">
             {placeHolder && (
-              <Text className="text-white text-center">{placeHolder}</Text>
+              <Text size="sm" className="text-center">
+                {placeHolder}
+              </Text>
             )}
           </View>
         )}

@@ -1,5 +1,6 @@
+import Text from "@/components/ui/text/text";
 import { SymbolMap } from "@/constants/mtg/mtg-symbols";
-import { Image, Text, View } from "react-native";
+import { Image, View } from "react-native";
 
 export interface CardTextProps {
   text: string;
@@ -35,9 +36,7 @@ export default function CardText({ text }: CardTextProps) {
               />
             )}
 
-            {section[0] !== "{" && (
-              <Text className="color-white">{section}</Text>
-            )}
+            {section[0] !== "{" && <Text>{section}</Text>}
           </Text>
         ))}
       </Text>

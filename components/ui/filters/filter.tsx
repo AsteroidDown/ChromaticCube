@@ -1,8 +1,9 @@
 import Chip from "@/components/ui/chip/chip";
 import Dropdown from "@/components/ui/dropdown/dropdown";
+import Text from "@/components/ui/text/text";
 import { ActionColor } from "@/constants/ui/colors";
 import React from "react";
-import { Text, View, ViewProps } from "react-native";
+import { View, ViewProps } from "react-native";
 
 export type FilterOptionProps = ViewProps & {
   title: string;
@@ -52,7 +53,8 @@ export default function Filter({
           }`}
         >
           <Text
-            className={`font-semibold text-dark-100 rounded-full px-[7px] py-[3px] ${textColor}`}
+            thickness="semi"
+            className={`!text-dark-100 rounded-full px-[7px] py-[3px] ${textColor}`}
           >
             {appliedFilterCount}
           </Text>
