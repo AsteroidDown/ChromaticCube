@@ -84,7 +84,7 @@ export default function CardImage({
                   }
                   source={{ uri: card.faces.back.imageUris.png }}
                   style={[{ resizeMode: "contain" }]}
-                />{" "}
+                />
               </View>
             </View>
           </View>
