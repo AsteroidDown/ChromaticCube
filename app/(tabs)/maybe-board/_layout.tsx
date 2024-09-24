@@ -1,3 +1,4 @@
+import CardImportExportModal from "@/components/cards/card-import-export-modal";
 import CardSearch from "@/components/cards/card-search";
 import Button from "@/components/ui/button/button";
 import { TabProps } from "@/components/ui/tabs/tab";
@@ -122,58 +123,56 @@ export default function CardsLayout() {
         <View className="flex gap-4 px-6 py-4 w-full h-[100vh] pb-4 bg-background-100 overflow-y-scroll">
           <CardSearch />
 
-          <TabBar tabs={tabs}>
-            <CardPreferencesContext.Provider
-              value={{ preferences, setPreferences }}
-            >
-              <TabBar tabs={tabs}>
-                <View className="flex flex-row gap-2 mx-4">
-                  <Tooltip
-                    title={
-                      hideImages
-                        ? "Expand Card Gallery"
-                        : "Condense Card Gallery"
-                    }
-                  >
-                    <Button
-                      rounded
-                      className="-rotate-45"
-                      type={condensed ? "outlined" : "clear"}
-                      icon={
-                        condensed
-                          ? faDownLeftAndUpRightToCenter
-                          : faUpRightAndDownLeftFromCenter
-                      }
-                      onClick={() =>
-                        condensed ? expandCards() : condenseCards()
-                      }
-                    />
-                  </Tooltip>
-
-                  <Tooltip
-                    title={hideImages ? "Show Card Images" : "Hide Card Images"}
-                  >
-                    <Button
-                      rounded
-                      type={hideImages ? "outlined" : "clear"}
-                      icon={hideImages ? faEyeSlash : faEye}
-                      onClick={() =>
-                        hideImages ? showCardImages() : hideCardImages()
-                      }
-                    />
-                  </Tooltip>
-
+          <CardPreferencesContext.Provider
+            value={{ preferences, setPreferences }}
+          >
+            <TabBar tabs={tabs}>
+              <View className="flex flex-row gap-2 mx-4">
+                <Tooltip
+                  title={
+                    hideImages ? "Expand Card Gallery" : "Condense Card Gallery"
+                  }
+                >
                   <Button
                     rounded
-                    type="clear"
-                    icon={faFileArrowDown}
-                    onClick={() => setOpen(!open)}
+                    className="-rotate-45"
+                    type={condensed ? "outlined" : "clear"}
+                    icon={
+                      condensed
+                        ? faDownLeftAndUpRightToCenter
+                        : faUpRightAndDownLeftFromCenter
+                    }
+                    onClick={() =>
+                      condensed ? expandCards() : condenseCards()
+                    }
                   />
-                </View>
-              </TabBar>
-            </CardPreferencesContext.Provider>
-          </TabBar>
+                </Tooltip>
+
+                <Tooltip
+                  title={hideImages ? "Show Card Images" : "Hide Card Images"}
+                >
+                  <Button
+                    rounded
+                    type={hideImages ? "outlined" : "clear"}
+                    icon={hideImages ? faEyeSlash : faEye}
+                    onClick={() =>
+                      hideImages ? showCardImages() : hideCardImages()
+                    }
+                  />
+                </Tooltip>
+
+                <Button
+                  rounded
+                  type="clear"
+                  icon={faFileArrowDown}
+                  onClick={() => setOpen(!open)}
+                />
+              </View>
+            </TabBar>
+          </CardPreferencesContext.Provider>
         </View>
+
+        <CardImportExportModal open={open} setOpen={setOpen} />
       </StoredCardsContext.Provider>
     </ScrollView>
   );
