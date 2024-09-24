@@ -1,8 +1,6 @@
 import Box from "@/components/ui/box/box";
 import BoxHeader from "@/components/ui/box/box-header";
-import Button from "@/components/ui/button/button";
 import FilterBar from "@/components/ui/filters/filter-bar";
-import { Tooltip } from "@/components/ui/tooltip/tooltip";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import { filterCards } from "@/functions/card-filtering";
 import {
@@ -15,10 +13,6 @@ import {
 } from "@/functions/card-sorting";
 import { getCountOfCards, getTotalValueOfCards } from "@/functions/card-stats";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
-import {
-  getLocalStoragePreferences,
-  setLocalStoragePreferences,
-} from "@/functions/local-storage/preferences-local-storage";
 import { Card } from "@/models/card/card";
 import {
   CardFilters,
@@ -26,13 +20,7 @@ import {
   CardsSortedByCost,
   CardsSortedByType,
 } from "@/models/sorted-cards/sorted-cards";
-import {
-  faChartSimple,
-  faDownLeftAndUpRightToCenter,
-  faEye,
-  faEyeSlash,
-  faUpRightAndDownLeftFromCenter,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import CardItemGalleryColumn from "./card-item-gallery-column";
@@ -41,10 +29,15 @@ export type CardItemGalleryType = "cost" | "color" | "type";
 
 export interface CardItemGalleryProps {
   type: CardItemGalleryType;
+
+  condensed: boolean;
+  hideImages: boolean;
 }
 
 export default function CardItemGallery({
   type = "cost",
+  condensed,
+  hideImages,
 }: CardItemGalleryProps) {
   const { maybeBoard, storedCards } = useContext(StoredCardsContext);
 
@@ -53,8 +46,6 @@ export default function CardItemGallery({
   const [cardCount, setCardCount] = React.useState(0);
   const [cardsValue, setCardsValue] = React.useState(0);
 
-  const [hideImages, setHideImages] = React.useState(false);
-  const [condensed, setCondensed] = React.useState(false);
   const [filters, setFilters] = React.useState({} as CardFilters);
 
   const [cardsSortedByCost, setCardsSortedByCost] = React.useState(
@@ -77,13 +68,6 @@ export default function CardItemGallery({
         sortCardsAlphabetically(getLocalStorageStoredCards(maybeBoard))
       )
     );
-
-    const preferences = getLocalStoragePreferences();
-    if (preferences?.cardsCondensed) setCondensed(true);
-    else setCondensed(false);
-
-    if (preferences?.hideCardImages) setHideImages(true);
-    else setHideImages(false);
   }, []);
 
   useEffect(() => {
@@ -117,66 +101,6 @@ export default function CardItemGallery({
     }
   }, [cards, filters]);
 
-  function condenseCards() {
-    setCondensed(true);
-
-    const preferences = getLocalStoragePreferences();
-    if (!preferences) {
-      setLocalStoragePreferences({
-        cardsCondensed: true,
-      });
-    } else {
-      setLocalStoragePreferences({
-        ...preferences,
-        cardsCondensed: true,
-      });
-    }
-  }
-
-  function expandCards() {
-    setCondensed(false);
-
-    const preferences = getLocalStoragePreferences();
-    if (!preferences) {
-      setLocalStoragePreferences({ cardsCondensed: false });
-    } else {
-      setLocalStoragePreferences({
-        ...preferences,
-        cardsCondensed: false,
-      });
-    }
-  }
-
-  function hideCardImages() {
-    setHideImages(true);
-
-    const preferences = getLocalStoragePreferences();
-    if (!preferences) {
-      setLocalStoragePreferences({
-        hideCardImages: true,
-      });
-    } else {
-      setLocalStoragePreferences({
-        ...preferences,
-        hideCardImages: true,
-      });
-    }
-  }
-
-  function showCardImages() {
-    setHideImages(false);
-
-    const preferences = getLocalStoragePreferences();
-    if (!preferences) {
-      setLocalStoragePreferences({ hideCardImages: false });
-    } else {
-      setLocalStoragePreferences({
-        ...preferences,
-        hideCardImages: false,
-      });
-    }
-  }
-
   return (
     <Box className="!rounded-tl-none flex gap-2 px-0 overflow-hidden">
       <BoxHeader
@@ -188,37 +112,6 @@ export default function CardItemGallery({
         end={
           <View className="flex flex-row gap-4">
             <FilterBar type={type} setFilters={setFilters} />
-
-            <Tooltip
-              title={
-                hideImages ? "Expand Card Gallery" : "Condense Card Gallery"
-              }
-            >
-              <Button
-                rounded
-                className="-rotate-45"
-                type={condensed ? "outlined" : "clear"}
-                icon={
-                  condensed
-                    ? faDownLeftAndUpRightToCenter
-                    : faUpRightAndDownLeftFromCenter
-                }
-                onClick={() => (condensed ? expandCards() : condenseCards())}
-              />
-            </Tooltip>
-
-            <Tooltip
-              title={hideImages ? "Show Card Images" : "Hide Card Images"}
-            >
-              <Button
-                rounded
-                type={hideImages ? "outlined" : "clear"}
-                icon={hideImages ? faEye : faEyeSlash}
-                onClick={() =>
-                  hideImages ? showCardImages() : hideCardImages()
-                }
-              />
-            </Tooltip>
           </View>
         }
       />
