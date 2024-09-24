@@ -13,6 +13,7 @@ import {
 } from "@/functions/card-sorting";
 import { getCountOfCards, getTotalValueOfCards } from "@/functions/card-stats";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
+import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
 import {
   CardFilters,
@@ -104,7 +105,7 @@ export default function CardItemGallery({
   return (
     <Box className="!rounded-tl-none flex gap-2 px-0 overflow-hidden">
       <BoxHeader
-        title="Cards Sorted by Cost"
+        title={"Cards Sorted by " + titleCase(type)}
         startIcon={faChartSimple}
         subtitle={`${cardCount} Card${
           cardCount !== 1 ? "s" : ""
