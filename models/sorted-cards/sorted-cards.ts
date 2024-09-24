@@ -42,5 +42,6 @@ export interface CardFilters {
   colorFilter?: MTGColor[];
   typeFilter?: MTGCardTypes[];
   rarityFilter?: MTGRarity[];
+  manaValueSort?: SortDirection;
   priceSort?: SortDirection;
 }

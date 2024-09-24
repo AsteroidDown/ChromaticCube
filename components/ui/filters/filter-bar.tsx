@@ -1,3 +1,4 @@
+import { CardItemGalleryType } from "@/components/cards/card-item-gallery";
 import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
@@ -14,10 +15,11 @@ import TypeFilter from "./filter-types/type-filter";
 import SortingFilter from "./sorting-filter";
 
 export interface FilterBarProps {
+  type?: CardItemGalleryType;
   setFilters: React.Dispatch<React.SetStateAction<CardFilters>>;
 }
 
-export default function FilterBar({ setFilters }: FilterBarProps) {
+export default function FilterBar({ setFilters, type }: FilterBarProps) {
   const [showFilters, setShowFilters] = React.useState(false);
   const [filterLength, setFilterLength] = React.useState(0);
   const [resetFilters, setResetFilters] = React.useState(false);
@@ -27,6 +29,9 @@ export default function FilterBar({ setFilters }: FilterBarProps) {
   const [rarityFilter, setRarityFilter] = React.useState([] as MTGRarity[]);
 
   const [priceSort, setPriceSort] = React.useState(null as SortDirection);
+  const [manaValueSort, setManaValueSort] = React.useState(
+    null as SortDirection
+  );
 
   useEffect(() => {
     setFilters({
@@ -34,17 +39,19 @@ export default function FilterBar({ setFilters }: FilterBarProps) {
       typeFilter,
       rarityFilter,
       priceSort,
+      manaValueSort,
     });
 
     setFilterLength(
       colorFilter.length + typeFilter.length + rarityFilter.length
     );
-  }, [colorFilter, typeFilter, rarityFilter, priceSort]);
+  }, [colorFilter, typeFilter, rarityFilter, manaValueSort, priceSort]);
 
   function clearFilters() {
     setColorFilter([]);
     setTypeFilter([]);
     setRarityFilter([]);
+    setManaValueSort(null);
     setPriceSort(null);
     setResetFilters(!resetFilters);
   }
@@ -87,11 +94,24 @@ export default function FilterBar({ setFilters }: FilterBarProps) {
           />
         )}
 
-        <ColorFilter setColorFilters={setColorFilter} reset={resetFilters} />
+        {type !== "color" && (
+          <ColorFilter setColorFilters={setColorFilter} reset={resetFilters} />
+        )}
 
-        <TypeFilter setTypeFilters={setTypeFilter} reset={resetFilters} />
+        {type !== "type" && (
+          <TypeFilter setTypeFilters={setTypeFilter} reset={resetFilters} />
+        )}
 
         <RarityFilter setRarityFilters={setRarityFilter} reset={resetFilters} />
+
+        {type !== "cost" && (
+          <SortingFilter
+            title="Mana Value"
+            reset={resetFilters}
+            sortDirection={manaValueSort}
+            setSortDirection={setManaValueSort}
+          />
+        )}
 
         <SortingFilter
           title="Price"

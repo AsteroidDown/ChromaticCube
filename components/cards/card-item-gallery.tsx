@@ -9,6 +9,7 @@ import {
   sortCardsAlphabetically,
   sortCardsByColor,
   sortCardsByCost,
+  sortCardsByManaValue,
   sortCardsByPrice,
   sortCardsByType,
 } from "@/functions/card-sorting";
@@ -36,7 +37,7 @@ import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import CardItemGalleryColumn from "./card-item-gallery-column";
 
-export type CardItemGalleryType = "cost" | "color" | "type" | "maybe";
+export type CardItemGalleryType = "cost" | "color" | "type";
 
 export interface CardItemGalleryProps {
   type: CardItemGalleryType;
@@ -67,11 +68,15 @@ export default function CardItemGallery({
   );
 
   useEffect(() => {
-    setCards(sortCardsAlphabetically(storedCards));
+    setCards(sortCardsByManaValue(sortCardsAlphabetically(storedCards)));
   }, [storedCards]);
 
   useEffect(() => {
-    setCards(sortCardsAlphabetically(getLocalStorageStoredCards(maybeBoard)));
+    setCards(
+      sortCardsByManaValue(
+        sortCardsAlphabetically(getLocalStorageStoredCards(maybeBoard))
+      )
+    );
 
     const preferences = getLocalStoragePreferences();
     if (preferences?.cardsCondensed) setCondensed(true);
@@ -82,14 +87,21 @@ export default function CardItemGallery({
   }, []);
 
   useEffect(() => {
-    const sortedCards =
+    const priceSortedCards =
       filters.priceSort === "ASC"
         ? sortCardsByPrice(cards)
         : filters.priceSort === "DESC"
         ? sortCardsByPrice(cards, false)
         : cards;
 
-    const filteredCards = filterCards(sortedCards, filters);
+    const manaValueSortedCards =
+      filters.manaValueSort === "ASC"
+        ? sortCardsByManaValue(priceSortedCards)
+        : filters.manaValueSort === "DESC"
+        ? sortCardsByManaValue(priceSortedCards, false)
+        : priceSortedCards;
+
+    const filteredCards = filterCards(manaValueSortedCards, filters);
 
     setCardCount(getCountOfCards(filteredCards));
     setCardsValue(getTotalValueOfCards(filteredCards));
@@ -175,7 +187,7 @@ export default function CardItemGallery({
         } | Total Value: $${cardsValue.toFixed(2)}`}
         end={
           <View className="flex flex-row gap-4">
-            <FilterBar setFilters={setFilters} />
+            <FilterBar type={type} setFilters={setFilters} />
 
             <Tooltip
               title={

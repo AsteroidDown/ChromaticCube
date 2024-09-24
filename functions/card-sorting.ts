@@ -10,6 +10,10 @@ export function sortCardsAlphabetically(cards: Card[]) {
   return cards.sort((a, b) => a.name.localeCompare(b.name));
 }
 
+export function sortCardsByManaValue(cards: Card[], ascending = true) {
+  return cards.sort((a, b) => (ascending ? a.cmc - b.cmc : b.cmc - a.cmc));
+}
+
 export function sortCardsByPrice(
   cards: Card[],
   ascending = true,
