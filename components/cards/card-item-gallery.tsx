@@ -60,33 +60,42 @@ export default function CardItemGallery({
   );
 
   useEffect(() => {
-    setCards(sortCardsByManaValue(sortCardsAlphabetically(storedCards)));
+    setCards(sortCardsAlphabetically(storedCards));
   }, [storedCards]);
 
   useEffect(() => {
-    setCards(
-      sortCardsByManaValue(
-        sortCardsAlphabetically(getLocalStorageStoredCards(maybeBoard))
-      )
-    );
+    setCards(sortCardsAlphabetically(getLocalStorageStoredCards(maybeBoard)));
   }, []);
 
   useEffect(() => {
-    const priceSortedCards =
-      filters.priceSort === "ASC"
-        ? sortCardsByPrice(cards)
-        : filters.priceSort === "DESC"
-        ? sortCardsByPrice(cards, false)
-        : cards;
+    let sortedCards: Card[] = [];
 
-    const manaValueSortedCards =
-      filters.manaValueSort === "ASC"
-        ? sortCardsByManaValue(priceSortedCards)
-        : filters.manaValueSort === "DESC"
-        ? sortCardsByManaValue(priceSortedCards, false)
-        : priceSortedCards;
+    console.log(filters.priceSort, filters.manaValueSort);
+    if (filters.priceSort || filters.manaValueSort) {
+      if (filters.priceSort) {
+        sortedCards =
+          filters.priceSort === "ASC"
+            ? sortCardsByPrice(cards)
+            : filters.priceSort === "DESC"
+            ? sortCardsByPrice(cards, false)
+            : cards;
+      }
 
-    const filteredCards = filterCards(manaValueSortedCards, filters);
+      if (filters.manaValueSort) {
+        const cardsToSort: Card[] = sortedCards?.length ? sortedCards : cards;
+
+        sortedCards =
+          filters.manaValueSort === "ASC"
+            ? sortCardsByManaValue(cardsToSort)
+            : filters.manaValueSort === "DESC"
+            ? sortCardsByManaValue(cardsToSort, false)
+            : cardsToSort;
+      }
+    } else {
+      sortedCards = sortCardsByManaValue(sortCardsAlphabetically(cards));
+    }
+
+    const filteredCards = filterCards(sortedCards, filters);
 
     setCardCount(getCountOfCards(filteredCards));
     setCardsValue(getTotalValueOfCards(filteredCards));
