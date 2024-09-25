@@ -21,16 +21,21 @@ export function setLocalStorageCards(cards: Card[], maybeBoard?: boolean) {
 export function saveLocalStorageCard(card: Card, maybeBoard?: boolean) {
   if (Platform.OS === "ios") return;
 
-  const storedCards: string[] = JSON.parse(
-    localStorage.getItem(maybeBoard ? "cubeCardsMaybe" : "cubeCards") || "[]"
+  const storedCards = getLocalStorageStoredCards(maybeBoard);
+
+  const storedCardIndex = storedCards.findIndex(
+    (storedCard) => storedCard.id === card.id
   );
-  const newCards = JSON.stringify([...storedCards, JSON.stringify(card)]);
+
+  if (storedCardIndex >= 0) storedCards[storedCardIndex].count += 1;
+  else storedCards.push(card);
+
+  const newCards = JSON.stringify([
+    ...storedCards.map((storedCard) => JSON.stringify(storedCard)),
+  ]);
   localStorage.setItem(maybeBoard ? "cubeCardsMaybe" : "cubeCards", newCards);
 
-  return [
-    ...storedCards.map((savedCard) => JSON.parse(savedCard) as Card),
-    card,
-  ];
+  return storedCards;
 }
 
 export function switchLocalStorageCardPrint(

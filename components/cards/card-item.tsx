@@ -217,7 +217,7 @@ export function CardItemFooter({
           action="danger"
           className="flex-1"
           icon={faMinus}
-          onClick={() => removeFromCount}
+          onClick={() => removeFromCount(card)}
         />
 
         <View className="flex justify-center items-center px-2 h-full border-2 border-x-0 border-dark-600">
