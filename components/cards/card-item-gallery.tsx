@@ -70,7 +70,6 @@ export default function CardItemGallery({
   useEffect(() => {
     let sortedCards: Card[] = [];
 
-    console.log(filters.priceSort, filters.manaValueSort);
     if (filters.priceSort || filters.manaValueSort) {
       if (filters.priceSort) {
         sortedCards =
