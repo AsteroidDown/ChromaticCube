@@ -6,7 +6,7 @@ import {
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useMemo } from "react";
 import { Image, Pressable, View } from "react-native";
 
 export interface CardImageProps {
@@ -25,8 +25,63 @@ export default function CardImage({
   const [showFront, setShowFront] = React.useState(true);
   const [hovered, setHovered] = React.useState(false);
 
+  const [frontLoading, setFrontLoading] = React.useState(false);
+  const [backLoading, setBackLoading] = React.useState(false);
+
   const baseClasses =
-    "justify-center items-center h-full max-h-[350px] aspect-[2.5/3.5] rounded-lg overflow-hidden";
+    "flex h-full max-h-[350px] aspect-[2.5/3.5] rounded-lg overflow-hidden";
+
+  const imagePlaceHolder = (
+    <View className="h-full max-h-[350px] aspect-[2.5/3.5] rounded-xl transition-all bg-background-100 animate-pulse"></View>
+  );
+
+  const cardImage = useMemo(
+    () => (
+      <Image
+        source={{ uri: card?.images?.png }}
+        style={[{ resizeMode: "contain" }]}
+        className={`max-h-[350px] aspect-[2.5/3.5] rounded-xl ${
+          frontLoading ? "!h-0" : "h-full"
+        }`}
+        onLoad={() => setFrontLoading(false)}
+        onLoadEnd={() => setFrontLoading(false)}
+        onLoadStart={() => setFrontLoading(true)}
+      />
+    ),
+    [card?.images?.png]
+  );
+
+  const cardFrontImage = useMemo(
+    () => (
+      <Image
+        source={{ uri: card?.faces?.front.imageUris?.png }}
+        style={[{ resizeMode: "contain" }]}
+        className={`max-h-[350px] aspect-[2.5/3.5] rounded-xl ${
+          frontLoading ? "!h-0" : "h-full"
+        }`}
+        onLoad={() => setFrontLoading(false)}
+        onLoadEnd={() => setFrontLoading(false)}
+        onLoadStart={() => setFrontLoading(true)}
+      />
+    ),
+    [card?.faces?.front.imageUris?.png]
+  );
+
+  const cardBackImage = useMemo(
+    () => (
+      <Image
+        source={{ uri: card?.faces?.back.imageUris?.png }}
+        style={[{ resizeMode: "contain" }]}
+        className={`max-h-[350px] aspect-[2.5/3.5] rounded-xl ${
+          frontLoading ? "!h-0" : "h-full"
+        }`}
+        onLoad={() => setBackLoading(false)}
+        onLoadEnd={() => setBackLoading(false)}
+        onLoadStart={() => setBackLoading(true)}
+      />
+    ),
+    [card?.faces?.back.imageUris?.png]
+  );
 
   return (
     <Pressable
@@ -37,13 +92,10 @@ export default function CardImage({
     >
       <View className={baseClasses}>
         {card && !card.faces?.back.imageUris.png && (
-          <Image
-            className={
-              "h-full max-h-[350px] aspect-[2.5/3.5] rounded transition-all "
-            }
-            source={{ uri: card.images?.png }}
-            style={[{ resizeMode: "contain" }]}
-          />
+          <>
+            {frontLoading && imagePlaceHolder}
+            {cardImage}
+          </>
         )}
 
         {card && card.faces?.back.imageUris.png && (
@@ -56,13 +108,10 @@ export default function CardImage({
                 className="absolute w-full h-full"
                 style={{ backfaceVisibility: "hidden" }}
               >
-                <Image
-                  className={
-                    "h-full max-h-[350px] aspect-[2.5/3.5] rounded transition-all "
-                  }
-                  source={{ uri: card.faces.front.imageUris.png }}
-                  style={[{ resizeMode: "contain" }]}
-                />
+                <>
+                  {frontLoading && imagePlaceHolder}
+                  {cardFrontImage}
+                </>
               </View>
 
               <View
@@ -79,13 +128,10 @@ export default function CardImage({
                       ]
                 }
               >
-                <Image
-                  className={
-                    "h-full max-h-[350px] aspect-[2.5/3.5] rounded transition-all "
-                  }
-                  source={{ uri: card.faces.back.imageUris.png }}
-                  style={[{ resizeMode: "contain" }]}
-                />
+                <>
+                  {backLoading && imagePlaceHolder}
+                  {cardBackImage}
+                </>
               </View>
             </View>
           </View>
@@ -109,7 +155,7 @@ export default function CardImage({
             <View
               className={
                 "bg-background-100 p-4 rounded-full transition-all " +
-                (hovered ? "bg-opacity-100" : "bg-opacity-85")
+                (hovered ? "bg-opacity-100" : "bg-opacity-60")
               }
             >
               <FontAwesomeIcon

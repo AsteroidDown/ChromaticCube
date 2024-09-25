@@ -19,7 +19,7 @@ export default function CardDetailedPreview({
       <View className="flex gap-3  min-w-[250px]">
         <CardImage
           card={card}
-          placeHolder="Search for a Card and it will be previewed here"
+          placeHolder="Search for a card and it will be previewed here"
         />
 
         {children}
