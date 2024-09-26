@@ -1,8 +1,19 @@
+import { ScryfallCatalog } from "@/models/scryfall/scryfall-catalog";
 import { ScryfallToCard } from "../functions/scryfall";
 import { Card } from "../models/card/card";
 import { ScryfallCard } from "../models/scryfall/scryfall-card";
 import { ScryfallList } from "../models/scryfall/scryfall-list";
 import Api from "./api-methods";
+
+async function autocomplete(query: string): Promise<string[]> {
+  const response: ScryfallCatalog = await Api.get(`cards/autocomplete`, {
+    q: query,
+  }).catch((error) => console.error(error));
+
+  return response
+    ? response.data.filter((name) => name.substring(0, 2) !== "A-")
+    : [];
+}
 
 async function findCards(query: string): Promise<Card[]> {
   const response: ScryfallList = await Api.get(`cards/search`, {
@@ -69,6 +80,7 @@ async function getRandomCard(): Promise<Card> {
 }
 
 const ScryfallService = {
+  autocomplete,
   findCards,
   getCard,
   getCardPrints,
