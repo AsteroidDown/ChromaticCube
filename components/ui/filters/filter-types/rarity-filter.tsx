@@ -6,11 +6,13 @@ import React, { useEffect } from "react";
 import { View } from "react-native";
 
 export interface RarityFilterProps {
-  reset: boolean;
+  flat?: boolean;
+  reset?: boolean;
   setRarityFilters: React.Dispatch<React.SetStateAction<MTGRarity[]>>;
 }
 
 export default function RarityFilter({
+  flat,
   setRarityFilters,
   reset,
 }: RarityFilterProps) {
@@ -42,6 +44,36 @@ export default function RarityFilter({
     setAppliedFilters([]);
   }, [reset]);
 
+  const rarityFiltersList = (
+    <View className="flex flex-row flex-wrap gap-2">
+      <Chip
+        text="Common"
+        type={commonApplied ? "default" : "outlined"}
+        onClick={() => setCommonApplied(!commonApplied)}
+      />
+
+      <Chip
+        text="Uncommon"
+        type={uncommonApplied ? "default" : "outlined"}
+        onClick={() => setUncommonApplied(!uncommonApplied)}
+      />
+
+      <Chip
+        text="Rare"
+        type={rareApplied ? "default" : "outlined"}
+        onClick={() => setRareApplied(!rareApplied)}
+      />
+
+      <Chip
+        text="Mythic"
+        type={mythicApplied ? "default" : "outlined"}
+        onClick={() => setMythicApplied(!mythicApplied)}
+      />
+    </View>
+  );
+
+  if (flat) return rarityFiltersList;
+
   return (
     <View>
       <Chip
@@ -67,33 +99,7 @@ export default function RarityFilter({
         expanded={expanded}
         setExpanded={setExpanded}
         className={`!max-w-[360px] px-4 py-2 border-2 border-primary-300 bg-dark-200 rounded-2xl shadow-lg`}
-      >
-        <View className="flex flex-row flex-wrap gap-2">
-          <Chip
-            text="Common"
-            type={commonApplied ? "default" : "outlined"}
-            onClick={() => setCommonApplied(!commonApplied)}
-          />
-
-          <Chip
-            text="Uncommon"
-            type={uncommonApplied ? "default" : "outlined"}
-            onClick={() => setUncommonApplied(!uncommonApplied)}
-          />
-
-          <Chip
-            text="Rare"
-            type={rareApplied ? "default" : "outlined"}
-            onClick={() => setRareApplied(!rareApplied)}
-          />
-
-          <Chip
-            text="Mythic"
-            type={mythicApplied ? "default" : "outlined"}
-            onClick={() => setMythicApplied(!mythicApplied)}
-          />
-        </View>
-      </Dropdown>
+      ></Dropdown>
     </View>
   );
 }

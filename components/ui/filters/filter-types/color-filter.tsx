@@ -6,11 +6,13 @@ import React, { useEffect } from "react";
 import { View } from "react-native";
 
 export interface ColorFilterProps {
-  reset: boolean;
+  flat?: boolean;
+  reset?: boolean;
   setColorFilters: React.Dispatch<React.SetStateAction<MTGColor[]>>;
 }
 
 export default function ColorFilter({
+  flat,
   setColorFilters,
   reset,
 }: ColorFilterProps) {
@@ -63,6 +65,67 @@ export default function ColorFilter({
     setAppliedFilters([]);
   }, [reset]);
 
+  const colorFiltersList = (
+    <View className="flex flex-row flex-wrap gap-2">
+      <Chip
+        text="White"
+        action="white"
+        type={whiteApplied ? "default" : "outlined"}
+        onClick={() => setWhiteApplied(!whiteApplied)}
+      />
+
+      <Chip
+        text="Blue"
+        action="blue"
+        type={blueApplied ? "default" : "outlined"}
+        onClick={() => setBlueApplied(!blueApplied)}
+      />
+
+      <Chip
+        text="Black"
+        action="black"
+        type={blackApplied ? "default" : "outlined"}
+        onClick={() => setBlackApplied(!blackApplied)}
+      />
+
+      <Chip
+        text="Red"
+        action="red"
+        type={redApplied ? "default" : "outlined"}
+        onClick={() => setRedApplied(!redApplied)}
+      />
+
+      <Chip
+        text="Green"
+        action="green"
+        type={greenApplied ? "default" : "outlined"}
+        onClick={() => setGreenApplied(!greenApplied)}
+      />
+
+      <Chip
+        text="Gold"
+        action="gold"
+        type={goldApplied ? "default" : "outlined"}
+        onClick={() => setGoldApplied(!goldApplied)}
+      />
+
+      <Chip
+        text="Colorless"
+        action="colorless"
+        type={colorlessApplied ? "default" : "outlined"}
+        onClick={() => setColorlessApplied(!colorlessApplied)}
+      />
+
+      <Chip
+        text="Mono"
+        type={monoColorApplied ? "default" : "outlined"}
+        onClick={() => setMonoColorApplied(!monoColorApplied)}
+      />
+    </View>
+  );
+
+  if (flat) return colorFiltersList;
+
   return (
     <View>
       <Chip type="outlined" text="Color" onClick={() => setExpanded(!expanded)}>
@@ -85,62 +148,7 @@ export default function ColorFilter({
         setExpanded={setExpanded}
         className={`!max-w-[360px] px-4 py-2 border-2 border-primary-300 bg-dark-200 rounded-2xl shadow-lg`}
       >
-        <View className="flex flex-row flex-wrap gap-2">
-          <Chip
-            text="White"
-            action="white"
-            type={whiteApplied ? "default" : "outlined"}
-            onClick={() => setWhiteApplied(!whiteApplied)}
-          />
-
-          <Chip
-            text="Blue"
-            action="blue"
-            type={blueApplied ? "default" : "outlined"}
-            onClick={() => setBlueApplied(!blueApplied)}
-          />
-
-          <Chip
-            text="Black"
-            action="black"
-            type={blackApplied ? "default" : "outlined"}
-            onClick={() => setBlackApplied(!blackApplied)}
-          />
-
-          <Chip
-            text="Red"
-            action="red"
-            type={redApplied ? "default" : "outlined"}
-            onClick={() => setRedApplied(!redApplied)}
-          />
-
-          <Chip
-            text="Green"
-            action="green"
-            type={greenApplied ? "default" : "outlined"}
-            onClick={() => setGreenApplied(!greenApplied)}
-          />
-
-          <Chip
-            text="Gold"
-            action="gold"
-            type={goldApplied ? "default" : "outlined"}
-            onClick={() => setGoldApplied(!goldApplied)}
-          />
-
-          <Chip
-            text="Colorless"
-            action="colorless"
-            type={colorlessApplied ? "default" : "outlined"}
-            onClick={() => setColorlessApplied(!colorlessApplied)}
-          />
-
-          <Chip
-            text="Mono"
-            type={monoColorApplied ? "default" : "outlined"}
-            onClick={() => setMonoColorApplied(!monoColorApplied)}
-          />
-        </View>
+        {colorFiltersList}
       </Dropdown>
     </View>
   );

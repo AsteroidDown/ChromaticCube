@@ -6,11 +6,16 @@ import React, { useEffect } from "react";
 import { View } from "react-native";
 
 export interface TypeFilterProps {
-  reset: boolean;
+  flat?: boolean;
+  reset?: boolean;
   setTypeFilters: React.Dispatch<React.SetStateAction<MTGCardTypes[]>>;
 }
 
-export default function TypeFilter({ setTypeFilters, reset }: TypeFilterProps) {
+export default function TypeFilter({
+  flat,
+  setTypeFilters,
+  reset,
+}: TypeFilterProps) {
   const [expanded, setExpanded] = React.useState(false);
 
   const [creatureApplied, setCreatureApplied] = React.useState(false);
@@ -62,6 +67,60 @@ export default function TypeFilter({ setTypeFilters, reset }: TypeFilterProps) {
     setAppliedFilters([]);
   }, [reset]);
 
+  const typeFiltersList = (
+    <View className="flex flex-row flex-wrap gap-2">
+      <Chip
+        text="Creature"
+        type={creatureApplied ? "default" : "outlined"}
+        onClick={() => setCreatureApplied(!creatureApplied)}
+      />
+
+      <Chip
+        text="Instant"
+        type={instantApplied ? "default" : "outlined"}
+        onClick={() => setInstantApplied(!instantApplied)}
+      />
+
+      <Chip
+        text="Sorcery"
+        type={sorceryApplied ? "default" : "outlined"}
+        onClick={() => setSorceryApplied(!sorceryApplied)}
+      />
+
+      <Chip
+        text="Artifact"
+        type={artifactApplied ? "default" : "outlined"}
+        onClick={() => setArtifactApplied(!artifactApplied)}
+      />
+
+      <Chip
+        text="Enchantment"
+        type={enchantmentApplied ? "default" : "outlined"}
+        onClick={() => setEnchantmentApplied(!enchantmentApplied)}
+      />
+
+      <Chip
+        text="Land"
+        type={landApplied ? "default" : "outlined"}
+        onClick={() => setLandApplied(!landApplied)}
+      />
+
+      <Chip
+        text="Planeswalker"
+        type={planeswalkerApplied ? "default" : "outlined"}
+        onClick={() => setPlaneswalkerApplied(!planeswalkerApplied)}
+      />
+
+      <Chip
+        text="Battle"
+        type={battleApplied ? "default" : "outlined"}
+        onClick={() => setBattleApplied(!battleApplied)}
+      />
+    </View>
+  );
+
+  if (flat) return typeFiltersList;
+
   return (
     <View>
       <Chip type="outlined" text="Type" onClick={() => setExpanded(!expanded)}>
@@ -84,55 +143,7 @@ export default function TypeFilter({ setTypeFilters, reset }: TypeFilterProps) {
         setExpanded={setExpanded}
         className={`!max-w-[360px] px-4 py-2 border-2 border-primary-300 bg-dark-200 rounded-2xl shadow-lg`}
       >
-        <View className="flex flex-row flex-wrap gap-2">
-          <Chip
-            text="Creature"
-            type={creatureApplied ? "default" : "outlined"}
-            onClick={() => setCreatureApplied(!creatureApplied)}
-          />
-
-          <Chip
-            text="Instant"
-            type={instantApplied ? "default" : "outlined"}
-            onClick={() => setInstantApplied(!instantApplied)}
-          />
-
-          <Chip
-            text="Sorcery"
-            type={sorceryApplied ? "default" : "outlined"}
-            onClick={() => setSorceryApplied(!sorceryApplied)}
-          />
-
-          <Chip
-            text="Artifact"
-            type={artifactApplied ? "default" : "outlined"}
-            onClick={() => setArtifactApplied(!artifactApplied)}
-          />
-
-          <Chip
-            text="Enchantment"
-            type={enchantmentApplied ? "default" : "outlined"}
-            onClick={() => setEnchantmentApplied(!enchantmentApplied)}
-          />
-
-          <Chip
-            text="Land"
-            type={landApplied ? "default" : "outlined"}
-            onClick={() => setLandApplied(!landApplied)}
-          />
-
-          <Chip
-            text="Planeswalker"
-            type={planeswalkerApplied ? "default" : "outlined"}
-            onClick={() => setPlaneswalkerApplied(!planeswalkerApplied)}
-          />
-
-          <Chip
-            text="Battle"
-            type={battleApplied ? "default" : "outlined"}
-            onClick={() => setBattleApplied(!battleApplied)}
-          />
-        </View>
+        {typeFiltersList}
       </Dropdown>
     </View>
   );
