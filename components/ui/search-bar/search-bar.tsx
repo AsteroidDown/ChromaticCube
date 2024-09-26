@@ -75,7 +75,7 @@ export default function SearchBar({
                 ? focusClasses
                 : "border-background-200"
             } ${
-              focused && autoComplete.length > 0
+              focused && autoComplete.length > 1
                 ? "max-h-40 z-10 !py-2 !border-2"
                 : "max-h-0 -z-10 !py-0 !border-none"
             }`}
@@ -84,13 +84,14 @@ export default function SearchBar({
               {autoComplete.map((name, index) => (
                 <Pressable
                   key={name + index}
-                  className="px-4 py-1 rounded-full hover:bg-background-300"
+                  onFocus={onFocus}
+                  className="px-4 py-1 rounded-full hover:bg-background-100 focus:bg-background-100 outline-none"
                   onPress={() => {
                     onSearchChange(name);
                     searchAction(name);
                   }}
                 >
-                  <Text>{name}</Text>
+                  <Text className="max-w-full truncate">{name}</Text>
                 </Pressable>
               ))}
             </View>
@@ -99,9 +100,13 @@ export default function SearchBar({
 
         <Pressable
           onPress={() => searchAction()}
-          className="rounded-full hover:bg-background-100 px-4 py-2 -mx-3 -my-2 transition-all"
+          onBlur={() => setSearchHovered(false)}
+          onFocus={() => setSearchHovered(true)}
           onPointerEnter={() => setSearchHovered(true)}
           onPointerLeave={() => setSearchHovered(false)}
+          className={`${
+            searchHovered ? "bg-background-100" : ""
+          } rounded-full px-4 py-2 -mx-3 -my-2 outline-none transition-all`}
         >
           <Text
             size="md"
