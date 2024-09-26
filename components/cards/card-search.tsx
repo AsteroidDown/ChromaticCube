@@ -31,8 +31,8 @@ export default function CardSearch() {
 
   const searchedCardsPlaceholder = Array(5).fill(undefined);
 
-  function findCards() {
-    ScryfallService.findCards(search).then((cards) => {
+  function findCards(query?: string) {
+    ScryfallService.findCards(query ?? search).then((cards) => {
       // if a no search results message is currently rendered, clear the disappear message timeout
       if (noSearchResultsTimer) {
         clearTimeout(noSearchResultsTimer);
@@ -82,12 +82,10 @@ export default function CardSearch() {
           noSearchResults={noSearchResults}
         />
 
-        <Box className="flex-[2] min-h-[350px] h-full">
+        <Box className="flex-[2] min-h-[350px] h-full z-[-1]">
           <View className="overflow-x-auto overflow-y-hidden h-full">
             {!searchedCards?.length && (
-              <View
-                className="flex flex-row flex-1 gap-4"
-              >
+              <View className="flex flex-row flex-1 gap-4">
                 {searchedCardsPlaceholder.map((_, index) => (
                   <CardImage key={index} />
                 ))}
@@ -95,9 +93,7 @@ export default function CardSearch() {
             )}
 
             {searchedCards?.length > 0 && (
-              <View
-                className="flex flex-row gap-4 h-full"
-              >
+              <View className="flex flex-row gap-4 h-full">
                 {searchedCards.map((card, index) => (
                   <CardImage
                     card={card}
