@@ -157,24 +157,24 @@ export function StackedBarLayout({
           <View
             className={`${baseClass} to-mtg-colorless from-mtg-colorless-secondary`}
           ></View>
+        </Tooltip>
 
-          <Tooltip
-            style={[
-              { bottom: 0 },
-              { width: "100%" },
-              { position: "absolute" },
-              { height: `${landHeight}%` },
-            ]}
-            title={data.find((entry) => entry.color === "land")?.name}
-            message={
-              "Count: " +
-              (data.find((entry) => entry.color === "land")?.count || 0)
-            }
-          >
-            <View
-              className={`${baseClass} to-mtg-land from-mtg-land-secondary`}
-            ></View>
-          </Tooltip>
+        <Tooltip
+          style={[
+            { bottom: 0 },
+            { width: "100%" },
+            { position: "absolute" },
+            { height: `${landHeight}%` },
+          ]}
+          title={data.find((entry) => entry.color === "land")?.name}
+          message={
+            "Count: " +
+            (data.find((entry) => entry.color === "land")?.count || 0)
+          }
+        >
+          <View
+            className={`${baseClass} to-mtg-land from-mtg-land-secondary`}
+          ></View>
         </Tooltip>
       </View>
     </View>
