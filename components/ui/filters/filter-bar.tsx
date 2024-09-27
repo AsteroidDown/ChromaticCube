@@ -1,11 +1,16 @@
 import { CardItemGalleryType } from "@/components/cards/card-item-gallery";
+import CardSaveAsGraphModal from "@/components/cards/card-save-as-graph-modal";
 import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import { SortDirection } from "@/constants/sorting";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
-import { faFilter, faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFilter,
+  faPlus,
+  faRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { View } from "react-native";
 import Chip from "../chip/chip";
@@ -32,6 +37,8 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
   const [manaValueSort, setManaValueSort] = React.useState(
     null as SortDirection
   );
+
+  const [saveAsGraphOpen, setSaveAsGraphOpen] = React.useState(false);
 
   useEffect(() => {
     setFilters({
@@ -86,7 +93,19 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
             : "-mr-12 max-w-[0%]"
         }`}
       >
-        {colorFilter?.length > 0 && (
+        <CardSaveAsGraphModal
+          open={saveAsGraphOpen}
+          setOpen={setSaveAsGraphOpen}
+        />
+
+        <Chip
+          type="outlined"
+          startIcon={faPlus}
+          onClick={() => setSaveAsGraphOpen(true)}
+        />
+
+        {(colorFilter?.length || typeFilter?.length || rarityFilter?.length) >
+          0 && (
           <Chip
             type="outlined"
             startIcon={faRotateRight}
