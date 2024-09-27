@@ -44,6 +44,8 @@ export default function CardSaveAsGraphModal({
   const [rarityFilter, setRarityFilter] = React.useState([] as MTGRarity[]);
 
   function createGraph() {
+    setDisabled(true);
+
     setLocalStorageDashboardGraph("Unsorted", {
       type,
       title: generateTitle(type, colorFilter, typeFilter, rarityFilter),
@@ -54,12 +56,14 @@ export default function CardSaveAsGraphModal({
       },
     });
 
-    // setDisabled(true);
-
-    // setTimeout(() => setSuccess(true), 3000);
-    // setTimeout(() => setDisabled(false), 3000);
-
-    // setTimeout(() => setSuccess(false), 6000);
+    setTimeout(() => {
+      setSuccess(true);
+      setDisabled(false);
+    }, 500);
+    setTimeout(() => {
+      setSuccess(false);
+      setOpen(false);
+    }, 2000);
   }
 
   return (
@@ -122,7 +126,7 @@ export default function CardSaveAsGraphModal({
             disabled
               ? "Creating Graph..."
               : success
-              ? "Graph Created!"
+              ? "Graph Created! Closing..."
               : error
               ? "Error Creating Graph!"
               : "Create Graph"
