@@ -1,4 +1,5 @@
 import Button from "@/components/ui/button/button";
+import Divider from "@/components/ui/divider/divider";
 import ColorFilter from "@/components/ui/filters/filter-types/color-filter";
 import RarityFilter from "@/components/ui/filters/filter-types/rarity-filter";
 import TypeFilter from "@/components/ui/filters/filter-types/type-filter";
@@ -38,17 +39,27 @@ export default function CardSaveAsGraphModal({
   const [error, setError] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
 
-  const [colorFilters, setColorFilters] = React.useState([] as MTGColor[]);
-  const [typeFilters, setTypeFilters] = React.useState([] as MTGCardTypes[]);
-  const [rarityFilters, setRarityFilters] = React.useState([] as MTGRarity[]);
+  const [colorFilter, setColorFilter] = React.useState([] as MTGColor[]);
+  const [typeFilter, setTypeFilter] = React.useState([] as MTGCardTypes[]);
+  const [rarityFilter, setRarityFilter] = React.useState([] as MTGRarity[]);
 
   function createGraph() {
-    setDisabled(true);
+    setLocalStorageDashboardGraph("Unsorted", {
+      type,
+      title: generateTitle(type, colorFilter, typeFilter, rarityFilter),
+      filters: {
+        colorFilter,
+        typeFilter,
+        rarityFilter,
+      },
+    });
 
-    setTimeout(() => setSuccess(true), 3000);
-    setTimeout(() => setDisabled(false), 3000);
+    // setDisabled(true);
 
-    setTimeout(() => setSuccess(false), 6000);
+    // setTimeout(() => setSuccess(true), 3000);
+    // setTimeout(() => setDisabled(false), 3000);
+
+    // setTimeout(() => setSuccess(false), 6000);
   }
 
   return (
@@ -68,7 +79,7 @@ export default function CardSaveAsGraphModal({
 
             <Divider thick />
 
-            <ColorFilter flat setColorFilters={setColorFilters} />
+            <ColorFilter flat setColorFilters={setColorFilter} />
           </View>
 
           <View className="flex gap-2 max-w-96">
@@ -78,7 +89,7 @@ export default function CardSaveAsGraphModal({
 
             <Divider thick />
 
-            <TypeFilter flat setTypeFilters={setTypeFilters} />
+            <TypeFilter flat setTypeFilters={setTypeFilter} />
           </View>
 
           <View className="flex gap-2 max-w-96">
@@ -88,7 +99,7 @@ export default function CardSaveAsGraphModal({
 
             <Divider thick />
 
-            <RarityFilter flat setRarityFilters={setRarityFilters} />
+            <RarityFilter flat setRarityFilters={setRarityFilter} />
           </View>
         </View>
 
@@ -121,4 +132,61 @@ export default function CardSaveAsGraphModal({
       </View>
     </Modal>
   );
+}
+
+function generateTitle(
+  type: CardFilterSortType,
+  colorFilter: MTGColor[],
+  typeFilter: MTGCardTypes[],
+  rarityFilter: MTGRarity[]
+) {
+  let title = "";
+
+  if (colorFilter.length > 0) {
+    if (colorFilter.includes("mono")) title += "Mono ";
+    if (colorFilter.includes("white")) title += "White ";
+    if (colorFilter.includes("blue")) title += "Blue ";
+    if (colorFilter.includes("black")) title += "Black ";
+    if (colorFilter.includes("red")) title += "Red ";
+    if (colorFilter.includes("green")) title += "Green ";
+    if (colorFilter.includes("gold")) title += "Gold ";
+    if (colorFilter.includes("colorless")) title += "Colorless ";
+  }
+
+  if (typeFilter.length > 0) {
+    const multiple = typeFilter.length > 1;
+
+    if (typeFilter.includes(MTGCardTypes.CREATURE))
+      title += "Creature" + (multiple ? ", " : " ");
+    if (typeFilter.includes(MTGCardTypes.INSTANT))
+      title += "Instant" + (multiple ? ", " : " ");
+    if (typeFilter.includes(MTGCardTypes.SORCERY))
+      title += "Sorcery" + (multiple ? ", " : " ");
+    if (typeFilter.includes(MTGCardTypes.ARTIFACT))
+      title += "Artifact" + (multiple ? ", " : " ");
+    if (typeFilter.includes(MTGCardTypes.ENCHANTMENT))
+      title += "Enchantment" + (multiple ? ", " : " ");
+    if (typeFilter.includes(MTGCardTypes.LAND))
+      title += "Land" + (multiple ? ", " : " ");
+    if (typeFilter.includes(MTGCardTypes.PLANESWALKER))
+      title += "Planeswalker" + (multiple ? ", " : " ");
+    if (typeFilter.includes(MTGCardTypes.BATTLE)) title += "Battle ";
+  }
+
+  if (rarityFilter.length > 0) {
+    const multiple = rarityFilter.length > 1;
+
+    if (rarityFilter.includes("common"))
+      title += "Common" + (multiple ? ", " : " ");
+    if (rarityFilter.includes("uncommon"))
+      title += "Uncommon" + (multiple ? ", " : " ");
+    if (rarityFilter.includes("rare"))
+      title += "Rare" + (multiple ? ", " : " ");
+    if (rarityFilter.includes("mythic"))
+      title += "Mythic" + (multiple ? ", " : " ");
+  }
+
+  title += "Cards sorted by " + titleCase(type);
+
+  return title;
 }
