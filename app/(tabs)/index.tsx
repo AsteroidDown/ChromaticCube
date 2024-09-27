@@ -1,18 +1,22 @@
+import DashboardSectionView from "@/components/dashboard/dashboard-section";
 import { Graph, GraphProps } from "@/components/graph/graph";
 import Box from "@/components/ui/box/box";
-import Text from "@/components/ui/text/text";
+import Button from "@/components/ui/button/button";
 import {
   graphCardsByColor,
   graphCardsByCost,
   graphCardsByType,
 } from "@/functions/card-graphing";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
+import { getLocalStorageDashboard } from "@/functions/local-storage/dashboard-local-storage";
 import { Card } from "@/models/card/card";
 import React from "react";
-import { Pressable, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 
 export default function App() {
   const [stacked, setStacked] = React.useState(true);
+
+  const dashboard = getLocalStorageDashboard();
 
   function getStoredCards(): Card[] {
     return getLocalStorageStoredCards();
@@ -41,12 +45,14 @@ export default function App() {
 
   return (
     <View className="flex gap-6 flex-1 justify-center bg-background-100 p-6">
-      <Pressable onPress={() => setStacked(!stacked)}>
-        <Text>{stacked ? "Stacked" : "Grouped"}</Text>
-      </Pressable>
+      <Button
+        className="mx-auto max-w-fit"
+        text={stacked ? "Stacked" : "Grouped"}
+        onClick={() => setStacked(!stacked)}
+      />
 
       <ScrollView>
-        <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
+        <View className="flex flex-wrap gap-6 justify-center items-center">
           <Box className="min-w-max overflow-x-scroll overflow-y-hidden">
             <Graph {...cardsByColorGraphProps} />
           </Box>
@@ -58,6 +64,13 @@ export default function App() {
           <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
             <Graph {...cardsByTypeGraphProps} />
           </Box>
+
+          {dashboard?.sections.map((section, index) => (
+            <DashboardSectionView
+              section={section}
+              key={section.title + index}
+            />
+          ))}
         </View>
       </ScrollView>
     </View>
