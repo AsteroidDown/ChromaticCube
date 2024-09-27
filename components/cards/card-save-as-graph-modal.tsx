@@ -60,10 +60,8 @@ export default function CardSaveAsGraphModal({
       setSuccess(true);
       setDisabled(false);
     }, 500);
-    setTimeout(() => {
-      setSuccess(false);
-      setOpen(false);
-    }, 2000);
+
+    setTimeout(() => setSuccess(false), 2000);
   }
 
   return (
@@ -126,7 +124,7 @@ export default function CardSaveAsGraphModal({
             disabled
               ? "Creating Graph..."
               : success
-              ? "Graph Created! Closing..."
+              ? "Graph Created!"
               : error
               ? "Error Creating Graph!"
               : "Create Graph"
@@ -147,7 +145,9 @@ function generateTitle(
   let title = "";
 
   if (colorFilter.length > 0) {
-    if (colorFilter.includes("mono")) title += "Mono ";
+    if (colorFilter.includes("mono")) {
+      title += "Mono " + (colorFilter.length === 1 ? "Colored " : "");
+    }
     if (colorFilter.includes("white")) title += "White ";
     if (colorFilter.includes("blue")) title += "Blue ";
     if (colorFilter.includes("black")) title += "Black ";
@@ -190,7 +190,7 @@ function generateTitle(
       title += "Mythic" + (multiple ? ", " : " ");
   }
 
-  title += "Cards sorted by " + titleCase(type);
+  title += "Cards by " + titleCase(type);
 
   return title;
 }
