@@ -24,8 +24,12 @@ export default function DashboardSectionView({
   const storedCards = getLocalStorageStoredCards();
 
   return (
-    <View className="flex gap-4 justify-center items-center">
-      <Text size="2xl" thickness="bold">
+    <View className="flex gap-4 justify-center items-center w-full">
+      <Text
+        size="2xl"
+        thickness="bold"
+        className="sticky top-0 py-2 pr-auto w-full bg-background-100"
+      >
         {section.title}
       </Text>
 

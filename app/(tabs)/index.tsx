@@ -45,13 +45,13 @@ export default function App() {
 
   return (
     <View className="flex gap-6 flex-1 justify-center bg-background-100 p-6">
-      <Button
-        className="mx-auto max-w-fit"
-        text={stacked ? "Stacked" : "Grouped"}
-        onClick={() => setStacked(!stacked)}
-      />
-
       <ScrollView>
+        <Button
+          className="mx-auto max-w-fit mb-4"
+          text={stacked ? "Stacked" : "Grouped"}
+          onClick={() => setStacked(!stacked)}
+        />
+
         <View className="flex flex-wrap gap-6 justify-center items-center">
           <Box className="min-w-max overflow-x-scroll overflow-y-hidden">
             <Graph {...cardsByColorGraphProps} />
