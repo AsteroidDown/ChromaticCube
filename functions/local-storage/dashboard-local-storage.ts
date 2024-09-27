@@ -8,6 +8,7 @@ export function getLocalStorageDashboard(): Dashboard | null {
     localStorage.getItem("dashboard") || "{}"
   );
 
+  if (!dashboard.sections) return null;
   return dashboard;
 }
 
@@ -17,7 +18,7 @@ export function setLocalStorageDashboard(dashboard: Dashboard) {
   localStorage.setItem("dashboard", JSON.stringify(dashboard));
 }
 
-export function setLocalStorageDashboardGraph(
+export function addLocalStorageDashboardGraph(
   section: string,
   graph: DashboardGraph
 ) {

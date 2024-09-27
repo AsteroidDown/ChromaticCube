@@ -9,7 +9,7 @@ import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
-import { setLocalStorageDashboardGraph } from "@/functions/local-storage/dashboard-local-storage";
+import { addLocalStorageDashboardGraph } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
 import { CardFilterSortType } from "@/models/sorted-cards/sorted-cards";
 import {
@@ -46,7 +46,7 @@ export default function CardSaveAsGraphModal({
   function createGraph() {
     setDisabled(true);
 
-    setLocalStorageDashboardGraph("Unsorted", {
+    addLocalStorageDashboardGraph("Unsorted", {
       type,
       title: generateTitle(type, colorFilter, typeFilter, rarityFilter),
       filters: {
