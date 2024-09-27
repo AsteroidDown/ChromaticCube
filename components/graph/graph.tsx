@@ -33,11 +33,13 @@ export function Graph({
   }, 0);
 
   const ceiling =
-    maxValue > 10
+    maxValue > 45
+      ? Math.ceil(maxValue / 10) * 10
+      : maxValue > 10
       ? Math.ceil(maxValue / 5) * 5
       : Math.ceil(maxValue / 2) * 2 + 2;
 
-  const verticalTickLength = ceiling > 12 ? 5 : 2;
+  const verticalTickLength = ceiling > 45 ? 10 : ceiling > 12 ? 5 : 2;
 
   return (
     <View
