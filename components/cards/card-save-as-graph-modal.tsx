@@ -8,6 +8,9 @@ import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
+import { setLocalStorageDashboardGraph } from "@/functions/local-storage/dashboard-local-storage";
+import { titleCase } from "@/functions/text-manipulation";
+import { CardFilterSortType } from "@/models/sorted-cards/sorted-cards";
 import {
   faChartSimple,
   faCheck,
@@ -16,14 +19,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext } from "react";
 import { View } from "react-native";
-import Divider from "../ui/divider/divider";
 
 export interface CardSaveAsGraphModalProps {
+  type: CardFilterSortType;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CardSaveAsGraphModal({
+  type,
   open,
   setOpen,
 }: CardSaveAsGraphModalProps) {

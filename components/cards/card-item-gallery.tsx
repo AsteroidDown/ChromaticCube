@@ -17,6 +17,7 @@ import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
 import {
   CardFilters,
+  CardFilterSortType,
   CardsSortedByColor,
   CardsSortedByCost,
   CardsSortedByType,
@@ -26,10 +27,8 @@ import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import CardItemGalleryColumn from "./card-item-gallery-column";
 
-export type CardItemGalleryType = "cost" | "color" | "type";
-
 export interface CardItemGalleryProps {
-  type: CardItemGalleryType;
+  type: CardFilterSortType;
 
   condensed: boolean;
   hideImages: boolean;

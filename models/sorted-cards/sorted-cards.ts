@@ -4,6 +4,8 @@ import { MTGCardTypes } from "../../constants/mtg/mtg-types";
 import { SortDirection } from "../../constants/sorting";
 import { Card } from "../card/card";
 
+export type CardFilterSortType = "cost" | "color" | "type";
+
 export interface CardsSortedByColor {
   white: Card[];
   blue: Card[];

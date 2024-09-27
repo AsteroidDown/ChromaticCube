@@ -1,11 +1,13 @@
-import { CardItemGalleryType } from "@/components/cards/card-item-gallery";
 import CardSaveAsGraphModal from "@/components/cards/card-save-as-graph-modal";
 import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import { SortDirection } from "@/constants/sorting";
-import { CardFilters } from "@/models/sorted-cards/sorted-cards";
+import {
+  CardFilters,
+  CardFilterSortType,
+} from "@/models/sorted-cards/sorted-cards";
 import {
   faFilter,
   faPlus,
@@ -20,7 +22,7 @@ import TypeFilter from "./filter-types/type-filter";
 import SortingFilter from "./sorting-filter";
 
 export interface FilterBarProps {
-  type?: CardItemGalleryType;
+  type: CardFilterSortType;
   setFilters: React.Dispatch<React.SetStateAction<CardFilters>>;
 }
 
@@ -94,6 +96,7 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
         }`}
       >
         <CardSaveAsGraphModal
+          type={type}
           open={saveAsGraphOpen}
           setOpen={setSaveAsGraphOpen}
         />
