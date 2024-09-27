@@ -4,6 +4,7 @@ import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import { SortDirection } from "@/constants/sorting";
+import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import {
   CardFilters,
   CardFilterSortType,
@@ -13,7 +14,7 @@ import {
   faPlus,
   faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import Chip from "../chip/chip";
 import ColorFilter from "./filter-types/color-filter";
@@ -27,6 +28,8 @@ export interface FilterBarProps {
 }
 
 export default function FilterBar({ setFilters, type }: FilterBarProps) {
+  const { maybeBoard } = useContext(StoredCardsContext);
+
   const [showFilters, setShowFilters] = React.useState(false);
   const [filterLength, setFilterLength] = React.useState(0);
   const [resetFilters, setResetFilters] = React.useState(false);
@@ -95,17 +98,21 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
             : "-mr-12 max-w-[0%]"
         }`}
       >
-        <CardSaveAsGraphModal
-          type={type}
-          open={saveAsGraphOpen}
-          setOpen={setSaveAsGraphOpen}
-        />
+        {!maybeBoard && (
+          <>
+            <CardSaveAsGraphModal
+              type={type}
+              open={saveAsGraphOpen}
+              setOpen={setSaveAsGraphOpen}
+            />
 
-        <Chip
-          type="outlined"
-          startIcon={faPlus}
-          onClick={() => setSaveAsGraphOpen(true)}
-        />
+            <Chip
+              type="outlined"
+              startIcon={faPlus}
+              onClick={() => setSaveAsGraphOpen(true)}
+            />
+          </>
+        )}
 
         {(colorFilter?.length || typeFilter?.length || rarityFilter?.length) >
           0 && (
