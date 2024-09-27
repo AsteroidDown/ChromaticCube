@@ -41,3 +41,27 @@ export function addLocalStorageDashboardGraph(
 
   setLocalStorageDashboard(dashboard);
 }
+
+export function removeLocalStorageDashboardGraph(
+  section: string,
+  graph: DashboardGraph
+) {
+  if (Platform.OS === "ios") return null;
+
+  let dashboard: Dashboard | null = getLocalStorageDashboard();
+  if (!dashboard) return;
+
+  const sectionIndex = dashboard?.sections?.findIndex(
+    (dashboardSection) => dashboardSection.title === section
+  );
+  if (sectionIndex < 0) return;
+
+  const graphIndex = dashboard?.sections[sectionIndex].graphs.findIndex(
+    (dashboardGraph) => dashboardGraph.title === graph.title
+  );
+  if (graphIndex < 0) return;
+
+  dashboard.sections[sectionIndex].graphs.splice(graphIndex, 1);
+
+  setLocalStorageDashboard(dashboard);
+}
