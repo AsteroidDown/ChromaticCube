@@ -54,3 +54,15 @@ export interface CardPriceUris {
   cardmarket: string;
   cardhoarder: string;
 }
+
+export type CardIdentifier =
+  | {
+      id: string;
+    }
+  | {
+      name: string;
+    }
+  | {
+      set: string;
+      collectorNumber: string;
+    };

@@ -5,6 +5,7 @@ import {
   setLocalStorageCards,
 } from "@/functions/local-storage/card-local-storage";
 import ScryfallService from "@/hooks/scryfall.service";
+import { CardIdentifier } from "@/models/card/card";
 import {
   faCheck,
   faFileArrowDown,
@@ -51,7 +52,7 @@ export default function CardImportExportModal({
   function getCardsFromImport(importText: string) {
     setDisabled(true);
 
-    const cardIdentifiers: { set: string; collectorNumber: string }[] = [];
+    const cardIdentifiers: CardIdentifier[] = [];
 
     let errorFound = false;
 
@@ -62,19 +63,46 @@ export default function CardImportExportModal({
       const infoLength = cardInfo.length;
 
       const cardCount = Number(cardInfo?.[0]);
-      const cardSet = cardInfo?.[infoLength - 2]?.substring(1, 4);
-      const cardNumber = cardInfo?.[infoLength - 1];
-
-      if (!cardCount || !cardSet || !cardNumber) {
+      if (!cardCount) {
         errorFound = true;
         setError(true);
         setDisabled(false);
       }
 
+      const identifier = cardInfo?.[infoLength - 1];
+      if (!identifier) {
+        errorFound = true;
+        setError(true);
+        setDisabled(false);
+      }
+
+      if (typeof Number(identifier) === "number") {
+        const cardSet = cardInfo?.[infoLength - 2]?.substring(1, 4);
+        if (!cardSet) {
+          errorFound = true;
+          setError(true);
+          setDisabled(false);
+        }
+
+        for (let i = 0; i < cardCount; i++) {
+          cardIdentifiers.push({
+            set: cardSet.toLowerCase(),
+            collectorNumber: identifier,
+          });
+        }
+      }
+
+      if (identifier?.split("-")?.length === 5) {
+        for (let i = 0; i < cardCount; i++) {
+          cardIdentifiers.push({
+            id: identifier,
+          });
+        }
+      }
+
       for (let i = 0; i < cardCount; i++) {
         cardIdentifiers.push({
-          set: cardSet.toLowerCase(),
-          collectorNumber: cardNumber,
+          name: cardInfo?.[infoLength - 1],
         });
       }
     });
@@ -107,9 +135,9 @@ export default function CardImportExportModal({
           </View>
         </View>
 
-        <Text className="pl-3">For importing use the standard:</Text>
+        <Text className="pl-3">For importing use one of the standards:</Text>
         <Text mono className="-mt-2 px-2.5 py-1.5 bg-background-100 rounded-lg">
-          1 name (set) collection_number
+          1 id {"\n"}1 name {"\n"}1 name (set) collection_number
         </Text>
 
         <View className="flex flex-row justify-center gap-3">

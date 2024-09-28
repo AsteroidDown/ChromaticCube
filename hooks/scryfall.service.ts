@@ -1,6 +1,6 @@
 import { ScryfallCatalog } from "@/models/scryfall/scryfall-catalog";
 import { ScryfallToCard } from "../functions/scryfall";
-import { Card } from "../models/card/card";
+import { Card, CardIdentifier } from "../models/card/card";
 import { ScryfallCard } from "../models/scryfall/scryfall-card";
 import { ScryfallList } from "../models/scryfall/scryfall-list";
 import Api from "./api-methods";
@@ -35,20 +35,24 @@ async function getCardPrints(name: string): Promise<Card[]> {
   return await findCards(`name:/^${name}$/ unique:prints game:paper`);
 }
 
-async function getCardsFromCollection(
-  cardsIdentifiers: { set: string; collectorNumber: string }[]
-) {
-  const bundles: { set: string; collector_number: string }[][] = [];
+async function getCardsFromCollection(cardsIdentifiers: CardIdentifier[]) {
+  const bundles: CardIdentifier[][] = [];
 
   cardsIdentifiers.forEach((identifier, index) => {
     const bundleNumber = Math.floor(index / 75);
 
     if (bundles.length <= bundleNumber) bundles.push([]);
 
-    bundles[bundleNumber].push({
-      set: identifier.set,
-      collector_number: identifier.collectorNumber,
-    });
+    bundles[bundleNumber].push(
+      (identifier as any).id
+        ? { id: (identifier as any).id }
+        : (identifier as any).name
+        ? { name: (identifier as any).name }
+        : {
+            set: (identifier as any).set,
+            collectorNumber: (identifier as any).collectorNumber,
+          }
+    );
   });
 
   const scryfallCards: ScryfallCard[] = [];
