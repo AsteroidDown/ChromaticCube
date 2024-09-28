@@ -85,6 +85,7 @@ export default function SearchBar({
                 <Pressable
                   key={name + index}
                   onFocus={onFocus}
+                  onBlur={onBlur}
                   className="px-4 py-1 rounded-full hover:bg-background-100 focus:bg-background-100 outline-none"
                   onPress={() => {
                     onSearchChange(name);
