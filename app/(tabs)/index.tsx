@@ -1,5 +1,5 @@
 import DashboardSectionView from "@/components/dashboard/dashboard-section";
-import { Graph, GraphProps } from "@/components/graph/graph";
+import Graph, { GraphProps } from "@/components/graph/graph";
 import Box from "@/components/ui/box/box";
 import Button from "@/components/ui/button/button";
 import {
@@ -52,16 +52,16 @@ export default function App() {
           onClick={() => setStacked(!stacked)}
         />
 
-        <View className="flex flex-wrap gap-6 justify-center items-center">
-          <Box className="min-w-max overflow-x-scroll overflow-y-hidden">
+        <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
+          <Box className="flex-1 h-96 lg:min-w-[40%] min-w-full overflow-hidden">
             <Graph {...cardsByColorGraphProps} />
           </Box>
 
-          <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
+          <Box className="flex-1 h-96 lg:min-w-[40%] min-w-full overflow-hidden">
             <Graph {...cardsByCostGraphProps} />
           </Box>
 
-          <Box className="max-w-full overflow-x-scroll overflow-y-hidden">
+          <Box className="flex-1 h-96 lg:min-w-[40%] min-w-full overflow-hidden">
             <Graph {...cardsByTypeGraphProps} />
           </Box>
 

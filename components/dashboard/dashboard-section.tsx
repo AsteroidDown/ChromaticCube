@@ -1,4 +1,4 @@
-import { Graph } from "@/components/graph/graph";
+import Graph from "@/components/graph/graph";
 import Box from "@/components/ui/box/box";
 import Text from "@/components/ui/text/text";
 import { filterCards } from "@/functions/card-filtering";
@@ -33,18 +33,22 @@ export default function DashboardSectionView({
         {section.title}
       </Text>
 
-      {section.graphs.map((graph, index) => (
-        <Box
-          key={graph.title + index}
-          className="max-w-full overflow-x-scroll overflow-y-hidden"
-        >
-          <Graph
-            title={graph.title}
-            horizontalTitle={titleCase(graph.type)}
-            sets={getSets(graph.type, graph.filters, storedCards)}
-          />
-        </Box>
-      ))}
+      <View className="flex flex-row flex-wrap gap-4 justify-center items-center w-full z-[-1]">
+        {section.graphs.map((graph, index) => (
+          <View
+            key={graph.title + index}
+            className="flex-1 h-96 lg:min-w-[40%] min-w-full overflow-hidden"
+          >
+            <Box className="w-full h-full overflow-x-scroll overflow-y-hidden">
+              <Graph
+                title={graph.title}
+                horizontalTitle={titleCase(graph.type)}
+                sets={getSets(graph.type, graph.filters, storedCards)}
+              />
+            </Box>
+          </View>
+        ))}
+      </View>
     </View>
   );
 }

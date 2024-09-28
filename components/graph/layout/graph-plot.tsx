@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, ViewProps } from "react-native";
 import { Bar, BarData } from "../bar/bar";
 
 export interface SetData {
@@ -6,18 +6,19 @@ export interface SetData {
   data: BarData[];
 }
 
-export interface GraphPlotProps {
+export type GraphPlotProps = ViewProps & {
   sets: SetData[];
   ceiling: number;
   yTickLength: number;
   stacked?: boolean;
-}
+};
 
 export function GraphPlot({
   sets,
   ceiling,
   yTickLength,
   stacked = true,
+  className,
 }: GraphPlotProps) {
   const verticalTickCount = ceiling / yTickLength;
 
@@ -26,7 +27,9 @@ export function GraphPlot({
     .map((_tick, index) => index * yTickLength);
 
   return (
-    <View className="flex flex-row flex-1 h-full border-b-background-600 border-b border-l-background-600 border-l">
+    <View
+      className={`${className} flex flex-row flex-1 h-full border-b-background-600 border-b border-l-background-600 border-l`}
+    >
       {
         <View className="justify-between absolute w-full h-full">
           {verticalTicks.map((tick) => (

@@ -12,7 +12,7 @@ export type GraphProps = ViewProps & {
   stacked?: boolean;
 };
 
-export function Graph({
+export default function Graph({
   title,
   sets,
   verticalTitle,
@@ -43,29 +43,28 @@ export function Graph({
 
   return (
     <View
-      className={
-        className +
-        " flex-1 grid grid-areas-graphLayout grid-cols-graphLayout grid-rows-graphLayout grid-flow-dense overflow-auto"
-      }
+      className={`
+        ${className} flex flex-1 w-full h-full overflow-auto
+      `}
     >
       <Text
         size="xl"
         thickness="bold"
-        className="w-full text-center p-4 grid-in-title"
+        className="w-full max-h-fit text-center p-4"
       >
         {title}
       </Text>
 
-      <View className="grid-in-verticalAxis pr-2">
+      <View className="flex-1 flex flex-row">
         <GraphVerticalAxis
+          className="w-3 mr-3"
           title={verticalTitle}
           ceiling={ceiling}
           tickLength={verticalTickLength}
         ></GraphVerticalAxis>
-      </View>
 
-      <View className="grid-in-plot">
         <GraphPlot
+          className="flex-[5]"
           sets={sets}
           ceiling={ceiling}
           stacked={stacked}
@@ -73,12 +72,10 @@ export function Graph({
         ></GraphPlot>
       </View>
 
-      <View className="grid-in-horizontalAxis">
-        <GraphHorizontalAxis
-          sets={sets}
-          title={horizontalTitle}
-        ></GraphHorizontalAxis>
-      </View>
+      <GraphHorizontalAxis
+        sets={sets}
+        title={horizontalTitle}
+      ></GraphHorizontalAxis>
     </View>
   );
 }

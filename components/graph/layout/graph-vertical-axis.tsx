@@ -1,16 +1,17 @@
 import Text from "@/components/ui/text/text";
-import { View } from "react-native";
+import { View, ViewProps } from "react-native";
 
-export interface GraphVerticalAxisProps {
+export type GraphVerticalAxisProps = ViewProps & {
   title?: string;
   ceiling: number;
   tickLength: number;
-}
+};
 
 export function GraphVerticalAxis({
   title,
   ceiling,
   tickLength,
+  className,
 }: GraphVerticalAxisProps) {
   const tickCount = ceiling / tickLength;
 
@@ -21,7 +22,7 @@ export function GraphVerticalAxis({
   ticks.reverse();
 
   return (
-    <View className="flex flex-row h-full">
+    <View className={`${className} flex flex-row h-full`}>
       <View className="justify-center">
         <Text noWrap center className="md:-rotate-90">
           {title}
@@ -29,8 +30,15 @@ export function GraphVerticalAxis({
       </View>
 
       <View className="justify-between">
-        {ticks.map((tick) => (
-          <Text noWrap center key={tick} className="text-center">
+        {ticks.map((tick, index) => (
+          <Text
+            noWrap
+            center
+            key={tick}
+            className={`${
+              index === 0 ? "-mt-2" : index === ticks.length - 1 ? "-mb-2" : ""
+            } text-center`}
+          >
             {tick}
           </Text>
         ))}

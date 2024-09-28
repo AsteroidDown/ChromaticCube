@@ -9,10 +9,10 @@ export interface GraphHorizontalAxisProps {
 
 export function GraphHorizontalAxis({ title, sets }: GraphHorizontalAxisProps) {
   return (
-    <View className="flex gap-4 pt-2 pb-4">
+    <View className="flex gap-4 pt-2 ml-6">
       <View className="flex flex-row">
         {sets.map((set, index) => (
-          <View className="min-w-24" key={set.title + index}>
+          <View className="flex-1" key={set.title + index}>
             <Text noWrap center>
               {set.title}
             </Text>
