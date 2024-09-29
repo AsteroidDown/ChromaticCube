@@ -1,5 +1,6 @@
 import Graph from "@/components/graph/graph";
 import Box from "@/components/ui/box/box";
+import Button from "@/components/ui/button/button";
 import Text from "@/components/ui/text/text";
 import { filterCards } from "@/functions/card-filtering";
 import {
@@ -8,10 +9,12 @@ import {
   graphCardsByType,
 } from "@/functions/card-graphing";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
+import { removeLocalStorageDashboardGraph } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
 import { DashboardSection } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 import { View, ViewProps } from "react-native";
 
 export type dashboardSectionProps = ViewProps & {
@@ -28,7 +31,7 @@ export default function DashboardSectionView({
       <Text
         size="2xl"
         thickness="bold"
-        className="sticky top-0 py-2 pr-auto w-full bg-background-100"
+        className="sticky top-0 py-4 pr-auto w-full bg-background-100 bg-opacity-60"
       >
         {section.title}
       </Text>
@@ -37,13 +40,24 @@ export default function DashboardSectionView({
         {section.graphs.map((graph, index) => (
           <View
             key={graph.title + index}
-            className="flex-1 h-96 lg:min-w-[40%] min-w-full overflow-hidden"
+            className="flex-1 mx-auto h-96 lg:min-w-[40%] w-full overflow-hidden"
           >
             <Box className="w-full h-full overflow-x-scroll overflow-y-hidden">
               <Graph
                 title={graph.title}
                 horizontalTitle={titleCase(graph.type)}
                 sets={getSets(graph.type, graph.filters, storedCards)}
+                titleEnd={
+                  <Button
+                    rounded
+                    icon={faX}
+                    type="clear"
+                    action="default"
+                    onClick={() =>
+                      removeLocalStorageDashboardGraph(section.title, graph)
+                    }
+                  />
+                }
               />
             </Box>
           </View>

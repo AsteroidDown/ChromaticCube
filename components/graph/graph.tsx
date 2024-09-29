@@ -1,4 +1,5 @@
 import Text from "@/components/ui/text/text";
+import { ReactNode } from "react";
 import { View, ViewProps } from "react-native";
 import { GraphHorizontalAxis } from "./layout/graph-horizontal-axis";
 import { GraphPlot, SetData } from "./layout/graph-plot";
@@ -6,6 +7,8 @@ import { GraphVerticalAxis } from "./layout/graph-vertical-axis";
 
 export type GraphProps = ViewProps & {
   title?: string;
+  titleStart?: ReactNode;
+  titleEnd?: ReactNode;
   horizontalTitle?: string;
   verticalTitle?: string;
   sets: SetData[];
@@ -14,6 +17,8 @@ export type GraphProps = ViewProps & {
 
 export default function Graph({
   title,
+  titleStart,
+  titleEnd,
   sets,
   verticalTitle,
   horizontalTitle,
@@ -47,13 +52,19 @@ export default function Graph({
         ${className} flex flex-1 w-full h-full overflow-auto
       `}
     >
-      <Text
-        size="xl"
-        thickness="bold"
-        className="w-full max-h-fit text-center p-4"
-      >
-        {title}
-      </Text>
+      <View className="flex flex-row w-full items-center">
+        {titleStart && titleStart}
+
+        <Text
+          size="xl"
+          thickness="bold"
+          className="flex-1 max-h-fit text-center mx-4 mt-2 mb-6"
+        >
+          {title}
+        </Text>
+
+        {titleEnd && <View className="-mt-4">{titleEnd}</View>}
+      </View>
 
       <View className="flex-1 flex flex-row">
         <GraphVerticalAxis
