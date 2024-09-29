@@ -2,6 +2,7 @@ import Graph from "@/components/graph/graph";
 import Box from "@/components/ui/box/box";
 import Button from "@/components/ui/button/button";
 import Text from "@/components/ui/text/text";
+import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import { filterCards } from "@/functions/card-filtering";
 import {
   graphCardsByColor,
@@ -9,12 +10,16 @@ import {
   graphCardsByType,
 } from "@/functions/card-graphing";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
-import { removeLocalStorageDashboardGraph } from "@/functions/local-storage/dashboard-local-storage";
+import {
+  getLocalStorageDashboard,
+  removeLocalStorageDashboardGraph,
+} from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
-import { DashboardSection } from "@/models/dashboard/dashboard";
+import { DashboardGraph, DashboardSection } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
 import { View, ViewProps } from "react-native";
 
 export type dashboardSectionProps = ViewProps & {
@@ -24,7 +29,14 @@ export type dashboardSectionProps = ViewProps & {
 export default function DashboardSectionView({
   section,
 }: dashboardSectionProps) {
+  const { setDashboard } = useContext(DashboardContext);
+
   const storedCards = getLocalStorageStoredCards();
+
+  function removeGraph(graph: DashboardGraph) {
+    removeLocalStorageDashboardGraph(section.title, graph);
+    setDashboard(getLocalStorageDashboard());
+  }
 
   return (
     <View className="flex gap-4 justify-center items-center w-full">
@@ -53,9 +65,7 @@ export default function DashboardSectionView({
                     icon={faX}
                     type="clear"
                     action="default"
-                    onClick={() =>
-                      removeLocalStorageDashboardGraph(section.title, graph)
-                    }
+                    onClick={() => removeGraph(graph)}
                   />
                 }
               />

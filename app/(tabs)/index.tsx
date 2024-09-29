@@ -2,21 +2,21 @@ import DashboardSectionView from "@/components/dashboard/dashboard-section";
 import Graph, { GraphProps } from "@/components/graph/graph";
 import Box from "@/components/ui/box/box";
 import Button from "@/components/ui/button/button";
+import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
   graphCardsByColor,
   graphCardsByCost,
   graphCardsByType,
 } from "@/functions/card-graphing";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
-import { getLocalStorageDashboard } from "@/functions/local-storage/dashboard-local-storage";
 import { Card } from "@/models/card/card";
-import React from "react";
+import React, { useContext } from "react";
 import { ScrollView, View } from "react-native";
 
 export default function App() {
-  const [stacked, setStacked] = React.useState(true);
+  const { dashboard } = useContext(DashboardContext);
 
-  const dashboard = getLocalStorageDashboard();
+  const [stacked, setStacked] = React.useState(true);
 
   function getStoredCards(): Card[] {
     return getLocalStorageStoredCards();

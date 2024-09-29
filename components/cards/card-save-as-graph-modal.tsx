@@ -8,8 +8,11 @@ import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
-import StoredCardsContext from "@/contexts/cards/stored-cards.context";
-import { addLocalStorageDashboardGraph } from "@/functions/local-storage/dashboard-local-storage";
+import DashboardContext from "@/contexts/dashboard/dashboard.context";
+import {
+  addLocalStorageDashboardGraph,
+  getLocalStorageDashboard,
+} from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
 import { CardFilterSortType } from "@/models/sorted-cards/sorted-cards";
 import {
@@ -32,9 +35,8 @@ export default function CardSaveAsGraphModal({
   open,
   setOpen,
 }: CardSaveAsGraphModalProps) {
-  const { maybeBoard, setStoredCards } = useContext(StoredCardsContext);
+  const { setDashboard } = useContext(DashboardContext);
 
-  const [cards, setCards] = React.useState("");
   const [disabled, setDisabled] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -55,6 +57,8 @@ export default function CardSaveAsGraphModal({
         rarityFilter,
       },
     });
+
+    setDashboard(getLocalStorageDashboard());
 
     setTimeout(() => {
       setSuccess(true);
