@@ -107,7 +107,9 @@ function getButtonBaseColor(
         ? "border-danger-200"
         : action === "info"
         ? "border-info-200"
-        : "border-warning-200")
+        : action === "warning"
+        ? "border-warning-200"
+        : "border-white")
     );
   } else {
     if (disabled) return "bg-dark-300";
@@ -122,7 +124,9 @@ function getButtonBaseColor(
       ? "bg-danger-200"
       : action === "info"
       ? "bg-info-200"
-      : "bg-warning-200";
+      : action === "warning"
+      ? "bg-warning-200"
+      : "bg-white bg-opacity-30";
   }
 }
 
@@ -144,7 +148,9 @@ function getButtonHoverColor(
       ? "hover:bg-danger-100"
       : action === "info"
       ? "hover:bg-info-100"
-      : "hover:bg-warning-100"
+      : action === "warning"
+      ? "hover:bg-warning-100"
+      : "hover:bg-white"
   }`;
 }
 
@@ -168,7 +174,9 @@ function getButtonTextColor(
       ? "!text-danger-100"
       : action === "info"
       ? "!text-info-100"
-      : "!text-warning-100"
+      : action === "warning"
+      ? "!text-warning-100"
+      : "!text-white"
   }`;
 }
 

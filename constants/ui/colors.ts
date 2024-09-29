@@ -4,4 +4,5 @@ export type ActionColor =
   | "success"
   | "danger"
   | "info"
-  | "warning";
+  | "warning"
+  | "default";
