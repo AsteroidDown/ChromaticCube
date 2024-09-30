@@ -6,6 +6,8 @@ import { GraphPlot, SetData } from "./layout/graph-plot";
 import { GraphVerticalAxis } from "./layout/graph-vertical-axis";
 
 export type GraphProps = ViewProps & {
+  id: string;
+  sectionId: string;
   title?: string;
   titleStart?: ReactNode;
   titleEnd?: ReactNode;
@@ -16,6 +18,8 @@ export type GraphProps = ViewProps & {
 };
 
 export default function Graph({
+  id,
+  sectionId,
   title,
   titleStart,
   titleEnd,

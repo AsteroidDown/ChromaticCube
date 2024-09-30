@@ -16,7 +16,7 @@ import {
 } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
-import { DashboardGraph, DashboardSection } from "@/models/dashboard/dashboard";
+import { DashboardSection } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import { faInfoCircle, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext } from "react";
@@ -25,22 +25,34 @@ import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
 import Placeholder from "../ui/placeholder/placeholder";
 
 export type dashboardSectionProps = ViewProps & {
-  section: DashboardSection;
+  sectionId: string;
 };
 
 export default function DashboardSectionView({
-  section,
+  sectionId,
 }: dashboardSectionProps) {
-  const { setDashboard } = useContext(DashboardContext);
+  const { dashboard, setDashboard } = useContext(DashboardContext);
 
   const [open, setOpen] = React.useState(false);
+  const [section, setSection] = React.useState(null as DashboardSection | null);
 
   const storedCards = getLocalStorageStoredCards();
 
-  function removeGraph(graph: DashboardGraph) {
-    removeLocalStorageDashboardGraph(section.title, graph);
+  useEffect(
+    () =>
+      setSection(
+        dashboard?.sections.find((section) => section.id === sectionId) || null
+      ),
+    [dashboard, sectionId]
+  );
+  function removeGraph(graphId: string) {
+    if (!section) return;
+
+    removeLocalStorageDashboardGraph(graphId, section.id);
     setDashboard(getLocalStorageDashboard());
   }
+
+  if (!section) return <Placeholder title="No Section Found!" />;
 
   return (
     <View className="flex gap-4 justify-center items-center w-full">
@@ -60,6 +72,8 @@ export default function DashboardSectionView({
           >
             <Box className="w-full h-full overflow-x-scroll overflow-y-hidden">
               <Graph
+                id={graph.id}
+                sectionId={section.id}
                 title={graph.title}
                 horizontalTitle={titleCase(graph.type)}
                 sets={getSets(graph.type, graph.filters, storedCards)}
@@ -69,7 +83,7 @@ export default function DashboardSectionView({
                     icon={faX}
                     type="clear"
                     action="default"
-                    onClick={() => removeGraph(graph)}
+                    onClick={() => removeGraph(graph.id)}
                   />
                 }
               />
@@ -87,7 +101,7 @@ export default function DashboardSectionView({
               text="Add Graph"
               className="mt-4"
               icon={faPlus}
-              onClick={() => setOpen(true)}
+              onClick={() => setAddGraphOpen(true)}
             ></Button>
           </Placeholder>
         )}

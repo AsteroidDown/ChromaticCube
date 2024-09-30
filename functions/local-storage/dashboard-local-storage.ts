@@ -1,5 +1,6 @@
 import { Dashboard, DashboardGraph } from "@/models/dashboard/dashboard";
 import { Platform } from "react-native";
+import { generateId } from "../identification";
 
 export function getLocalStorageDashboard(): Dashboard | null {
   if (Platform.OS === "ios") return null;
@@ -20,22 +21,27 @@ export function setLocalStorageDashboard(dashboard: Dashboard) {
 
 export function addLocalStorageDashboardGraph(
   section: string,
-  graph: DashboardGraph
+  graph: Omit<DashboardGraph, "id">
 ) {
   if (Platform.OS === "ios") return null;
 
   let dashboard: Dashboard | null = getLocalStorageDashboard();
   if (!dashboard?.sections) dashboard = { sections: [] };
 
-  const graphIndex = dashboard?.sections?.findIndex(
+  const sectionIndex = dashboard?.sections?.findIndex(
     (dashboardSection) => dashboardSection.title === section
   );
 
-  if (graphIndex >= 0) dashboard.sections[graphIndex].graphs.push(graph);
+  if (sectionIndex >= 0)
+    dashboard.sections[sectionIndex].graphs.push({
+      ...graph,
+      id: generateId("dashboard-graph"),
+    });
   else {
     dashboard.sections.push({
+      id: generateId("dashboard-section"),
       title: "Unsorted",
-      graphs: [graph],
+      graphs: [{ ...graph, id: generateId("dashboard-graph") }],
     });
   }
 
@@ -43,8 +49,8 @@ export function addLocalStorageDashboardGraph(
 }
 
 export function removeLocalStorageDashboardGraph(
-  section: string,
-  graph: DashboardGraph
+  graphId: string,
+  sectionId: string
 ) {
   if (Platform.OS === "ios") return null;
 
@@ -52,12 +58,12 @@ export function removeLocalStorageDashboardGraph(
   if (!dashboard) return;
 
   const sectionIndex = dashboard?.sections?.findIndex(
-    (dashboardSection) => dashboardSection.title === section
+    (dashboardSection) => dashboardSection.id === sectionId
   );
   if (sectionIndex < 0) return;
 
   const graphIndex = dashboard?.sections[sectionIndex].graphs.findIndex(
-    (dashboardGraph) => dashboardGraph.title === graph.title
+    (dashboardGraph) => dashboardGraph.id === graphId
   );
   if (graphIndex < 0) return;
 

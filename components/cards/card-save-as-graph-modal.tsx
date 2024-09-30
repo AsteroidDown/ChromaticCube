@@ -25,12 +25,14 @@ import React, { useContext } from "react";
 import { View } from "react-native";
 
 export interface CardSaveAsGraphModalProps {
+  sectionId?: string;
   type?: CardFilterSortType;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CardSaveAsGraphModal({
+  sectionId,
   type = "cost",
   open,
   setOpen,
@@ -50,7 +52,7 @@ export default function CardSaveAsGraphModal({
   function createGraph() {
     setDisabled(true);
 
-    addLocalStorageDashboardGraph("Unsorted", {
+    addLocalStorageDashboardGraph(sectionId ?? "unsorted", {
       type: sortType,
       title: generateTitle(type, colorFilter, typeFilter, rarityFilter),
       filters: {

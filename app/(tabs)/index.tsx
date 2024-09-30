@@ -23,6 +23,8 @@ export default function App() {
   }
 
   const cardsByColorGraphProps: GraphProps = {
+    id: "cardsByColor",
+    sectionId: "general",
     title: "Cards By Color",
     horizontalTitle: "Color",
     stacked: stacked,
@@ -30,6 +32,8 @@ export default function App() {
   };
 
   const cardsByCostGraphProps: GraphProps = {
+    id: "cardsByCost",
+    sectionId: "general",
     title: "Cards By Cost",
     horizontalTitle: "Cost",
     stacked: stacked,
@@ -37,6 +41,8 @@ export default function App() {
   };
 
   const cardsByTypeGraphProps: GraphProps = {
+    id: "cardsByType",
+    sectionId: "general",
     title: "Cards By Type",
     horizontalTitle: "Type",
     stacked: stacked,
@@ -67,7 +73,7 @@ export default function App() {
 
           {dashboard?.sections.map((section, index) => (
             <DashboardSectionView
-              section={section}
+              sectionId={section.id}
               key={section.title + index}
             />
           ))}
