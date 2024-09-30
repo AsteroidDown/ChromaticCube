@@ -61,7 +61,9 @@ export default function Graph({
       onPointerLeave={() => setHovered(false)}
     >
       <View className="flex flex-row w-full items-center">
-        {titleStart && titleStart}
+        {titleStart && (
+          <View className={`-mt-4 transition-all`}>{titleStart}</View>
+        )}
 
         <Text
           size="xl"
