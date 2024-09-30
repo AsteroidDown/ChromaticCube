@@ -132,7 +132,11 @@ export default function DashboardSectionView({
         )}
       </View>
 
-      <CardSaveAsGraphModal open={addGraphOpen} setOpen={setAddGraphOpen} />
+      <CardSaveAsGraphModal
+        sectionId={section.id}
+        open={addGraphOpen}
+        setOpen={setAddGraphOpen}
+      />
     </View>
   );
 }
