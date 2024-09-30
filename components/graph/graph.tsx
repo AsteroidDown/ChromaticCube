@@ -1,5 +1,5 @@
 import Text from "@/components/ui/text/text";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { View, ViewProps } from "react-native";
 import { GraphHorizontalAxis } from "./layout/graph-horizontal-axis";
 import { GraphPlot, SetData } from "./layout/graph-plot";
@@ -11,10 +11,10 @@ export type GraphProps = ViewProps & {
   title?: string;
   titleStart?: ReactNode;
   titleEnd?: ReactNode;
+  stacked?: boolean;
   horizontalTitle?: string;
   verticalTitle?: string;
   sets: SetData[];
-  stacked?: boolean;
 };
 
 export default function Graph({
@@ -23,11 +23,11 @@ export default function Graph({
   title,
   titleStart,
   titleEnd,
-  sets,
+  stacked,
   verticalTitle,
   horizontalTitle,
-  stacked = true,
   className,
+  sets,
 }: GraphProps) {
   const [hovered, setHovered] = React.useState(false);
 

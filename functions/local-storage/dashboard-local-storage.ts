@@ -48,6 +48,38 @@ export function addLocalStorageDashboardGraph(
   setLocalStorageDashboard(dashboard);
 }
 
+export function updateLocalStorageDashboardGraph(
+  graphId: string,
+  sectionId: string,
+  data: { title?: string; stacked?: boolean }
+) {
+  if (Platform.OS === "ios") return null;
+
+  let dashboard: Dashboard | null = getLocalStorageDashboard();
+  if (!dashboard?.sections) dashboard = { sections: [] };
+
+  const sectionIndex = dashboard?.sections?.findIndex(
+    (dashboardSection) => dashboardSection.id === sectionId
+  );
+
+  if (sectionIndex >= 0) {
+    const graphIndex = dashboard.sections[sectionIndex].graphs.findIndex(
+      (storedGraph) => storedGraph.id === graphId
+    );
+
+    if (graphIndex >= 0) {
+      const graph = dashboard.sections[sectionIndex].graphs[graphIndex];
+
+      if (data.title !== undefined) graph.title = data.title;
+      if (data.stacked !== undefined) graph.stacked = data.stacked;
+
+      dashboard.sections[sectionIndex].graphs[graphIndex] = graph;
+    }
+  }
+
+  setLocalStorageDashboard(dashboard);
+}
+
 export function removeLocalStorageDashboardGraph(
   graphId: string,
   sectionId: string

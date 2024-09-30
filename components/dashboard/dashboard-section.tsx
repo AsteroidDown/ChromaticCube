@@ -13,13 +13,20 @@ import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local
 import {
   getLocalStorageDashboard,
   removeLocalStorageDashboardGraph,
+  updateLocalStorageDashboardGraph,
 } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
 import { DashboardSection } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
-import { faInfoCircle, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext } from "react";
+import {
+  faChartSimple,
+  faDatabase,
+  faInfoCircle,
+  faPlus,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
+import React, { useContext, useEffect } from "react";
 import { View, ViewProps } from "react-native";
 import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
 import Placeholder from "../ui/placeholder/placeholder";
@@ -45,6 +52,14 @@ export default function DashboardSectionView({
       ),
     [dashboard, sectionId]
   );
+
+  function toggleStacked(graphId: string, stacked: boolean) {
+    if (!section) return;
+
+    updateLocalStorageDashboardGraph(graphId, section.id, { stacked });
+    setDashboard(getLocalStorageDashboard());
+  }
+
   function removeGraph(graphId: string) {
     if (!section) return;
 
@@ -75,8 +90,18 @@ export default function DashboardSectionView({
                 id={graph.id}
                 sectionId={section.id}
                 title={graph.title}
+                stacked={graph.stacked}
                 horizontalTitle={titleCase(graph.type)}
                 sets={getSets(graph.type, graph.filters, storedCards)}
+                titleStart={
+                  <Button
+                    rounded
+                    type="clear"
+                    action="default"
+                    icon={graph.stacked ? faDatabase : faChartSimple}
+                    onClick={() => toggleStacked(graph.id, !graph.stacked)}
+                  />
+                }
                 titleEnd={
                   <Button
                     rounded
