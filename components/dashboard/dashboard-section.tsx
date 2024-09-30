@@ -18,9 +18,11 @@ import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
 import { DashboardGraph, DashboardSection } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
-import { faX } from "@fortawesome/free-solid-svg-icons";
-import { useContext } from "react";
+import { faInfoCircle, faPlus, faX } from "@fortawesome/free-solid-svg-icons";
+import React, { useContext } from "react";
 import { View, ViewProps } from "react-native";
+import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
+import Placeholder from "../ui/placeholder/placeholder";
 
 export type dashboardSectionProps = ViewProps & {
   section: DashboardSection;
@@ -30,6 +32,8 @@ export default function DashboardSectionView({
   section,
 }: dashboardSectionProps) {
   const { setDashboard } = useContext(DashboardContext);
+
+  const [open, setOpen] = React.useState(false);
 
   const storedCards = getLocalStorageStoredCards();
 
@@ -72,7 +76,24 @@ export default function DashboardSectionView({
             </Box>
           </View>
         ))}
+
+        {!section.graphs.length && (
+          <Placeholder
+            title="No Graphs Added!"
+            subtitle="Add some to get started"
+            icon={faInfoCircle}
+          >
+            <Button
+              text="Add Graph"
+              className="mt-4"
+              icon={faPlus}
+              onClick={() => setOpen(true)}
+            ></Button>
+          </Placeholder>
+        )}
       </View>
+
+      <CardSaveAsGraphModal open={open} setOpen={setOpen} />
     </View>
   );
 }
