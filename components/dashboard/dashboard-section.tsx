@@ -33,7 +33,7 @@ export default function DashboardSectionView({
 }: dashboardSectionProps) {
   const { dashboard, setDashboard } = useContext(DashboardContext);
 
-  const [open, setOpen] = React.useState(false);
+  const [addGraphOpen, setAddGraphOpen] = React.useState(false);
   const [section, setSection] = React.useState(null as DashboardSection | null);
 
   const storedCards = getLocalStorageStoredCards();
@@ -107,7 +107,7 @@ export default function DashboardSectionView({
         )}
       </View>
 
-      <CardSaveAsGraphModal open={open} setOpen={setOpen} />
+      <CardSaveAsGraphModal open={addGraphOpen} setOpen={setAddGraphOpen} />
     </View>
   );
 }
