@@ -45,11 +45,10 @@ export default function DashboardSectionView({
 
   const [addGraphOpen, setAddGraphOpen] = React.useState(false);
   const [section, setSection] = React.useState(null as DashboardSection | null);
+
   const [sectionTitle, setSectionTitle] = React.useState("");
-
-  const [editing, setEditing] = React.useState(false);
-
-  const [titleHovered, setTitleHovered] = React.useState(false);
+  const [sectionTitleHovered, setSectionTitleHovered] = React.useState(false);
+  const [editingSection, setEditingSection] = React.useState(false);
 
   const storedCards = getLocalStorageStoredCards();
 
@@ -62,11 +61,11 @@ export default function DashboardSectionView({
   );
 
   function updateSectionTitle() {
-    if (!section) return;
+    if (!section || !sectionTitle) return;
 
     updateLocalStorageDashboardSection(section.id, sectionTitle);
     setDashboard(getLocalStorageDashboard());
-    setEditing(false);
+    setEditingSection(false);
   }
 
   function toggleStacked(graphId: string, stacked: boolean) {
@@ -89,17 +88,17 @@ export default function DashboardSectionView({
     <View className="flex gap-4 justify-center items-center w-full">
       <View
         className="flex flex-row gap-2 justify-between items-center py-4 w-full bg-background-100 bg-opacity-60 sticky top-0"
-        onPointerEnter={() => setTitleHovered(true)}
-        onPointerLeave={() => setTitleHovered(false)}
+        onPointerEnter={() => setSectionTitleHovered(true)}
+        onPointerLeave={() => setSectionTitleHovered(false)}
       >
         <View className="flex flex-row gap-2 items-center">
-          {!editing && (
+          {!editingSection && (
             <Text size="2xl" thickness="bold" className="py-1 pr-auto ">
               {section.title}
             </Text>
           )}
 
-          {editing && (
+          {editingSection && (
             <TextInput
               placeholderTextColor="#8b8b8b"
               className="color-white outline-none text-2xl font-bold"
@@ -116,12 +115,16 @@ export default function DashboardSectionView({
             rounded
             type="clear"
             action="default"
-            icon={editing ? faCheck : faPencil}
+            icon={editingSection ? faCheck : faPencil}
             className={`${
-              editing || titleHovered ? "opacity-100" : "opacity-0"
+              editingSection || sectionTitleHovered
+                ? "opacity-100"
+                : "opacity-0"
             } transition-all`}
             onClick={() =>
-              editing ? updateSectionTitle() : setEditing(!editing)
+              editingSection
+                ? updateSectionTitle()
+                : setEditingSection(!editingSection)
             }
           />
         </View>
