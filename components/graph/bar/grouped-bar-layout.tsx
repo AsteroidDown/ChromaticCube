@@ -18,11 +18,13 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
   const colorlessHeight = getStackHeight("colorless", ceiling, data);
   const goldHeight = getStackHeight("gold", ceiling, data);
 
-  const baseClass = "w-10 h-full rounded-t-lg bg-gradient-to-t";
+  const baseClasses = "w-full rounded-t-lg bg-gradient-to-t";
+
+  console.log(whiteHeight);
 
   return (
-    <View className="flex flex-row gap-2 items-end h-56 border-white">
-      <View className="flex h-full">
+    <View className="flex flex-row gap-1 justify-center w-full h-full px-2">
+      <View className="flex h-full flex-1">
         <View style={[{ height: `${100 - whiteHeight}%` }]}></View>
 
         <Tooltip
@@ -31,15 +33,15 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
             "Count: " +
             (data.find((entry) => entry.color === "white")?.count || 0)
           }
+          style={[{ height: `${whiteHeight}%` }]}
         >
           <View
-            style={[{ height: `${whiteHeight}%` }]}
-            className={`${baseClass} to-mtg-white from-mtg-white-secondary`}
+            className={`${baseClasses} h-full to-mtg-white from-mtg-white-secondary`}
           ></View>
         </Tooltip>
       </View>
 
-      <View className="flex h-full">
+      <View className="flex h-full flex-1">
         <View style={[{ height: `${100 - blueHeight}%` }]}></View>
 
         <Tooltip
@@ -48,15 +50,15 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
             "Count: " +
             (data.find((entry) => entry.color === "blue")?.count || 0)
           }
+          style={[{ height: `${blueHeight}%` }]}
         >
           <View
-            style={[{ height: `${blueHeight}%` }]}
-            className={`${baseClass} to-mtg-blue from-mtg-blue-secondary`}
+            className={`${baseClasses} h-full to-mtg-blue from-mtg-blue-secondary`}
           ></View>
         </Tooltip>
       </View>
 
-      <View className="flex h-full">
+      <View className="flex h-full flex-1">
         <View style={[{ height: `${100 - blackHeight}%` }]}></View>
 
         <Tooltip
@@ -65,15 +67,15 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
             "Count: " +
             (data.find((entry) => entry.color === "black")?.count || 0)
           }
+          style={[{ height: `${blackHeight}%` }]}
         >
           <View
-            style={[{ height: `${blackHeight}%` }]}
-            className={`${baseClass} to-mtg-black from-mtg-black-secondary`}
+            className={`${baseClasses} h-full to-mtg-black from-mtg-black-secondary`}
           ></View>
         </Tooltip>
       </View>
 
-      <View className="flex h-full">
+      <View className="flex h-full flex-1">
         <View style={[{ height: `${100 - redHeight}%` }]}></View>
 
         <Tooltip
@@ -82,15 +84,15 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
             "Count: " +
             (data.find((entry) => entry.color === "red")?.count || 0)
           }
+          style={[{ height: `${redHeight}%` }]}
         >
           <View
-            style={[{ height: `${redHeight}%` }]}
-            className={`${baseClass} to-mtg-red from-mtg-red-secondary`}
+            className={`${baseClasses} h-full to-mtg-red from-mtg-red-secondary`}
           ></View>
         </Tooltip>
       </View>
 
-      <View className="flex h-full">
+      <View className="flex h-full flex-1">
         <View style={[{ height: `${100 - greenHeight}%` }]}></View>
 
         <Tooltip
@@ -99,15 +101,15 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
             "Count: " +
             (data.find((entry) => entry.color === "green")?.count || 0)
           }
+          style={[{ height: `${greenHeight}%` }]}
         >
           <View
-            style={[{ height: `${greenHeight}%` }]}
-            className={`${baseClass} to-mtg-green from-mtg-green-secondary`}
+            className={`${baseClasses} h-full to-mtg-green from-mtg-green-secondary`}
           ></View>
         </Tooltip>
       </View>
 
-      <View className="flex h-full">
+      <View className="flex h-full flex-1">
         <View style={[{ height: `${100 - goldHeight}%` }]}></View>
 
         <Tooltip
@@ -116,14 +118,14 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
             "Count: " +
             (data.find((entry) => entry.color === "gold")?.count || 0)
           }
+          style={[{ height: `${goldHeight}%` }]}
         >
           <View
-            style={[{ height: `${goldHeight}%` }]}
-            className={`${baseClass} to-mtg-gold from-mtg-gold-secondary`}
+            className={`${baseClasses} h-full to-mtg-gold from-mtg-gold-secondary`}
           ></View>
         </Tooltip>
 
-        <View className="flex h-full">
+        <View className="flex h-full flex-1">
           <View style={[{ height: `${100 - colorlessHeight}%` }]}></View>
 
           <Tooltip
@@ -132,15 +134,15 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
               "Count: " +
               (data.find((entry) => entry.color === "colorless")?.count || 0)
             }
+            style={[{ height: `${colorlessHeight}%` }]}
           >
             <View
-              style={[{ height: `${colorlessHeight}%` }]}
-              className={`${baseClass} to-mtg-colorless from-mtg-colorless-secondary`}
+              className={`${baseClasses} h-full to-mtg-colorless from-mtg-colorless-secondary`}
             ></View>
           </Tooltip>
         </View>
 
-        <View className="flex h-full">
+        <View className="flex h-full flex-1">
           <View style={[{ height: `${100 - landHeight}%` }]}></View>
 
           <Tooltip
@@ -149,10 +151,10 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
               "Count: " +
               (data.find((entry) => entry.color === "land")?.count || 0)
             }
+            style={[{ height: `${landHeight}%` }]}
           >
             <View
-              style={[{ height: `${landHeight}%` }]}
-              className={`${baseClass} to-mtg-land from-mtg-land-secondary`}
+              className={`${baseClasses} h-full to-mtg-land from-mtg-land-secondary`}
             ></View>
           </Tooltip>
         </View>
