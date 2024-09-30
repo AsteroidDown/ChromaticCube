@@ -88,45 +88,53 @@ export default function DashboardSectionView({
   return (
     <View className="flex gap-4 justify-center items-center w-full">
       <View
-        className="flex flex-row gap-2 justify-start items-center py-4 w-full sticky top-0"
+        className="flex flex-row gap-2 justify-between items-center py-4 w-full bg-background-100 bg-opacity-60 sticky top-0"
         onPointerEnter={() => setTitleHovered(true)}
         onPointerLeave={() => setTitleHovered(false)}
       >
-        {!editing && (
-          <Text
-            size="2xl"
-            thickness="bold"
-            className="py-1 pr-auto bg-background-100 bg-opacity-60"
-          >
-            {section.title}
-          </Text>
-        )}
+        <View className="flex flex-row gap-2 items-center">
+          {!editing && (
+            <Text size="2xl" thickness="bold" className="py-1 pr-auto ">
+              {section.title}
+            </Text>
+          )}
 
-        {editing && (
-          <TextInput
-            placeholderTextColor="#8b8b8b"
-            className="color-white outline-none text-2xl font-bold"
-            value={sectionTitle}
-            placeholder={section.title}
-            onChangeText={(text) => setSectionTitle(text)}
-            onKeyPress={(event) =>
-              (event as any)?.code === "Enter" ? updateSectionTitle() : null
+          {editing && (
+            <TextInput
+              placeholderTextColor="#8b8b8b"
+              className="color-white outline-none text-2xl font-bold"
+              value={sectionTitle}
+              placeholder={section.title}
+              onChangeText={(text) => setSectionTitle(text)}
+              onKeyPress={(event) =>
+                (event as any)?.code === "Enter" ? updateSectionTitle() : null
+              }
+            />
+          )}
+
+          <Button
+            rounded
+            type="clear"
+            action="default"
+            icon={editing ? faCheck : faPencil}
+            className={`${
+              editing || titleHovered ? "opacity-100" : "opacity-0"
+            } transition-all`}
+            onClick={() =>
+              editing ? updateSectionTitle() : setEditing(!editing)
             }
           />
-        )}
+        </View>
 
-        <Button
-          rounded
-          type="clear"
-          action="default"
-          icon={editing ? faCheck : faPencil}
-          className={`${
-            editing || titleHovered ? "opacity-100" : "opacity-0"
-          } transition-all`}
-          onClick={() =>
-            editing ? updateSectionTitle() : setEditing(!editing)
-          }
-        />
+        <View className="flex flex-row gap-2 items-center">
+          <Button
+            rounded
+            type="clear"
+            action="default"
+            icon={faPlus}
+            onClick={() => setAddGraphOpen(true)}
+          />
+        </View>
       </View>
 
       <View className="flex flex-row flex-wrap gap-4 justify-center items-center w-full z-[-1]">
