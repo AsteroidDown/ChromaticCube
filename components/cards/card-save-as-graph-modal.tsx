@@ -25,13 +25,13 @@ import React, { useContext } from "react";
 import { View } from "react-native";
 
 export interface CardSaveAsGraphModalProps {
-  type: CardFilterSortType;
+  type?: CardFilterSortType;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CardSaveAsGraphModal({
-  type,
+  type = "cost",
   open,
   setOpen,
 }: CardSaveAsGraphModalProps) {
@@ -41,6 +41,8 @@ export default function CardSaveAsGraphModal({
   const [error, setError] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
 
+  const [sortType, setSortType] = React.useState(type);
+
   const [colorFilter, setColorFilter] = React.useState([] as MTGColor[]);
   const [typeFilter, setTypeFilter] = React.useState([] as MTGCardTypes[]);
   const [rarityFilter, setRarityFilter] = React.useState([] as MTGRarity[]);
@@ -49,7 +51,7 @@ export default function CardSaveAsGraphModal({
     setDisabled(true);
 
     addLocalStorageDashboardGraph("Unsorted", {
-      type,
+      type: sortType,
       title: generateTitle(type, colorFilter, typeFilter, rarityFilter),
       filters: {
         colorFilter,
@@ -77,6 +79,40 @@ export default function CardSaveAsGraphModal({
 
         <View className="flex gap-4">
           <Text>Add a graph to the dashboard with the following filters:</Text>
+
+          <View className="flex gap-2 max-w-96">
+            <Text size="md" thickness="bold">
+              Sort Type
+            </Text>
+
+            <Divider thick />
+
+            <View className="flex flex-row gap-2 max-w-96">
+              <Button
+                rounded
+                text="Cost"
+                className="flex-1"
+                type={sortType !== "cost" ? "outlined" : "default"}
+                onClick={() => setSortType("cost")}
+              ></Button>
+
+              <Button
+                rounded
+                text="Color"
+                className="flex-1"
+                type={sortType !== "color" ? "outlined" : "default"}
+                onClick={() => setSortType("color")}
+              ></Button>
+
+              <Button
+                rounded
+                text="Type"
+                className="flex-1"
+                type={sortType !== "type" ? "outlined" : "default"}
+                onClick={() => setSortType("type")}
+              ></Button>
+            </View>
+          </View>
 
           <View className="flex gap-2 max-w-96">
             <Text size="md" thickness="bold">
