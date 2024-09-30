@@ -19,12 +19,11 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
   const goldHeight = getStackHeight("gold", ceiling, data);
 
   const baseClasses = "w-full rounded-t-lg bg-gradient-to-t";
-
-  console.log(whiteHeight);
+  const containerClasses = "flex h-full flex-1";
 
   return (
     <View className="flex flex-row gap-1 justify-center w-full h-full px-2">
-      <View className="flex h-full flex-1">
+      <View className={containerClasses}>
         <View style={[{ height: `${100 - whiteHeight}%` }]}></View>
 
         <Tooltip
@@ -41,7 +40,7 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         </Tooltip>
       </View>
 
-      <View className="flex h-full flex-1">
+      <View className={containerClasses}>
         <View style={[{ height: `${100 - blueHeight}%` }]}></View>
 
         <Tooltip
@@ -58,7 +57,7 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         </Tooltip>
       </View>
 
-      <View className="flex h-full flex-1">
+      <View className={containerClasses}>
         <View style={[{ height: `${100 - blackHeight}%` }]}></View>
 
         <Tooltip
@@ -75,7 +74,7 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         </Tooltip>
       </View>
 
-      <View className="flex h-full flex-1">
+      <View className={containerClasses}>
         <View style={[{ height: `${100 - redHeight}%` }]}></View>
 
         <Tooltip
@@ -92,7 +91,7 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         </Tooltip>
       </View>
 
-      <View className="flex h-full flex-1">
+      <View className={containerClasses}>
         <View style={[{ height: `${100 - greenHeight}%` }]}></View>
 
         <Tooltip
@@ -109,7 +108,7 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         </Tooltip>
       </View>
 
-      <View className="flex h-full flex-1">
+      <View className={containerClasses}>
         <View style={[{ height: `${100 - goldHeight}%` }]}></View>
 
         <Tooltip
@@ -125,7 +124,7 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
           ></View>
         </Tooltip>
 
-        <View className="flex h-full flex-1">
+        <View className={containerClasses}>
           <View style={[{ height: `${100 - colorlessHeight}%` }]}></View>
 
           <Tooltip
@@ -142,7 +141,7 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
           </Tooltip>
         </View>
 
-        <View className="flex h-full flex-1">
+        <View className={containerClasses}>
           <View style={[{ height: `${100 - landHeight}%` }]}></View>
 
           <Tooltip
