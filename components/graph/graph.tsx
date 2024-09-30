@@ -29,6 +29,8 @@ export default function Graph({
   stacked = true,
   className,
 }: GraphProps) {
+  const [hovered, setHovered] = React.useState(false);
+
   const maxValue = sets.reduce((acc, set) => {
     const setValue = stacked
       ? set.data.reduce((acc, entry) => acc + entry.count, 0)
@@ -55,6 +57,8 @@ export default function Graph({
       className={`
         ${className} flex flex-1 w-full h-full overflow-auto
       `}
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
     >
       <View className="flex flex-row w-full items-center">
         {titleStart && titleStart}
@@ -67,7 +71,15 @@ export default function Graph({
           {title}
         </Text>
 
-        {titleEnd && <View className="-mt-4">{titleEnd}</View>}
+        {titleEnd && (
+          <View
+            className={`${
+              hovered ? "opacity-100" : "opacity-0"
+            } -mt-4 transition-all`}
+          >
+            {titleEnd}
+          </View>
+        )}
       </View>
 
       <View className="flex-1 flex flex-row">
