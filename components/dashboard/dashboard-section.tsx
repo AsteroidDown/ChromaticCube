@@ -14,6 +14,7 @@ import {
   getLocalStorageDashboard,
   removeLocalStorageDashboardGraph,
   updateLocalStorageDashboardGraph,
+  updateLocalStorageDashboardSection,
 } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
@@ -21,13 +22,15 @@ import { DashboardSection } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import {
   faChartSimple,
+  faCheck,
   faDatabase,
   faInfoCircle,
+  faPencil,
   faPlus,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
-import { View, ViewProps } from "react-native";
+import { TextInput, View, ViewProps } from "react-native";
 import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
 import Placeholder from "../ui/placeholder/placeholder";
 
@@ -42,6 +45,11 @@ export default function DashboardSectionView({
 
   const [addGraphOpen, setAddGraphOpen] = React.useState(false);
   const [section, setSection] = React.useState(null as DashboardSection | null);
+  const [sectionTitle, setSectionTitle] = React.useState("");
+
+  const [editing, setEditing] = React.useState(false);
+
+  const [titleHovered, setTitleHovered] = React.useState(false);
 
   const storedCards = getLocalStorageStoredCards();
 
@@ -52,6 +60,14 @@ export default function DashboardSectionView({
       ),
     [dashboard, sectionId]
   );
+
+  function updateSectionTitle() {
+    if (!section) return;
+
+    updateLocalStorageDashboardSection(section.id, sectionTitle);
+    setDashboard(getLocalStorageDashboard());
+    setEditing(false);
+  }
 
   function toggleStacked(graphId: string, stacked: boolean) {
     if (!section) return;
@@ -71,13 +87,47 @@ export default function DashboardSectionView({
 
   return (
     <View className="flex gap-4 justify-center items-center w-full">
-      <Text
-        size="2xl"
-        thickness="bold"
-        className="sticky top-0 py-4 pr-auto w-full bg-background-100 bg-opacity-60"
+      <View
+        className="flex flex-row gap-2 justify-start items-center py-4 w-full sticky top-0"
+        onPointerEnter={() => setTitleHovered(true)}
+        onPointerLeave={() => setTitleHovered(false)}
       >
-        {section.title}
-      </Text>
+        {!editing && (
+          <Text
+            size="2xl"
+            thickness="bold"
+            className="py-1 pr-auto bg-background-100 bg-opacity-60"
+          >
+            {section.title}
+          </Text>
+        )}
+
+        {editing && (
+          <TextInput
+            placeholderTextColor="#8b8b8b"
+            className="color-white outline-none text-2xl font-bold"
+            value={sectionTitle}
+            placeholder={section.title}
+            onChangeText={(text) => setSectionTitle(text)}
+            onKeyPress={(event) =>
+              (event as any)?.code === "Enter" ? updateSectionTitle() : null
+            }
+          />
+        )}
+
+        <Button
+          rounded
+          type="clear"
+          action="default"
+          icon={editing ? faCheck : faPencil}
+          className={`${
+            editing || titleHovered ? "opacity-100" : "opacity-0"
+          } transition-all`}
+          onClick={() =>
+            editing ? updateSectionTitle() : setEditing(!editing)
+          }
+        />
+      </View>
 
       <View className="flex flex-row flex-wrap gap-4 justify-center items-center w-full z-[-1]">
         {section.graphs.map((graph, index) => (

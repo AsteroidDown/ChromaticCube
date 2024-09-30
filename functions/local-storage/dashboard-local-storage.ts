@@ -19,6 +19,26 @@ export function setLocalStorageDashboard(dashboard: Dashboard) {
   localStorage.setItem("dashboard", JSON.stringify(dashboard));
 }
 
+export function updateLocalStorageDashboardSection(
+  sectionId: string,
+  title: string
+) {
+  if (Platform.OS === "ios") return;
+
+  let dashboard: Dashboard | null = getLocalStorageDashboard();
+  if (!dashboard?.sections) return;
+
+  const sectionIndex = dashboard?.sections?.findIndex(
+    (dashboardSection) => dashboardSection.id === sectionId
+  );
+
+  if (sectionIndex >= 0) {
+    dashboard.sections[sectionIndex].title = title;
+  }
+
+  setLocalStorageDashboard(dashboard);
+}
+
 export function addLocalStorageDashboardGraph(
   section: string,
   graph: Omit<DashboardGraph, "id">
