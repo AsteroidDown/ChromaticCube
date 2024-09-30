@@ -40,7 +40,7 @@ export function updateLocalStorageDashboardSection(
 }
 
 export function addLocalStorageDashboardGraph(
-  section: string,
+  sectionId: string,
   graph: Omit<DashboardGraph, "id">
 ) {
   if (Platform.OS === "ios") return null;
@@ -49,7 +49,7 @@ export function addLocalStorageDashboardGraph(
   if (!dashboard?.sections) dashboard = { sections: [] };
 
   const sectionIndex = dashboard?.sections?.findIndex(
-    (dashboardSection) => dashboardSection.title === section
+    (dashboardSection) => dashboardSection.id === sectionId
   );
 
   if (sectionIndex >= 0)
