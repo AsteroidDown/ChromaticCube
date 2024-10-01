@@ -86,7 +86,13 @@ export default function Graph({
     >
       <View className="flex flex-row w-full items-center">
         {titleStart && (
-          <View className={`-mt-4 transition-all`}>{titleStart}</View>
+          <View
+            className={`${
+              hovered ? "opacity-100" : "opacity-0"
+            } -mt-4 transition-all`}
+          >
+            {titleStart}
+          </View>
         )}
 
         <View className="flex-1 flex-row justify-center items-center mx-auto pl-10">
