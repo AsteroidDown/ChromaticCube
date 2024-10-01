@@ -88,7 +88,7 @@ export default function Graph({
           <View
             className={`${
               hovered ? "opacity-100" : "opacity-0"
-            } -mt-4 transition-all`}
+            } -mt-4 transition-all duration-500`}
           >
             {titleStart}
           </View>
@@ -125,7 +125,7 @@ export default function Graph({
             icon={editingGraph ? faCheck : faPencil}
             className={`${
               editingGraph || hovered ? "opacity-100" : "opacity-0"
-            } -mt-4 transition-all`}
+            } -mt-4 transition-all duration-500`}
             onClick={() =>
               editingGraph ? updateGraphTitle() : setEditingGraph(!editingGraph)
             }
@@ -136,7 +136,7 @@ export default function Graph({
           <View
             className={`${
               hovered ? "opacity-100" : "opacity-0"
-            } -mt-4 transition-all`}
+            } -mt-4 transition-all duration-500`}
           >
             {titleEnd}
           </View>

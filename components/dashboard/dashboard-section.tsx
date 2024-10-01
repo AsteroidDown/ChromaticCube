@@ -126,7 +126,7 @@ export default function DashboardSectionView({
               editingSection || sectionTitleHovered
                 ? "opacity-100"
                 : "opacity-0"
-            } transition-all`}
+            } transition-all duration-500`}
             onClick={() =>
               editingSection
                 ? updateSectionTitle()
@@ -158,7 +158,7 @@ export default function DashboardSectionView({
                 : "lg:min-w-[100%]"
             }`}
           >
-            <Box className="w-full h-full overflow-x-scroll overflow-y-hidden">
+            <Box className="w-full h-full !bg-background-100 border-2 border-background-300 overflow-x-scroll overflow-y-hidden">
               <Graph
                 id={graph.id}
                 sectionId={section.id}

@@ -59,15 +59,15 @@ export default function App() {
         />
 
         <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
-          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full overflow-hidden">
+          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
             <Graph {...cardsByColorGraphProps} />
           </Box>
 
-          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full overflow-hidden">
+          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
             <Graph {...cardsByCostGraphProps} />
           </Box>
 
-          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full overflow-hidden">
+          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
             <Graph {...cardsByTypeGraphProps} />
           </Box>
 
