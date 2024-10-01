@@ -150,7 +150,7 @@ export default function DashboardSectionView({
         {section.graphs.map((graph, index) => (
           <View
             key={graph.title + index}
-            className={`flex-1 h-80 min-w-full overflow-hidden ${
+            className={`flex-1 h-80 min-w-full overflow-hidden transition-all duration-500 ${
               graph.size === "sm"
                 ? "lg:min-w-[25%] lg:max-w-[33%]"
                 : graph.size === "md"
