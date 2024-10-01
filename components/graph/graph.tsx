@@ -66,10 +66,13 @@ export default function Graph({
   const verticalTickLength = ceiling > 45 ? 10 : ceiling > 12 ? 5 : 2;
 
   function updateGraphTitle() {
-    if (!id || !sectionId || !graphTitle) return;
+    if (!id || !sectionId) return;
 
-    updateLocalStorageDashboardGraph(id, sectionId, { title: graphTitle });
-    setDashboard(getLocalStorageDashboard());
+    if (graphTitle) {
+      updateLocalStorageDashboardGraph(id, sectionId, { title: graphTitle });
+      setDashboard(getLocalStorageDashboard());
+    }
+
     setEditingGraph(false);
   }
 
