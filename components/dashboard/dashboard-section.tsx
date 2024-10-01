@@ -143,7 +143,7 @@ export default function DashboardSectionView({
         {section.graphs.map((graph, index) => (
           <View
             key={graph.title + index}
-            className="flex-1 mx-auto h-96 lg:min-w-[40%] w-full overflow-hidden"
+            className="flex-1 mx-auto h-96 lg:min-w-[40%] min-w-full overflow-hidden"
           >
             <Box className="w-full h-full overflow-x-scroll overflow-y-hidden">
               <Graph
