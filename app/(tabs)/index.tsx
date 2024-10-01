@@ -50,7 +50,7 @@ export default function App() {
   };
 
   return (
-    <View className="flex gap-6 flex-1 justify-center bg-background-100 p-6">
+    <View className="flex gap-6 flex-1 justify-center bg-background-100 px-6">
       <ScrollView>
         <Button
           className="mx-auto max-w-fit mb-4"
@@ -59,15 +59,15 @@ export default function App() {
         />
 
         <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
-          <Box className="flex-1 h-96 lg:min-w-[40%] min-w-full overflow-hidden">
+          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full overflow-hidden">
             <Graph {...cardsByColorGraphProps} />
           </Box>
 
-          <Box className="flex-1 h-96 lg:min-w-[40%] min-w-full overflow-hidden">
+          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full overflow-hidden">
             <Graph {...cardsByCostGraphProps} />
           </Box>
 
-          <Box className="flex-1 h-96 lg:min-w-[40%] min-w-full overflow-hidden">
+          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full overflow-hidden">
             <Graph {...cardsByTypeGraphProps} />
           </Box>
 

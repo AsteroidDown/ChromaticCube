@@ -41,7 +41,6 @@ export default function Graph({
   const [hovered, setHovered] = React.useState(false);
 
   const [editingGraph, setEditingGraph] = React.useState(false);
-  const [graphTitleHovered, setGraphTitleHovered] = React.useState(false);
   const [graphTitle, setGraphTitle] = React.useState("");
 
   const maxValue = sets.reduce((acc, set) => {
