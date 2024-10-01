@@ -12,26 +12,32 @@ import {
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import {
   getLocalStorageDashboard,
+  moveDownLocalStorageDashboardGraph,
+  moveUpLocalStorageDashboardGraph,
   removeLocalStorageDashboardGraph,
   updateLocalStorageDashboardGraph,
   updateLocalStorageDashboardSection,
 } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
-import { DashboardSection } from "@/models/dashboard/dashboard";
+import { DashboardGraph, DashboardSection } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import {
   faChartSimple,
   faCheck,
   faDatabase,
+  faDownLong,
+  faEllipsisV,
   faInfoCircle,
   faPencil,
   faPlus,
+  faUpLong,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { TextInput, View, ViewProps } from "react-native";
 import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
+import Dropdown from "../ui/dropdown/dropdown";
 import Placeholder from "../ui/placeholder/placeholder";
 
 export type dashboardSectionProps = ViewProps & {
@@ -72,13 +78,6 @@ export default function DashboardSectionView({
     if (!section) return;
 
     updateLocalStorageDashboardGraph(graphId, section.id, { stacked });
-    setDashboard(getLocalStorageDashboard());
-  }
-
-  function removeGraph(graphId: string) {
-    if (!section) return;
-
-    removeLocalStorageDashboardGraph(graphId, section.id);
     setDashboard(getLocalStorageDashboard());
   }
 
@@ -164,13 +163,7 @@ export default function DashboardSectionView({
                   />
                 }
                 titleEnd={
-                  <Button
-                    rounded
-                    icon={faX}
-                    type="clear"
-                    action="default"
-                    onClick={() => removeGraph(graph.id)}
-                  />
+                  <GraphOptionsMenu graph={graph} sectionId={section.id} />
                 }
               />
             </Box>
@@ -199,6 +192,83 @@ export default function DashboardSectionView({
         setOpen={setAddGraphOpen}
       />
     </View>
+  );
+}
+
+interface GraphOptionsMenuProps {
+  graph: DashboardGraph;
+  sectionId: string;
+}
+
+function GraphOptionsMenu({ graph, sectionId }: GraphOptionsMenuProps) {
+  const { setDashboard } = useContext(DashboardContext);
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  function moveGraphUp() {
+    if (!graph || !sectionId) return;
+
+    moveUpLocalStorageDashboardGraph(graph.id, sectionId);
+    setDashboard(getLocalStorageDashboard());
+  }
+
+  function moveGraphDown() {
+    if (!graph || !sectionId) return;
+
+    moveDownLocalStorageDashboardGraph(graph.id, sectionId);
+    setDashboard(getLocalStorageDashboard());
+  }
+
+  function removeGraph() {
+    if (!graph || !sectionId) return;
+
+    removeLocalStorageDashboardGraph(graph.id, sectionId);
+    setDashboard(getLocalStorageDashboard());
+  }
+
+  return (
+    <>
+      <Button
+        rounded
+        icon={faEllipsisV}
+        type="clear"
+        action="default"
+        onClick={() => setExpanded(!expanded)}
+      />
+      <Dropdown xOffset={-100} expanded={expanded} setExpanded={setExpanded}>
+        <Box className="flex justify-start items-start !p-0 border-2 border-background-100 !bg-background-200 overflow-hidden">
+          <Button
+            start
+            square
+            type="clear"
+            text="Move Up"
+            className="w-full"
+            icon={faUpLong}
+            onClick={moveGraphUp}
+          />
+
+          <Button
+            start
+            square
+            type="clear"
+            text="Move Down"
+            className="w-full"
+            icon={faDownLong}
+            onClick={moveGraphDown}
+          />
+
+          <Button
+            start
+            square
+            type="clear"
+            text="Delete"
+            className="w-full"
+            icon={faX}
+            onClick={removeGraph}
+          />
+        </Box>
+      </Dropdown>
+    </>
   );
 }
 

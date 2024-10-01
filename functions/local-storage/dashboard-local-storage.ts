@@ -100,6 +100,64 @@ export function updateLocalStorageDashboardGraph(
   setLocalStorageDashboard(dashboard);
 }
 
+export function moveUpLocalStorageDashboardGraph(
+  graphId: string,
+  sectionId: string
+) {
+  if (Platform.OS === "ios") return null;
+
+  let dashboard: Dashboard | null = getLocalStorageDashboard();
+  if (!dashboard) return;
+
+  const sectionIndex = dashboard?.sections?.findIndex(
+    (dashboardSection) => dashboardSection.id === sectionId
+  );
+
+  if (sectionIndex >= 0) {
+    const graphIndex = dashboard.sections[sectionIndex].graphs.findIndex(
+      (storedGraph) => storedGraph.id === graphId
+    );
+
+    if (graphIndex > 0) {
+      const graph = dashboard.sections[sectionIndex].graphs[graphIndex];
+      dashboard.sections[sectionIndex].graphs[graphIndex] =
+        dashboard.sections[sectionIndex].graphs[graphIndex - 1];
+      dashboard.sections[sectionIndex].graphs[graphIndex - 1] = graph;
+    }
+  }
+
+  setLocalStorageDashboard(dashboard);
+}
+
+export function moveDownLocalStorageDashboardGraph(
+  graphId: string,
+  sectionId: string
+) {
+  if (Platform.OS === "ios") return null;
+
+  let dashboard: Dashboard | null = getLocalStorageDashboard();
+  if (!dashboard) return;
+
+  const sectionIndex = dashboard?.sections?.findIndex(
+    (dashboardSection) => dashboardSection.id === sectionId
+  );
+
+  if (sectionIndex >= 0) {
+    const graphIndex = dashboard.sections[sectionIndex].graphs.findIndex(
+      (storedGraph) => storedGraph.id === graphId
+    );
+
+    if (graphIndex < dashboard.sections[sectionIndex].graphs.length - 1) {
+      const graph = dashboard.sections[sectionIndex].graphs[graphIndex];
+      dashboard.sections[sectionIndex].graphs[graphIndex] =
+        dashboard.sections[sectionIndex].graphs[graphIndex + 1];
+      dashboard.sections[sectionIndex].graphs[graphIndex + 1] = graph;
+    }
+  }
+
+  setLocalStorageDashboard(dashboard);
+}
+
 export function removeLocalStorageDashboardGraph(
   graphId: string,
   sectionId: string
