@@ -53,9 +53,10 @@ export default function CardSaveAsGraphModal({
     setDisabled(true);
 
     addLocalStorageDashboardGraph(sectionId ?? "unsorted", {
+      title: generateTitle(sortType, colorFilter, typeFilter, rarityFilter),
       type: sortType,
       stacked: true,
-      title: generateTitle(sortType, colorFilter, typeFilter, rarityFilter),
+      size: "md",
       filters: {
         colorFilter,
         typeFilter,

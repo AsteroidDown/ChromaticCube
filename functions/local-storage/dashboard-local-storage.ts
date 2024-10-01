@@ -1,4 +1,8 @@
-import { Dashboard, DashboardGraph } from "@/models/dashboard/dashboard";
+import {
+  Dashboard,
+  DashboardGraph,
+  GraphSize,
+} from "@/models/dashboard/dashboard";
 import { Platform } from "react-native";
 import { generateId } from "../identification";
 
@@ -41,7 +45,7 @@ export function updateLocalStorageDashboardSection(
 
 export function addLocalStorageDashboardGraph(
   sectionId: string,
-  graph: Omit<DashboardGraph, "id">
+  graph: Omit<DashboardGraph, "id" | "index">
 ) {
   if (Platform.OS === "ios") return null;
 
@@ -56,12 +60,13 @@ export function addLocalStorageDashboardGraph(
     dashboard.sections[sectionIndex].graphs.push({
       ...graph,
       id: generateId("dashboard-graph"),
+      index: dashboard.sections[sectionIndex].graphs.length,
     });
   else {
     dashboard.sections.push({
       id: generateId("dashboard-section"),
       title: "Unsorted",
-      graphs: [{ ...graph, id: generateId("dashboard-graph") }],
+      graphs: [{ ...graph, id: generateId("dashboard-graph"), index: 0 }],
     });
   }
 
@@ -71,7 +76,7 @@ export function addLocalStorageDashboardGraph(
 export function updateLocalStorageDashboardGraph(
   graphId: string,
   sectionId: string,
-  data: { title?: string; stacked?: boolean }
+  data: { title?: string; stacked?: boolean; size?: GraphSize }
 ) {
   if (Platform.OS === "ios") return null;
 
@@ -92,6 +97,7 @@ export function updateLocalStorageDashboardGraph(
 
       if (data.title !== undefined) graph.title = data.title;
       if (data.stacked !== undefined) graph.stacked = data.stacked;
+      if (data.size !== undefined) graph.size = data.size;
 
       dashboard.sections[sectionIndex].graphs[graphIndex] = graph;
     }

@@ -20,7 +20,11 @@ import {
 } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
-import { DashboardGraph, DashboardSection } from "@/models/dashboard/dashboard";
+import {
+  DashboardGraph,
+  DashboardSection,
+  GraphSize,
+} from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import {
   faChartSimple,
@@ -28,7 +32,10 @@ import {
   faDatabase,
   faDownLong,
   faEllipsisV,
+  faExpand,
   faInfoCircle,
+  faMaximize,
+  faMinimize,
   faPencil,
   faPlus,
   faUpLong,
@@ -139,11 +146,17 @@ export default function DashboardSectionView({
         </View>
       </View>
 
-      <View className="flex flex-row flex-wrap gap-4 justify-center items-center w-full z-[-1]">
+      <View className="flex flex-row flex-wrap gap-4 justify-start items-center w-full z-[-1]">
         {section.graphs.map((graph, index) => (
           <View
             key={graph.title + index}
-            className="flex-1 mx-auto h-96 lg:min-w-[40%] min-w-full overflow-hidden"
+            className={`flex-1 h-80 min-w-full overflow-hidden ${
+              graph.size === "sm"
+                ? "lg:min-w-[25%] lg:max-w-[33%]"
+                : graph.size === "md"
+                ? "lg:min-w-[50%] lg:max-w-[66%]"
+                : "lg:min-w-[100%]"
+            }`}
           >
             <Box className="w-full h-full overflow-x-scroll overflow-y-hidden">
               <Graph
@@ -219,6 +232,14 @@ function GraphOptionsMenu({ graph, sectionId }: GraphOptionsMenuProps) {
     setDashboard(getLocalStorageDashboard());
   }
 
+  function setGraphSize(size: GraphSize) {
+    if (!graph || !sectionId) return;
+
+    updateLocalStorageDashboardGraph(graph.id, sectionId, { size });
+    setDashboard(getLocalStorageDashboard());
+    setExpanded(false);
+  }
+
   function removeGraph() {
     if (!graph || !sectionId) return;
 
@@ -235,6 +256,7 @@ function GraphOptionsMenu({ graph, sectionId }: GraphOptionsMenuProps) {
         action="default"
         onClick={() => setExpanded(!expanded)}
       />
+
       <Dropdown xOffset={-100} expanded={expanded} setExpanded={setExpanded}>
         <Box className="flex justify-start items-start !p-0 border-2 border-background-100 !bg-background-200 overflow-hidden">
           <Button
@@ -256,6 +278,42 @@ function GraphOptionsMenu({ graph, sectionId }: GraphOptionsMenuProps) {
             icon={faDownLong}
             onClick={moveGraphDown}
           />
+
+          {graph.size !== "sm" && (
+            <Button
+              start
+              square
+              type="clear"
+              text="Small"
+              className="w-full"
+              icon={faMinimize}
+              onClick={() => setGraphSize("sm")}
+            />
+          )}
+
+          {graph.size !== "md" && (
+            <Button
+              start
+              square
+              type="clear"
+              text="Medium"
+              className="w-full"
+              icon={faExpand}
+              onClick={() => setGraphSize("md")}
+            />
+          )}
+
+          {graph.size !== "lg" && (
+            <Button
+              start
+              square
+              type="clear"
+              text="Large"
+              className="w-full"
+              icon={faMaximize}
+              onClick={() => setGraphSize("lg")}
+            />
+          )}
 
           <Button
             start

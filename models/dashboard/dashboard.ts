@@ -12,8 +12,12 @@ export interface DashboardSection {
 
 export interface DashboardGraph {
   id: string;
+  index: number;
   title: string;
   type: string;
+  size: GraphSize;
   stacked: boolean;
   filters: CardFilters;
 }
+
+export type GraphSize = "sm" | "md" | "lg";
