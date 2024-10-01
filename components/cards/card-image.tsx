@@ -85,6 +85,7 @@ export default function CardImage({
 
   return (
     <Pressable
+      className="min-w-[228px]"
       disabled={!card || !onClick}
       onPress={onClick}
       onPointerEnter={() => setHovered(true)}
