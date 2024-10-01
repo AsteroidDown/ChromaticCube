@@ -15,6 +15,9 @@ export type ButtonProps = ViewProps & {
   size?: Size;
   type?: ButtonType;
   rounded?: boolean;
+  square?: boolean;
+
+  start?: boolean;
 
   hideLeftBorder?: boolean;
   hideRightBorder?: boolean;
@@ -30,12 +33,14 @@ export default function Button({
   action = "primary",
   size = "md",
   type = "default",
+  disabled = false,
   onClick,
   children,
+  start = false,
+  rounded = false,
+  square = false,
   hideLeftBorder = false,
   hideRightBorder = false,
-  rounded = false,
-  disabled = false,
 }: ButtonProps) {
   const baseColor = getButtonBaseColor(action, type, disabled);
   const hoverColor = getButtonHoverColor(action, type, disabled);
@@ -44,7 +49,9 @@ export default function Button({
   const buttonHeight = getButtonHeight(size);
 
   const baseButtonClasses =
-    "flex flex-row px-4 py-2 justify-center items-center w-full rounded-md transition-all";
+    "flex flex-row px-4 py-2 items-center w-full rounded-md transition-all " +
+    (start ? "justify-start" : "justify-center") +
+    (square ? " !rounded-none" : "");
 
   return (
     <Pressable className={className} onPress={onClick} disabled={disabled}>
