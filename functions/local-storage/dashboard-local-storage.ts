@@ -1,7 +1,7 @@
 import {
   Dashboard,
   DashboardGraph,
-  GraphSize,
+  DashboardItemSize,
 } from "@/models/dashboard/dashboard";
 import { Platform } from "react-native";
 import { generateId } from "../identification";
@@ -76,7 +76,7 @@ export function addLocalStorageDashboardGraph(
 export function updateLocalStorageDashboardGraph(
   graphId: string,
   sectionId: string,
-  data: { title?: string; stacked?: boolean; size?: GraphSize }
+  data: { title?: string; stacked?: boolean; size?: DashboardItemSize }
 ) {
   if (Platform.OS === "ios") return null;
 

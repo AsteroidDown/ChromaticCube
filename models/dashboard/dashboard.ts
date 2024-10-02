@@ -15,9 +15,9 @@ export interface DashboardGraph {
   index: number;
   title: string;
   type: string;
-  size: GraphSize;
+  size: DashboardItemSize;
   stacked: boolean;
   filters: CardFilters;
 }
 
-export type GraphSize = "sm" | "md" | "lg";
+export type DashboardItemSize = "sm" | "md" | "lg";

@@ -22,8 +22,8 @@ import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
 import {
   DashboardGraph,
+  DashboardItemSize,
   DashboardSection,
-  GraphSize,
 } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import {
@@ -232,7 +232,7 @@ function GraphOptionsMenu({ graph, sectionId }: GraphOptionsMenuProps) {
     setDashboard(getLocalStorageDashboard());
   }
 
-  function setGraphSize(size: GraphSize) {
+  function setGraphSize(size: DashboardItemSize) {
     if (!graph || !sectionId) return;
 
     updateLocalStorageDashboardGraph(graph.id, sectionId, { size });
