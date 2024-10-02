@@ -1,3 +1,4 @@
+import Chart from "@/components/chart/chart";
 import DashboardSectionView from "@/components/dashboard/dashboard-section";
 import Graph, { GraphProps } from "@/components/graph/graph";
 import Box from "@/components/ui/box/box";
@@ -10,6 +11,7 @@ import {
 } from "@/functions/card-graphing";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { Card } from "@/models/card/card";
+import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React, { useContext } from "react";
 import { ScrollView, View } from "react-native";
 
@@ -49,6 +51,18 @@ export default function App() {
     sets: graphCardsByType(getStoredCards()),
   };
 
+  const colorFilters: CardFilters = {
+    colorFilter: [
+      "white",
+      "blue",
+      "black",
+      "red",
+      "green",
+      "gold",
+      "colorless",
+    ],
+  };
+
   return (
     <View className="flex gap-6 flex-1 justify-center bg-background-100 px-6">
       <ScrollView>
@@ -59,6 +73,8 @@ export default function App() {
         />
 
         <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
+          <Chart type="cost" size="sm" filters={colorFilters} />
+
           <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
             <Graph {...cardsByColorGraphProps} />
           </Box>
