@@ -38,7 +38,7 @@ export default function Placeholder({
 
       <Text>{subtitle}</Text>
 
-      <View>{children}</View>
+      <View className="mt-4">{children}</View>
     </Box>
   );
 }

@@ -63,7 +63,7 @@ export default function ChartCostLayout({
       }`}
     >
       <View className="flex flex-row w-full -mt-1">
-        <View className="w-20"></View>
+        <View className="w-24"></View>
         {sortedCards.zero.length > 0 && (
           <ChartColumnHeading title="Zero" size={size} />
         )}
@@ -82,7 +82,7 @@ export default function ChartCostLayout({
       {colors?.map((color, index) => (
         <View key={color + index} className="flex-1 flex flex-row">
           <View
-            className={`flex flex-row justify-end items-center w-20 pr-2 border-t border-r border-background-300 ${getCellBackgroundColor(
+            className={`flex flex-row justify-end items-center w-24 pr-2 border-t border-r border-background-300 ${getCellBackgroundColor(
               color
             )}`}
           >
@@ -98,7 +98,7 @@ export default function ChartCostLayout({
           <CostChartCell cost={4} color={color} sortedCards={sortedFour} />
           <CostChartCell cost={5} color={color} sortedCards={sortedFive} />
           <CostChartCell cost={6} color={color} sortedCards={sortedSix} />
-          {sortedCards.seven?.length && (
+          {sortedCards.seven?.length > 0 && (
             <CostChartCell
               double
               cost={7}
