@@ -35,7 +35,7 @@ export default function CostChartCell({
     (!hideRightBorder ? (double ? "border-r-2" : "border-r") : "") +
     " border-t border-background-300";
   const baseClasses =
-    "flex-1 flex justify-center items-center hover:bg-opacity-80 cursor-pointer transition-all duration-150";
+    "flex-1 flex justify-center items-center py-1 hover:bg-opacity-80 cursor-pointer transition-all duration-150";
 
   const cards: Card[] =
     Object.values(sortedCards)[

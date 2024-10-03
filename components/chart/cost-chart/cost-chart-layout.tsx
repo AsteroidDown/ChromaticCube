@@ -64,19 +64,15 @@ export default function ChartCostLayout({
     >
       <View className="flex flex-row w-full -mt-1">
         <View className="w-24"></View>
-        {sortedCards.zero.length > 0 && (
-          <ChartColumnHeading title="Zero" size={size} />
-        )}
-        <ChartColumnHeading title="One" size={size} />
-        <ChartColumnHeading title="Two" size={size} />
-        <ChartColumnHeading title="Three" size={size} />
-        <ChartColumnHeading title="Four" size={size} />
-        <ChartColumnHeading title="Five" size={size} />
-        <ChartColumnHeading title="Six" size={size} />
-        {sortedCards.seven.length > 0 && (
-          <ChartColumnHeading title="Seven" size={size} />
-        )}
-        <ChartColumnHeading double title="Total" size={size} />
+        {sortedCards.zero.length > 0 && <ChartColumnHeading title="Zero" />}
+        <ChartColumnHeading title="One" />
+        <ChartColumnHeading title="Two" />
+        <ChartColumnHeading title="Three" />
+        <ChartColumnHeading title="Four" />
+        <ChartColumnHeading title="Five" />
+        <ChartColumnHeading title="Six" />
+        {sortedCards.seven.length > 0 && <ChartColumnHeading title="Seven" />}
+        <ChartColumnHeading double title="Total" />
       </View>
 
       {colors?.map((color, index) => (
