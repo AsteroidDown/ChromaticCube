@@ -30,11 +30,11 @@ export default function RarityChartLayout({ filters }: RarityChartLayoutProps) {
     <>
       <View className="flex flex-row w-full -mt-1">
         <View className="w-24"></View>
-        <ChartColumnHeading title="Common" />
-        <ChartColumnHeading title="Uncommon" />
-        <ChartColumnHeading title="Rare" />
-        <ChartColumnHeading title="Mythic" />
-        <ChartColumnHeading double title="Total" />
+        <ChartColumnHeading large title="Common" />
+        <ChartColumnHeading large title="Uncommon" />
+        <ChartColumnHeading large title="Rare" />
+        <ChartColumnHeading large title="Mythic" />
+        <ChartColumnHeading double large title="Total" />
       </View>
 
       {colors?.map((color, index) => (

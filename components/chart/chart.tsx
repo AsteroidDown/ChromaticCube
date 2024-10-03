@@ -18,7 +18,7 @@ export type ChartProps = ViewProps & {
 export default function Chart({ type, size = "md", filters }: ChartProps) {
   return (
     <Box
-      className={`flex-1 flex self-stretch !p-0 !bg-background-100 border-2 border-background-300 overflow-hidden ${
+      className={`flex-1 flex self-stretch min-w-full !p-0 !bg-background-100 border-2 border-background-300 overflow-hidden ${
         size === "sm"
           ? "lg:min-w-[25%] lg:max-w-[33%]"
           : size === "md"
