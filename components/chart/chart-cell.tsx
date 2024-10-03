@@ -13,7 +13,7 @@ import React from "react";
 import { Pressable } from "react-native";
 import Modal from "../ui/modal/modal";
 import Text from "../ui/text/text";
-import { getCellBackgroundColor } from "./chart";
+import { ChartType, getCellBackgroundColor } from "./chart";
 
 interface ChartCellProps {
   sortedCards: CardsSortedByColor;
@@ -36,11 +36,7 @@ export default function ChartCell({
 }: ChartCellProps) {
   const [cardPreviewModalOpen, setCardPreviewModalOpen] = React.useState(false);
 
-  const cellType: "cost" | "rarity" | "type" = cost
-    ? "cost"
-    : rarity
-    ? "rarity"
-    : "type";
+  const cellType: ChartType = cost ? "cost" : rarity ? "rarity" : "type";
 
   const borderClasses =
     (!hideRightBorder ? (double ? "border-r-2" : "border-r") : "") +

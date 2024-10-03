@@ -1,15 +1,14 @@
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { DashboardItemSize } from "@/models/dashboard/dashboard";
-import {
-  CardFilters,
-  CardFilterSortType,
-} from "@/models/sorted-cards/sorted-cards";
+import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
 import { View, ViewProps } from "react-native";
 import ChartCostLayout from "./cost-chart-layout";
 
+export type ChartType = "cost" | "rarity" | "type";
+
 export type ChartProps = ViewProps & {
-  type: CardFilterSortType;
+  type: ChartType;
   size?: DashboardItemSize;
   filters: CardFilters;
 };
