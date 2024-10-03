@@ -1,4 +1,9 @@
 import { MTGColor } from "@/constants/mtg/mtg-colors";
+import {
+  sortCardsAlphabetically,
+  sortCardsByManaValue,
+} from "@/functions/card-sorting";
+import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { DashboardItemSize } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
@@ -17,6 +22,10 @@ export type ChartProps = ViewProps & {
 };
 
 export default function Chart({ type, size = "md", filters }: ChartProps) {
+  const cards = sortCardsByManaValue(
+    sortCardsAlphabetically(getLocalStorageStoredCards())
+  );
+
   return (
     <Box
       className={`flex-1 flex self-stretch min-w-full !p-0 !bg-background-100 border-2 border-background-300 overflow-hidden ${
@@ -27,9 +36,11 @@ export default function Chart({ type, size = "md", filters }: ChartProps) {
           : "lg:min-w-[100%]"
       }`}
     >
-      {type === "cost" && <CostChartLayout filters={filters} />}
-      {type === "rarity" && <RarityChartLayout filters={filters} />}
-      {type === "type" && <TypeChartLayout filters={filters} />}
+      {type === "cost" && <CostChartLayout cards={cards} filters={filters} />}
+      {type === "rarity" && (
+        <RarityChartLayout cards={cards} filters={filters} />
+      )}
+      {type === "type" && <TypeChartLayout cards={cards} filters={filters} />}
     </Box>
   );
 }

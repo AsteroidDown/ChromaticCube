@@ -1,6 +1,6 @@
 import { sortCardsByColor, sortCardsByCost } from "@/functions/card-sorting";
-import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
+import { Card } from "@/models/card/card";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
 import { View } from "react-native";
@@ -10,13 +10,15 @@ import ChartCell from "./chart-cell";
 import ChartColumnHeading from "./chart-column-heading";
 
 interface CostChartLayoutProps {
+  cards: Card[];
   filters: CardFilters;
 }
 
-export default function CostChartLayout({ filters }: CostChartLayoutProps) {
+export default function CostChartLayout({
+  cards,
+  filters,
+}: CostChartLayoutProps) {
   const colors = filters.colorFilter;
-
-  const cards = getLocalStorageStoredCards();
 
   const sortedCards = sortCardsByCost(cards);
   const cardsSortedByColor = sortCardsByColor(cards);

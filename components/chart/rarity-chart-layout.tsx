@@ -1,6 +1,6 @@
 import { sortCardsByColor, sortCardsByRarity } from "@/functions/card-sorting";
-import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
+import { Card } from "@/models/card/card";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
 import { View } from "react-native";
@@ -10,13 +10,15 @@ import ChartCell from "./chart-cell";
 import ChartColumnHeading from "./chart-column-heading";
 
 interface RarityChartLayoutProps {
+  cards: Card[];
   filters: CardFilters;
 }
 
-export default function RarityChartLayout({ filters }: RarityChartLayoutProps) {
+export default function RarityChartLayout({
+  cards,
+  filters,
+}: RarityChartLayoutProps) {
   const colors = filters.colorFilter;
-
-  const cards = getLocalStorageStoredCards();
 
   const sortedCards = sortCardsByRarity(cards);
   const cardsSortedByColor = sortCardsByColor(cards);

@@ -1,6 +1,6 @@
 import { sortCardsByColor, sortCardsByType } from "@/functions/card-sorting";
-import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
+import { Card } from "@/models/card/card";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
 import { View } from "react-native";
@@ -10,13 +10,15 @@ import ChartCell from "./chart-cell";
 import ChartColumnHeading from "./chart-column-heading";
 
 interface TypeChartLayoutProps {
+  cards: Card[];
   filters: CardFilters;
 }
 
-export default function TypeChartLayout({ filters }: TypeChartLayoutProps) {
+export default function TypeChartLayout({
+  cards,
+  filters,
+}: TypeChartLayoutProps) {
   const colors = filters.colorFilter;
-
-  const cards = getLocalStorageStoredCards();
 
   const sortedCards = sortCardsByType(cards);
   const cardsSortedByColor = sortCardsByColor(cards);
