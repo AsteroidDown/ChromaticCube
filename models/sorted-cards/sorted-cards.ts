@@ -40,6 +40,13 @@ export interface CardsSortedByType {
   land: Card[];
 }
 
+export interface CardsSortedByRarity {
+  common: Card[];
+  uncommon: Card[];
+  rare: Card[];
+  mythic: Card[];
+}
+
 export interface CardFilters {
   colorFilter?: MTGColor[];
   typeFilter?: MTGCardTypes[];

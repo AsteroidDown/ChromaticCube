@@ -3,6 +3,7 @@ import { Card } from "../models/card/card";
 import {
   CardsSortedByColor,
   CardsSortedByCost,
+  CardsSortedByRarity,
   CardsSortedByType,
 } from "../models/sorted-cards/sorted-cards";
 
@@ -165,6 +166,34 @@ export function sortCardsByType(cards: Card[]): CardsSortedByType {
         return;
       case MTGCardTypes.INSTANT.toLowerCase():
         sortedCards.instant.push(card);
+        return;
+    }
+  });
+
+  return sortedCards;
+}
+
+export function sortCardsByRarity(cards: Card[]): CardsSortedByRarity {
+  const sortedCards: CardsSortedByRarity = {
+    common: [],
+    uncommon: [],
+    rare: [],
+    mythic: [],
+  };
+
+  cards.forEach((card) => {
+    switch (card.rarity) {
+      case "common":
+        sortedCards.common.push(card);
+        return;
+      case "uncommon":
+        sortedCards.uncommon.push(card);
+        return;
+      case "rare":
+        sortedCards.rare.push(card);
+        return;
+      case "mythic":
+        sortedCards.mythic.push(card);
         return;
     }
   });
