@@ -1,4 +1,4 @@
-export function titleCase(text: string) {
+export function titleCase(text?: string) {
   return text?.length
     ? text
         .split(" ")
