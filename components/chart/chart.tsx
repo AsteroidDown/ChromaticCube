@@ -2,8 +2,9 @@ import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { DashboardItemSize } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
-import { View, ViewProps } from "react-native";
-import ChartCostLayout from "./cost-chart-layout";
+import { ViewProps } from "react-native";
+import Box from "../ui/box/box";
+import CostChartLayout from "./cost-chart-layout";
 
 export type ChartType = "cost" | "rarity" | "type";
 
@@ -14,9 +15,19 @@ export type ChartProps = ViewProps & {
 };
 
 export default function Chart({ type, size = "md", filters }: ChartProps) {
-  if (type === "cost") return <ChartCostLayout filters={filters} size={size} />;
-
-  return <View className="flex flex-1 overflow-hidden"></View>;
+  return (
+    <Box
+      className={`flex-1 flex self-stretch !p-0 !bg-background-100 border-2 border-background-300 overflow-hidden ${
+        size === "sm"
+          ? "lg:min-w-[25%] lg:max-w-[33%]"
+          : size === "md"
+          ? "lg:min-w-[50%] lg:max-w-[66%]"
+          : "lg:min-w-[100%]"
+      }`}
+    >
+      {type === "cost" && <CostChartLayout filters={filters} />}
+    </Box>
+  );
 }
 
 export function getCellBackgroundColor(color: MTGColor) {

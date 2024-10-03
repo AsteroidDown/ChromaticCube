@@ -1,9 +1,6 @@
-import Box from "@/components/ui/box/box";
-import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { sortCardsByColor, sortCardsByCost } from "@/functions/card-sorting";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
-import { DashboardItemSize } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
 import { View } from "react-native";
@@ -12,15 +9,11 @@ import { getCellBackgroundColor } from "./chart";
 import ChartCell from "./chart-cell";
 import ChartColumnHeading from "./chart-column-heading";
 
-interface ChartCostLayoutProps {
-  size: DashboardItemSize;
+interface CostChartLayoutProps {
   filters: CardFilters;
 }
 
-export default function ChartCostLayout({
-  size,
-  filters,
-}: ChartCostLayoutProps) {
+export default function CostChartLayout({ filters }: CostChartLayoutProps) {
   const colors = filters.colorFilter;
 
   const cards = getLocalStorageStoredCards();
@@ -37,31 +30,8 @@ export default function ChartCostLayout({
   const sortedSix = sortCardsByColor(sortedCards.six);
   const sortedSeven = sortCardsByColor(sortedCards.seven);
 
-  function getRowCards(color: MTGColor) {
-    const index = Object.keys(sortedOne).findIndex((key) => key === color) || 0;
-
-    return [
-      ...Object.values(sortedZero)[index],
-      ...Object.values(sortedOne)[index],
-      ...Object.values(sortedTwo)[index],
-      ...Object.values(sortedThree)[index],
-      ...Object.values(sortedFour)[index],
-      ...Object.values(sortedFive)[index],
-      ...Object.values(sortedSix)[index],
-      ...Object.values(sortedSeven)[index],
-    ];
-  }
-
   return (
-    <Box
-      className={`flex-1 flex self-stretch !p-0 !bg-background-100 border-2 border-background-300 overflow-hidden ${
-        size === "sm"
-          ? "lg:min-w-[25%] lg:max-w-[33%]"
-          : size === "md"
-          ? "lg:min-w-[50%] lg:max-w-[66%]"
-          : "lg:min-w-[100%]"
-      }`}
-    >
+    <>
       <View className="flex flex-row w-full -mt-1">
         <View className="w-24"></View>
         {sortedCards.zero.length > 0 && <ChartColumnHeading title="Zero" />}
@@ -110,6 +80,6 @@ export default function ChartCostLayout({
           />
         </View>
       ))}
-    </Box>
+    </>
   );
 }
