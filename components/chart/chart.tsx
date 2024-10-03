@@ -5,6 +5,7 @@ import React from "react";
 import { ViewProps } from "react-native";
 import Box from "../ui/box/box";
 import CostChartLayout from "./cost-chart-layout";
+import RarityChartLayout from "./rarity-chart-layout";
 
 export type ChartType = "cost" | "rarity" | "type";
 
@@ -26,6 +27,7 @@ export default function Chart({ type, size = "md", filters }: ChartProps) {
       }`}
     >
       {type === "cost" && <CostChartLayout filters={filters} />}
+      {type === "rarity" && <RarityChartLayout filters={filters} />}
     </Box>
   );
 }

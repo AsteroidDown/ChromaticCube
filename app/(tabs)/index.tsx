@@ -74,6 +74,7 @@ export default function App() {
 
         <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
           <Chart type="cost" size="sm" filters={colorFilters} />
+          <Chart type="rarity" size="sm" filters={colorFilters} />
 
           <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
             <Graph {...cardsByColorGraphProps} />
