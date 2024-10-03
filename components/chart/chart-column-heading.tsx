@@ -13,7 +13,7 @@ export default function ChartColumnHeading({
   double = false,
 }: ChartColumnHeadingProps) {
   return (
-    <View className={`flex-1 ${large ? "h-24" : "h-14"}`}>
+    <View className={`flex-1 ${large ? "h-[100px]" : "h-14"}`}>
       <View
         className={`${
           double ? "border-l-2" : "border-l"
