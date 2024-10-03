@@ -6,7 +6,7 @@ import {
 } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
 import { View, ViewProps } from "react-native";
-import ChartCostLayout from "./cost-chart/cost-chart-layout";
+import ChartCostLayout from "./cost-chart-layout";
 
 export type ChartProps = ViewProps & {
   type: CardFilterSortType;

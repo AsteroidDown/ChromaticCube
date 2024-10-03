@@ -7,10 +7,10 @@ import { DashboardItemSize } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
 import { View } from "react-native";
-import Text from "../../ui/text/text";
-import { getCellBackgroundColor } from "../chart";
-import ChartColumnHeading from "../chart-column-heading";
-import CostChartCell from "./cost-chart-cell";
+import Text from "../ui/text/text";
+import { getCellBackgroundColor } from "./chart";
+import ChartCell from "./chart-cell";
+import ChartColumnHeading from "./chart-column-heading";
 
 interface ChartCostLayoutProps {
   size: DashboardItemSize;
@@ -86,16 +86,16 @@ export default function ChartCostLayout({
           </View>
 
           {sortedCards.zero.length > 0 && (
-            <CostChartCell cost={0} color={color} sortedCards={sortedZero} />
+            <ChartCell cost={0} color={color} sortedCards={sortedZero} />
           )}
-          <CostChartCell cost={1} color={color} sortedCards={sortedOne} />
-          <CostChartCell cost={2} color={color} sortedCards={sortedTwo} />
-          <CostChartCell cost={3} color={color} sortedCards={sortedThree} />
-          <CostChartCell cost={4} color={color} sortedCards={sortedFour} />
-          <CostChartCell cost={5} color={color} sortedCards={sortedFive} />
-          <CostChartCell cost={6} color={color} sortedCards={sortedSix} />
+          <ChartCell cost={1} color={color} sortedCards={sortedOne} />
+          <ChartCell cost={2} color={color} sortedCards={sortedTwo} />
+          <ChartCell cost={3} color={color} sortedCards={sortedThree} />
+          <ChartCell cost={4} color={color} sortedCards={sortedFour} />
+          <ChartCell cost={5} color={color} sortedCards={sortedFive} />
+          <ChartCell cost={6} color={color} sortedCards={sortedSix} />
           {sortedCards.seven?.length > 0 && (
-            <CostChartCell
+            <ChartCell
               double
               cost={7}
               color={color}
@@ -103,7 +103,7 @@ export default function ChartCostLayout({
             />
           )}
 
-          <CostChartCell
+          <ChartCell
             hideRightBorder
             color={color}
             sortedCards={cardsSortedByColor}
