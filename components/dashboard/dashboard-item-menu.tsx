@@ -22,44 +22,46 @@ import React, { useContext } from "react";
 import Dropdown from "../ui/dropdown/dropdown";
 
 export interface DashboardItemMenu {
-  graph: DashboardItem;
+  item: DashboardItem;
   sectionId: string;
+  xOffset?: number;
 }
 
 export default function DashboardItemMenu({
-  graph,
+  item,
   sectionId,
+  xOffset = 0,
 }: DashboardItemMenu) {
   const { setDashboard } = useContext(DashboardContext);
 
   const [expanded, setExpanded] = React.useState(false);
 
-  function moveGraphUp() {
-    if (!graph || !sectionId) return;
+  function moveItemUp() {
+    if (!item || !sectionId) return;
 
-    moveUpLocalStorageDashboardItem(graph.id, sectionId);
+    moveUpLocalStorageDashboardItem(item.id, sectionId);
     setDashboard(getLocalStorageDashboard());
   }
 
-  function moveGraphDown() {
-    if (!graph || !sectionId) return;
+  function moveItemDown() {
+    if (!item || !sectionId) return;
 
-    moveDownLocalStorageDashboardItem(graph.id, sectionId);
+    moveDownLocalStorageDashboardItem(item.id, sectionId);
     setDashboard(getLocalStorageDashboard());
   }
 
-  function setGraphSize(size: DashboardItemSize) {
-    if (!graph || !sectionId) return;
+  function setItemSize(size: DashboardItemSize) {
+    if (!item || !sectionId) return;
 
-    updateLocalStorageDashboardItem(graph.id, sectionId, { size });
+    updateLocalStorageDashboardItem(item.id, sectionId, { size });
     setDashboard(getLocalStorageDashboard());
     setExpanded(false);
   }
 
-  function removeGraph() {
-    if (!graph || !sectionId) return;
+  function removeItem() {
+    if (!item || !sectionId) return;
 
-    removeLocalStorageDashboardItem(graph.id, sectionId);
+    removeLocalStorageDashboardItem(item.id, sectionId);
     setDashboard(getLocalStorageDashboard());
   }
 
@@ -73,7 +75,11 @@ export default function DashboardItemMenu({
         onClick={() => setExpanded(!expanded)}
       />
 
-      <Dropdown xOffset={-100} expanded={expanded} setExpanded={setExpanded}>
+      <Dropdown
+        xOffset={xOffset ?? -100}
+        expanded={expanded}
+        setExpanded={setExpanded}
+      >
         <Box className="flex justify-start items-start !p-0 border-2 border-background-100 !bg-background-200 overflow-hidden">
           <Button
             start
@@ -82,7 +88,7 @@ export default function DashboardItemMenu({
             text="Move Up"
             className="w-full"
             icon={faUpLong}
-            onClick={moveGraphUp}
+            onClick={moveItemUp}
           />
 
           <Button
@@ -92,10 +98,10 @@ export default function DashboardItemMenu({
             text="Move Down"
             className="w-full"
             icon={faDownLong}
-            onClick={moveGraphDown}
+            onClick={moveItemDown}
           />
 
-          {graph.size !== "sm" && (
+          {item.size !== "sm" && (
             <Button
               start
               square
@@ -103,11 +109,11 @@ export default function DashboardItemMenu({
               text="Small"
               className="w-full"
               icon={faMinimize}
-              onClick={() => setGraphSize("sm")}
+              onClick={() => setItemSize("sm")}
             />
           )}
 
-          {graph.size !== "md" && (
+          {item.size !== "md" && (
             <Button
               start
               square
@@ -115,11 +121,11 @@ export default function DashboardItemMenu({
               text="Medium"
               className="w-full"
               icon={faExpand}
-              onClick={() => setGraphSize("md")}
+              onClick={() => setItemSize("md")}
             />
           )}
 
-          {graph.size !== "lg" && (
+          {item.size !== "lg" && (
             <Button
               start
               square
@@ -127,7 +133,7 @@ export default function DashboardItemMenu({
               text="Large"
               className="w-full"
               icon={faMaximize}
-              onClick={() => setGraphSize("lg")}
+              onClick={() => setItemSize("lg")}
             />
           )}
 
@@ -138,7 +144,7 @@ export default function DashboardItemMenu({
             text="Delete"
             className="w-full"
             icon={faX}
-            onClick={removeGraph}
+            onClick={removeItem}
           />
         </Box>
       </Dropdown>
