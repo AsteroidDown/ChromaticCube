@@ -76,7 +76,7 @@ export default function CardImportExportModal({
         setDisabled(false);
       }
 
-      if (typeof Number(identifier) === "number") {
+      if (Number(identifier) > 0) {
         const cardSet = cardInfo?.[infoLength - 2]?.substring(1, 4);
         if (!cardSet) {
           errorFound = true;
@@ -87,23 +87,23 @@ export default function CardImportExportModal({
         for (let i = 0; i < cardCount; i++) {
           cardIdentifiers.push({
             set: cardSet.toLowerCase(),
-            collectorNumber: identifier,
+            collector_number: identifier,
           });
         }
-      }
-
-      if (identifier?.split("-")?.length === 5) {
+      } else if (identifier?.split("-")?.length === 5) {
         for (let i = 0; i < cardCount; i++) {
           cardIdentifiers.push({
             id: identifier,
           });
         }
-      }
+      } else {
+        cardInfo.shift();
 
-      for (let i = 0; i < cardCount; i++) {
-        cardIdentifiers.push({
-          name: cardInfo?.[infoLength - 1],
-        });
+        for (let i = 0; i < cardCount; i++) {
+          cardIdentifiers.push({
+            name: cardInfo.join(" "),
+          });
+        }
       }
     });
 

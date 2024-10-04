@@ -64,5 +64,5 @@ export type CardIdentifier =
     }
   | {
       set: string;
-      collectorNumber: string;
+      collector_number: string;
     };

@@ -50,7 +50,7 @@ async function getCardsFromCollection(cardsIdentifiers: CardIdentifier[]) {
         ? { name: (identifier as any).name }
         : {
             set: (identifier as any).set,
-            collectorNumber: (identifier as any).collectorNumber,
+            collector_number: (identifier as any).collector_number,
           }
     );
   });
