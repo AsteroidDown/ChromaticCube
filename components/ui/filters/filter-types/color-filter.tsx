@@ -8,13 +8,15 @@ import { View } from "react-native";
 export interface ColorFilterProps {
   flat?: boolean;
   reset?: boolean;
+  excludeMono?: boolean;
   setColorFilters: React.Dispatch<React.SetStateAction<MTGColor[]>>;
 }
 
 export default function ColorFilter({
   flat,
-  setColorFilters,
   reset,
+  excludeMono = false,
+  setColorFilters,
 }: ColorFilterProps) {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -116,11 +118,13 @@ export default function ColorFilter({
         onClick={() => setColorlessApplied(!colorlessApplied)}
       />
 
-      <Chip
-        text="Mono"
-        type={monoColorApplied ? "default" : "outlined"}
-        onClick={() => setMonoColorApplied(!monoColorApplied)}
-      />
+      {!excludeMono && (
+        <Chip
+          text="Mono"
+          type={monoColorApplied ? "default" : "outlined"}
+          onClick={() => setMonoColorApplied(!monoColorApplied)}
+        />
+      )}
     </View>
   );
 
