@@ -10,7 +10,7 @@ import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
-  addLocalStorageDashboardGraph,
+  addLocalStorageDashboardItem,
   getLocalStorageDashboard,
 } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
@@ -52,11 +52,11 @@ export default function CardSaveAsGraphModal({
   function createGraph() {
     setDisabled(true);
 
-    addLocalStorageDashboardGraph(sectionId ?? "unsorted", {
+    addLocalStorageDashboardItem(sectionId ?? "unsorted", {
       title: generateTitle(sortType, colorFilter, typeFilter, rarityFilter),
       type: sortType,
       stacked: true,
-      size: "md",
+      size: "lg",
       filters: {
         colorFilter,
         typeFilter,

@@ -1,6 +1,6 @@
 import {
   Dashboard,
-  DashboardGraph,
+  DashboardItem,
   DashboardItemSize,
 } from "@/models/dashboard/dashboard";
 import { Platform } from "react-native";
@@ -43,9 +43,9 @@ export function updateLocalStorageDashboardSection(
   setLocalStorageDashboard(dashboard);
 }
 
-export function addLocalStorageDashboardGraph(
+export function addLocalStorageDashboardItem(
   sectionId: string,
-  graph: Omit<DashboardGraph, "id" | "index">
+  item: Omit<DashboardItem, "id" | "index">
 ) {
   if (Platform.OS === "ios") return null;
 
@@ -57,24 +57,24 @@ export function addLocalStorageDashboardGraph(
   );
 
   if (sectionIndex >= 0)
-    dashboard.sections[sectionIndex].graphs.push({
-      ...graph,
-      id: generateId("dashboard-graph"),
-      index: dashboard.sections[sectionIndex].graphs.length,
+    dashboard.sections[sectionIndex].items.push({
+      ...item,
+      id: generateId("dashboard-item"),
+      index: dashboard.sections[sectionIndex].items.length,
     });
   else {
     dashboard.sections.push({
       id: generateId("dashboard-section"),
       title: "Unsorted",
-      graphs: [{ ...graph, id: generateId("dashboard-graph"), index: 0 }],
+      items: [{ ...item, id: generateId("dashboard-item"), index: 0 }],
     });
   }
 
   setLocalStorageDashboard(dashboard);
 }
 
-export function updateLocalStorageDashboardGraph(
-  graphId: string,
+export function updateLocalStorageDashboardItem(
+  itemId: string,
   sectionId: string,
   data: { title?: string; stacked?: boolean; size?: DashboardItemSize }
 ) {
@@ -88,26 +88,26 @@ export function updateLocalStorageDashboardGraph(
   );
 
   if (sectionIndex >= 0) {
-    const graphIndex = dashboard.sections[sectionIndex].graphs.findIndex(
-      (storedGraph) => storedGraph.id === graphId
+    const itemIndex = dashboard.sections[sectionIndex].items.findIndex(
+      (storedItem) => storedItem.id === itemId
     );
 
-    if (graphIndex >= 0) {
-      const graph = dashboard.sections[sectionIndex].graphs[graphIndex];
+    if (itemIndex >= 0) {
+      const item = dashboard.sections[sectionIndex].items[itemIndex];
 
-      if (data.title !== undefined) graph.title = data.title;
-      if (data.stacked !== undefined) graph.stacked = data.stacked;
-      if (data.size !== undefined) graph.size = data.size;
+      if (data.title !== undefined) item.title = data.title;
+      if (data.stacked !== undefined) item.stacked = data.stacked;
+      if (data.size !== undefined) item.size = data.size;
 
-      dashboard.sections[sectionIndex].graphs[graphIndex] = graph;
+      dashboard.sections[sectionIndex].items[itemIndex] = item;
     }
   }
 
   setLocalStorageDashboard(dashboard);
 }
 
-export function moveUpLocalStorageDashboardGraph(
-  graphId: string,
+export function moveUpLocalStorageDashboardItem(
+  itemId: string,
   sectionId: string
 ) {
   if (Platform.OS === "ios") return null;
@@ -120,23 +120,23 @@ export function moveUpLocalStorageDashboardGraph(
   );
 
   if (sectionIndex >= 0) {
-    const graphIndex = dashboard.sections[sectionIndex].graphs.findIndex(
-      (storedGraph) => storedGraph.id === graphId
+    const itemIndex = dashboard.sections[sectionIndex].items.findIndex(
+      (storeItem) => storeItem.id === itemId
     );
 
-    if (graphIndex > 0) {
-      const graph = dashboard.sections[sectionIndex].graphs[graphIndex];
-      dashboard.sections[sectionIndex].graphs[graphIndex] =
-        dashboard.sections[sectionIndex].graphs[graphIndex - 1];
-      dashboard.sections[sectionIndex].graphs[graphIndex - 1] = graph;
+    if (itemIndex > 0) {
+      const item = dashboard.sections[sectionIndex].items[itemIndex];
+      dashboard.sections[sectionIndex].items[itemIndex] =
+        dashboard.sections[sectionIndex].items[itemIndex - 1];
+      dashboard.sections[sectionIndex].items[itemIndex - 1] = item;
     }
   }
 
   setLocalStorageDashboard(dashboard);
 }
 
-export function moveDownLocalStorageDashboardGraph(
-  graphId: string,
+export function moveDownLocalStorageDashboardItem(
+  itemId: string,
   sectionId: string
 ) {
   if (Platform.OS === "ios") return null;
@@ -149,23 +149,23 @@ export function moveDownLocalStorageDashboardGraph(
   );
 
   if (sectionIndex >= 0) {
-    const graphIndex = dashboard.sections[sectionIndex].graphs.findIndex(
-      (storedGraph) => storedGraph.id === graphId
+    const itemIndex = dashboard.sections[sectionIndex].items.findIndex(
+      (storedItem) => storedItem.id === itemId
     );
 
-    if (graphIndex < dashboard.sections[sectionIndex].graphs.length - 1) {
-      const graph = dashboard.sections[sectionIndex].graphs[graphIndex];
-      dashboard.sections[sectionIndex].graphs[graphIndex] =
-        dashboard.sections[sectionIndex].graphs[graphIndex + 1];
-      dashboard.sections[sectionIndex].graphs[graphIndex + 1] = graph;
+    if (itemIndex < dashboard.sections[sectionIndex].items.length - 1) {
+      const item = dashboard.sections[sectionIndex].items[itemIndex];
+      dashboard.sections[sectionIndex].items[itemIndex] =
+        dashboard.sections[sectionIndex].items[itemIndex + 1];
+      dashboard.sections[sectionIndex].items[itemIndex + 1] = item;
     }
   }
 
   setLocalStorageDashboard(dashboard);
 }
 
-export function removeLocalStorageDashboardGraph(
-  graphId: string,
+export function removeLocalStorageDashboardItem(
+  itemId: string,
   sectionId: string
 ) {
   if (Platform.OS === "ios") return null;
@@ -178,12 +178,12 @@ export function removeLocalStorageDashboardGraph(
   );
   if (sectionIndex < 0) return;
 
-  const graphIndex = dashboard?.sections[sectionIndex].graphs.findIndex(
-    (dashboardGraph) => dashboardGraph.id === graphId
+  const itemIndex = dashboard?.sections[sectionIndex].items.findIndex(
+    (dashboardItem) => dashboardItem.id === itemId
   );
-  if (graphIndex < 0) return;
+  if (itemIndex < 0) return;
 
-  dashboard.sections[sectionIndex].graphs.splice(graphIndex, 1);
+  dashboard.sections[sectionIndex].items.splice(itemIndex, 1);
 
   setLocalStorageDashboard(dashboard);
 }

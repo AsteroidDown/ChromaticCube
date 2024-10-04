@@ -3,7 +3,7 @@ import Text from "@/components/ui/text/text";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
   getLocalStorageDashboard,
-  updateLocalStorageDashboardGraph,
+  updateLocalStorageDashboardItem,
 } from "@/functions/local-storage/dashboard-local-storage";
 import { faCheck, faPencil } from "@fortawesome/free-solid-svg-icons";
 import React, { ReactNode, useContext } from "react";
@@ -68,7 +68,7 @@ export default function Graph({
     if (!id || !sectionId) return;
 
     if (graphTitle) {
-      updateLocalStorageDashboardGraph(id, sectionId, { title: graphTitle });
+      updateLocalStorageDashboardItem(id, sectionId, { title: graphTitle });
       setDashboard(getLocalStorageDashboard());
     }
 

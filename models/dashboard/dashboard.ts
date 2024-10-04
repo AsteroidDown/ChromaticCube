@@ -7,10 +7,12 @@ export interface Dashboard {
 export interface DashboardSection {
   id: string;
   title: string;
-  graphs: DashboardGraph[];
+  items: DashboardItem[];
 }
 
-export interface DashboardGraph {
+export type DashboardItemSize = "sm" | "md" | "lg";
+
+export interface DashboardItem {
   id: string;
   index: number;
   title: string;
@@ -19,5 +21,3 @@ export interface DashboardGraph {
   stacked: boolean;
   filters: CardFilters;
 }
-
-export type DashboardItemSize = "sm" | "md" | "lg";
