@@ -11,12 +11,14 @@ export interface DashboardSection {
 }
 
 export type DashboardItemSize = "sm" | "md" | "lg";
+export type DashboardItemType = "graph" | "chart";
 
 export interface DashboardItem {
   id: string;
   index: number;
   title: string;
-  type: string;
+  itemType: DashboardItemType;
+  sortType: string;
   size: DashboardItemSize;
   stacked: boolean;
   filters: CardFilters;

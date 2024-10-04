@@ -84,8 +84,8 @@ export default function DashboardSectionView({
                 sectionId={section.id}
                 title={item.title}
                 stacked={item.stacked}
-                horizontalTitle={titleCase(item.type)}
-                sets={getSets(item.type, item.filters, storedCards)}
+                horizontalTitle={titleCase(item.sortType)}
+                sets={getSets(item.sortType, item.filters, storedCards)}
                 titleStart={
                   <Button
                     rounded
