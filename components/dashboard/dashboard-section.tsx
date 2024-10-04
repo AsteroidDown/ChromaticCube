@@ -102,13 +102,25 @@ export default function DashboardSectionView({
                   />
                 }
                 titleEnd={
-                  <DashboardItemMenu graph={item} sectionId={section.id} />
+                  <DashboardItemMenu item={item} sectionId={section.id} />
                 }
               />
             )}
 
             {item.itemType === "chart" && (
-              <Chart type={item.sortType as ChartType} filters={item.filters} />
+              <Chart
+                type={item.sortType as ChartType}
+                filters={item.filters}
+                menu={
+                  <View className="ml-2.5 mt-1">
+                    <DashboardItemMenu
+                      xOffset={-40}
+                      item={item}
+                      sectionId={section.id}
+                    />
+                  </View>
+                }
+              />
             )}
           </Box>
         ))}

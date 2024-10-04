@@ -2,7 +2,7 @@ import { sortCardsByColor, sortCardsByRarity } from "@/functions/card-sorting";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
-import React from "react";
+import React, { ReactNode } from "react";
 import { View } from "react-native";
 import Text from "../ui/text/text";
 import { getCellBackgroundColor } from "./chart";
@@ -12,11 +12,13 @@ import ChartColumnHeading from "./chart-column-heading";
 interface RarityChartLayoutProps {
   cards: Card[];
   filters: CardFilters;
+  menu?: ReactNode;
 }
 
 export default function RarityChartLayout({
   cards,
   filters,
+  menu,
 }: RarityChartLayoutProps) {
   const colors = filters.colorFilter;
 
@@ -31,7 +33,8 @@ export default function RarityChartLayout({
   return (
     <>
       <View className="flex flex-row w-full -mt-1">
-        <View className="w-24"></View>
+        <View className="flex justify-center items-center w-24">{menu}</View>
+
         <ChartColumnHeading large title="Common" />
         <ChartColumnHeading large title="Uncommon" />
         <ChartColumnHeading large title="Rare" />

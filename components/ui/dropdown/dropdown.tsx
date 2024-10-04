@@ -65,7 +65,6 @@ function DropdownContent({
             buttonRef.current?.measureInWindow((fx, fy) => {
               setTop(fy + 4);
               setLeft(fx);
-              console.log(fx, fy);
             });
           }}
         >

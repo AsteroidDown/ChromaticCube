@@ -5,7 +5,7 @@ import {
 } from "@/functions/card-sorting";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
-import React from "react";
+import React, { ReactNode } from "react";
 import { ViewProps } from "react-native";
 import Placeholder from "../ui/placeholder/placeholder";
 import CostChartLayout from "./cost-chart-layout";
@@ -17,19 +17,20 @@ export type ChartType = "cost" | "rarity" | "type";
 export type ChartProps = ViewProps & {
   type: ChartType;
   filters: CardFilters;
+  menu?: ReactNode;
 };
 
-export default function Chart({ type, filters }: ChartProps) {
+export default function Chart({ type, filters, menu }: ChartProps) {
   const cards = sortCardsByManaValue(
     sortCardsAlphabetically(getLocalStorageStoredCards())
   );
 
   if (type === "cost")
-    return <CostChartLayout cards={cards} filters={filters} />;
+    return <CostChartLayout cards={cards} filters={filters} menu={menu} />;
   else if (type === "rarity")
-    return <RarityChartLayout cards={cards} filters={filters} />;
+    return <RarityChartLayout cards={cards} filters={filters} menu={menu} />;
   else if (type === "type")
-    return <TypeChartLayout cards={cards} filters={filters} />;
+    return <TypeChartLayout cards={cards} filters={filters} menu={menu} />;
   else return <Placeholder title="No Chart Found!" />;
 }
 
