@@ -105,22 +105,23 @@ export default function DashboardSectionView({
 
         {!section.items.length && (
           <Placeholder
-            title="No Graphs Added!"
+            title="No Items Added!"
             subtitle="Add some to get started"
             icon={faInfoCircle}
           >
             <Button
-              text="Add Graph"
+              text="Add Item"
               className="mt-4"
               icon={faPlus}
               onClick={() => setAddItemOpen(true)}
-            >
-              <DashboardAddItemMenu
-                sectionId={section.id}
-                addItemOpen={addItemOpen}
-                setAddItemOpen={setAddItemOpen}
-              />
-            </Button>
+            />
+
+            <DashboardAddItemMenu
+              xOffset={-8}
+              sectionId={section.id}
+              addItemOpen={addItemOpen}
+              setAddItemOpen={setAddItemOpen}
+            />
           </Placeholder>
         )}
       </View>

@@ -77,20 +77,21 @@ export default function DashboardSectionHeader({
         />
       </View>
 
-      <View className="flex flex-row gap-2 items-center">
+      <View className="flex gap-2 items-center max-w-10 max-h-10">
         <Button
           rounded
           type="clear"
           action="default"
           icon={faPlus}
           onClick={() => setAddItemOpen(true)}
-        >
-          <DashboardAddItemMenu
-            sectionId={section.id}
-            addItemOpen={addItemOpen}
-            setAddItemOpen={setAddItemOpen}
-          />
-        </Button>
+        ></Button>
+
+        <DashboardAddItemMenu
+          xOffset={-120}
+          sectionId={section.id}
+          addItemOpen={addItemOpen}
+          setAddItemOpen={setAddItemOpen}
+        />
       </View>
     </View>
   );

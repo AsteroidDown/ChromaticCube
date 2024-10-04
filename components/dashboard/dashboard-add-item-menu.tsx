@@ -7,12 +7,14 @@ import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
 import Dropdown from "../ui/dropdown/dropdown";
 
 export type DashboardAddItemMenuProps = ViewProps & {
+  xOffset?: number;
   sectionId: string;
   addItemOpen: boolean;
   setAddItemOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function DashboardAddItemMenu({
+  xOffset,
   sectionId,
   addItemOpen,
   setAddItemOpen,
@@ -22,7 +24,11 @@ export default function DashboardAddItemMenu({
 
   return (
     <>
-      <Dropdown expanded={addItemOpen} setExpanded={setAddItemOpen}>
+      <Dropdown
+        xOffset={xOffset}
+        expanded={addItemOpen}
+        setExpanded={setAddItemOpen}
+      >
         <Box className="flex justify-start items-start !p-0 border-2 border-background-100 !bg-background-200 overflow-hidden">
           <Button
             start
