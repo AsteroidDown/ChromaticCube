@@ -3,6 +3,7 @@ import Button from "@/components/ui/button/button";
 import { faChartSimple, faTable } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { ViewProps } from "react-native";
+import CardSaveAsChartModal from "../cards/card-save-as-chart-modal";
 import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
 import Dropdown from "../ui/dropdown/dropdown";
 
@@ -62,6 +63,12 @@ export default function DashboardAddItemMenu({
         sectionId={sectionId}
         open={addGraphOpen}
         setOpen={setAddGraphOpen}
+      />
+
+      <CardSaveAsChartModal
+        sectionId={sectionId}
+        open={addChartOpen}
+        setOpen={setAddChartOpen}
       />
     </>
   );

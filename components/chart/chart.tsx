@@ -4,11 +4,10 @@ import {
   sortCardsByManaValue,
 } from "@/functions/card-sorting";
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
-import { DashboardItemSize } from "@/models/dashboard/dashboard";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
 import { ViewProps } from "react-native";
-import Box from "../ui/box/box";
+import Placeholder from "../ui/placeholder/placeholder";
 import CostChartLayout from "./cost-chart-layout";
 import RarityChartLayout from "./rarity-chart-layout";
 import TypeChartLayout from "./type-chart-layout";
@@ -17,32 +16,21 @@ export type ChartType = "cost" | "rarity" | "type";
 
 export type ChartProps = ViewProps & {
   type: ChartType;
-  size?: DashboardItemSize;
   filters: CardFilters;
 };
 
-export default function Chart({ type, size = "md", filters }: ChartProps) {
+export default function Chart({ type, filters }: ChartProps) {
   const cards = sortCardsByManaValue(
     sortCardsAlphabetically(getLocalStorageStoredCards())
   );
 
-  return (
-    <Box
-      className={`flex-1 flex self-stretch min-w-full !p-0 !bg-background-100 border-2 border-background-300 overflow-hidden ${
-        size === "sm"
-          ? "lg:min-w-[25%] lg:max-w-[33%]"
-          : size === "md"
-          ? "lg:min-w-[50%] lg:max-w-[66%]"
-          : "lg:min-w-[100%]"
-      }`}
-    >
-      {type === "cost" && <CostChartLayout cards={cards} filters={filters} />}
-      {type === "rarity" && (
-        <RarityChartLayout cards={cards} filters={filters} />
-      )}
-      {type === "type" && <TypeChartLayout cards={cards} filters={filters} />}
-    </Box>
-  );
+  if (type === "cost")
+    return <CostChartLayout cards={cards} filters={filters} />;
+  else if (type === "rarity")
+    return <RarityChartLayout cards={cards} filters={filters} />;
+  else if (type === "type")
+    return <TypeChartLayout cards={cards} filters={filters} />;
+  else return <Placeholder title="No Chart Found!" />;
 }
 
 export function getCellBackgroundColor(color: MTGColor) {

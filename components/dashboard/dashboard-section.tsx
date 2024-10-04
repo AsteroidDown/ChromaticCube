@@ -25,6 +25,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { View, ViewProps } from "react-native";
+import Chart, { ChartType } from "../chart/chart";
 import Placeholder from "../ui/placeholder/placeholder";
 import DashboardAddItemMenu from "./dashboard-add-item-menu";
 import DashboardItemMenu from "./dashboard-item-menu";
@@ -44,6 +45,9 @@ export default function DashboardSectionView({
   const [addItemOpen, setAddItemOpen] = React.useState(false);
 
   const storedCards = getLocalStorageStoredCards();
+
+  const itemClasses =
+    "flex-1 min-w-full h-80 !bg-background-100 border-2 border-background-300 overflow-x-scroll overflow-y-hidden transition-all duration-500";
 
   useEffect(
     () =>
@@ -68,9 +72,11 @@ export default function DashboardSectionView({
 
       <View className="flex flex-row flex-wrap gap-4 justify-start items-center w-full z-[-1]">
         {section.items.map((item, index) => (
-          <View
+          <Box
             key={item.title + index}
-            className={`flex-1 h-80 min-w-full overflow-hidden transition-all duration-500 ${
+            className={`${itemClasses} ${
+              item.itemType === "chart" ? "!p-0" : ""
+            } ${
               item.size === "sm"
                 ? "lg:min-w-[25%] lg:max-w-[33%]"
                 : item.size === "md"
@@ -78,7 +84,7 @@ export default function DashboardSectionView({
                 : "lg:min-w-[100%]"
             }`}
           >
-            <Box className="w-full h-full !bg-background-100 border-2 border-background-300 overflow-x-scroll overflow-y-hidden">
+            {item.itemType === "graph" && (
               <Graph
                 id={item.id}
                 sectionId={section.id}
@@ -99,8 +105,12 @@ export default function DashboardSectionView({
                   <DashboardItemMenu graph={item} sectionId={section.id} />
                 }
               />
-            </Box>
-          </View>
+            )}
+
+            {item.itemType === "chart" && (
+              <Chart type={item.sortType as ChartType} filters={item.filters} />
+            )}
+          </Box>
         ))}
 
         {!section.items.length && (
