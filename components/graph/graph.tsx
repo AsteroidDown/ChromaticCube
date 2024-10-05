@@ -1,9 +1,4 @@
-import DashboardContext from "@/contexts/dashboard/dashboard.context";
-import {
-  getLocalStorageDashboard,
-  updateLocalStorageDashboardItem,
-} from "@/functions/local-storage/dashboard-local-storage";
-import React, { ReactNode, useContext } from "react";
+import React, { ReactNode } from "react";
 import { View, ViewProps } from "react-native";
 import DashboardItemHeader from "../dashboard/dashboard-item-header";
 import { GraphHorizontalAxis } from "./layout/graph-horizontal-axis";
@@ -34,11 +29,6 @@ export default function Graph({
   className,
   sets,
 }: GraphProps) {
-  const { setDashboard } = useContext(DashboardContext);
-
-  const [editingGraph, setEditingGraph] = React.useState(false);
-  const [graphTitle, setGraphTitle] = React.useState("");
-
   const maxValue = sets.reduce((acc, set) => {
     const setValue = stacked
       ? set.data.reduce((acc, entry) => acc + entry.count, 0)
@@ -59,17 +49,6 @@ export default function Graph({
       : Math.ceil(maxValue / 2) * 2 + 2;
 
   const verticalTickLength = ceiling > 45 ? 10 : ceiling > 12 ? 5 : 2;
-
-  function updateGraphTitle() {
-    if (!id || !sectionId) return;
-
-    if (graphTitle) {
-      updateLocalStorageDashboardItem(id, sectionId, { title: graphTitle });
-      setDashboard(getLocalStorageDashboard());
-    }
-
-    setEditingGraph(false);
-  }
 
   return (
     <View className={`${className} flex flex-1 w-full h-full overflow-auto`}>

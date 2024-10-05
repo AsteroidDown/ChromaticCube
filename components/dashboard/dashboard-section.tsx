@@ -22,6 +22,7 @@ import {
   faDatabase,
   faInfoCircle,
   faPlus,
+  faTextHeight,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { View, ViewProps } from "react-native";
@@ -65,6 +66,13 @@ export default function DashboardSectionView({
   }
 
   if (!section) return <Placeholder title="No Section Found!" />;
+
+  function setItemTitleSize(itemId: string, smallTitles: boolean) {
+    if (!itemId || !sectionId) return;
+
+    updateLocalStorageDashboardItem(itemId, sectionId, { smallTitles });
+    setDashboard(getLocalStorageDashboard());
+  }
 
   return (
     <View className="flex gap-4 justify-center items-center w-full">
@@ -115,7 +123,16 @@ export default function DashboardSectionView({
                 type={item.sortType as ChartType}
                 filters={item.filters}
                 smallTitles={item.smallTitles}
-                menu={
+                titleStart={
+                  <Button
+                    rounded
+                    type="clear"
+                    action="default"
+                    icon={faTextHeight}
+                    onClick={() => setItemTitleSize(item.id, !item.smallTitles)}
+                  />
+                }
+                titleEnd={
                   <View className="ml-2.5 mt-1">
                     <DashboardItemMenu
                       xOffset={-40}

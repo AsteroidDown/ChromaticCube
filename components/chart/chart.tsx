@@ -19,19 +19,21 @@ export type ChartProps = ViewProps & {
   id: string;
   sectionId: string;
   title: string;
+  titleStart?: ReactNode;
+  titleEnd?: ReactNode;
   type: ChartType;
   filters: CardFilters;
   smallTitles?: boolean;
-  menu?: ReactNode;
 };
 
 export default function Chart({
   id,
   sectionId,
   title,
+  titleStart,
+  titleEnd,
   type,
   filters,
-  menu,
   smallTitles = false,
 }: ChartProps) {
   const cards = sortCardsByManaValue(
@@ -46,7 +48,8 @@ export default function Chart({
           itemId={id}
           sectionId={sectionId}
           title={title}
-          titleEnd={menu}
+          titleEnd={titleEnd}
+          titleStart={titleStart}
         />
 
         <CostChartLayout
@@ -64,13 +67,13 @@ export default function Chart({
           itemId={id}
           sectionId={sectionId}
           title={title}
-          titleEnd={menu}
+          titleEnd={titleStart}
+          titleStart={titleEnd}
         />
 
         <RarityChartLayout
           cards={cards}
           filters={filters}
-          menu={menu}
           smallTitles={smallTitles}
         />
       </View>
@@ -83,13 +86,13 @@ export default function Chart({
           itemId={id}
           sectionId={sectionId}
           title={title}
-          titleEnd={menu}
+          titleEnd={titleStart}
+          titleStart={titleEnd}
         />
 
         <TypeChartLayout
           cards={cards}
           filters={filters}
-          menu={menu}
           smallTitles={smallTitles}
         />
       </View>
