@@ -13,12 +13,14 @@ interface RarityChartLayoutProps {
   cards: Card[];
   filters: CardFilters;
   menu?: ReactNode;
+  smallTitles?: boolean;
 }
 
 export default function RarityChartLayout({
   cards,
   filters,
   menu,
+  smallTitles = false,
 }: RarityChartLayoutProps) {
   const colors = filters.colorFilter;
 
@@ -35,11 +37,16 @@ export default function RarityChartLayout({
       <View className="flex flex-row w-full -mt-1">
         <View className="flex justify-center items-center w-24">{menu}</View>
 
-        <ChartColumnHeading large title="Common" />
-        <ChartColumnHeading large title="Uncommon" />
-        <ChartColumnHeading large title="Rare" />
-        <ChartColumnHeading large title="Mythic" />
-        <ChartColumnHeading double large title="Total" />
+        <ChartColumnHeading large smallTitles={smallTitles} title="Common" />
+        <ChartColumnHeading large smallTitles={smallTitles} title="Uncommon" />
+        <ChartColumnHeading large smallTitles={smallTitles} title="Rare" />
+        <ChartColumnHeading large smallTitles={smallTitles} title="Mythic" />
+        <ChartColumnHeading
+          double
+          large
+          smallTitles={smallTitles}
+          title="Total"
+        />
       </View>
 
       {colors?.map((color, index) => (

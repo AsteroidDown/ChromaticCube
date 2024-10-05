@@ -82,7 +82,7 @@ export default function App() {
           </Box>
 
           <Box className="flex-1 h-80 !p-0 lg:min-w-[25%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Chart type="cost" filters={colorFilters} />
+            <Chart smallTitles={true} type="cost" filters={colorFilters} />
           </Box>
 
           <Box className="flex-1 h-80 !p-0 lg:min-w-[25%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">

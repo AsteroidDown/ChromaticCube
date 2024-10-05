@@ -17,20 +17,47 @@ export type ChartType = "cost" | "rarity" | "type";
 export type ChartProps = ViewProps & {
   type: ChartType;
   filters: CardFilters;
+  smallTitles?: boolean;
   menu?: ReactNode;
 };
 
-export default function Chart({ type, filters, menu }: ChartProps) {
+export default function Chart({
+  type,
+  filters,
+  menu,
+  smallTitles = false,
+}: ChartProps) {
   const cards = sortCardsByManaValue(
     sortCardsAlphabetically(getLocalStorageStoredCards())
   );
 
   if (type === "cost")
-    return <CostChartLayout cards={cards} filters={filters} menu={menu} />;
+    return (
+      <CostChartLayout
+        menu={menu}
+        cards={cards}
+        filters={filters}
+        smallTitles={smallTitles}
+      />
+    );
   else if (type === "rarity")
-    return <RarityChartLayout cards={cards} filters={filters} menu={menu} />;
+    return (
+      <RarityChartLayout
+        cards={cards}
+        filters={filters}
+        menu={menu}
+        smallTitles={smallTitles}
+      />
+    );
   else if (type === "type")
-    return <TypeChartLayout cards={cards} filters={filters} menu={menu} />;
+    return (
+      <TypeChartLayout
+        cards={cards}
+        filters={filters}
+        menu={menu}
+        smallTitles={smallTitles}
+      />
+    );
   else return <Placeholder title="No Chart Found!" />;
 }
 

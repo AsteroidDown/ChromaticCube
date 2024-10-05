@@ -13,12 +13,14 @@ interface CostChartLayoutProps {
   cards: Card[];
   filters: CardFilters;
   menu?: ReactNode;
+  smallTitles?: boolean;
 }
 
 export default function CostChartLayout({
   cards,
   filters,
   menu,
+  smallTitles = false,
 }: CostChartLayoutProps) {
   const colors = filters.colorFilter;
 
@@ -39,15 +41,43 @@ export default function CostChartLayout({
       <View className="flex flex-row w-full -mt-1">
         <View className="flex justify-center items-center w-24">{menu}</View>
 
-        {sortedCards.zero.length > 0 && <ChartColumnHeading title="Zero" />}
-        <ChartColumnHeading title="One" />
-        <ChartColumnHeading title="Two" />
-        <ChartColumnHeading title="Three" />
-        <ChartColumnHeading title="Four" />
-        <ChartColumnHeading title="Five" />
-        <ChartColumnHeading title="Six" />
-        {sortedCards.seven.length > 0 && <ChartColumnHeading title="Seven" />}
-        <ChartColumnHeading double title="Total" />
+        {sortedCards.zero.length > 0 && (
+          <ChartColumnHeading
+            smallTitles={smallTitles}
+            title={smallTitles ? "0" : "Zero"}
+          />
+        )}
+        <ChartColumnHeading
+          smallTitles={smallTitles}
+          title={smallTitles ? "1" : "One"}
+        />
+        <ChartColumnHeading
+          smallTitles={smallTitles}
+          title={smallTitles ? "2" : "Two"}
+        />
+        <ChartColumnHeading
+          smallTitles={smallTitles}
+          title={smallTitles ? "3" : "Three"}
+        />
+        <ChartColumnHeading
+          smallTitles={smallTitles}
+          title={smallTitles ? "4" : "Four"}
+        />
+        <ChartColumnHeading
+          smallTitles={smallTitles}
+          title={smallTitles ? "5" : "Five"}
+        />
+        <ChartColumnHeading
+          smallTitles={smallTitles}
+          title={smallTitles ? "6" : "Six"}
+        />
+        {sortedCards.seven.length > 0 && (
+          <ChartColumnHeading
+            smallTitles={smallTitles}
+            title={smallTitles ? "7" : "Seven"}
+          />
+        )}
+        <ChartColumnHeading smallTitles={smallTitles} double title="Total" />
       </View>
 
       {colors?.map((color, index) => (

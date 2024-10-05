@@ -13,12 +13,14 @@ interface TypeChartLayoutProps {
   cards: Card[];
   filters: CardFilters;
   menu?: ReactNode;
+  smallTitles?: boolean;
 }
 
 export default function TypeChartLayout({
   cards,
   filters,
   menu,
+  smallTitles = false,
 }: TypeChartLayoutProps) {
   const colors = filters.colorFilter;
 
@@ -39,19 +41,32 @@ export default function TypeChartLayout({
       <View className="flex flex-row w-full -mt-1">
         <View className="flex justify-center items-center w-24">{menu}</View>
 
-        <ChartColumnHeading large title="Creature" />
-        <ChartColumnHeading large title="Instant" />
-        <ChartColumnHeading large title="Sorcery" />
-        <ChartColumnHeading large title="Artifact" />
-        <ChartColumnHeading large title="Enchantment" />
-        <ChartColumnHeading large title="Land" />
+        <ChartColumnHeading large smallTitles={smallTitles} title="Creature" />
+        <ChartColumnHeading large smallTitles={smallTitles} title="Instant" />
+        <ChartColumnHeading large smallTitles={smallTitles} title="Sorcery" />
+        <ChartColumnHeading large smallTitles={smallTitles} title="Artifact" />
+        <ChartColumnHeading
+          large
+          smallTitles={smallTitles}
+          title="Enchantment"
+        />
+        <ChartColumnHeading large smallTitles={smallTitles} title="Land" />
         {sortedCards.planeswalker?.length > 0 && (
-          <ChartColumnHeading large title="Planeswalker" />
+          <ChartColumnHeading
+            large
+            smallTitles={smallTitles}
+            title="Planeswalker"
+          />
         )}
         {sortedCards.battle?.length > 0 && (
-          <ChartColumnHeading large title="Battle" />
+          <ChartColumnHeading large smallTitles={smallTitles} title="Battle" />
         )}
-        <ChartColumnHeading double large title="Total" />
+        <ChartColumnHeading
+          double
+          large
+          smallTitles={smallTitles}
+          title="Total"
+        />
       </View>
 
       {colors?.map((color, index) => (
