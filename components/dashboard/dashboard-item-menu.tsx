@@ -15,6 +15,7 @@ import {
   faExpand,
   faMaximize,
   faMinimize,
+  faTextHeight,
   faUpLong,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
@@ -54,6 +55,14 @@ export default function DashboardItemMenu({
     if (!item || !sectionId) return;
 
     updateLocalStorageDashboardItem(item.id, sectionId, { size });
+    setDashboard(getLocalStorageDashboard());
+    setExpanded(false);
+  }
+
+  function setItemTitleSize(smallTitles: boolean) {
+    if (!item || !sectionId) return;
+
+    updateLocalStorageDashboardItem(item.id, sectionId, { smallTitles });
     setDashboard(getLocalStorageDashboard());
     setExpanded(false);
   }
@@ -134,6 +143,17 @@ export default function DashboardItemMenu({
               className="w-full"
               icon={faMaximize}
               onClick={() => setItemSize("lg")}
+            />
+          )}
+
+          {item.itemType === "chart" && (
+            <Button
+              start
+              square
+              type="clear"
+              icon={faTextHeight}
+              text={item.smallTitles ? "Large Titles" : "Small Titles"}
+              onClick={() => setItemTitleSize(!item.smallTitles)}
             />
           )}
 

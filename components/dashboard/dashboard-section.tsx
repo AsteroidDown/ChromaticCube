@@ -111,6 +111,7 @@ export default function DashboardSectionView({
               <Chart
                 type={item.sortType as ChartType}
                 filters={item.filters}
+                smallTitles={item.smallTitles}
                 menu={
                   <View className="ml-2.5 mt-1">
                     <DashboardItemMenu

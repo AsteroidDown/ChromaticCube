@@ -76,7 +76,12 @@ export function addLocalStorageDashboardItem(
 export function updateLocalStorageDashboardItem(
   itemId: string,
   sectionId: string,
-  data: { title?: string; stacked?: boolean; size?: DashboardItemSize }
+  data: {
+    title?: string;
+    stacked?: boolean;
+    size?: DashboardItemSize;
+    smallTitles?: boolean;
+  }
 ) {
   if (Platform.OS === "ios") return null;
 
@@ -98,6 +103,7 @@ export function updateLocalStorageDashboardItem(
       if (data.title !== undefined) item.title = data.title;
       if (data.stacked !== undefined) item.stacked = data.stacked;
       if (data.size !== undefined) item.size = data.size;
+      if (data.smallTitles !== undefined) item.smallTitles = data.smallTitles;
 
       dashboard.sections[sectionIndex].items[itemIndex] = item;
     }

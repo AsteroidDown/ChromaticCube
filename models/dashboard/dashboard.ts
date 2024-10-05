@@ -20,6 +20,8 @@ export interface DashboardItem {
   itemType: DashboardItemType;
   sortType: string;
   size: DashboardItemSize;
-  stacked: boolean;
   filters: CardFilters;
+
+  stacked?: boolean;
+  smallTitles?: boolean;
 }

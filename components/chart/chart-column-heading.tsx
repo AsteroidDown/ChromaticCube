@@ -17,7 +17,9 @@ export default function ChartColumnHeading({
 }: ChartColumnHeadingProps) {
   return (
     <View
-      className={`flex-1 ${smallTitles ? "h-8" : large ? "h-[100px]" : "h-14"}`}
+      className={`flex-1 ${
+        smallTitles ? "h-10" : large ? "h-[110px]" : "h-16"
+      }`}
     >
       <View
         className={`${
@@ -25,13 +27,17 @@ export default function ChartColumnHeading({
         } absolute h-full -ml-px border-background-300 rotate-[12deg] origin-bottom-left`}
       ></View>
 
-      <View className="absolute flex justify-end items-center w-full h-full left-[50%] translate-x-[-50%]">
+      <View
+        className={`absolute flex items-center w-full h-full left-[50%] translate-x-[-50%] ${
+          smallTitles ? "justify-center" : "justify-end"
+        }`}
+      >
         <Text
           noWrap
-          className={`absolute w-full left-[50%] bottom-1 origin-bottom-left ${
+          className={`${
             !smallTitles
-              ? "rotate-[-78deg] md:translate-x-[7%] translate-x-[25%]"
-              : ""
+              ? "absolute w-full bottom-2 left-[50%] rotate-[-78deg] md:translate-x-[10px] translate-x-[25%] origin-bottom-left"
+              : "w-fit ml-2"
           }`}
         >
           {smallTitles ? titleCase(title.substring(0, 1)) : title}
