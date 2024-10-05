@@ -109,6 +109,9 @@ export default function DashboardSectionView({
 
             {item.itemType === "chart" && (
               <Chart
+                id={item.id}
+                sectionId={section.id}
+                title={item.title}
                 type={item.sortType as ChartType}
                 filters={item.filters}
                 smallTitles={item.smallTitles}

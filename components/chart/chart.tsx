@@ -6,7 +6,8 @@ import {
 import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React, { ReactNode } from "react";
-import { ViewProps } from "react-native";
+import { View, ViewProps } from "react-native";
+import DashboardItemHeader from "../dashboard/dashboard-item-header";
 import Placeholder from "../ui/placeholder/placeholder";
 import CostChartLayout from "./cost-chart-layout";
 import RarityChartLayout from "./rarity-chart-layout";
@@ -15,6 +16,9 @@ import TypeChartLayout from "./type-chart-layout";
 export type ChartType = "cost" | "rarity" | "type";
 
 export type ChartProps = ViewProps & {
+  id: string;
+  sectionId: string;
+  title: string;
   type: ChartType;
   filters: CardFilters;
   smallTitles?: boolean;
@@ -22,6 +26,9 @@ export type ChartProps = ViewProps & {
 };
 
 export default function Chart({
+  id,
+  sectionId,
+  title,
   type,
   filters,
   menu,
@@ -33,30 +40,59 @@ export default function Chart({
 
   if (type === "cost")
     return (
-      <CostChartLayout
-        menu={menu}
-        cards={cards}
-        filters={filters}
-        smallTitles={smallTitles}
-      />
+      <View className="flex w-full h-full">
+        <DashboardItemHeader
+          className="my-2 px-4"
+          itemId={id}
+          sectionId={sectionId}
+          title={title}
+          titleEnd={menu}
+        />
+
+        <CostChartLayout
+          cards={cards}
+          filters={filters}
+          smallTitles={smallTitles}
+        />
+      </View>
     );
   else if (type === "rarity")
     return (
-      <RarityChartLayout
-        cards={cards}
-        filters={filters}
-        menu={menu}
-        smallTitles={smallTitles}
-      />
+      <View className="flex w-full h-full">
+        <DashboardItemHeader
+          className="my-2 px-4"
+          itemId={id}
+          sectionId={sectionId}
+          title={title}
+          titleEnd={menu}
+        />
+
+        <RarityChartLayout
+          cards={cards}
+          filters={filters}
+          menu={menu}
+          smallTitles={smallTitles}
+        />
+      </View>
     );
   else if (type === "type")
     return (
-      <TypeChartLayout
-        cards={cards}
-        filters={filters}
-        menu={menu}
-        smallTitles={smallTitles}
-      />
+      <View className="flex w-full h-full">
+        <DashboardItemHeader
+          className="my-2 px-4"
+          itemId={id}
+          sectionId={sectionId}
+          title={title}
+          titleEnd={menu}
+        />
+
+        <TypeChartLayout
+          cards={cards}
+          filters={filters}
+          menu={menu}
+          smallTitles={smallTitles}
+        />
+      </View>
     );
   else return <Placeholder title="No Chart Found!" />;
 }

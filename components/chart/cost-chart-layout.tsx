@@ -2,7 +2,7 @@ import { sortCardsByColor, sortCardsByCost } from "@/functions/card-sorting";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
-import React, { ReactNode } from "react";
+import React from "react";
 import { View } from "react-native";
 import Text from "../ui/text/text";
 import { getCellBackgroundColor } from "./chart";
@@ -12,14 +12,12 @@ import ChartColumnHeading from "./chart-column-heading";
 interface CostChartLayoutProps {
   cards: Card[];
   filters: CardFilters;
-  menu?: ReactNode;
   smallTitles?: boolean;
 }
 
 export default function CostChartLayout({
   cards,
   filters,
-  menu,
   smallTitles = false,
 }: CostChartLayoutProps) {
   const colors = filters.colorFilter;
@@ -39,7 +37,7 @@ export default function CostChartLayout({
   return (
     <>
       <View className="flex flex-row w-full -mt-1">
-        <View className="flex justify-center items-center w-24">{menu}</View>
+        <View className="w-24"></View>
 
         {sortedCards.zero.length > 0 && (
           <ChartColumnHeading

@@ -1,4 +1,4 @@
-import Chart from "@/components/chart/chart";
+import Chart, { ChartProps } from "@/components/chart/chart";
 import DashboardSectionView from "@/components/dashboard/dashboard-section";
 import Graph, { GraphProps } from "@/components/graph/graph";
 import Box from "@/components/ui/box/box";
@@ -63,6 +63,33 @@ export default function App() {
     ],
   };
 
+  const cardsByCostChartProps: ChartProps = {
+    id: "cardsByCost",
+    sectionId: "general",
+    title: "Cards by Cost",
+    type: "cost",
+    filters: colorFilters,
+    smallTitles: true,
+  };
+
+  const cardsByRarityChartProps: ChartProps = {
+    id: "cardsByRarity",
+    sectionId: "general",
+    title: "Cards by Rarity",
+    type: "rarity",
+    filters: colorFilters,
+    smallTitles: true,
+  };
+
+  const cardsByTypeChartProps: ChartProps = {
+    id: "cardsByType",
+    sectionId: "general",
+    title: "Cards by Type",
+    type: "type",
+    filters: colorFilters,
+    smallTitles: true,
+  };
+
   return (
     <View className="flex gap-6 flex-1 justify-center bg-background-100 px-6">
       <ScrollView>
@@ -82,15 +109,15 @@ export default function App() {
           </Box>
 
           <Box className="flex-1 h-80 !p-0 lg:min-w-[25%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Chart smallTitles={true} type="cost" filters={colorFilters} />
+            <Chart {...cardsByCostChartProps} />
           </Box>
 
           <Box className="flex-1 h-80 !p-0 lg:min-w-[25%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Chart type="rarity" filters={colorFilters} />
+            <Chart {...cardsByRarityChartProps} />
           </Box>
 
           <Box className="flex-1 h-80 !p-0 lg:min-w-[25%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Chart type="type" filters={colorFilters} />
+            <Chart {...cardsByTypeChartProps} />
           </Box>
 
           <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">

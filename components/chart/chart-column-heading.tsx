@@ -24,7 +24,7 @@ export default function ChartColumnHeading({
       <View
         className={`${
           double ? "border-l-2" : "border-l"
-        } absolute h-full -ml-px border-background-300 rotate-[12deg] origin-bottom-left`}
+        } absolute h-full -ml-px border-background-300 rotate-[12deg] translate-y-px origin-bottom-left`}
       ></View>
 
       <View
