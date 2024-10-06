@@ -52,6 +52,7 @@ export default function CardSaveAsChartModal({
       itemType: "chart",
       stacked: true,
       size: "lg",
+      smallTitles: true,
       filters: { colorFilter },
     });
 

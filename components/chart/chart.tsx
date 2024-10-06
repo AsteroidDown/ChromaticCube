@@ -67,8 +67,8 @@ export default function Chart({
           itemId={id}
           sectionId={sectionId}
           title={title}
-          titleEnd={titleStart}
-          titleStart={titleEnd}
+          titleEnd={titleEnd}
+          titleStart={titleStart}
         />
 
         <RarityChartLayout
@@ -86,8 +86,8 @@ export default function Chart({
           itemId={id}
           sectionId={sectionId}
           title={title}
-          titleEnd={titleStart}
-          titleStart={titleEnd}
+          titleEnd={titleEnd}
+          titleStart={titleStart}
         />
 
         <TypeChartLayout
