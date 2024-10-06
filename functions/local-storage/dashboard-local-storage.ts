@@ -63,11 +63,23 @@ export function addLocalStorageDashboardItem(
       index: dashboard.sections[sectionIndex].items.length,
     });
   else {
-    dashboard.sections.push({
-      id: generateId("dashboard-section"),
-      title: "Unsorted",
-      items: [{ ...item, id: generateId("dashboard-item"), index: 0 }],
-    });
+    const sectionIndex = dashboard?.sections?.findIndex(
+      (dashboardSection) => dashboardSection.title === "Unsorted"
+    );
+
+    if (sectionIndex >= 0) {
+      dashboard.sections[sectionIndex].items.push({
+        ...item,
+        id: generateId("dashboard-item"),
+        index: dashboard.sections[sectionIndex].items.length,
+      });
+    } else {
+      dashboard.sections.push({
+        id: generateId("dashboard-section"),
+        title: "Unsorted",
+        items: [{ ...item, id: generateId("dashboard-item"), index: 0 }],
+      });
+    }
   }
 
   setLocalStorageDashboard(dashboard);
