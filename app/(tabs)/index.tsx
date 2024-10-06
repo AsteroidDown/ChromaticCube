@@ -1,58 +1,25 @@
-import Chart, { ChartProps } from "@/components/chart/chart";
 import DashboardSectionView from "@/components/dashboard/dashboard-section";
-import Graph, { GraphProps } from "@/components/graph/graph";
-import Box from "@/components/ui/box/box";
-import Button from "@/components/ui/button/button";
+import { MTGColor } from "@/constants/mtg/mtg-colors";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
-  graphCardsByColor,
-  graphCardsByCost,
-  graphCardsByType,
-} from "@/functions/card-graphing";
-import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
-import { Card } from "@/models/card/card";
-import { CardFilters } from "@/models/sorted-cards/sorted-cards";
+  addLocalStorageDashboardItem,
+  addLocalStorageDashboardSection,
+  setLocalStorageDashboard,
+} from "@/functions/local-storage/dashboard-local-storage";
 import React, { useContext } from "react";
 import { ScrollView, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   const { dashboard } = useContext(DashboardContext);
 
-  const [stacked, setStacked] = React.useState(true);
+  if (!dashboard?.sections) {
+    setLocalStorageDashboard({ sections: [] });
 
-  function getStoredCards(): Card[] {
-    return getLocalStorageStoredCards();
-  }
+    const sectionId = addLocalStorageDashboardSection("General");
+    if (!sectionId) return;
 
-  const cardsByColorGraphProps: GraphProps = {
-    id: "cardsByColor",
-    sectionId: "general",
-    title: "Cards By Color",
-    horizontalTitle: "Color",
-    stacked: stacked,
-    sets: graphCardsByColor(getStoredCards()),
-  };
-
-  const cardsByCostGraphProps: GraphProps = {
-    id: "cardsByCost",
-    sectionId: "general",
-    title: "Cards By Cost",
-    horizontalTitle: "Cost",
-    stacked: stacked,
-    sets: graphCardsByCost(getStoredCards()),
-  };
-
-  const cardsByTypeGraphProps: GraphProps = {
-    id: "cardsByType",
-    sectionId: "general",
-    title: "Cards By Type",
-    horizontalTitle: "Type",
-    stacked: stacked,
-    sets: graphCardsByType(getStoredCards()),
-  };
-
-  const colorFilters: CardFilters = {
-    colorFilter: [
+    const allColorFilter: MTGColor[] = [
       "white",
       "blue",
       "black",
@@ -60,70 +27,64 @@ export default function App() {
       "green",
       "gold",
       "colorless",
-    ],
-  };
+    ];
 
-  const cardsByCostChartProps: ChartProps = {
-    id: "cardsByCost",
-    sectionId: "general",
-    title: "Cards by Cost",
-    type: "cost",
-    filters: colorFilters,
-    smallTitles: true,
-  };
+    addLocalStorageDashboardItem(sectionId, {
+      title: "Cards by Cost",
+      sortType: "cost",
+      itemType: "graph",
+      stacked: true,
+      size: "md",
+      filters: {},
+    });
+    addLocalStorageDashboardItem(sectionId, {
+      title: "Cards by Color",
+      sortType: "color",
+      itemType: "graph",
+      stacked: true,
+      size: "md",
+      filters: {},
+    });
+    addLocalStorageDashboardItem(sectionId, {
+      title: "Cards by Cost",
+      sortType: "cost",
+      itemType: "chart",
+      smallTitles: true,
+      size: "sm",
+      filters: { colorFilter: allColorFilter },
+    });
+    addLocalStorageDashboardItem(sectionId, {
+      title: "Cards by Rarity",
+      sortType: "rarity",
+      itemType: "chart",
+      smallTitles: true,
+      size: "sm",
+      filters: { colorFilter: allColorFilter },
+    });
+    addLocalStorageDashboardItem(sectionId, {
+      title: "Cards by Type",
+      sortType: "type",
+      itemType: "chart",
+      smallTitles: true,
+      size: "sm",
+      filters: { colorFilter: allColorFilter },
+    });
+    addLocalStorageDashboardItem(sectionId, {
+      title: "Cards by Type",
+      sortType: "type",
+      itemType: "graph",
+      stacked: true,
+      size: "lg",
+      filters: {},
+    });
 
-  const cardsByRarityChartProps: ChartProps = {
-    id: "cardsByRarity",
-    sectionId: "general",
-    title: "Cards by Rarity",
-    type: "rarity",
-    filters: colorFilters,
-    smallTitles: true,
-  };
-
-  const cardsByTypeChartProps: ChartProps = {
-    id: "cardsByType",
-    sectionId: "general",
-    title: "Cards by Type",
-    type: "type",
-    filters: colorFilters,
-    smallTitles: true,
-  };
+    addLocalStorageDashboardSection("Unsorted");
+  }
 
   return (
-    <View className="flex gap-6 flex-1 justify-center bg-background-100 px-6">
+    <SafeAreaView className="flex-1 bg-background-100 ">
       <ScrollView>
-        <Button
-          className="mx-auto max-w-fit mb-4"
-          text={stacked ? "Stacked" : "Grouped"}
-          onClick={() => setStacked(!stacked)}
-        />
-
-        <View className="flex flex-row flex-wrap gap-6 justify-center items-center">
-          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Graph {...cardsByColorGraphProps} />
-          </Box>
-
-          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Graph {...cardsByCostGraphProps} />
-          </Box>
-
-          <Box className="flex-1 h-80 !p-0 lg:min-w-[25%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Chart {...cardsByCostChartProps} />
-          </Box>
-
-          <Box className="flex-1 h-80 !p-0 lg:min-w-[25%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Chart {...cardsByRarityChartProps} />
-          </Box>
-
-          <Box className="flex-1 h-80 !p-0 lg:min-w-[25%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Chart {...cardsByTypeChartProps} />
-          </Box>
-
-          <Box className="flex-1 h-80 lg:min-w-[40%] min-w-full !bg-background-100 border-2 border-background-300 overflow-hidden">
-            <Graph {...cardsByTypeGraphProps} />
-          </Box>
-
+        <View className="flex-1 flex flex-row flex-wrap gap-6 px-6 justify-center items-center">
           {dashboard?.sections.map((section, index) => (
             <DashboardSectionView
               sectionId={section.id}
@@ -132,6 +93,6 @@ export default function App() {
           ))}
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }

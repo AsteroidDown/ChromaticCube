@@ -88,7 +88,7 @@ export default function DashboardSectionView({
               item.size === "sm"
                 ? "lg:min-w-[25%] lg:max-w-[33%]"
                 : item.size === "md"
-                ? "lg:min-w-[50%] lg:max-w-[66%]"
+                ? "lg:min-w-[45%] lg:max-w-[66%]"
                 : "lg:min-w-[100%]"
             }`}
           >

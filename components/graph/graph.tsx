@@ -50,6 +50,8 @@ export default function Graph({
 
   const verticalTickLength = ceiling > 45 ? 10 : ceiling > 12 ? 5 : 2;
 
+  console.log(sets, maxValue, ceiling, verticalTickLength);
+
   return (
     <View className={`${className} flex flex-1 w-full h-full overflow-auto`}>
       <DashboardItemHeader

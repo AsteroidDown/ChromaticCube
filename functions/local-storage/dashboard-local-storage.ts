@@ -23,6 +23,25 @@ export function setLocalStorageDashboard(dashboard: Dashboard) {
   localStorage.setItem("dashboard", JSON.stringify(dashboard));
 }
 
+export function addLocalStorageDashboardSection(title: string) {
+  if (Platform.OS === "ios") return null;
+
+  let dashboard: Dashboard | null = getLocalStorageDashboard();
+  if (!dashboard) return;
+
+  const newSection = {
+    id: generateId("dashboard-section"),
+    title: title,
+    items: [],
+  };
+
+  dashboard.sections.push(newSection);
+
+  setLocalStorageDashboard(dashboard);
+
+  return newSection.id;
+}
+
 export function updateLocalStorageDashboardSection(
   sectionId: string,
   title: string
