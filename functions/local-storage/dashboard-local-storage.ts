@@ -31,7 +31,7 @@ export function addLocalStorageDashboardSection(title: string) {
 
   const newSection = {
     id: generateId("dashboard-section"),
-    title: title,
+    title,
     items: [],
   };
 

@@ -1,17 +1,20 @@
 import DashboardSectionView from "@/components/dashboard/dashboard-section";
+import Button from "@/components/ui/button/button";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
   addLocalStorageDashboardItem,
   addLocalStorageDashboardSection,
+  getLocalStorageDashboard,
   setLocalStorageDashboard,
 } from "@/functions/local-storage/dashboard-local-storage";
+import { faTableCellsLarge } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext } from "react";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
-  const { dashboard } = useContext(DashboardContext);
+  const { dashboard, setDashboard } = useContext(DashboardContext);
 
   if (!dashboard?.sections) {
     setLocalStorageDashboard({ sections: [] });
@@ -77,8 +80,11 @@ export default function App() {
       size: "lg",
       filters: {},
     });
+  }
 
-    addLocalStorageDashboardSection("Unsorted");
+  function addSection() {
+    addLocalStorageDashboardSection("New Section");
+    setDashboard(getLocalStorageDashboard());
   }
 
   return (
@@ -91,6 +97,15 @@ export default function App() {
               key={section.title + index}
             />
           ))}
+        </View>
+
+        <View className="flex justify-center items-center my-24">
+          <Button
+            text="Add Section"
+            type="outlined"
+            icon={faTableCellsLarge}
+            onClick={() => addSection()}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
