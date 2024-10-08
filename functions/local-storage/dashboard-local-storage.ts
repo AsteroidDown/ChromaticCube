@@ -62,6 +62,44 @@ export function updateLocalStorageDashboardSection(
   setLocalStorageDashboard(dashboard);
 }
 
+export function moveUpLocalStorageDashboardSection(sectionId: string) {
+  if (Platform.OS === "ios") return null;
+
+  let dashboard: Dashboard | null = getLocalStorageDashboard();
+  if (!dashboard) return;
+
+  const sectionIndex = dashboard?.sections?.findIndex(
+    (dashboardSection) => dashboardSection.id === sectionId
+  );
+
+  if (sectionIndex > 0) {
+    const section = dashboard.sections[sectionIndex];
+    dashboard.sections[sectionIndex] = dashboard.sections[sectionIndex - 1];
+    dashboard.sections[sectionIndex - 1] = section;
+  }
+
+  setLocalStorageDashboard(dashboard);
+}
+
+export function moveDownLocalStorageDashboardSection(sectionId: string) {
+  if (Platform.OS === "ios") return null;
+
+  let dashboard: Dashboard | null = getLocalStorageDashboard();
+  if (!dashboard) return;
+
+  const sectionIndex = dashboard?.sections?.findIndex(
+    (dashboardSection) => dashboardSection.id === sectionId
+  );
+
+  if (sectionIndex < dashboard.sections.length - 1) {
+    const section = dashboard.sections[sectionIndex];
+    dashboard.sections[sectionIndex] = dashboard.sections[sectionIndex + 1];
+    dashboard.sections[sectionIndex + 1] = section;
+  }
+
+  setLocalStorageDashboard(dashboard);
+}
+
 export function removeLocalStorageDashboardSection(sectionId: string) {
   if (Platform.OS === "ios") return null;
 

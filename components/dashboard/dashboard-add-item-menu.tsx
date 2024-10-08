@@ -3,13 +3,17 @@ import Button from "@/components/ui/button/button";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
   getLocalStorageDashboard,
+  moveDownLocalStorageDashboardSection,
+  moveUpLocalStorageDashboardSection,
   removeLocalStorageDashboardSection,
 } from "@/functions/local-storage/dashboard-local-storage";
 import { DashboardSection } from "@/models/dashboard/dashboard";
 import {
   faChartSimple,
+  faDownLong,
   faTable,
   faTrash,
+  faUpLong,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext } from "react";
 import { ViewProps } from "react-native";
@@ -38,6 +42,16 @@ export default function DashboardSectionOptionsMenu({
   const [addGraphOpen, setAddGraphOpen] = React.useState(false);
   const [addChartOpen, setAddChartOpen] = React.useState(false);
   const [removeSectionOpen, setRemoveSectionOpen] = React.useState(false);
+
+  function moveSectionUp() {
+    moveUpLocalStorageDashboardSection(section.id);
+    setDashboard(getLocalStorageDashboard());
+  }
+
+  function moveSectionDown() {
+    moveDownLocalStorageDashboardSection(section.id);
+    setDashboard(getLocalStorageDashboard());
+  }
 
   function removeSection(sectionId: string) {
     removeLocalStorageDashboardSection(sectionId);
@@ -79,18 +93,40 @@ export default function DashboardSectionOptionsMenu({
           />
 
           {!addOnly && (
-            <Button
-              start
-              square
-              type="clear"
-              text="Remove"
-              className="w-full"
-              icon={faTrash}
-              onClick={() => {
-                setRemoveSectionOpen(true);
-                setAddItemOpen(false);
-              }}
-            />
+            <>
+              <Button
+                start
+                square
+                type="clear"
+                text="Move Up"
+                className="w-full"
+                icon={faUpLong}
+                onClick={() => moveSectionUp()}
+              ></Button>
+
+              <Button
+                start
+                square
+                type="clear"
+                text="Move Down"
+                className="w-full"
+                icon={faDownLong}
+                onClick={() => moveSectionDown()}
+              ></Button>
+
+              <Button
+                start
+                square
+                type="clear"
+                text="Remove"
+                className="w-full"
+                icon={faTrash}
+                onClick={() => {
+                  setRemoveSectionOpen(true);
+                  setAddItemOpen(false);
+                }}
+              />
+            </>
           )}
         </Box>
       </Dropdown>
