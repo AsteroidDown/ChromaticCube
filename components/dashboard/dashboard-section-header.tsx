@@ -92,7 +92,7 @@ export default function DashboardSectionHeader({
 
         <DashboardSectionOptionsMenu
           xOffset={-120}
-          sectionId={section.id}
+          section={section}
           addItemOpen={addItemOpen}
           setAddItemOpen={setAddItemOpen}
         />

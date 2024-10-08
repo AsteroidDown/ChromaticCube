@@ -162,7 +162,7 @@ export default function DashboardSectionView({
             <DashboardSectionOptionsMenu
               addOnly
               xOffset={-8}
-              sectionId={section.id}
+              section={section}
               addItemOpen={addItemOpen}
               setAddItemOpen={setAddItemOpen}
             />

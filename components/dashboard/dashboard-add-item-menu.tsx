@@ -5,6 +5,7 @@ import {
   getLocalStorageDashboard,
   removeLocalStorageDashboardSection,
 } from "@/functions/local-storage/dashboard-local-storage";
+import { DashboardSection } from "@/models/dashboard/dashboard";
 import {
   faChartSimple,
   faTable,
@@ -15,10 +16,11 @@ import { ViewProps } from "react-native";
 import CardSaveAsChartModal from "../cards/card-save-as-chart-modal";
 import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
 import Dropdown from "../ui/dropdown/dropdown";
+import SimpleModal from "../ui/modal/simple-modal";
 
 export type DashboardSectionOptionsMenuProps = ViewProps & {
   xOffset?: number;
-  sectionId: string;
+  section: DashboardSection;
   addItemOpen: boolean;
   setAddItemOpen: React.Dispatch<React.SetStateAction<boolean>>;
   addOnly?: boolean;
@@ -26,7 +28,7 @@ export type DashboardSectionOptionsMenuProps = ViewProps & {
 
 export default function DashboardSectionOptionsMenu({
   xOffset,
-  sectionId,
+  section,
   addItemOpen,
   setAddItemOpen,
   addOnly = false,
@@ -35,6 +37,7 @@ export default function DashboardSectionOptionsMenu({
 
   const [addGraphOpen, setAddGraphOpen] = React.useState(false);
   const [addChartOpen, setAddChartOpen] = React.useState(false);
+  const [removeSectionOpen, setRemoveSectionOpen] = React.useState(false);
 
   function removeSection(sectionId: string) {
     removeLocalStorageDashboardSection(sectionId);
@@ -84,7 +87,7 @@ export default function DashboardSectionOptionsMenu({
               className="w-full"
               icon={faTrash}
               onClick={() => {
-                removeSection(sectionId);
+                setRemoveSectionOpen(true);
                 setAddItemOpen(false);
               }}
             />
@@ -93,16 +96,26 @@ export default function DashboardSectionOptionsMenu({
       </Dropdown>
 
       <CardSaveAsGraphModal
-        sectionId={sectionId}
+        sectionId={section.id}
         open={addGraphOpen}
         setOpen={setAddGraphOpen}
       />
 
       <CardSaveAsChartModal
-        sectionId={sectionId}
+        sectionId={section.id}
         open={addChartOpen}
         setOpen={setAddChartOpen}
       />
+
+      <SimpleModal
+        title={"Remove " + section.title + "?"}
+        description="This action can't be undone. Are you sure you want to continue?"
+        confirmText="Remove Section"
+        confirmActionColor="danger"
+        open={removeSectionOpen}
+        setOpen={setRemoveSectionOpen}
+        confirmAction={() => removeSection(section.id)}
+      ></SimpleModal>
     </>
   );
 }
