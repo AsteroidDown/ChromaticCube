@@ -9,10 +9,10 @@ module.exports = {
         bottomToTopGrow: {
           "0%": { height: "0" },
           "100%": { height: "100%" },
-        }
+        },
       },
       animation: {
-        bottomToTopGrow: "bottomToTopGrow 1s ease forwards"
+        bottomToTopGrow: "bottomToTopGrow 1s ease forwards",
       },
       gridTemplateAreas: {
         graphLayout: ["title title", "verticalAxis plot", ". horizontalAxis"],
@@ -28,8 +28,8 @@ module.exports = {
         "mtg-white-secondary": "#f8e7b9",
         "mtg-blue": "#0e68ab",
         "mtg-blue-secondary": "#4687b8",
-        "mtg-black": "#120126",
-        "mtg-black-secondary": "#301252",
+        "mtg-black": "#471480",
+        "mtg-black-secondary": "#651db5",
         "mtg-red": "#d3202a",
         "mtg-red-secondary": "#bf4d53",
         "mtg-green": "#00733d",
