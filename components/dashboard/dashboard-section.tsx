@@ -110,7 +110,11 @@ export default function DashboardSectionView({
                   />
                 }
                 titleEnd={
-                  <DashboardItemMenu item={item} sectionId={section.id} />
+                  <DashboardItemMenu
+                    xOffset={-100}
+                    item={item}
+                    sectionId={section.id}
+                  />
                 }
               />
             )}
@@ -133,13 +137,11 @@ export default function DashboardSectionView({
                   />
                 }
                 titleEnd={
-                  <View className="ml-2.5 mt-1">
-                    <DashboardItemMenu
-                      xOffset={-40}
-                      item={item}
-                      sectionId={section.id}
-                    />
-                  </View>
+                  <DashboardItemMenu
+                    xOffset={-100}
+                    item={item}
+                    sectionId={section.id}
+                  />
                 }
               />
             )}

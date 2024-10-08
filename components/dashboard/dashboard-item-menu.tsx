@@ -80,7 +80,7 @@ export default function DashboardItemMenu({
         expanded={expanded}
         setExpanded={setExpanded}
       >
-        <Box className="flex justify-start items-start !p-0 border-2 border-background-100 !bg-background-200 overflow-hidden">
+        <Box className="flex justify-start items-start !p-0 border-2 border-primary-300 !bg-background-100 !bg-opacity-90 overflow-hidden">
           <Button
             start
             square
