@@ -62,6 +62,23 @@ export function updateLocalStorageDashboardSection(
   setLocalStorageDashboard(dashboard);
 }
 
+export function removeLocalStorageDashboardSection(sectionId: string) {
+  if (Platform.OS === "ios") return null;
+
+  let dashboard: Dashboard | null = getLocalStorageDashboard();
+  if (!dashboard) return;
+
+  const sectionIndex = dashboard?.sections?.findIndex(
+    (dashboardSection) => dashboardSection.id === sectionId
+  );
+
+  if (sectionIndex >= 0) {
+    dashboard.sections.splice(sectionIndex, 1);
+  }
+
+  setLocalStorageDashboard(dashboard);
+}
+
 export function addLocalStorageDashboardItem(
   sectionId: string,
   item: Omit<DashboardItem, "id" | "index">

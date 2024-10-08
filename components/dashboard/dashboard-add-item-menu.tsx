@@ -1,27 +1,45 @@
 import Box from "@/components/ui/box/box";
 import Button from "@/components/ui/button/button";
-import { faChartSimple, faTable } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import DashboardContext from "@/contexts/dashboard/dashboard.context";
+import {
+  getLocalStorageDashboard,
+  removeLocalStorageDashboardSection,
+} from "@/functions/local-storage/dashboard-local-storage";
+import {
+  faChartSimple,
+  faTable,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import React, { useContext } from "react";
 import { ViewProps } from "react-native";
 import CardSaveAsChartModal from "../cards/card-save-as-chart-modal";
 import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
 import Dropdown from "../ui/dropdown/dropdown";
 
-export type DashboardAddItemMenuProps = ViewProps & {
+export type DashboardSectionOptionsMenuProps = ViewProps & {
   xOffset?: number;
   sectionId: string;
   addItemOpen: boolean;
   setAddItemOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  addOnly?: boolean;
 };
 
-export default function DashboardAddItemMenu({
+export default function DashboardSectionOptionsMenu({
   xOffset,
   sectionId,
   addItemOpen,
   setAddItemOpen,
-}: DashboardAddItemMenuProps) {
+  addOnly = false,
+}: DashboardSectionOptionsMenuProps) {
+  const { setDashboard } = useContext(DashboardContext);
+
   const [addGraphOpen, setAddGraphOpen] = React.useState(false);
   const [addChartOpen, setAddChartOpen] = React.useState(false);
+
+  function removeSection(sectionId: string) {
+    removeLocalStorageDashboardSection(sectionId);
+    setDashboard(getLocalStorageDashboard());
+  }
 
   return (
     <>
@@ -56,6 +74,21 @@ export default function DashboardAddItemMenu({
               setAddItemOpen(false);
             }}
           />
+
+          {!addOnly && (
+            <Button
+              start
+              square
+              type="clear"
+              text="Remove"
+              className="w-full"
+              icon={faTrash}
+              onClick={() => {
+                removeSection(sectionId);
+                setAddItemOpen(false);
+              }}
+            />
+          )}
         </Box>
       </Dropdown>
 

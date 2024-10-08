@@ -28,7 +28,7 @@ import React, { useContext, useEffect } from "react";
 import { View, ViewProps } from "react-native";
 import Chart, { ChartType } from "../chart/chart";
 import Placeholder from "../ui/placeholder/placeholder";
-import DashboardAddItemMenu from "./dashboard-add-item-menu";
+import DashboardSectionOptionsMenu from "./dashboard-add-item-menu";
 import DashboardItemMenu from "./dashboard-item-menu";
 import DashboardSectionHeader from "./dashboard-section-header";
 
@@ -159,7 +159,8 @@ export default function DashboardSectionView({
               onClick={() => setAddItemOpen(true)}
             />
 
-            <DashboardAddItemMenu
+            <DashboardSectionOptionsMenu
+              addOnly
               xOffset={-8}
               sectionId={section.id}
               addItemOpen={addItemOpen}

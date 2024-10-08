@@ -6,10 +6,14 @@ import {
   updateLocalStorageDashboardSection,
 } from "@/functions/local-storage/dashboard-local-storage";
 import { DashboardSection } from "@/models/dashboard/dashboard";
-import { faCheck, faPencil, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faEllipsisV,
+  faPencil,
+} from "@fortawesome/free-solid-svg-icons";
 import React, { useContext } from "react";
 import { TextInput, View, ViewProps } from "react-native";
-import DashboardAddItemMenu from "./dashboard-add-item-menu";
+import DashboardSectionOptionsMenu from "./dashboard-add-item-menu";
 
 export type DashboardSectionHeaderProps = ViewProps & {
   section: DashboardSection;
@@ -43,7 +47,7 @@ export default function DashboardSectionHeader({
     >
       <View className="flex flex-row gap-2 items-center">
         {!editingSection && (
-          <Text size="2xl" thickness="bold" className="py-1 pr-auto ">
+          <Text size="2xl" thickness="bold" className="py-1 pr-auto">
             {section.title}
           </Text>
         )}
@@ -82,11 +86,11 @@ export default function DashboardSectionHeader({
           rounded
           type="clear"
           action="default"
-          icon={faPlus}
+          icon={faEllipsisV}
           onClick={() => setAddItemOpen(true)}
         ></Button>
 
-        <DashboardAddItemMenu
+        <DashboardSectionOptionsMenu
           xOffset={-120}
           sectionId={section.id}
           addItemOpen={addItemOpen}
