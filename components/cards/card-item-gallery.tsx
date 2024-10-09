@@ -1,6 +1,7 @@
 import Box from "@/components/ui/box/box";
 import BoxHeader from "@/components/ui/box/box-header";
 import FilterBar from "@/components/ui/filters/filter-bar";
+import BoardContext from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import { filterCards } from "@/functions/card-filtering";
 import {
@@ -39,7 +40,8 @@ export default function CardItemGallery({
   condensed,
   hideImages,
 }: CardItemGalleryProps) {
-  const { maybeBoard, storedCards } = useContext(StoredCardsContext);
+  const { board } = useContext(BoardContext);
+  const { storedCards } = useContext(StoredCardsContext);
 
   const [cards, setCards] = React.useState([] as Card[]);
 
@@ -58,12 +60,13 @@ export default function CardItemGallery({
     {} as CardsSortedByType
   );
 
-  useEffect(() => {
-    setCards(sortCardsAlphabetically(storedCards));
-  }, [storedCards]);
+  useEffect(
+    () => setCards(sortCardsAlphabetically(getLocalStorageStoredCards(board))),
+    [storedCards]
+  );
 
   useEffect(() => {
-    setCards(sortCardsAlphabetically(getLocalStorageStoredCards(maybeBoard)));
+    setCards(sortCardsAlphabetically(getLocalStorageStoredCards(board)));
   }, []);
 
   useEffect(() => {

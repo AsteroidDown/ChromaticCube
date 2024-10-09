@@ -4,7 +4,7 @@ import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import { SortDirection } from "@/constants/sorting";
-import StoredCardsContext from "@/contexts/cards/stored-cards.context";
+import BoardContext from "@/contexts/cards/board.context";
 import {
   CardFilters,
   CardFilterSortType,
@@ -28,7 +28,7 @@ export interface FilterBarProps {
 }
 
 export default function FilterBar({ setFilters, type }: FilterBarProps) {
-  const { maybeBoard } = useContext(StoredCardsContext);
+  const { board } = useContext(BoardContext);
 
   const [showFilters, setShowFilters] = React.useState(false);
   const [filterLength, setFilterLength] = React.useState(0);
@@ -98,7 +98,7 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
             : "-mr-12 max-w-[0%]"
         }`}
       >
-        {!maybeBoard && (
+        {board === "main" && (
           <>
             <CardSaveAsGraphModal
               type={type}

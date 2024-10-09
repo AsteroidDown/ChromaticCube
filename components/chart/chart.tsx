@@ -3,7 +3,7 @@ import {
   sortCardsAlphabetically,
   sortCardsByManaValue,
 } from "@/functions/card-sorting";
-import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
+import { Card } from "@/models/card/card";
 import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React, { ReactNode } from "react";
 import { View, ViewProps } from "react-native";
@@ -18,6 +18,7 @@ export type ChartType = "cost" | "rarity" | "type";
 export type ChartProps = ViewProps & {
   id: string;
   sectionId: string;
+  cards: Card[];
   title: string;
   titleStart?: ReactNode;
   titleEnd?: ReactNode;
@@ -29,6 +30,7 @@ export type ChartProps = ViewProps & {
 export default function Chart({
   id,
   sectionId,
+  cards,
   title,
   titleStart,
   titleEnd,
@@ -36,9 +38,7 @@ export default function Chart({
   filters,
   smallTitles = false,
 }: ChartProps) {
-  const cards = sortCardsByManaValue(
-    sortCardsAlphabetically(getLocalStorageStoredCards())
-  );
+  const sortedCards = sortCardsByManaValue(sortCardsAlphabetically(cards));
 
   if (type === "cost")
     return (
@@ -53,7 +53,7 @@ export default function Chart({
         />
 
         <CostChartLayout
-          cards={cards}
+          cards={sortedCards}
           filters={filters}
           smallTitles={smallTitles}
         />
@@ -72,7 +72,7 @@ export default function Chart({
         />
 
         <RarityChartLayout
-          cards={cards}
+          cards={sortedCards}
           filters={filters}
           smallTitles={smallTitles}
         />
@@ -91,7 +91,7 @@ export default function Chart({
         />
 
         <TypeChartLayout
-          cards={cards}
+          cards={sortedCards}
           filters={filters}
           smallTitles={smallTitles}
         />

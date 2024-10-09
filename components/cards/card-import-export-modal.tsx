@@ -1,4 +1,5 @@
 import Text from "@/components/ui/text/text";
+import BoardContext from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import {
   getLocalStorageStoredCards,
@@ -27,7 +28,8 @@ export default function CardImportExportModal({
   open,
   setOpen,
 }: CardImportExportModalProps) {
-  const { maybeBoard, setStoredCards } = useContext(StoredCardsContext);
+  const { board } = useContext(BoardContext);
+  const { setStoredCards } = useContext(StoredCardsContext);
 
   const [cards, setCards] = React.useState("");
   const [disabled, setDisabled] = React.useState(false);
@@ -113,7 +115,7 @@ export default function CardImportExportModal({
     } else {
       ScryfallService.getCardsFromCollection(cardIdentifiers).then(
         (newCards) => {
-          setLocalStorageCards(newCards, maybeBoard);
+          setLocalStorageCards(newCards, board);
           setStoredCards(newCards);
 
           setDisabled(false);

@@ -4,13 +4,14 @@ import Button from "@/components/ui/button/button";
 import { TabProps } from "@/components/ui/tabs/tab";
 import TabBar from "@/components/ui/tabs/tab-bar";
 import { Tooltip } from "@/components/ui/tooltip/tooltip";
+import BoardContext, { BoardType } from "@/contexts/cards/board.context";
 import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
+import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import {
   getLocalStoragePreferences,
   setLocalStoragePreferences,
 } from "@/functions/local-storage/preferences-local-storage";
-import { Card } from "@/models/card/card";
 import { Preferences } from "@/models/preferences/preferences";
 import {
   faDownLeftAndUpRightToCenter,
@@ -19,12 +20,15 @@ import {
   faFileArrowDown,
   faUpRightAndDownLeftFromCenter,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { ScrollView, View } from "react-native";
 
 export default function CardsLayout() {
+  const { setStoredCards } = useContext(StoredCardsContext);
+
+  const [board, setBoard] = React.useState("maybe" as BoardType);
+
   const [open, setOpen] = React.useState(false);
-  const [storedCards, setStoredCards] = React.useState([] as Card[]);
 
   const [preferences, setPreferences] = React.useState({} as Preferences);
   const [hideImages, setHideImages] = React.useState(false);
@@ -41,6 +45,8 @@ export default function CardsLayout() {
   ];
 
   useEffect(() => {
+    setStoredCards(getLocalStorageStoredCards(board));
+
     const storedPreferences = getLocalStoragePreferences();
     if (storedPreferences) setPreferences(storedPreferences);
 
@@ -117,9 +123,7 @@ export default function CardsLayout() {
 
   return (
     <ScrollView>
-      <StoredCardsContext.Provider
-        value={{ maybeBoard: true, storedCards, setStoredCards }}
-      >
+      <BoardContext.Provider value={{ board, setBoard }}>
         <View className="flex gap-4 px-6 py-4 w-full h-[100vh] pb-4 bg-background-100 overflow-y-scroll">
           <CardSearch />
 
@@ -173,7 +177,7 @@ export default function CardsLayout() {
         </View>
 
         <CardImportExportModal open={open} setOpen={setOpen} />
-      </StoredCardsContext.Provider>
+      </BoardContext.Provider>
     </ScrollView>
   );
 }

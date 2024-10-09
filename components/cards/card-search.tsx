@@ -2,6 +2,7 @@ import Box from "@/components/ui/box/box";
 import Button from "@/components/ui/button/button";
 import SearchBar from "@/components/ui/search-bar/search-bar";
 import { ActionColor } from "@/constants/ui/colors";
+import BoardContext from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import { saveLocalStorageCard } from "@/functions/local-storage/card-local-storage";
 import ScryfallService from "@/hooks/scryfall.service";
@@ -14,7 +15,8 @@ import CardImage from "./card-image";
 import CardPrints from "./card-prints";
 
 export default function CardSearch() {
-  const { maybeBoard, setStoredCards } = useContext(StoredCardsContext);
+  const { board } = useContext(BoardContext);
+  const { setStoredCards } = useContext(StoredCardsContext);
 
   const [search, onSearchChange] = useState("");
 
@@ -60,7 +62,7 @@ export default function CardSearch() {
   function saveCard(card?: Card) {
     if (!card) return;
 
-    const storedCards = saveLocalStorageCard(card, maybeBoard);
+    const storedCards = saveLocalStorageCard(card, board);
     if (storedCards) setStoredCards(storedCards);
 
     setButtonText("Card Added!");

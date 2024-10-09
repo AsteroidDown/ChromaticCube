@@ -8,7 +8,6 @@ import {
   graphCardsByCost,
   graphCardsByType,
 } from "@/functions/card-graphing";
-import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import {
   getLocalStorageDashboard,
   updateLocalStorageDashboardItem,
@@ -34,18 +33,18 @@ import DashboardSectionHeader from "./dashboard-section-header";
 
 export type DashboardSectionProps = ViewProps & {
   sectionId: string;
+  cards: Card[];
 };
 
 export default function DashboardSectionView({
   sectionId,
+  cards,
 }: DashboardSectionProps) {
   const { dashboard, setDashboard } = useContext(DashboardContext);
 
   const [section, setSection] = React.useState(null as DashboardSection | null);
 
   const [addItemOpen, setAddItemOpen] = React.useState(false);
-
-  const storedCards = getLocalStorageStoredCards();
 
   const itemClasses =
     "flex-1 min-w-full h-80 !bg-background-100 border-2 border-background-300 overflow-x-scroll overflow-y-hidden transition-all duration-500";
@@ -99,7 +98,7 @@ export default function DashboardSectionView({
                 title={item.title}
                 stacked={item.stacked}
                 horizontalTitle={titleCase(item.sortType)}
-                sets={getSets(item.sortType, item.filters, storedCards)}
+                sets={getSets(item.sortType, item.filters, cards)}
                 titleStart={
                   <Button
                     rounded
@@ -123,6 +122,7 @@ export default function DashboardSectionView({
               <Chart
                 id={item.id}
                 sectionId={section.id}
+                cards={cards}
                 title={item.title}
                 type={item.sortType as ChartType}
                 filters={item.filters}

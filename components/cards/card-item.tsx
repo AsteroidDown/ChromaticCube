@@ -3,6 +3,7 @@ import Divider from "@/components/ui/divider/divider";
 import Modal from "@/components/ui/modal/modal";
 import Text from "@/components/ui/text/text";
 import { Tooltip } from "@/components/ui/tooltip/tooltip";
+import BoardContext, { BoardType } from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import {
   addToLocalStorageCardCount,
@@ -139,7 +140,8 @@ export function CardItemFooter({
   modalOpen,
   setModalOpen,
 }: any) {
-  const { maybeBoard, setStoredCards } = useContext(StoredCardsContext);
+  const { board } = useContext(BoardContext);
+  const { setStoredCards } = useContext(StoredCardsContext);
 
   const [print, setPrint] = React.useState(undefined as Card | undefined);
 
@@ -150,29 +152,29 @@ export function CardItemFooter({
   }, [print]);
 
   function addToCount(card: Card) {
-    addToLocalStorageCardCount(card, maybeBoard);
-    setStoredCards(getLocalStorageStoredCards(maybeBoard));
+    addToLocalStorageCardCount(card, board);
+    setStoredCards(getLocalStorageStoredCards(board));
   }
 
   function removeFromCount(card: Card) {
-    removeFromLocalStorageCardCount(card, maybeBoard);
-    setStoredCards(getLocalStorageStoredCards(maybeBoard));
+    removeFromLocalStorageCardCount(card, board);
+    setStoredCards(getLocalStorageStoredCards(board));
   }
 
   function removeCard(card: Card) {
-    removeLocalStorageCard(card, maybeBoard);
-    setStoredCards(getLocalStorageStoredCards(maybeBoard));
+    removeLocalStorageCard(card, board);
+    setStoredCards(getLocalStorageStoredCards(board));
   }
 
   function switchPrint(card: Card, print: Card) {
-    switchLocalStorageCardPrint(card, print, maybeBoard);
-    setStoredCards(getLocalStorageStoredCards(maybeBoard));
+    switchLocalStorageCardPrint(card, print, board);
+    setStoredCards(getLocalStorageStoredCards(board));
   }
 
-  function moveCard(card: Card) {
-    saveLocalStorageCard(card, !maybeBoard);
-    removeLocalStorageCard(card, maybeBoard);
-    setStoredCards(getLocalStorageStoredCards(maybeBoard));
+  function moveCard(card: Card, moveToBoard: BoardType) {
+    saveLocalStorageCard(card, moveToBoard);
+    removeLocalStorageCard(card, board);
+    setStoredCards(getLocalStorageStoredCards(board));
   }
 
   return (
@@ -197,7 +199,7 @@ export function CardItemFooter({
             action="warning"
             className="flex-1"
             icon={faRightFromBracket}
-            onClick={() => moveCard(card)}
+            onClick={() => moveCard(card, "maybe")}
           ></Button>
         </Tooltip>
 

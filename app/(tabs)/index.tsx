@@ -1,6 +1,7 @@
 import DashboardSectionView from "@/components/dashboard/dashboard-section";
 import Button from "@/components/ui/button/button";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
+import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
   addLocalStorageDashboardItem,
@@ -14,6 +15,7 @@ import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
+  const { storedCards } = useContext(StoredCardsContext);
   const { dashboard, setDashboard } = useContext(DashboardContext);
 
   if (!dashboard?.sections) {
@@ -93,6 +95,7 @@ export default function App() {
         <View className="flex-1 flex flex-row flex-wrap gap-6 px-6 justify-center items-center">
           {dashboard?.sections.map((section, index) => (
             <DashboardSectionView
+              cards={storedCards}
               sectionId={section.id}
               key={section.title + index}
             />

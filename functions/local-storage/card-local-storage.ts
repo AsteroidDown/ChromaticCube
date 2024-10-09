@@ -1,27 +1,29 @@
+import { BoardType } from "@/contexts/cards/board.context";
 import { Platform } from "react-native";
 import { Card } from "../../models/card/card";
+import { titleCase } from "../text-manipulation";
 
-export function getLocalStorageStoredCards(maybeBoard?: boolean) {
+export function getLocalStorageStoredCards(board: BoardType = "main") {
   if (Platform.OS === "ios") return [];
 
   const storedCards: string[] = JSON.parse(
-    localStorage.getItem(maybeBoard ? "cubeCardsMaybe" : "cubeCards") || "[]"
+    localStorage.getItem("cubeCards" + titleCase(board)) || "[]"
   );
 
   return storedCards.map((savedCard) => JSON.parse(savedCard) as Card);
 }
 
-export function setLocalStorageCards(cards: Card[], maybeBoard?: boolean) {
+export function setLocalStorageCards(cards: Card[], board?: BoardType) {
   localStorage.setItem(
-    maybeBoard ? "cubeCardsMaybe" : "cubeCards",
+    "cubeCards" + titleCase(board),
     JSON.stringify(cards.map((card) => JSON.stringify(card)))
   );
 }
 
-export function saveLocalStorageCard(card: Card, maybeBoard?: boolean) {
+export function saveLocalStorageCard(card: Card, board?: BoardType) {
   if (Platform.OS === "ios") return;
 
-  const storedCards = getLocalStorageStoredCards(maybeBoard);
+  const storedCards = getLocalStorageStoredCards(board);
 
   const storedCardIndex = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
@@ -33,7 +35,7 @@ export function saveLocalStorageCard(card: Card, maybeBoard?: boolean) {
   const newCards = JSON.stringify([
     ...storedCards.map((storedCard) => JSON.stringify(storedCard)),
   ]);
-  localStorage.setItem(maybeBoard ? "cubeCardsMaybe" : "cubeCards", newCards);
+  localStorage.setItem("cubeCards" + titleCase(board), newCards);
 
   return storedCards;
 }
@@ -41,9 +43,9 @@ export function saveLocalStorageCard(card: Card, maybeBoard?: boolean) {
 export function switchLocalStorageCardPrint(
   card: Card,
   print: Card,
-  maybeBoard?: boolean
+  board?: BoardType
 ) {
-  const storedCards = getLocalStorageStoredCards(maybeBoard);
+  const storedCards = getLocalStorageStoredCards(board);
 
   const cardIndex = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
@@ -55,7 +57,7 @@ export function switchLocalStorageCardPrint(
     storedCards[cardIndex] = print;
 
     localStorage.setItem(
-      maybeBoard ? "cubeCardsMaybe" : "cubeCards",
+      "cubeCards" + titleCase(board),
       JSON.stringify(
         storedCards.map((storedCard) => JSON.stringify(storedCard))
       )
@@ -63,8 +65,8 @@ export function switchLocalStorageCardPrint(
   }
 }
 
-export function addToLocalStorageCardCount(card: Card, maybeBoard?: boolean) {
-  const storedCards = getLocalStorageStoredCards(maybeBoard);
+export function addToLocalStorageCardCount(card: Card, board?: BoardType) {
+  const storedCards = getLocalStorageStoredCards(board);
 
   const cardIndex = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
@@ -74,7 +76,7 @@ export function addToLocalStorageCardCount(card: Card, maybeBoard?: boolean) {
     storedCards[cardIndex].count += 1;
 
     localStorage.setItem(
-      maybeBoard ? "cubeCardsMaybe" : "cubeCards",
+      "cubeCards" + titleCase(board),
       JSON.stringify(
         storedCards.map((storedCard) => JSON.stringify(storedCard))
       )
@@ -82,11 +84,8 @@ export function addToLocalStorageCardCount(card: Card, maybeBoard?: boolean) {
   } else saveLocalStorageCard(card);
 }
 
-export function removeFromLocalStorageCardCount(
-  card: Card,
-  maybeBoard?: boolean
-) {
-  const storedCards = getLocalStorageStoredCards(maybeBoard);
+export function removeFromLocalStorageCardCount(card: Card, board?: BoardType) {
+  const storedCards = getLocalStorageStoredCards(board);
 
   const cardIndex = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
@@ -98,7 +97,7 @@ export function removeFromLocalStorageCardCount(
     if (storedCards[cardIndex].count <= 0) removeLocalStorageCard(card);
     else {
       localStorage.setItem(
-        maybeBoard ? "cubeCardsMaybe" : "cubeCards",
+        "cubeCards" + titleCase(board),
         JSON.stringify(
           storedCards.map((storedCard) => JSON.stringify(storedCard))
         )
@@ -107,10 +106,10 @@ export function removeFromLocalStorageCardCount(
   }
 }
 
-export function removeLocalStorageCard(card: Card, maybeBoard?: boolean) {
+export function removeLocalStorageCard(card: Card, board?: BoardType) {
   if (Platform.OS === "ios") return;
 
-  const storedCards = getLocalStorageStoredCards(maybeBoard);
+  const storedCards = getLocalStorageStoredCards(board);
 
   const index = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
@@ -119,7 +118,7 @@ export function removeLocalStorageCard(card: Card, maybeBoard?: boolean) {
   if (index >= 0) {
     storedCards.splice(index, 1);
     localStorage.setItem(
-      maybeBoard ? "cubeCardsMaybe" : "cubeCards",
+      "cubeCards" + titleCase(board),
       JSON.stringify(
         storedCards.map((storedCard) => JSON.stringify(storedCard))
       )
