@@ -4,6 +4,7 @@ import { Size } from "@/constants/ui/sizes";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faRotate } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useEffect } from "react";
 import { Pressable, View, ViewProps } from "react-native";
 
 export type ButtonType = "default" | "outlined" | "clear";
@@ -23,6 +24,7 @@ export type ButtonProps = ViewProps & {
   hideRightBorder?: boolean;
 
   disabled?: boolean;
+  tabbable?: boolean;
   onClick?: () => void;
 };
 
@@ -34,6 +36,7 @@ export default function Button({
   size = "md",
   type = "default",
   disabled = false,
+  tabbable = true,
   onClick,
   children,
   start = false,
@@ -42,9 +45,15 @@ export default function Button({
   hideLeftBorder = false,
   hideRightBorder = false,
 }: ButtonProps) {
+  const [focused, setFocused] = React.useState(false);
+  const [useFocus, setUseFocus] = React.useState(false);
+
+  const ref = React.useRef<View>(null);
+
   const baseColor = getButtonBaseColor(action, type, disabled);
   const hoverColor = getButtonHoverColor(action, type, disabled);
   const textColor = getButtonTextColor(action, type, disabled);
+  const focusColor = getButtonFocusColor(action, type, disabled);
 
   const buttonHeight = getButtonHeight(size);
 
@@ -53,11 +62,29 @@ export default function Button({
     (start ? "justify-start" : "justify-center") +
     (square ? " !rounded-none" : "");
 
+  useEffect(() => {
+    if (focused) {
+      ref.current?.focus();
+      setUseFocus(true);
+    } else {
+      ref.current?.blur();
+      setUseFocus(false);
+    }
+  }, [focused]);
+
   return (
-    <Pressable className={className} onPress={onClick} disabled={disabled}>
+    <Pressable
+      onPress={onClick}
+      disabled={disabled}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
+      className={`${className} outline-none`}
+      tabIndex={disabled ? -1 : tabbable ? 0 : -1}
+    >
       <View
+        ref={ref}
         className={`${baseButtonClasses} ${buttonHeight}
-          ${baseColor} ${hoverColor} ${
+          ${baseColor} ${hoverColor} ${useFocus ? focusColor : ""} ${
           rounded && text
             ? "!rounded-full"
             : rounded
@@ -121,19 +148,21 @@ function getButtonBaseColor(
   } else {
     if (disabled) return "bg-dark-300";
 
-    return action === "primary"
-      ? "bg-primary-300"
-      : action === "secondary"
-      ? "bg-secondary-200"
-      : action === "success"
-      ? "bg-success-200"
-      : action === "danger"
-      ? "bg-danger-200"
-      : action === "info"
-      ? "bg-info-200"
-      : action === "warning"
-      ? "bg-warning-200"
-      : "bg-white bg-opacity-30";
+    return (
+      (action === "primary"
+        ? "bg-primary-300 border-primary-300"
+        : action === "secondary"
+        ? "bg-secondary-200 border-secondary-200"
+        : action === "success"
+        ? "bg-success-200 border-success-200"
+        : action === "danger"
+        ? "bg-danger-200 border-danger-200"
+        : action === "info"
+        ? "bg-info-200 border-info-200"
+        : action === "warning"
+        ? "bg-warning-200 border-warning-200"
+        : "bg-white bg-opacity-30") + " border-2"
+    );
   }
 }
 
@@ -158,6 +187,30 @@ function getButtonHoverColor(
       : action === "warning"
       ? "hover:bg-warning-100"
       : "hover:bg-white"
+  }`;
+}
+
+function getButtonFocusColor(
+  action: ActionColor,
+  type: ButtonType,
+  disabled: boolean
+) {
+  if (disabled) return;
+
+  return `${type !== "default" ? "bg-opacity-30" : "border-2 bg-opacity-60"} ${
+    action === "primary"
+      ? "bg-primary-100 border-primary-300"
+      : action === "secondary"
+      ? "bg-secondary-100 border-secondary-300"
+      : action === "success"
+      ? "bg-success-100 border-success-300"
+      : action === "danger"
+      ? "bg-danger-100 border-danger-300"
+      : action === "info"
+      ? "bg-info-100 border-info-300"
+      : action === "warning"
+      ? "bg-warning-100 border-warning-300"
+      : "bg-white"
   }`;
 }
 

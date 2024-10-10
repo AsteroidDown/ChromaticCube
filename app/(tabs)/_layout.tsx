@@ -29,7 +29,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Overview",
+            title: "Dashboard",
             tabBarLabel: ({ focused }) => (
               <View className="flex flex-row justify-center items-center gap-2">
                 <FontAwesomeIcon
@@ -39,7 +39,7 @@ export default function TabLayout() {
                 />
 
                 <Text className={focused ? "" : "color-primary-400"}>
-                  Overview
+                  Dashboard
                 </Text>
               </View>
             ),

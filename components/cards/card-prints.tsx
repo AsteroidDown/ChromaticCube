@@ -1,18 +1,19 @@
 import Box from "@/components/ui/box/box";
 import Button from "@/components/ui/button/button";
-import Dropdown from "@/components/ui/dropdown/dropdown";
-import Text from "@/components/ui/text/text";
 import ScryfallService from "@/hooks/scryfall.service";
 import { Card } from "@/models/card/card";
 import { faPalette } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { Image, Pressable, View } from "react-native";
+import Dropdown from "../ui/dropdown/dropdown";
+import Text from "../ui/text/text";
 
 export interface CardPrintsProps {
   card?: Card;
   setCard: React.Dispatch<React.SetStateAction<Card | undefined>>;
   iconOnly?: boolean;
   disabled?: boolean;
+  tabbable?: boolean;
 }
 
 export default function CardPrints({
@@ -20,10 +21,10 @@ export default function CardPrints({
   setCard,
   iconOnly = false,
   disabled = false,
+  tabbable = true,
 }: CardPrintsProps) {
   const [expanded, setExpanded] = React.useState(false);
   const [hoverIndex, setHoverIndex] = React.useState(null as number | null);
-
   const [cardPrints, setCardPrints] = React.useState([] as Card[]);
 
   useEffect(() => {
@@ -41,9 +42,10 @@ export default function CardPrints({
   }
 
   return (
-    <View>
+    <>
       <Button
         icon={faPalette}
+        tabbable={false}
         text={iconOnly ? undefined : "Select Print"}
         disabled={disabled || !card || (cardPrints.length || 0) < 2}
         onClick={() => setExpanded(!expanded)}
@@ -92,6 +94,6 @@ export default function CardPrints({
           </View>
         </Box>
       </Dropdown>
-    </View>
+    </>
   );
 }

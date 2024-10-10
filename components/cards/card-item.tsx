@@ -42,12 +42,15 @@ export default function CardItem({
 }: CardItemProps) {
   const [expanded, setExpanded] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [focused, setFocused] = React.useState(false);
 
   return (
     <>
       <Pressable
         onPress={() => setExpanded(!expanded)}
-        className={`flex gap-2 rounded-2xl overflow-hidden transition-all duration-300 ${
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        className={`flex gap-2 rounded-2xl overflow-hidden transition-all duration-300 outline-none ${
           expanded
             ? "max-h-[1000px] "
             : condensed
@@ -61,7 +64,7 @@ export default function CardItem({
             : "bg-background-300"
         }`}
       >
-        <CardItemHeader card={card} condensed={condensed} />
+        <CardItemHeader card={card} condensed={condensed} focused={focused} />
 
         <Divider thick className="-mt-2" />
 
@@ -92,14 +95,18 @@ export default function CardItem({
   );
 }
 
-export function CardItemHeader({ card, condensed }: CardItemProps) {
+export function CardItemHeader({
+  card,
+  condensed,
+  focused,
+}: CardItemProps & { focused: boolean }) {
   const [hovered, setHovered] = React.useState(false);
 
   return (
     <View
       className={`flex flex-row gap-1 justify-between items-center transition-all ${
         condensed ? "px-2 max-h-[24px] h-[24px]" : "px-4 max-h-[36px] h-[36px]"
-      }
+      } ${focused ? "bg-primary-300" : ""}
         ${
           hovered
             ? "bg-primary-300"
@@ -183,6 +190,7 @@ export function CardItemFooter({
         <Button
           action="info"
           className="flex-1"
+          tabbable={expanded}
           icon={faCircleInfo}
           onClick={() => setModalOpen(!modalOpen)}
         ></Button>
@@ -192,12 +200,14 @@ export function CardItemFooter({
           card={card}
           setCard={setPrint}
           disabled={!expanded}
+          tabbable={expanded}
         />
 
         <Tooltip title="Move to Maybe Board">
           <Button
             action="warning"
             className="flex-1"
+            tabbable={expanded}
             icon={faRightFromBracket}
             onClick={() => moveCard(card, "maybe")}
           ></Button>
@@ -207,6 +217,7 @@ export function CardItemFooter({
           action="danger"
           className="flex-1"
           icon={faTrash}
+          tabbable={expanded}
           onClick={() => removeCard(card)}
         ></Button>
       </View>
@@ -219,6 +230,7 @@ export function CardItemFooter({
           action="danger"
           className="flex-1"
           icon={faMinus}
+          tabbable={expanded}
           onClick={() => removeFromCount(card)}
         />
 
@@ -233,6 +245,7 @@ export function CardItemFooter({
           action="info"
           className="flex-1"
           icon={faPlus}
+          tabbable={expanded}
           onClick={() => addToCount(card)}
         />
       </View>
@@ -243,6 +256,7 @@ export function CardItemFooter({
           action="info"
           className="flex-1"
           icon={faShop}
+          tabbable={expanded}
           text={`$${card.prices?.usd}`}
           onClick={async () => await Linking.openURL(card.priceUris.tcgplayer)}
         />
@@ -252,6 +266,7 @@ export function CardItemFooter({
           action="info"
           className="flex-1"
           icon={faShop}
+          tabbable={expanded}
           text={`€${card.prices?.eur}`}
           onClick={async () => await Linking.openURL(card.priceUris.cardmarket)}
         />
