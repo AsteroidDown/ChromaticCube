@@ -45,7 +45,7 @@ export default function CardPrints({
     <>
       <Button
         icon={faPalette}
-        tabbable={false}
+        tabbable={tabbable}
         text={iconOnly ? undefined : "Select Print"}
         disabled={disabled || !card || (cardPrints.length || 0) < 2}
         onClick={() => setExpanded(!expanded)}
