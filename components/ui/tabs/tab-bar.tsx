@@ -1,6 +1,6 @@
 import { Link, Stack } from "expo-router";
 import React from "react";
-import { View, ViewProps } from "react-native";
+import { Linking, View, ViewProps } from "react-native";
 import Tab, { TabProps } from "./tab";
 
 export type TabBarProps = ViewProps & {
@@ -8,7 +8,19 @@ export type TabBarProps = ViewProps & {
 };
 
 export default function TabBar({ tabs, className, children }: TabBarProps) {
+  const [firstLoad, setFirstLoad] = React.useState(true);
   const [focusedIndex, setFocusedIndex] = React.useState(0);
+
+  Linking.getInitialURL().then((url) => {
+    if (!firstLoad) return;
+
+    tabs.forEach((tab, index) => {
+      if (url?.includes(tab.name)) {
+        setFirstLoad(false);
+        setFocusedIndex(index);
+      }
+    });
+  });
 
   return (
     <View className={`${className} flex mb-4`}>
