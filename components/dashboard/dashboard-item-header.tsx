@@ -38,7 +38,10 @@ export default function DashboardItemHeader({
   const [itemTitle, setItemTitle] = React.useState("");
 
   function updateItemTitle() {
-    if (!itemTitle) return;
+    if (!itemTitle) {
+      setEditingItem(false);
+      return;
+    }
 
     updateLocalStorageDashboardItem(itemId, sectionId, { title: itemTitle });
     setDashboard(getLocalStorageDashboard());

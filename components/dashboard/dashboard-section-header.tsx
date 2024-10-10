@@ -32,7 +32,10 @@ export default function DashboardSectionHeader({
   const [editingSection, setEditingSection] = React.useState(false);
 
   function updateSectionTitle() {
-    if (!section || !sectionTitle) return;
+    if (!section || !sectionTitle) {
+      setEditingSection(false);
+      return;
+    }
 
     updateLocalStorageDashboardSection(section.id, sectionTitle);
     setDashboard(getLocalStorageDashboard());
