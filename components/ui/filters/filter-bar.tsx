@@ -34,15 +34,21 @@ export interface FilterBarProps {
 
 export default function FilterBar({ setFilters, type }: FilterBarProps) {
   const { board } = useContext(BoardContext);
-  const { setPreferences } = useContext(CardPreferencesContext);
+  const { preferences, setPreferences } = useContext(CardPreferencesContext);
 
   const [showFilters, setShowFilters] = React.useState(false);
   const [filterLength, setFilterLength] = React.useState(0);
   const [resetFilters, setResetFilters] = React.useState(false);
 
-  const [colorFilter, setColorFilter] = React.useState([] as MTGColor[]);
-  const [typeFilter, setTypeFilter] = React.useState([] as MTGCardTypes[]);
-  const [rarityFilter, setRarityFilter] = React.useState([] as MTGRarity[]);
+  const [colorFilter, setColorFilter] = React.useState(
+    undefined as MTGColor[] | undefined
+  );
+  const [typeFilter, setTypeFilter] = React.useState(
+    undefined as MTGCardTypes[] | undefined
+  );
+  const [rarityFilter, setRarityFilter] = React.useState(
+    undefined as MTGRarity[] | undefined
+  );
 
   const [priceSort, setPriceSort] = React.useState(null as SortDirection);
   const [manaValueSort, setManaValueSort] = React.useState(
@@ -62,7 +68,9 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
     setFilters(filters);
 
     const filterLength =
-      colorFilter.length + typeFilter.length + rarityFilter.length;
+      (colorFilter?.length || 0) +
+      (typeFilter?.length || 0) +
+      (rarityFilter?.length || 0);
     setFilterLength(filterLength);
 
     if (filterLength) {
@@ -78,6 +86,9 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
     setManaValueSort(null);
     setPriceSort(null);
     setResetFilters(!resetFilters);
+    setLocalStoragePreferences({
+      filters: { colorFilter: [], typeFilter: [], rarityFilter: [] },
+    });
   }
 
   return (
@@ -126,8 +137,7 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
           </>
         )}
 
-        {(colorFilter?.length || typeFilter?.length || rarityFilter?.length) >
-          0 && (
+        {filterLength > 0 && (
           <Chip
             type="outlined"
             startIcon={faRotateRight}

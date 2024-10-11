@@ -9,7 +9,9 @@ import { View } from "react-native";
 export interface RarityFilterProps {
   flat?: boolean;
   reset?: boolean;
-  setRarityFilters: React.Dispatch<React.SetStateAction<MTGRarity[]>>;
+  setRarityFilters: React.Dispatch<
+    React.SetStateAction<MTGRarity[] | undefined>
+  >;
 }
 
 export default function RarityFilter({
@@ -29,23 +31,6 @@ export default function RarityFilter({
   const [appliedFilters, setAppliedFilters] = React.useState([] as MTGRarity[]);
 
   useEffect(() => {
-    if (!preferences.filters) return;
-
-    if (preferences.filters.rarityFilter?.includes("common")) {
-      setCommonApplied(true);
-    }
-    if (preferences.filters.rarityFilter?.includes("uncommon")) {
-      setUncommonApplied(true);
-    }
-    if (preferences.filters.rarityFilter?.includes("rare")) {
-      setRareApplied(true);
-    }
-    if (preferences.filters.rarityFilter?.includes("mythic")) {
-      setMythicApplied(true);
-    }
-  }, [preferences]);
-
-  useEffect(() => {
     setAppliedFilters([
       ...(commonApplied ? ["common"] : []),
       ...(uncommonApplied ? ["uncommon"] : []),
@@ -63,6 +48,23 @@ export default function RarityFilter({
     setMythicApplied(false);
     setAppliedFilters([]);
   }, [reset]);
+
+  useEffect(() => {
+    if (!preferences.filters) return;
+
+    if (preferences.filters.rarityFilter?.includes("common")) {
+      setCommonApplied(true);
+    }
+    if (preferences.filters.rarityFilter?.includes("uncommon")) {
+      setUncommonApplied(true);
+    }
+    if (preferences.filters.rarityFilter?.includes("rare")) {
+      setRareApplied(true);
+    }
+    if (preferences.filters.rarityFilter?.includes("mythic")) {
+      setMythicApplied(true);
+    }
+  }, [preferences]);
 
   const rarityFiltersList = (
     <View className="flex flex-row flex-wrap gap-2">

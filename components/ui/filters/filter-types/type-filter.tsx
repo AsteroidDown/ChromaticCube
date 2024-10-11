@@ -9,7 +9,9 @@ import { View } from "react-native";
 export interface TypeFilterProps {
   flat?: boolean;
   reset?: boolean;
-  setTypeFilters: React.Dispatch<React.SetStateAction<MTGCardTypes[]>>;
+  setTypeFilters: React.Dispatch<
+    React.SetStateAction<MTGCardTypes[] | undefined>
+  >;
 }
 
 export default function TypeFilter({
@@ -33,35 +35,6 @@ export default function TypeFilter({
   const [appliedFilters, setAppliedFilters] = React.useState(
     [] as MTGCardTypes[]
   );
-
-  useEffect(() => {
-    if (!preferences.filters) return;
-
-    if (preferences.filters.typeFilter?.includes(MTGCardTypes.CREATURE)) {
-      setCreatureApplied(true);
-    }
-    if (preferences.filters.typeFilter?.includes(MTGCardTypes.INSTANT)) {
-      setInstantApplied(true);
-    }
-    if (preferences.filters.typeFilter?.includes(MTGCardTypes.SORCERY)) {
-      setSorceryApplied(true);
-    }
-    if (preferences.filters.typeFilter?.includes(MTGCardTypes.ARTIFACT)) {
-      setArtifactApplied(true);
-    }
-    if (preferences.filters.typeFilter?.includes(MTGCardTypes.ENCHANTMENT)) {
-      setEnchantmentApplied(true);
-    }
-    if (preferences.filters.typeFilter?.includes(MTGCardTypes.LAND)) {
-      setLandApplied(true);
-    }
-    if (preferences.filters.typeFilter?.includes(MTGCardTypes.PLANESWALKER)) {
-      setPlaneswalkerApplied(true);
-    }
-    if (preferences.filters.typeFilter?.includes(MTGCardTypes.BATTLE)) {
-      setBattleApplied(true);
-    }
-  }, [preferences]);
 
   useEffect(() => {
     setAppliedFilters([
@@ -98,6 +71,35 @@ export default function TypeFilter({
     setBattleApplied(false);
     setAppliedFilters([]);
   }, [reset]);
+
+  useEffect(() => {
+    if (!preferences.filters) return;
+
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.CREATURE)) {
+      setCreatureApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.INSTANT)) {
+      setInstantApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.SORCERY)) {
+      setSorceryApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.ARTIFACT)) {
+      setArtifactApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.ENCHANTMENT)) {
+      setEnchantmentApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.LAND)) {
+      setLandApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.PLANESWALKER)) {
+      setPlaneswalkerApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.BATTLE)) {
+      setBattleApplied(true);
+    }
+  }, [preferences]);
 
   const typeFiltersList = (
     <View className="flex flex-row flex-wrap gap-2">

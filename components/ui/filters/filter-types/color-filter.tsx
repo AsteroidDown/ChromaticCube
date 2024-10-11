@@ -10,7 +10,7 @@ export interface ColorFilterProps {
   flat?: boolean;
   reset?: boolean;
   excludeMono?: boolean;
-  setColorFilters: React.Dispatch<React.SetStateAction<MTGColor[]>>;
+  setColorFilters: React.Dispatch<React.SetStateAction<MTGColor[] | undefined>>;
 }
 
 export default function ColorFilter({
@@ -33,35 +33,6 @@ export default function ColorFilter({
   const [monoColorApplied, setMonoColorApplied] = React.useState(false);
 
   const [appliedFilters, setAppliedFilters] = React.useState([] as MTGColor[]);
-
-  useEffect(() => {
-    if (!preferences.filters) return;
-
-    if (preferences.filters.colorFilter?.includes("white")) {
-      setWhiteApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("blue")) {
-      setBlueApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("black")) {
-      setBlackApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("red")) {
-      setRedApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("green")) {
-      setGreenApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("gold")) {
-      setGoldApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("colorless")) {
-      setColorlessApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("mono")) {
-      setMonoColorApplied(true);
-    }
-  }, [preferences]);
 
   useEffect(() => {
     setAppliedFilters([
@@ -98,6 +69,35 @@ export default function ColorFilter({
     setMonoColorApplied(false);
     setAppliedFilters([]);
   }, [reset]);
+
+  useEffect(() => {
+    if (!preferences.filters) return;
+
+    if (preferences.filters.colorFilter?.includes("white")) {
+      setWhiteApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("blue")) {
+      setBlueApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("black")) {
+      setBlackApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("red")) {
+      setRedApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("green")) {
+      setGreenApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("gold")) {
+      setGoldApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("colorless")) {
+      setColorlessApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("mono")) {
+      setMonoColorApplied(true);
+    }
+  }, [preferences]);
 
   const colorFiltersList = (
     <View className="flex flex-row flex-wrap gap-2">

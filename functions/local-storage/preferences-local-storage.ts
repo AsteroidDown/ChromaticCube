@@ -28,7 +28,15 @@ export function setLocalStoragePreferences(preferences: Preferences) {
   }
 
   if (preferences.filters !== undefined) {
-    storedPreferences.filters = preferences.filters;
+    if (preferences.filters.colorFilter !== undefined) {
+      storedPreferences.filters.colorFilter = preferences.filters.colorFilter;
+    }
+    if (preferences.filters.typeFilter !== undefined) {
+      storedPreferences.filters.typeFilter = preferences.filters.typeFilter;
+    }
+    if (preferences.filters.rarityFilter !== undefined) {
+      storedPreferences.filters.rarityFilter = preferences.filters.rarityFilter;
+    }
   }
   if (preferences.cardsCondensed !== undefined) {
     storedPreferences.cardsCondensed = preferences.cardsCondensed;

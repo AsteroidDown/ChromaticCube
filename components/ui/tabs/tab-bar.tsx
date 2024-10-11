@@ -32,6 +32,7 @@ export default function TabBar({ tabs, className, children }: TabBarProps) {
             key={tab.title + index}
             href={tab.link}
             onPress={() => {
+              // router.replace(tab.link);
               setFocusedIndex(index);
             }}
           >
@@ -47,15 +48,11 @@ export default function TabBar({ tabs, className, children }: TabBarProps) {
         <View className="ml-auto">{children}</View>
       </View>
 
-      {/* <View
-        className={`flex flex-1 w-full rounded-b-xl rounded-tr-xl border-2 border-primary-200 overflow-hidden`}
-      > */}
       <Stack screenOptions={{ headerShown: false }}>
         {tabs.map((tab, index) => (
           <Stack.Screen key={tab.title + index} name={tab.link?.toString()} />
         ))}
       </Stack>
     </View>
-    // </View>
   );
 }
