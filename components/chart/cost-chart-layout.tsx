@@ -5,8 +5,7 @@ import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import React from "react";
 import { View } from "react-native";
 import Text from "../ui/text/text";
-import { getCellBackgroundColor } from "./chart";
-import ChartCell from "./chart-cell";
+import ChartCell, { getCellBackgroundColor } from "./chart-cell";
 import ChartColumnHeading from "./chart-column-heading";
 
 interface CostChartLayoutProps {

@@ -1,4 +1,3 @@
-import { MTGColor } from "@/constants/mtg/mtg-colors";
 import {
   sortCardsAlphabetically,
   sortCardsByManaValue,
@@ -98,25 +97,4 @@ export default function Chart({
       </View>
     );
   else return <Placeholder title="No Chart Found!" />;
-}
-
-export function getCellBackgroundColor(color: MTGColor) {
-  switch (color) {
-    case "white":
-      return "bg-mtg-white bg-opacity-10";
-    case "blue":
-      return "bg-mtg-blue bg-opacity-10";
-    case "black":
-      return "bg-mtg-black bg-opacity-10";
-    case "red":
-      return "bg-mtg-red bg-opacity-10";
-    case "green":
-      return "bg-mtg-green bg-opacity-10";
-    case "gold":
-      return "bg-mtg-gold bg-opacity-10";
-    case "colorless":
-      return "bg-mtg-colorless bg-opacity-10";
-    case "land":
-      return "bg-mtg-land bg-opacity-10";
-  }
 }
