@@ -2,7 +2,8 @@ import Chip from "@/components/ui/chip/chip";
 import Dropdown from "@/components/ui/dropdown/dropdown";
 import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
-import React, { useEffect } from "react";
+import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
+import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 
 export interface ColorFilterProps {
@@ -18,6 +19,8 @@ export default function ColorFilter({
   excludeMono = false,
   setColorFilters,
 }: ColorFilterProps) {
+  const { preferences } = useContext(CardPreferencesContext);
+
   const [expanded, setExpanded] = React.useState(false);
 
   const [whiteApplied, setWhiteApplied] = React.useState(false);
@@ -30,6 +33,35 @@ export default function ColorFilter({
   const [monoColorApplied, setMonoColorApplied] = React.useState(false);
 
   const [appliedFilters, setAppliedFilters] = React.useState([] as MTGColor[]);
+
+  useEffect(() => {
+    if (!preferences.filters) return;
+
+    if (preferences.filters.colorFilter?.includes("white")) {
+      setWhiteApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("blue")) {
+      setBlueApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("black")) {
+      setBlackApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("red")) {
+      setRedApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("green")) {
+      setGreenApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("gold")) {
+      setGoldApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("colorless")) {
+      setColorlessApplied(true);
+    }
+    if (preferences.filters.colorFilter?.includes("mono")) {
+      setMonoColorApplied(true);
+    }
+  }, [preferences]);
 
   useEffect(() => {
     setAppliedFilters([

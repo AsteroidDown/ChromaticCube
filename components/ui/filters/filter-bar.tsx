@@ -5,6 +5,11 @@ import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import { SortDirection } from "@/constants/sorting";
 import BoardContext from "@/contexts/cards/board.context";
+import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
+import {
+  getLocalStoragePreferences,
+  setLocalStoragePreferences,
+} from "@/functions/local-storage/preferences-local-storage";
 import {
   CardFilters,
   CardFilterSortType,
@@ -29,6 +34,7 @@ export interface FilterBarProps {
 
 export default function FilterBar({ setFilters, type }: FilterBarProps) {
   const { board } = useContext(BoardContext);
+  const { setPreferences } = useContext(CardPreferencesContext);
 
   const [showFilters, setShowFilters] = React.useState(false);
   const [filterLength, setFilterLength] = React.useState(0);
@@ -46,17 +52,23 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
   const [saveAsGraphOpen, setSaveAsGraphOpen] = React.useState(false);
 
   useEffect(() => {
-    setFilters({
+    const filters: CardFilters = {
       colorFilter,
       typeFilter,
       rarityFilter,
       priceSort,
       manaValueSort,
-    });
+    };
+    setFilters(filters);
 
-    setFilterLength(
-      colorFilter.length + typeFilter.length + rarityFilter.length
-    );
+    const filterLength =
+      colorFilter.length + typeFilter.length + rarityFilter.length;
+    setFilterLength(filterLength);
+
+    if (filterLength) {
+      setLocalStoragePreferences({ filters });
+      setPreferences(getLocalStoragePreferences() || {});
+    }
   }, [colorFilter, typeFilter, rarityFilter, manaValueSort, priceSort]);
 
   function clearFilters() {

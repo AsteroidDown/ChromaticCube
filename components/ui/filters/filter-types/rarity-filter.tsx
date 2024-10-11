@@ -2,7 +2,8 @@ import Chip from "@/components/ui/chip/chip";
 import Dropdown from "@/components/ui/dropdown/dropdown";
 import Text from "@/components/ui/text/text";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
-import React, { useEffect } from "react";
+import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
+import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 
 export interface RarityFilterProps {
@@ -16,6 +17,8 @@ export default function RarityFilter({
   setRarityFilters,
   reset,
 }: RarityFilterProps) {
+  const { preferences } = useContext(CardPreferencesContext);
+
   const [expanded, setExpanded] = React.useState(false);
 
   const [commonApplied, setCommonApplied] = React.useState(false);
@@ -24,6 +27,23 @@ export default function RarityFilter({
   const [mythicApplied, setMythicApplied] = React.useState(false);
 
   const [appliedFilters, setAppliedFilters] = React.useState([] as MTGRarity[]);
+
+  useEffect(() => {
+    if (!preferences.filters) return;
+
+    if (preferences.filters.rarityFilter?.includes("common")) {
+      setCommonApplied(true);
+    }
+    if (preferences.filters.rarityFilter?.includes("uncommon")) {
+      setUncommonApplied(true);
+    }
+    if (preferences.filters.rarityFilter?.includes("rare")) {
+      setRareApplied(true);
+    }
+    if (preferences.filters.rarityFilter?.includes("mythic")) {
+      setMythicApplied(true);
+    }
+  }, [preferences]);
 
   useEffect(() => {
     setAppliedFilters([

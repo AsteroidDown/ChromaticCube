@@ -2,7 +2,8 @@ import Chip from "@/components/ui/chip/chip";
 import Dropdown from "@/components/ui/dropdown/dropdown";
 import Text from "@/components/ui/text/text";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
-import React, { useEffect } from "react";
+import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
+import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 
 export interface TypeFilterProps {
@@ -16,6 +17,8 @@ export default function TypeFilter({
   setTypeFilters,
   reset,
 }: TypeFilterProps) {
+  const { preferences } = useContext(CardPreferencesContext);
+
   const [expanded, setExpanded] = React.useState(false);
 
   const [creatureApplied, setCreatureApplied] = React.useState(false);
@@ -30,6 +33,35 @@ export default function TypeFilter({
   const [appliedFilters, setAppliedFilters] = React.useState(
     [] as MTGCardTypes[]
   );
+
+  useEffect(() => {
+    if (!preferences.filters) return;
+
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.CREATURE)) {
+      setCreatureApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.INSTANT)) {
+      setInstantApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.SORCERY)) {
+      setSorceryApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.ARTIFACT)) {
+      setArtifactApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.ENCHANTMENT)) {
+      setEnchantmentApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.LAND)) {
+      setLandApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.PLANESWALKER)) {
+      setPlaneswalkerApplied(true);
+    }
+    if (preferences.filters.typeFilter?.includes(MTGCardTypes.BATTLE)) {
+      setBattleApplied(true);
+    }
+  }, [preferences]);
 
   useEffect(() => {
     setAppliedFilters([

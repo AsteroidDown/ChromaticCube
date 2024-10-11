@@ -12,5 +12,30 @@ export function getLocalStoragePreferences(): Preferences | null {
 }
 
 export function setLocalStoragePreferences(preferences: Preferences) {
-  localStorage.setItem("preferences", JSON.stringify(preferences));
+  let storedPreferences = getLocalStoragePreferences();
+
+  if (!storedPreferences?.filters) {
+    localStorage.setItem(
+      "preferences",
+      JSON.stringify({
+        filters: preferences.filters || [],
+        cardsCondensed: preferences.cardsCondensed || false,
+        hideCardImages: preferences.hideCardImages || false,
+      })
+    );
+
+    return;
+  }
+
+  if (preferences.filters !== undefined) {
+    storedPreferences.filters = preferences.filters;
+  }
+  if (preferences.cardsCondensed !== undefined) {
+    storedPreferences.cardsCondensed = preferences.cardsCondensed;
+  }
+  if (preferences.hideCardImages !== undefined) {
+    storedPreferences.hideCardImages = preferences.hideCardImages;
+  }
+
+  return localStorage.setItem("preferences", JSON.stringify(storedPreferences));
 }
