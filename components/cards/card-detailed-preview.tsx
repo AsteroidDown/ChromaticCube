@@ -15,7 +15,7 @@ export default function CardDetailedPreview({
   children,
 }: CardDetailedPreview) {
   return (
-    <Box className="flex flex-row flex-wrap flex-1 max-w-max justify-center gap-3 h-fit">
+    <Box className="flex flex-row flex-wrap flex-1 max-w-max min-w-fit justify-center gap-3 h-fit">
       <View className="flex gap-3  min-w-[250px]">
         <CardImage
           card={card}
