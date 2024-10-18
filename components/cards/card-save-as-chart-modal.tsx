@@ -41,7 +41,9 @@ export default function CardSaveAsChartModal({
 
   const [sortType, setSortType] = React.useState(type);
 
-  const [colorFilter, setColorFilter] = React.useState([] as MTGColor[]);
+  const [colorFilter, setColorFilter] = React.useState(
+    undefined as MTGColor[] | undefined
+  );
 
   function createChart() {
     setDisabled(true);
@@ -125,7 +127,7 @@ export default function CardSaveAsChartModal({
           rounded
           type="outlined"
           className="mt-4"
-          disabled={disabled || colorFilter.length === 0}
+          disabled={disabled || colorFilter?.length === 0}
           action={success ? "success" : error ? "danger" : "primary"}
           icon={
             disabled
@@ -152,10 +154,10 @@ export default function CardSaveAsChartModal({
   );
 }
 
-function generateTitle(type: ChartType, colorFilter: MTGColor[]) {
+function generateTitle(type: ChartType, colorFilter?: MTGColor[]) {
   let title = "";
 
-  if (colorFilter.length > 0) {
+  if (colorFilter?.length) {
     if (colorFilter.includes("white")) title += "White ";
     if (colorFilter.includes("blue")) title += "Blue ";
     if (colorFilter.includes("black")) title += "Black ";

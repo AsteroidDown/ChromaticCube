@@ -23,11 +23,12 @@ import {
   CardsSortedByCost,
   CardsSortedByType,
 } from "@/models/sorted-cards/sorted-cards";
-import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
+import { faChartSimple, faTable } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import Button from "../ui/button/button";
 import CardItemGalleryColumn from "./card-item-gallery-column";
+import CardSaveAsChartModal from "./card-save-as-chart-modal";
 import CardSaveAsGraphModal from "./card-save-as-graph-modal";
 
 export interface CardItemGalleryProps {
@@ -46,6 +47,7 @@ export default function CardItemGallery({
   const { storedCards } = useContext(StoredCardsContext);
 
   const [saveAsGraphOpen, setSaveAsGraphOpen] = React.useState(false);
+  const [saveAsChartOpen, setSaveAsChartOpen] = React.useState(false);
 
   const [cards, setCards] = React.useState([] as Card[]);
 
@@ -130,17 +132,33 @@ export default function CardItemGallery({
 
             {board === "main" && (
               <>
-                <CardSaveAsGraphModal
-                  type={type}
-                  open={saveAsGraphOpen}
-                  setOpen={setSaveAsGraphOpen}
-                />
+                <View className="-mx-3">
+                  <CardSaveAsGraphModal
+                    type={type}
+                    open={saveAsGraphOpen}
+                    setOpen={setSaveAsGraphOpen}
+                  />
+                </View>
 
                 <Button
                   rounded
                   type="clear"
                   icon={faChartSimple}
                   onClick={() => setSaveAsGraphOpen(true)}
+                />
+
+                <View className="-mx-3">
+                  <CardSaveAsChartModal
+                    open={saveAsChartOpen}
+                    setOpen={setSaveAsChartOpen}
+                  />
+                </View>
+
+                <Button
+                  rounded
+                  type="clear"
+                  icon={faTable}
+                  onClick={() => setSaveAsChartOpen(true)}
                 />
               </>
             )}
