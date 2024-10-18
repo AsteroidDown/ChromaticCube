@@ -26,7 +26,9 @@ import {
 import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
+import Button from "../ui/button/button";
 import CardItemGalleryColumn from "./card-item-gallery-column";
+import CardSaveAsGraphModal from "./card-save-as-graph-modal";
 
 export interface CardItemGalleryProps {
   type: CardFilterSortType;
@@ -42,6 +44,8 @@ export default function CardItemGallery({
 }: CardItemGalleryProps) {
   const { board } = useContext(BoardContext);
   const { storedCards } = useContext(StoredCardsContext);
+
+  const [saveAsGraphOpen, setSaveAsGraphOpen] = React.useState(false);
 
   const [cards, setCards] = React.useState([] as Card[]);
 
@@ -123,6 +127,23 @@ export default function CardItemGallery({
         end={
           <View className="flex flex-row gap-4">
             <FilterBar type={type} setFilters={setFilters} />
+
+            {board === "main" && (
+              <>
+                <CardSaveAsGraphModal
+                  type={type}
+                  open={saveAsGraphOpen}
+                  setOpen={setSaveAsGraphOpen}
+                />
+
+                <Button
+                  rounded
+                  type="clear"
+                  icon={faChartSimple}
+                  onClick={() => setSaveAsGraphOpen(true)}
+                />
+              </>
+            )}
           </View>
         }
       />

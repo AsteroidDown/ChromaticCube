@@ -1,4 +1,3 @@
-import CardSaveAsGraphModal from "@/components/cards/card-save-as-graph-modal";
 import Button from "@/components/ui/button/button";
 import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
@@ -15,11 +14,7 @@ import {
   CardFilters,
   CardFilterSortType,
 } from "@/models/sorted-cards/sorted-cards";
-import {
-  faFilter,
-  faPlus,
-  faRotateRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import Chip from "../chip/chip";
@@ -55,8 +50,6 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
   const [manaValueSort, setManaValueSort] = React.useState(
     null as SortDirection
   );
-
-  const [saveAsGraphOpen, setSaveAsGraphOpen] = React.useState(false);
 
   useEffect(() => {
     const filters: CardFilters = {
@@ -125,22 +118,6 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
           showFilters ? "mr-4 max-w-[100%] overflow-x-auto" : "-mr-8 max-w-[0%]"
         }`}
       >
-        {board === "main" && (
-          <>
-            <CardSaveAsGraphModal
-              type={type}
-              open={saveAsGraphOpen}
-              setOpen={setSaveAsGraphOpen}
-            />
-
-            <Chip
-              type="outlined"
-              startIcon={faPlus}
-              onClick={() => setSaveAsGraphOpen(true)}
-            />
-          </>
-        )}
-
         {filterLength > 0 && (
           <Chip
             type="outlined"
