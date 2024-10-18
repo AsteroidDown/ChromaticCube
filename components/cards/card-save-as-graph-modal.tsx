@@ -45,9 +45,15 @@ export default function CardSaveAsGraphModal({
 
   const [sortType, setSortType] = React.useState(type);
 
-  const [colorFilter, setColorFilter] = React.useState([] as MTGColor[]);
-  const [typeFilter, setTypeFilter] = React.useState([] as MTGCardTypes[]);
-  const [rarityFilter, setRarityFilter] = React.useState([] as MTGRarity[]);
+  const [colorFilter, setColorFilter] = React.useState(
+    undefined as MTGColor[] | undefined
+  );
+  const [typeFilter, setTypeFilter] = React.useState(
+    undefined as MTGCardTypes[] | undefined
+  );
+  const [rarityFilter, setRarityFilter] = React.useState(
+    undefined as MTGRarity[] | undefined
+  );
 
   function createGraph() {
     setDisabled(true);
@@ -183,13 +189,13 @@ export default function CardSaveAsGraphModal({
 
 function generateTitle(
   type: CardFilterSortType,
-  colorFilter: MTGColor[],
-  typeFilter: MTGCardTypes[],
-  rarityFilter: MTGRarity[]
+  colorFilter?: MTGColor[],
+  typeFilter?: MTGCardTypes[],
+  rarityFilter?: MTGRarity[]
 ) {
   let title = "";
 
-  if (colorFilter.length > 0) {
+  if (colorFilter?.length) {
     if (colorFilter.includes("mono")) {
       title += "Mono " + (colorFilter.length === 1 ? "Colored " : "");
     }
@@ -202,7 +208,7 @@ function generateTitle(
     if (colorFilter.includes("colorless")) title += "Colorless ";
   }
 
-  if (typeFilter.length > 0) {
+  if (typeFilter?.length) {
     const multiple = typeFilter.length > 1;
 
     if (typeFilter.includes(MTGCardTypes.CREATURE))
@@ -222,7 +228,7 @@ function generateTitle(
     if (typeFilter.includes(MTGCardTypes.BATTLE)) title += "Battle ";
   }
 
-  if (rarityFilter.length > 0) {
+  if (rarityFilter?.length) {
     const multiple = rarityFilter.length > 1;
 
     if (rarityFilter.includes("common"))
