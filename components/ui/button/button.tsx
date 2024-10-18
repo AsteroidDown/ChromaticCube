@@ -74,7 +74,10 @@ export default function Button({
 
   return (
     <Pressable
-      onPress={onClick}
+      onPress={() => {
+        onClick?.();
+        setFocused(false);
+      }}
       disabled={disabled}
       onBlur={() => setFocused(false)}
       onFocus={() => setFocused(true)}
