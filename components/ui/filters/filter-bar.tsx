@@ -1,4 +1,5 @@
 import CardSaveAsGraphModal from "@/components/cards/card-save-as-graph-modal";
+import Button from "@/components/ui/button/button";
 import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
@@ -92,18 +93,23 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
   }
 
   return (
-    <View className="flex flex-row-reverse">
+    <View
+      className={`flex flex-row-reverse transition-all duration-300 ${
+        showFilters ? "max-w-[1000px]" : "max-w-[8px]"
+      }`}
+    >
       <View className="bg-background-200 rounded-l-full z-10">
-        <Chip
-          startIcon={faFilter}
-          type={showFilters ? "default" : "outlined"}
+        <Button
+          rounded
+          icon={faFilter}
+          type={showFilters ? "default" : "clear"}
           onClick={() => setShowFilters(!showFilters)}
-        ></Chip>
+        ></Button>
 
         <View
           className={`${
             filterLength ? "max-w-[100px]" : "max-w-[0px]"
-          } absolute -bottom-1 -right-1 overflow-hidden transition-all duration-300`}
+          } absolute -bottom-1.5 -right-1.5 overflow-hidden transition-all duration-300`}
         >
           <Text
             thickness="bold"
@@ -115,10 +121,8 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
       </View>
 
       <View
-        className={`flex flex-row gap-2 w-fit pr-4 rounded-full overflow-hidden transition-all duration-300 ${
-          showFilters
-            ? "mr-0 max-w-[100%] overflow-x-auto"
-            : "-mr-12 max-w-[0%]"
+        className={`flex flex-row gap-2 w-fit rounded-full overflow-hidden transition-all duration-300 ${
+          showFilters ? "mr-4 max-w-[100%] overflow-x-auto" : "-mr-8 max-w-[0%]"
         }`}
       >
         {board === "main" && (
