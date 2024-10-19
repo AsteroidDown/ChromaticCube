@@ -6,7 +6,7 @@ import {
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Image, Pressable, View } from "react-native";
 
 export interface CardImageProps {
@@ -82,6 +82,8 @@ export default function CardImage({
     ),
     [card?.faces?.back.imageUris?.png]
   );
+
+  useEffect(() => setShowFront(true), [card]);
 
   return (
     <Pressable
