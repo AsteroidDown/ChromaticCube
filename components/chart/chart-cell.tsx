@@ -72,11 +72,9 @@ export default function ChartCell({
         onPress={() => setCardPreviewModalOpen(true)}
       >
         <Text>
-          {
-            Object.values(sortedCards)[
-              Object.keys(sortedCards).findIndex((key) => key === color) || 0
-            ]?.length
-          }
+          {Object.values(sortedCards)[
+            Object.keys(sortedCards).findIndex((key) => key === color) || 0
+          ]?.reduce((acc: number, card: Card) => acc + card.count, 0)}
         </Text>
       </Pressable>
 
