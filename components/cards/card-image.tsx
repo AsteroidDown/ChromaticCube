@@ -20,11 +20,14 @@ export default function CardImage({
   placeHolder,
   onClick,
 }: CardImageProps) {
+  const [focused, setFocused] = React.useState(false);
   const [showFront, setShowFront] = React.useState(true);
-  const [hovered, setHovered] = React.useState(false);
 
   const [frontLoading, setFrontLoading] = React.useState(false);
   const [backLoading, setBackLoading] = React.useState(false);
+
+  const containerClasses =
+    "min-w-[228px] max-h-fit border-2 border-primary-200 border-opacity-0 focus:border-opacity-100 rounded-xl overflow-hidden outline-none transition-all duration-300";
 
   const baseClasses =
     "flex h-full max-h-[350px] aspect-[2.5/3.5] rounded-lg overflow-hidden";
@@ -89,11 +92,11 @@ export default function CardImage({
 
   return (
     <Pressable
-      className="min-w-[228px]"
+      className={containerClasses}
       disabled={!card || !onClick}
-      tabIndex={focusable ? 0 : -1}
-      onPointerEnter={() => setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
+      tabIndex={!card ? -1 : focusable ? 0 : -1}
       onPress={() => (focusable ? onClick?.() : null)}
     >
       <View className={baseClasses}>
@@ -161,7 +164,7 @@ export default function CardImage({
             <View
               className={
                 "bg-background-100 p-4 rounded-full transition-all " +
-                (hovered ? "bg-opacity-100" : "bg-opacity-60")
+                (focused ? "bg-opacity-100" : "bg-opacity-60")
               }
             >
               <FontAwesomeIcon
