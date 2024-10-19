@@ -8,14 +8,14 @@ import Box from "../box/box";
 
 export interface SearchBarProps {
   search: string;
-  onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+  searchChange: React.Dispatch<React.SetStateAction<string>>;
   searchAction: (search?: string) => void;
   noSearchResults?: boolean;
 }
 
 export default function SearchBar({
   search,
-  onSearchChange,
+  searchChange,
   searchAction,
   noSearchResults,
 }: SearchBarProps) {
@@ -35,9 +35,10 @@ export default function SearchBar({
   const noSearchResultClasses = "border-red-500";
 
   useEffect(() => {
-    ScryfallService.autocomplete(search).then((names) =>
-      setAutoComplete(names)
-    );
+    ScryfallService.autocomplete(search).then((names) => {
+      if (!names.includes(search)) setAutoComplete(names);
+      else setAutoComplete([]);
+    });
   }, [search]);
 
   return (
@@ -61,7 +62,7 @@ export default function SearchBar({
             value={search}
             onBlur={onBlur}
             onFocus={onFocus}
-            onChangeText={onSearchChange}
+            onChangeText={searchChange}
             onKeyPress={(event) =>
               (event as any)?.code === "Enter" ? searchAction() : null
             }
@@ -75,7 +76,7 @@ export default function SearchBar({
                 ? focusClasses
                 : "border-background-200"
             } ${
-              focused && autoComplete.length > 1
+              focused && autoComplete.length > 0
                 ? "max-h-40 z-10 !py-2 !border-2"
                 : "max-h-0 -z-10 !py-0 !border-none"
             }`}
@@ -88,7 +89,7 @@ export default function SearchBar({
                   onBlur={onBlur}
                   className="px-4 py-1 rounded-full hover:bg-background-100 focus:bg-background-100 outline-none"
                   onPress={() => {
-                    onSearchChange(name);
+                    searchChange(name);
                     searchAction(name);
                   }}
                 >

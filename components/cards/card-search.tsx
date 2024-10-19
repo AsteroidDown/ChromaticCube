@@ -35,17 +35,17 @@ export default function CardSearch() {
 
   function findCards(query?: string) {
     ScryfallService.findCards(query ?? search).then((cards) => {
-      // if a no search results message is currently rendered, clear the disappear message timeout
+      // If a no search results message is currently rendered, clear the disappear message timeout
       if (noSearchResultsTimer) {
         clearTimeout(noSearchResultsTimer);
         setNoSearchResults(false);
       }
 
-      // one result returned, auto-populate the card-detailed-preview with it
+      // One result returned, auto-populate the card-detailed-preview with it
       if (cards.length === 1) setCard(cards[0]);
 
       if (cards.length === 0) {
-        // show "No search results" message for a short period of time
+        // Show "No search results" message for a short period of time
         setNoSearchResults(true);
         const noResultsTimer = setTimeout(() => {
           setNoSearchResults(false);
@@ -80,7 +80,7 @@ export default function CardSearch() {
         <SearchBar
           search={search}
           searchAction={findCards}
-          onSearchChange={onSearchChange}
+          searchChange={onSearchChange}
           noSearchResults={noSearchResults}
         />
 
