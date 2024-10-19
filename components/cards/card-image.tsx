@@ -1,24 +1,22 @@
 import Text from "@/components/ui/text/text";
 import { CardBackIds } from "@/constants/scryfall/ids";
 import { Card } from "@/models/card/card";
-import {
-  faRotateRight,
-  IconDefinition,
-} from "@fortawesome/free-solid-svg-icons";
+import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useMemo } from "react";
 import { Image, Pressable, View } from "react-native";
 
 export interface CardImageProps {
   card?: Card;
+  focusable?: boolean;
   placeHolder?: string;
-  actionIcon?: IconDefinition;
 
   onClick?: () => any;
 }
 
 export default function CardImage({
   card,
+  focusable,
   placeHolder,
   onClick,
 }: CardImageProps) {
@@ -85,13 +83,18 @@ export default function CardImage({
 
   useEffect(() => setShowFront(true), [card]);
 
+  if (focusable === undefined) {
+    onClick ? (focusable = true) : (focusable = false);
+  }
+
   return (
     <Pressable
       className="min-w-[228px]"
       disabled={!card || !onClick}
-      onPress={onClick}
+      tabIndex={focusable ? 0 : -1}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
+      onPress={() => (focusable ? onClick?.() : null)}
     >
       <View className={baseClasses}>
         {card && !card.faces?.back.imageUris.png && (

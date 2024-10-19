@@ -71,7 +71,11 @@ export default function CardItem({
         {!hideImage && (
           <>
             <View className={"flex gap-2 px-2"}>
-              <CardImage card={card} onClick={() => setModalOpen(true)} />
+              <CardImage
+                card={card}
+                focusable={expanded}
+                onClick={() => setModalOpen(true)}
+              />
             </View>
 
             <Divider thick />
