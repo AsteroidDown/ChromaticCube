@@ -6,3 +6,7 @@ export function titleCase(text?: string) {
         .join(" ")
     : "";
 }
+
+export function currency(value: number) {
+  return "$" + value.toFixed(2);
+}
