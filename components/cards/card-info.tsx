@@ -47,6 +47,26 @@ export function CardInfo({ card }: CardInfoProps) {
         </Text>
       </View>
 
+      {card?.loyalty && (
+        <>
+          <Divider />
+
+          <View className="flex flex-row gap-2">
+            <Text thickness="bold" className="flex-1">
+              Loyalty
+            </Text>
+            <Text className="flex-[3]">
+              <Text
+                thickness="bold"
+                className="px-2 py-0.5 bg-background-100 rounded"
+              >
+                {card.loyalty}
+              </Text>
+            </Text>
+          </View>
+        </>
+      )}
+
       <Divider />
 
       <View className="flex flex-row gap-2">
@@ -95,19 +115,38 @@ export function CardFrontInfo({ card }: CardInfoProps) {
         <Text className="flex-[3]">{card?.faces?.front.typeLine || ""}</Text>
       </View>
 
-      {/* {card?.producedMana &&
-        card?.faces?.front?.oracleText.toLowerCase().includes("add") && (
-          <>
-            <Divider />
+      {!!card?.faces?.front.loyalty && (
+        <>
+          <Divider />
 
-            <View className="flex flex-row gap-2">
-              <Text thickness="bold" className="flex-1">Produces</Text>
-              <View className="flex-[3]">
-                <CardCost cost={"{" + card.producedMana.join("}{") + "}"} />
-              </View>
-            </View>
-          </>
-        )} */}
+          <View className="flex flex-row gap-2">
+            <Text thickness="bold" className="flex-1">
+              Loyalty
+            </Text>
+            <Text className="flex-[3]">
+              <Text
+                thickness="bold"
+                className="px-2 py-0.5 bg-background-100 rounded"
+              >
+                {card.faces.front.loyalty}
+              </Text>
+            </Text>
+          </View>
+        </>
+      )}
+
+      {!!card?.faces?.front.defense && (
+        <>
+          <Divider />
+
+          <View className="flex flex-row gap-2">
+            <Text thickness="bold" className="flex-1">
+              Defense
+            </Text>
+            <Text className="flex-[3]">{card.faces.front.defense}</Text>
+          </View>
+        </>
+      )}
 
       <Divider />
 
@@ -157,19 +196,38 @@ export function CardBackInfo({ card }: CardInfoProps) {
         <Text className="flex-[3]">{card?.faces?.back.typeLine || ""}</Text>
       </View>
 
-      {/* {card?.producedMana &&
-        card?.faces?.back?.oracleText.toLowerCase().includes("add") && (
-          <>
-            <Divider />
+      {!!card?.faces?.back.loyalty && (
+        <>
+          <Divider />
 
-            <View className="flex flex-row gap-2">
-              <Text thickness="bold" className="flex-1">Produces</Text>
-              <View className="flex-[3]">
-                <CardCost cost={"{" + card.producedMana.join("}{") + "}"} />
-              </View>
-            </View>
-          </>
-        )} */}
+          <View className="flex flex-row gap-2">
+            <Text thickness="bold" className="flex-1">
+              Loyalty
+            </Text>
+            <Text className="flex-[3]">
+              <Text
+                thickness="bold"
+                className="px-2 py-0.5 bg-background-100 rounded"
+              >
+                {card.faces.back.loyalty}
+              </Text>
+            </Text>
+          </View>
+        </>
+      )}
+
+      {!!card?.faces?.back.defense && (
+        <>
+          <Divider />
+
+          <View className="flex flex-row gap-2">
+            <Text thickness="bold" className="flex-1">
+              Defense
+            </Text>
+            <Text className="flex-[3]">{card.faces.back.defense}</Text>
+          </View>
+        </>
+      )}
 
       <Divider />
 

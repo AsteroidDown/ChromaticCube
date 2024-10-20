@@ -14,6 +14,8 @@ export interface Card {
   colorIdentity: MTGColorSymbol[];
   manaCost: string;
   typeLine: string;
+  loyalty?: string;
+  defense?: string;
   producedMana?: string[];
   oracleText?: string;
   images?: CardImageUris;
@@ -36,6 +38,8 @@ export interface CardFace {
   name: string;
   typeLine: string;
   manaCost: string;
+  loyalty?: string;
+  defense?: string;
   oracleText: string;
   imageUris: CardImageUris;
 }

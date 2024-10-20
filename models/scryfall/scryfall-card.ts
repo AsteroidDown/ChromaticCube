@@ -12,6 +12,8 @@ export interface ScryfallCard {
   color_identity: MTGColorSymbol[];
   mana_cost: string;
   type_line: string;
+  loyalty?: string;
+  defense?: string;
   produced_mana: any[];
   oracle_text: string;
   image_uris: ScryfallImageUris;
@@ -33,6 +35,8 @@ export interface ScryfallCardFace {
   name: string;
   type_line: string;
   mana_cost: string;
+  loyalty?: string;
+  defense?: string;
   oracle_text: string;
   image_uris: ScryfallImageUris;
 }
