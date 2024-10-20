@@ -35,7 +35,7 @@ export default function CardDetailedPreview({
           <View className="flex gap-3">
             <CardFrontInfo card={card} />
 
-            <Divider className="my-3" />
+            <Divider thick className="my-3" />
 
             <CardBackInfo card={card} />
           </View>
