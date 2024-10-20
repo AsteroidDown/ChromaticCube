@@ -47,21 +47,6 @@ export function CardInfo({ card }: CardInfoProps) {
         </Text>
       </View>
 
-      {card?.producedMana && (
-        <>
-          <Divider />
-
-          <View className="flex flex-row gap-2">
-            <Text thickness="bold" className="flex-1">
-              Produces
-            </Text>
-            <View className="flex-[3]">
-              <CardCost cost={"{" + card.producedMana.join("}{") + "}"} />
-            </View>
-          </View>
-        </>
-      )}
-
       <Divider />
 
       <View className="flex flex-row gap-2">
