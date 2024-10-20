@@ -4,7 +4,6 @@ import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import { SortDirection } from "@/constants/sorting";
-import BoardContext from "@/contexts/cards/board.context";
 import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
 import {
   getLocalStoragePreferences,
@@ -29,8 +28,7 @@ export interface FilterBarProps {
 }
 
 export default function FilterBar({ setFilters, type }: FilterBarProps) {
-  const { board } = useContext(BoardContext);
-  const { preferences, setPreferences } = useContext(CardPreferencesContext);
+  const { setPreferences } = useContext(CardPreferencesContext);
 
   const [showFilters, setShowFilters] = React.useState(false);
   const [filterLength, setFilterLength] = React.useState(0);
@@ -83,6 +81,7 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
     setLocalStoragePreferences({
       filters: { colorFilter: [], typeFilter: [], rarityFilter: [] },
     });
+    setPreferences(getLocalStoragePreferences() || {});
   }
 
   return (
