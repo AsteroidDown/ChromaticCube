@@ -228,7 +228,7 @@ export function CardItemFooter({
 
       <View className="flex flex-row justify-between items-center px-2">
         <Button
-          hideRightBorder
+          squareRight
           size="sm"
           type="outlined"
           action="danger"
@@ -238,12 +238,12 @@ export function CardItemFooter({
           onClick={() => removeFromCount(card)}
         />
 
-        <View className="flex justify-center items-center px-2 h-full border-2 border-x-0 border-dark-600">
+        <View className="flex justify-center items-center px-4 h-full border-2 border-x-0 border-dark-500">
           <Text thickness="bold">{card.count}</Text>
         </View>
 
         <Button
-          hideLeftBorder
+          squareLeft
           size="sm"
           type="outlined"
           action="info"

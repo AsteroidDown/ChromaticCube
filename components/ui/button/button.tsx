@@ -20,6 +20,8 @@ export type ButtonProps = ViewProps & {
 
   start?: boolean;
 
+  squareLeft?: boolean;
+  squareRight?: boolean;
   hideLeftBorder?: boolean;
   hideRightBorder?: boolean;
 
@@ -42,6 +44,8 @@ export default function Button({
   start = false,
   rounded = false,
   square = false,
+  squareLeft = false,
+  squareRight = false,
   hideLeftBorder = false,
   hideRightBorder = false,
 }: ButtonProps) {
@@ -93,8 +97,10 @@ export default function Button({
             : rounded
             ? "!rounded-full !w-10 !h-10"
             : ""
-        } ${hideLeftBorder ? "!rounded-l-none !border-l-0" : ""} ${
-          hideRightBorder ? "!rounded-r-none !border-r-0" : ""
+        } ${hideLeftBorder ? "!border-l-0" : ""} ${
+          hideRightBorder ? "!border-r-0" : ""
+        } ${squareLeft ? "!rounded-l-none" : ""} ${
+          squareRight ? "!rounded-r-none" : ""
         }`}
       >
         {icon && (
