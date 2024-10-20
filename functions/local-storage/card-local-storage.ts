@@ -20,7 +20,7 @@ export function setLocalStorageCards(cards: Card[], board?: BoardType) {
   );
 }
 
-export function saveLocalStorageCard(card: Card, board?: BoardType) {
+export function saveLocalStorageCard(card: Card, count = 1, board?: BoardType) {
   if (Platform.OS === "ios") return;
 
   const storedCards = getLocalStorageStoredCards(board);
@@ -29,8 +29,8 @@ export function saveLocalStorageCard(card: Card, board?: BoardType) {
     (storedCard) => storedCard.id === card.id
   );
 
-  if (storedCardIndex >= 0) storedCards[storedCardIndex].count += 1;
-  else storedCards.push(card);
+  if (storedCardIndex >= 0) storedCards[storedCardIndex].count += count;
+  else storedCards.push({ ...card, count });
 
   const newCards = JSON.stringify([
     ...storedCards.map((storedCard) => JSON.stringify(storedCard)),

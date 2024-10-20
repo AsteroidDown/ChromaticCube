@@ -7,9 +7,10 @@ import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import { saveLocalStorageCard } from "@/functions/local-storage/card-local-storage";
 import ScryfallService from "@/hooks/scryfall.service";
 import { Card } from "@/models/card/card";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useState } from "react";
 import { View } from "react-native";
+import Dropdown from "../ui/dropdown/dropdown";
 import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
 import CardPrints from "./card-prints";
@@ -30,6 +31,8 @@ export default function CardSearch() {
   const [noSearchResultsTimer, setNoSearchResultsTimer] =
     useState<NodeJS.Timeout>();
   const [noResultsSearch, setNoResultsSearch] = useState("");
+
+  const [addMultipleOpen, setAddMultipleOpen] = useState(false);
 
   const searchedCardsPlaceholder = Array(5).fill(undefined);
 
@@ -59,10 +62,12 @@ export default function CardSearch() {
     });
   }
 
-  function saveCard(card?: Card) {
+  function saveCard(card?: Card, count = 1) {
     if (!card) return;
 
-    const storedCards = saveLocalStorageCard(card, board);
+    setAddMultipleOpen(false);
+
+    const storedCards = saveLocalStorageCard(card, count, board);
     if (storedCards) setStoredCards(storedCards);
 
     setButtonText("Card Added!");
@@ -118,13 +123,65 @@ export default function CardSearch() {
       <CardDetailedPreview card={card}>
         <CardPrints card={card} setCard={setCard} />
 
-        <Button
-          icon={faPlus}
-          disabled={!card}
-          text={buttonText}
-          action={buttonAction}
-          onClick={() => saveCard(card)}
-        />
+        <View className="flex flex-row justify-center items-end w-full gap-0.5">
+          <Button
+            squareRight
+            className="flex-1"
+            icon={faPlus}
+            disabled={!card}
+            text={buttonText}
+            action={buttonAction}
+            onClick={() => saveCard(card)}
+          />
+
+          <Button
+            squareLeft
+            icon={faEllipsisV}
+            disabled={!card}
+            action={buttonAction}
+            onClick={() => setAddMultipleOpen(true)}
+          />
+
+          <View className="-mx-px">
+            <Dropdown
+              xOffset={-104}
+              expanded={addMultipleOpen}
+              setExpanded={setAddMultipleOpen}
+            >
+              <Box className="flex justify-start items-start !p-0 border-2 border-primary-300 !bg-background-100 !bg-opacity-90 overflow-hidden">
+                <Button
+                  start
+                  square
+                  type="clear"
+                  text="Add 2"
+                  className="w-full"
+                  icon={faPlus}
+                  onClick={() => saveCard(card, 2)}
+                />
+
+                <Button
+                  start
+                  square
+                  type="clear"
+                  text="Add 3"
+                  className="w-full"
+                  icon={faPlus}
+                  onClick={() => saveCard(card, 3)}
+                />
+
+                <Button
+                  start
+                  square
+                  type="clear"
+                  text="Add 4"
+                  className="w-full"
+                  icon={faPlus}
+                  onClick={() => saveCard(card, 4)}
+                />
+              </Box>
+            </Dropdown>
+          </View>
+        </View>
       </CardDetailedPreview>
     </View>
   );
