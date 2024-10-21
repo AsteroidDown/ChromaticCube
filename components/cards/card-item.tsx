@@ -3,7 +3,7 @@ import Divider from "@/components/ui/divider/divider";
 import Modal from "@/components/ui/modal/modal";
 import Text from "@/components/ui/text/text";
 import { Tooltip } from "@/components/ui/tooltip/tooltip";
-import BoardContext, { BoardType } from "@/contexts/cards/board.context";
+import BoardContext from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import {
   addToLocalStorageCardCount,
@@ -182,8 +182,9 @@ export function CardItemFooter({
     setStoredCards(getLocalStorageStoredCards(board));
   }
 
-  function moveCard(card: Card, moveToBoard: BoardType) {
-    saveLocalStorageCard(card, moveToBoard);
+  function moveCard(card: Card) {
+    const moveToBoard = board === "main" ? "maybe" : "main";
+    saveLocalStorageCard(card, card.count, moveToBoard);
     removeLocalStorageCard(card, board);
     setStoredCards(getLocalStorageStoredCards(board));
   }
@@ -213,7 +214,7 @@ export function CardItemFooter({
             className="flex-1"
             tabbable={expanded}
             icon={faRightFromBracket}
-            onClick={() => moveCard(card, "maybe")}
+            onClick={() => moveCard(card)}
           ></Button>
         </Tooltip>
 
