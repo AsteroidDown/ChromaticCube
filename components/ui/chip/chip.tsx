@@ -58,7 +58,7 @@ export default function Chip({
       )}
 
       {text && (
-        <Text size={size} thickness="bold" className={`${textColor}`}>
+        <Text noWrap size={size} thickness="bold" className={`${textColor}`}>
           {text}
         </Text>
       )}
