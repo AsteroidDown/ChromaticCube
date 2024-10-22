@@ -8,7 +8,7 @@ import { Card } from "@/models/card/card";
 import { Dashboard } from "@/models/dashboard/dashboard";
 import { Stack } from "expo-router";
 import React, { useEffect } from "react";
-import { View } from "react-native";
+import { SafeAreaView } from "react-native";
 
 export default function RootLayout() {
   const [storedCards, setStoredCards] = React.useState([] as Card[]);
@@ -21,7 +21,7 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <View className="flex w-full h-full bg-background-100 ">
+    <SafeAreaView className="flex w-full h-full bg-background-100">
       <Text size="2xl" thickness="medium" className="px-6 py-4">
         Chromatic Cube
       </Text>
@@ -34,6 +34,6 @@ export default function RootLayout() {
           </Stack>
         </DashboardContext.Provider>
       </StoredCardsContext.Provider>
-    </View>
+    </SafeAreaView>
   );
 }
