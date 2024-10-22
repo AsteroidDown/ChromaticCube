@@ -3,6 +3,7 @@ import BoardContext from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import {
   getLocalStorageStoredCards,
+  saveLocalStorageCard,
   setLocalStorageCards,
 } from "@/functions/local-storage/card-local-storage";
 import ScryfallService from "@/hooks/scryfall.service";
@@ -115,7 +116,8 @@ export default function CardImportExportModal({
     } else {
       ScryfallService.getCardsFromCollection(cardIdentifiers).then(
         (newCards) => {
-          setLocalStorageCards(newCards, board);
+          setLocalStorageCards([], board);
+          newCards.forEach((card) => saveLocalStorageCard(card, 1, board));
           setStoredCards(newCards);
 
           setDisabled(false);
