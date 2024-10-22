@@ -59,7 +59,12 @@ export default function CardSaveAsGraphModal({
     setDisabled(true);
 
     addLocalStorageDashboardItem(sectionId ?? "unsorted", {
-      title: generateTitle(sortType, colorFilter, typeFilter, rarityFilter),
+      title: generateGraphTitle(
+        sortType,
+        colorFilter,
+        typeFilter,
+        rarityFilter
+      ),
       itemType: "graph",
       sortType: sortType,
       stacked: true,
@@ -187,7 +192,7 @@ export default function CardSaveAsGraphModal({
   );
 }
 
-function generateTitle(
+export function generateGraphTitle(
   type: CardFilterSortType,
   colorFilter?: MTGColor[],
   typeFilter?: MTGCardTypes[],
@@ -208,6 +213,19 @@ function generateTitle(
     if (colorFilter.includes("colorless")) title += "Colorless ";
   }
 
+  if (rarityFilter?.length) {
+    const multiple = rarityFilter.length > 1;
+
+    if (rarityFilter.includes("common"))
+      title += "Common" + (multiple ? ", " : " ");
+    if (rarityFilter.includes("uncommon"))
+      title += "Uncommon" + (multiple ? ", " : " ");
+    if (rarityFilter.includes("rare"))
+      title += "Rare" + (multiple ? ", " : " ");
+    if (rarityFilter.includes("mythic"))
+      title += "Mythic" + (multiple ? ", " : " ");
+  }
+
   if (typeFilter?.length) {
     const multiple = typeFilter.length > 1;
 
@@ -226,19 +244,6 @@ function generateTitle(
     if (typeFilter.includes(MTGCardTypes.PLANESWALKER))
       title += "Planeswalker" + (multiple ? ", " : " ");
     if (typeFilter.includes(MTGCardTypes.BATTLE)) title += "Battle ";
-  }
-
-  if (rarityFilter?.length) {
-    const multiple = rarityFilter.length > 1;
-
-    if (rarityFilter.includes("common"))
-      title += "Common" + (multiple ? ", " : " ");
-    if (rarityFilter.includes("uncommon"))
-      title += "Uncommon" + (multiple ? ", " : " ");
-    if (rarityFilter.includes("rare"))
-      title += "Rare" + (multiple ? ", " : " ");
-    if (rarityFilter.includes("mythic"))
-      title += "Mythic" + (multiple ? ", " : " ");
   }
 
   title += "Cards by " + titleCase(type);

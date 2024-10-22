@@ -1,3 +1,4 @@
+import { filterCards } from "@/functions/card-filtering";
 import {
   sortCardsAlphabetically,
   sortCardsByManaValue,
@@ -37,7 +38,14 @@ export default function Chart({
   filters,
   smallTitles = false,
 }: ChartProps) {
-  const sortedCards = sortCardsByManaValue(sortCardsAlphabetically(cards));
+  let sortedCards = sortCardsByManaValue(sortCardsAlphabetically(cards));
+
+  if (filters.rarityFilter?.length) {
+    sortedCards = filterCards(sortedCards, {
+      rarityFilter: filters.rarityFilter,
+      typeFilter: filters.typeFilter,
+    });
+  }
 
   if (type === "cost")
     return (
