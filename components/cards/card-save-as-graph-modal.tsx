@@ -12,8 +12,10 @@ import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
   addLocalStorageDashboardItem,
   getLocalStorageDashboard,
+  updateLocalStorageDashboardItem,
 } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
+import { DashboardItem } from "@/models/dashboard/dashboard";
 import { CardFilterSortType } from "@/models/sorted-cards/sorted-cards";
 import {
   faChartSimple,
@@ -21,10 +23,12 @@ import {
   faInfoCircle,
   faRotate,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import { View } from "react-native";
 
 export interface CardSaveAsGraphModalProps {
+  item?: DashboardItem;
   sectionId?: string;
   type?: CardFilterSortType;
   open: boolean;
@@ -32,6 +36,7 @@ export interface CardSaveAsGraphModalProps {
 }
 
 export default function CardSaveAsGraphModal({
+  item,
   sectionId,
   type = "cost",
   open,
@@ -58,23 +63,34 @@ export default function CardSaveAsGraphModal({
   function createGraph() {
     setDisabled(true);
 
-    addLocalStorageDashboardItem(sectionId ?? "unsorted", {
-      title: generateGraphTitle(
-        sortType,
-        colorFilter,
-        typeFilter,
-        rarityFilter
-      ),
-      itemType: "graph",
-      sortType: sortType,
-      stacked: true,
-      size: "lg",
-      filters: {
-        colorFilter,
-        typeFilter,
-        rarityFilter,
-      },
-    });
+    if (item) {
+      updateLocalStorageDashboardItem(item.id, sectionId ?? "unsorted", {
+        sortType: sortType,
+        filters: {
+          colorFilter,
+          typeFilter,
+          rarityFilter,
+        },
+      });
+    } else {
+      addLocalStorageDashboardItem(sectionId ?? "unsorted", {
+        title: generateGraphTitle(
+          sortType,
+          colorFilter,
+          typeFilter,
+          rarityFilter
+        ),
+        itemType: "graph",
+        sortType: sortType,
+        stacked: true,
+        size: "lg",
+        filters: {
+          colorFilter,
+          typeFilter,
+          rarityFilter,
+        },
+      });
+    }
 
     setDashboard(getLocalStorageDashboard());
 
@@ -83,18 +99,32 @@ export default function CardSaveAsGraphModal({
       setDisabled(false);
     }, 500);
 
-    setTimeout(() => setSuccess(false), 2000);
+    setTimeout(() => {
+      setSuccess(false);
+      if (item) setOpen(false);
+    }, 2000);
   }
 
   return (
     <Modal open={open} setOpen={setOpen}>
       <View className="flex gap-2">
-        <Text size="2xl" thickness="bold">
-          Save As Graph
-        </Text>
+        <View className="flex flex-row gap-4">
+          <FontAwesomeIcon
+            icon={faChartSimple}
+            size="2xl"
+            className="color-white"
+          />
+          <Text size="2xl" thickness="bold">
+            {item ? "Update Graph" : "Save As Graph"}
+          </Text>
+        </View>
 
         <View className="flex gap-4">
-          <Text>Add a graph to the dashboard with the following filters:</Text>
+          <Text>
+            {item
+              ? "Update the filters for " + item.title
+              : "Add a graph to the dashboard with the following filters:"}
+          </Text>
 
           <View className="flex gap-2 max-w-96">
             <Text size="md" thickness="bold">
@@ -178,11 +208,17 @@ export default function CardSaveAsGraphModal({
           }
           text={
             disabled
-              ? "Creating Graph..."
+              ? item
+                ? "Updating Graph..."
+                : "Creating Graph..."
               : success
-              ? "Graph Created!"
+              ? item
+                ? "Graph Updated! Closing..."
+                : "Graph Created!"
               : error
               ? "Error Creating Graph!"
+              : item
+              ? "Update Graph"
               : "Create Graph"
           }
           onClick={async () => createGraph()}

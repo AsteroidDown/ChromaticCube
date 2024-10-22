@@ -12,19 +12,23 @@ import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
   addLocalStorageDashboardItem,
   getLocalStorageDashboard,
+  updateLocalStorageDashboardItem,
 } from "@/functions/local-storage/dashboard-local-storage";
 import { titleCase } from "@/functions/text-manipulation";
+import { DashboardItem } from "@/models/dashboard/dashboard";
 import {
   faCheck,
   faInfoCircle,
   faRotate,
   faTable,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import { View } from "react-native";
 import { ChartType } from "../chart/chart";
 
 export interface CardSaveAsChartModalProps {
+  item?: DashboardItem;
   sectionId?: string;
   type?: ChartType;
   open: boolean;
@@ -32,6 +36,7 @@ export interface CardSaveAsChartModalProps {
 }
 
 export default function CardSaveAsChartModal({
+  item,
   sectionId,
   type = "cost",
   open,
@@ -58,19 +63,30 @@ export default function CardSaveAsChartModal({
   function createChart() {
     setDisabled(true);
 
-    addLocalStorageDashboardItem(sectionId ?? "unsorted", {
-      title: generateTitle(sortType, colorFilter, rarityFilter, typeFilter),
-      sortType,
-      itemType: "chart",
-      stacked: true,
-      size: "lg",
-      smallTitles: true,
-      filters: {
-        colorFilter,
-        typeFilter: sortType !== "type" ? typeFilter : undefined,
-        rarityFilter: sortType !== "rarity" ? rarityFilter : undefined,
-      },
-    });
+    if (item) {
+      updateLocalStorageDashboardItem(item.id, sectionId ?? "unsorted", {
+        sortType,
+        filters: {
+          colorFilter,
+          typeFilter: sortType !== "type" ? typeFilter : undefined,
+          rarityFilter: sortType !== "rarity" ? rarityFilter : undefined,
+        },
+      });
+    } else {
+      addLocalStorageDashboardItem(sectionId ?? "unsorted", {
+        title: generateTitle(sortType, colorFilter, rarityFilter, typeFilter),
+        sortType,
+        itemType: "chart",
+        stacked: true,
+        size: "lg",
+        smallTitles: true,
+        filters: {
+          colorFilter,
+          typeFilter: sortType !== "type" ? typeFilter : undefined,
+          rarityFilter: sortType !== "rarity" ? rarityFilter : undefined,
+        },
+      });
+    }
 
     setDashboard(getLocalStorageDashboard());
 
@@ -79,18 +95,29 @@ export default function CardSaveAsChartModal({
       setDisabled(false);
     }, 500);
 
-    setTimeout(() => setSuccess(false), 2000);
+    setTimeout(() => {
+      setSuccess(false);
+      if (item) setOpen(false);
+    }, 2000);
   }
 
   return (
     <Modal open={open} setOpen={setOpen}>
       <View className="flex gap-2">
-        <Text size="2xl" thickness="bold">
-          Save As Chart
-        </Text>
+        <View className="flex flex-row gap-4">
+          <FontAwesomeIcon icon={faTable} size="2xl" className="color-white" />
+
+          <Text size="2xl" thickness="bold">
+            {item ? "Update Chart" : "Save As Chart"}
+          </Text>
+        </View>
 
         <View className="flex gap-4">
-          <Text>Add a Chart to the dashboard with the following filters:</Text>
+          <Text>
+            {item
+              ? "Update the filters for " + item.title
+              : "Add a Chart to the dashboard with the following filters:"}
+          </Text>
 
           <View className="flex gap-2 max-w-96">
             <Text size="md" thickness="bold">
@@ -128,7 +155,7 @@ export default function CardSaveAsChartModal({
 
           <View className="flex gap-2 max-w-96">
             <Text size="md" thickness="bold">
-              Color
+              Colors to Include
             </Text>
 
             <Divider thick />
@@ -138,7 +165,7 @@ export default function CardSaveAsChartModal({
 
           <View className="flex gap-2 max-w-96">
             <Text size="md" thickness="bold">
-              Rarity
+              Rarities to Filter By
             </Text>
 
             <Divider thick />
@@ -152,7 +179,7 @@ export default function CardSaveAsChartModal({
 
           <View className="flex gap-2 max-w-96">
             <Text size="md" thickness="bold">
-              Type
+              Types to Filter By
             </Text>
 
             <Divider thick />
@@ -182,11 +209,17 @@ export default function CardSaveAsChartModal({
           }
           text={
             disabled
-              ? "Creating Chart..."
+              ? item
+                ? "Updating Chart..."
+                : "Creating Chart..."
               : success
-              ? "Chart Created!"
+              ? item
+                ? "Chart Updated! Closing..."
+                : "Chart Created!"
               : error
               ? "Error Creating Chart!"
+              : item
+              ? "Update Chart"
               : "Create Chart"
           }
           onClick={async () => createChart()}

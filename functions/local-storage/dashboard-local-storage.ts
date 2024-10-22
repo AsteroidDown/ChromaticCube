@@ -3,6 +3,7 @@ import {
   DashboardItem,
   DashboardItemSize,
 } from "@/models/dashboard/dashboard";
+import { CardFilters } from "@/models/sorted-cards/sorted-cards";
 import { Platform } from "react-native";
 import { generateId } from "../identification";
 
@@ -165,6 +166,8 @@ export function updateLocalStorageDashboardItem(
   data: {
     title?: string;
     stacked?: boolean;
+    sortType?: string;
+    filters?: CardFilters;
     size?: DashboardItemSize;
     smallTitles?: boolean;
   }
@@ -187,6 +190,8 @@ export function updateLocalStorageDashboardItem(
       const item = dashboard.sections[sectionIndex].items[itemIndex];
 
       if (data.title !== undefined) item.title = data.title;
+      if (data.sortType !== undefined) item.sortType = data.sortType;
+      if (data.filters !== undefined) item.filters = data.filters;
       if (data.stacked !== undefined) item.stacked = data.stacked;
       if (data.size !== undefined) item.size = data.size;
       if (data.smallTitles !== undefined) item.smallTitles = data.smallTitles;

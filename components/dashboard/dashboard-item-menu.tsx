@@ -15,10 +15,13 @@ import {
   faExpand,
   faMaximize,
   faMinimize,
+  faPencil,
   faUpLong,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext } from "react";
+import CardSaveAsChartModal from "../cards/card-save-as-chart-modal";
+import CardSaveAsGraphModal from "../cards/card-save-as-graph-modal";
 import Dropdown from "../ui/dropdown/dropdown";
 
 export interface DashboardItemMenu {
@@ -35,6 +38,16 @@ export default function DashboardItemMenu({
   const { setDashboard } = useContext(DashboardContext);
 
   const [expanded, setExpanded] = React.useState(false);
+
+  const [editGraphFiltersOpen, setEditGraphFiltersOpen] = React.useState(false);
+  const [editChartFiltersOpen, setEditChartFiltersOpen] = React.useState(false);
+
+  function editItemFilters() {
+    if (!item || !sectionId) return;
+
+    if (item.itemType === "graph") setEditGraphFiltersOpen(true);
+    else if (item.itemType === "chart") setEditChartFiltersOpen(true);
+  }
 
   function moveItemUp() {
     if (!item || !sectionId) return;
@@ -81,6 +94,16 @@ export default function DashboardItemMenu({
         setExpanded={setExpanded}
       >
         <Box className="flex justify-start items-start !p-0 border-2 border-primary-300 !bg-background-100 !bg-opacity-90 overflow-hidden">
+          <Button
+            start
+            square
+            type="clear"
+            text="Update"
+            className="w-full"
+            icon={faPencil}
+            onClick={editItemFilters}
+          />
+
           <Button
             start
             square
@@ -147,6 +170,20 @@ export default function DashboardItemMenu({
             onClick={removeItem}
           />
         </Box>
+
+        <CardSaveAsGraphModal
+          item={item}
+          sectionId={sectionId}
+          open={editGraphFiltersOpen}
+          setOpen={setEditGraphFiltersOpen}
+        />
+
+        <CardSaveAsChartModal
+          item={item}
+          sectionId={sectionId}
+          open={editChartFiltersOpen}
+          setOpen={setEditChartFiltersOpen}
+        />
       </Dropdown>
     </>
   );
