@@ -33,6 +33,7 @@ export function ScryfallToCard(scryfallCard: ScryfallCard): Card {
     producedMana: scryfallCard.produced_mana,
     oracleText: scryfallCard.oracle_text,
     images: transferImageUris(scryfallCard.image_uris),
+    legalities: scryfallCard.legalities,
     faces: scryfallCard.card_faces
       ? {
           front: {

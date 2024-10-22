@@ -1,3 +1,4 @@
+import { MTGLegality } from "@/constants/mtg/mtg-legality";
 import { MTGColorSymbol } from "../../constants/mtg/mtg-colors";
 import { Rarity } from "../card/card";
 
@@ -20,6 +21,7 @@ export interface ScryfallCard {
   card_faces: ScryfallCardFace[];
   prices: ScryfallCardPrices;
   purchase_uris: ScryfallCardPriceUris;
+  legalities: ScryfallCardLegalities;
 }
 
 export interface ScryfallImageUris {
@@ -54,4 +56,35 @@ export interface ScryfallCardPriceUris {
   tcgplayer: string;
   cardmarket: string;
   cardhoarder: string;
+}
+
+export interface ScryfallCardLegalities {
+  // Common formats
+  standard: MTGLegality;
+  pioneer: MTGLegality;
+  modern: MTGLegality;
+  legacy: MTGLegality;
+  vintage: MTGLegality;
+
+  commander: MTGLegality;
+  oathbreaker: MTGLegality;
+
+  alchemy: MTGLegality; // Arena Standard Equivalent
+  explorer: MTGLegality; // Arena Pioneer Equivalent
+  historic: MTGLegality; // Arena Modern Equivalent
+  timeless: MTGLegality; // Arena Legacy Equivalent
+
+  brawl: MTGLegality;
+  pauper: MTGLegality;
+  penny: MTGLegality;
+
+  // Non-common formats
+  future: MTGLegality;
+  gladiator: MTGLegality;
+  standardbrawl: MTGLegality;
+  paupercommander: MTGLegality;
+  duel: MTGLegality;
+  oldschool: MTGLegality;
+  premodern: MTGLegality;
+  pred: MTGLegality;
 }

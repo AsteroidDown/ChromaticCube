@@ -1,3 +1,4 @@
+import { MTGLegality } from "@/constants/mtg/mtg-legality";
 import { MTGColorSymbol } from "../../constants/mtg/mtg-colors";
 
 export type Rarity = "common" | "uncommon" | "rare" | "mythic";
@@ -22,6 +23,7 @@ export interface Card {
   faces: { front: CardFace; back: CardFace } | null;
   prices: CardPrices;
   priceUris: CardPriceUris;
+  legalities: CardLegalities;
 }
 
 export interface CardImageUris {
@@ -57,6 +59,37 @@ export interface CardPriceUris {
   tcgplayer: string;
   cardmarket: string;
   cardhoarder: string;
+}
+
+export interface CardLegalities {
+  // Common formats
+  standard: MTGLegality;
+  pioneer: MTGLegality;
+  modern: MTGLegality;
+  legacy: MTGLegality;
+  vintage: MTGLegality;
+
+  commander: MTGLegality;
+  oathbreaker: MTGLegality;
+
+  alchemy: MTGLegality; // Arena Standard Equivalent
+  explorer: MTGLegality; // Arena Pioneer Equivalent
+  historic: MTGLegality; // Arena Modern Equivalent
+  timeless: MTGLegality; // Arena Legacy Equivalent
+
+  brawl: MTGLegality;
+  pauper: MTGLegality;
+  penny: MTGLegality;
+
+  // Non-common formats
+  future: MTGLegality;
+  gladiator: MTGLegality;
+  standardbrawl: MTGLegality;
+  paupercommander: MTGLegality;
+  duel: MTGLegality;
+  oldschool: MTGLegality;
+  premodern: MTGLegality;
+  pred: MTGLegality;
 }
 
 export type CardIdentifier =
