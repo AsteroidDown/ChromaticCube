@@ -11,6 +11,7 @@ export interface ColorFilterProps {
   reset?: boolean;
   disabled?: boolean;
   excludeMono?: boolean;
+  colorFilters?: MTGColor[];
   setColorFilters: React.Dispatch<React.SetStateAction<MTGColor[] | undefined>>;
 }
 
@@ -19,6 +20,7 @@ export default function ColorFilter({
   reset,
   disabled,
   excludeMono = false,
+  colorFilters,
   setColorFilters,
 }: ColorFilterProps) {
   const { preferences } = useContext(CardPreferencesContext);
@@ -73,33 +75,44 @@ export default function ColorFilter({
   }, [reset]);
 
   useEffect(() => {
-    if (!preferences.filters) return;
+    if (colorFilters?.length) {
+      if (colorFilters.includes("white")) setWhiteApplied(true);
+      if (colorFilters.includes("blue")) setBlueApplied(true);
+      if (colorFilters.includes("black")) setBlackApplied(true);
+      if (colorFilters.includes("red")) setRedApplied(true);
+      if (colorFilters.includes("green")) setGreenApplied(true);
+      if (colorFilters.includes("gold")) setGoldApplied(true);
+      if (colorFilters.includes("colorless")) setColorlessApplied(true);
+      if (colorFilters.includes("mono")) setMonoColorApplied(true);
+    } else {
+      if (!preferences.filters) return;
 
-    if (preferences.filters.colorFilter?.includes("white")) {
-      setWhiteApplied(true);
+      if (preferences.filters.colorFilter?.includes("white")) {
+        setWhiteApplied(true);
+      }
+      if (preferences.filters.colorFilter?.includes("blue")) {
+        setBlueApplied(true);
+      }
+      if (preferences.filters.colorFilter?.includes("black")) {
+        setBlackApplied(true);
+      }
+      if (preferences.filters.colorFilter?.includes("red")) {
+        setRedApplied(true);
+      }
+      if (preferences.filters.colorFilter?.includes("green")) {
+        setGreenApplied(true);
+      }
+      if (preferences.filters.colorFilter?.includes("gold")) {
+        setGoldApplied(true);
+      }
+      if (preferences.filters.colorFilter?.includes("colorless")) {
+        setColorlessApplied(true);
+      }
+      if (preferences.filters.colorFilter?.includes("mono")) {
+        setMonoColorApplied(true);
+      }
     }
-    if (preferences.filters.colorFilter?.includes("blue")) {
-      setBlueApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("black")) {
-      setBlackApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("red")) {
-      setRedApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("green")) {
-      setGreenApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("gold")) {
-      setGoldApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("colorless")) {
-      setColorlessApplied(true);
-    }
-    if (preferences.filters.colorFilter?.includes("mono")) {
-      setMonoColorApplied(true);
-    }
-  }, [preferences]);
+  }, [preferences, colorFilters]);
 
   const colorFiltersList = (
     <View className="flex flex-row flex-wrap gap-2">

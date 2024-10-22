@@ -10,6 +10,7 @@ export interface RarityFilterProps {
   flat?: boolean;
   reset?: boolean;
   disabled?: boolean;
+  rarityFilters?: MTGRarity[];
   setRarityFilters: React.Dispatch<
     React.SetStateAction<MTGRarity[] | undefined>
   >;
@@ -19,6 +20,7 @@ export default function RarityFilter({
   flat,
   reset,
   disabled,
+  rarityFilters,
   setRarityFilters,
 }: RarityFilterProps) {
   const { preferences } = useContext(CardPreferencesContext);
@@ -52,21 +54,28 @@ export default function RarityFilter({
   }, [reset]);
 
   useEffect(() => {
-    if (!preferences.filters) return;
+    if (rarityFilters?.length) {
+      if (rarityFilters.includes("common")) setCommonApplied(true);
+      if (rarityFilters.includes("uncommon")) setUncommonApplied(true);
+      if (rarityFilters.includes("rare")) setRareApplied(true);
+      if (rarityFilters.includes("mythic")) setMythicApplied(true);
+    } else {
+      if (!preferences.filters) return;
 
-    if (preferences.filters.rarityFilter?.includes("common")) {
-      setCommonApplied(true);
+      if (preferences.filters.rarityFilter?.includes("common")) {
+        setCommonApplied(true);
+      }
+      if (preferences.filters.rarityFilter?.includes("uncommon")) {
+        setUncommonApplied(true);
+      }
+      if (preferences.filters.rarityFilter?.includes("rare")) {
+        setRareApplied(true);
+      }
+      if (preferences.filters.rarityFilter?.includes("mythic")) {
+        setMythicApplied(true);
+      }
     }
-    if (preferences.filters.rarityFilter?.includes("uncommon")) {
-      setUncommonApplied(true);
-    }
-    if (preferences.filters.rarityFilter?.includes("rare")) {
-      setRareApplied(true);
-    }
-    if (preferences.filters.rarityFilter?.includes("mythic")) {
-      setMythicApplied(true);
-    }
-  }, [preferences]);
+  }, [preferences, rarityFilters]);
 
   const rarityFiltersList = (
     <View className="flex flex-row flex-wrap gap-2">

@@ -51,13 +51,13 @@ export default function CardSaveAsGraphModal({
   const [sortType, setSortType] = React.useState(type);
 
   const [colorFilter, setColorFilter] = React.useState(
-    undefined as MTGColor[] | undefined
+    item?.filters.colorFilter as MTGColor[] | undefined
   );
   const [typeFilter, setTypeFilter] = React.useState(
-    undefined as MTGCardTypes[] | undefined
+    item?.filters.typeFilter as MTGCardTypes[] | undefined
   );
   const [rarityFilter, setRarityFilter] = React.useState(
-    undefined as MTGRarity[] | undefined
+    item?.filters.rarityFilter as MTGRarity[] | undefined
   );
 
   function createGraph() {
@@ -107,7 +107,7 @@ export default function CardSaveAsGraphModal({
 
   return (
     <Modal open={open} setOpen={setOpen}>
-      <View className="flex gap-2">
+      <View className="flex gap-2 max-w-[400px]">
         <View className="flex flex-row gap-4">
           <FontAwesomeIcon
             icon={faChartSimple}
@@ -167,7 +167,11 @@ export default function CardSaveAsGraphModal({
 
             <Divider thick />
 
-            <ColorFilter flat setColorFilters={setColorFilter} />
+            <ColorFilter
+              flat
+              colorFilters={colorFilter}
+              setColorFilters={setColorFilter}
+            />
           </View>
 
           <View className="flex gap-2 max-w-96">
@@ -177,7 +181,11 @@ export default function CardSaveAsGraphModal({
 
             <Divider thick />
 
-            <TypeFilter flat setTypeFilters={setTypeFilter} />
+            <TypeFilter
+              flat
+              typeFilters={typeFilter}
+              setTypeFilters={setTypeFilter}
+            />
           </View>
 
           <View className="flex gap-2 max-w-96">
@@ -187,7 +195,11 @@ export default function CardSaveAsGraphModal({
 
             <Divider thick />
 
-            <RarityFilter flat setRarityFilters={setRarityFilter} />
+            <RarityFilter
+              flat
+              rarityFilters={rarityFilter}
+              setRarityFilters={setRarityFilter}
+            />
           </View>
         </View>
 

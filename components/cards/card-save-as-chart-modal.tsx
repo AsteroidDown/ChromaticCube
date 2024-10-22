@@ -51,13 +51,13 @@ export default function CardSaveAsChartModal({
   const [sortType, setSortType] = React.useState(type);
 
   const [colorFilter, setColorFilter] = React.useState(
-    undefined as MTGColor[] | undefined
-  );
-  const [rarityFilter, setRarityFilter] = React.useState(
-    undefined as MTGRarity[] | undefined
+    item?.filters.colorFilter as MTGColor[] | undefined
   );
   const [typeFilter, setTypeFilter] = React.useState(
-    undefined as MTGCardTypes[] | undefined
+    item?.filters.typeFilter as MTGCardTypes[] | undefined
+  );
+  const [rarityFilter, setRarityFilter] = React.useState(
+    item?.filters.rarityFilter as MTGRarity[] | undefined
   );
 
   function createChart() {
@@ -103,7 +103,7 @@ export default function CardSaveAsChartModal({
 
   return (
     <Modal open={open} setOpen={setOpen}>
-      <View className="flex gap-2">
+      <View className="flex gap-2 max-w-[400px]">
         <View className="flex flex-row gap-4">
           <FontAwesomeIcon icon={faTable} size="2xl" className="color-white" />
 
@@ -160,20 +160,11 @@ export default function CardSaveAsChartModal({
 
             <Divider thick />
 
-            <ColorFilter flat excludeMono setColorFilters={setColorFilter} />
-          </View>
-
-          <View className="flex gap-2 max-w-96">
-            <Text size="md" thickness="bold">
-              Rarities to Filter By
-            </Text>
-
-            <Divider thick />
-
-            <RarityFilter
+            <ColorFilter
               flat
-              disabled={sortType === "rarity"}
-              setRarityFilters={setRarityFilter}
+              excludeMono
+              colorFilters={colorFilter}
+              setColorFilters={setColorFilter}
             />
           </View>
 
@@ -186,8 +177,24 @@ export default function CardSaveAsChartModal({
 
             <TypeFilter
               flat
+              typeFilters={typeFilter}
               disabled={sortType === "type"}
               setTypeFilters={setTypeFilter}
+            />
+          </View>
+
+          <View className="flex gap-2 max-w-96">
+            <Text size="md" thickness="bold">
+              Rarities to Filter By
+            </Text>
+
+            <Divider thick />
+
+            <RarityFilter
+              flat
+              rarityFilters={rarityFilter}
+              disabled={sortType === "rarity"}
+              setRarityFilters={setRarityFilter}
             />
           </View>
         </View>
