@@ -117,7 +117,7 @@ export default function Button({
           <Text
             thickness="bold"
             size={size}
-            className={`${textColor} ${children ? "mr-2" : ""}`}
+            className={`${textColor} ${children ? "mr-2" : ""} select-none`}
           >
             {text}
           </Text>
