@@ -5,6 +5,7 @@ import React from "react";
 import { View, ViewProps } from "react-native";
 import CardImage from "./card-image";
 import { CardBackInfo, CardFrontInfo, CardInfo } from "./card-info";
+import { CardLegalities } from "./card-legalities";
 
 export type CardDetailedPreview = ViewProps & {
   card?: Card;
@@ -26,7 +27,7 @@ export default function CardDetailedPreview({
       </View>
 
       <Box
-        className="flex gap-3 w-[350px] max-h-[458px] overflow-y-auto"
+        className="flex gap-3 w-[364px] max-h-[458px] overflow-y-auto"
         shade={300}
       >
         {!card?.faces && <CardInfo card={card} />}
@@ -40,6 +41,10 @@ export default function CardDetailedPreview({
             <CardBackInfo card={card} />
           </View>
         )}
+
+        <Divider thick />
+
+        <CardLegalities card={card} />
       </Box>
     </Box>
   );
