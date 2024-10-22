@@ -48,7 +48,9 @@ export default function CardSaveAsChartModal({
   const [error, setError] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
 
-  const [sortType, setSortType] = React.useState(type);
+  const [sortType, setSortType] = React.useState(
+    (item ? item.sortType : type) as ChartType
+  );
 
   const [colorFilter, setColorFilter] = React.useState(
     item?.filters.colorFilter as MTGColor[] | undefined

@@ -149,6 +149,7 @@ export default function CardItemGallery({
 
                 <View className="-mx-3">
                   <CardSaveAsChartModal
+                    type={type === "type" ? "type" : "cost"}
                     open={saveAsChartOpen}
                     setOpen={setSaveAsChartOpen}
                   />
