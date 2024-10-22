@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext } from "react";
 import { TextInput, View, ViewProps } from "react-native";
-import DashboardSectionOptionsMenu from "./dashboard-add-item-menu";
+import DashboardSectionOptionsMenu from "./dashboard-section-options-menu";
 
 export type DashboardSectionHeaderProps = ViewProps & {
   section: DashboardSection;

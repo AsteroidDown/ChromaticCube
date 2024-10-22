@@ -27,9 +27,9 @@ import React, { useContext, useEffect } from "react";
 import { View, ViewProps } from "react-native";
 import Chart, { ChartType } from "../chart/chart";
 import Placeholder from "../ui/placeholder/placeholder";
-import DashboardSectionOptionsMenu from "./dashboard-add-item-menu";
 import DashboardItemMenu from "./dashboard-item-menu";
 import DashboardSectionHeader from "./dashboard-section-header";
+import DashboardSectionOptionsMenu from "./dashboard-section-options-menu";
 
 export type DashboardSectionProps = ViewProps & {
   sectionId: string;
