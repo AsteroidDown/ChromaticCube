@@ -9,6 +9,7 @@ import { View } from "react-native";
 export interface ColorFilterProps {
   flat?: boolean;
   reset?: boolean;
+  disabled?: boolean;
   excludeMono?: boolean;
   setColorFilters: React.Dispatch<React.SetStateAction<MTGColor[] | undefined>>;
 }
@@ -16,6 +17,7 @@ export interface ColorFilterProps {
 export default function ColorFilter({
   flat,
   reset,
+  disabled,
   excludeMono = false,
   setColorFilters,
 }: ColorFilterProps) {
@@ -104,6 +106,7 @@ export default function ColorFilter({
       <Chip
         text="White"
         action="white"
+        disabled={disabled}
         type={whiteApplied ? "default" : "outlined"}
         onClick={() => setWhiteApplied(!whiteApplied)}
       />
@@ -111,6 +114,7 @@ export default function ColorFilter({
       <Chip
         text="Blue"
         action="blue"
+        disabled={disabled}
         type={blueApplied ? "default" : "outlined"}
         onClick={() => setBlueApplied(!blueApplied)}
       />
@@ -118,6 +122,7 @@ export default function ColorFilter({
       <Chip
         text="Black"
         action="black"
+        disabled={disabled}
         type={blackApplied ? "default" : "outlined"}
         onClick={() => setBlackApplied(!blackApplied)}
       />
@@ -125,6 +130,7 @@ export default function ColorFilter({
       <Chip
         text="Red"
         action="red"
+        disabled={disabled}
         type={redApplied ? "default" : "outlined"}
         onClick={() => setRedApplied(!redApplied)}
       />
@@ -132,6 +138,7 @@ export default function ColorFilter({
       <Chip
         text="Green"
         action="green"
+        disabled={disabled}
         type={greenApplied ? "default" : "outlined"}
         onClick={() => setGreenApplied(!greenApplied)}
       />
@@ -139,6 +146,7 @@ export default function ColorFilter({
       <Chip
         text="Gold"
         action="gold"
+        disabled={disabled}
         type={goldApplied ? "default" : "outlined"}
         onClick={() => setGoldApplied(!goldApplied)}
       />
@@ -146,6 +154,7 @@ export default function ColorFilter({
       <Chip
         text="Colorless"
         action="colorless"
+        disabled={disabled}
         type={colorlessApplied ? "default" : "outlined"}
         onClick={() => setColorlessApplied(!colorlessApplied)}
       />
@@ -153,6 +162,7 @@ export default function ColorFilter({
       {!excludeMono && (
         <Chip
           text="Mono"
+          disabled={disabled}
           type={monoColorApplied ? "default" : "outlined"}
           onClick={() => setMonoColorApplied(!monoColorApplied)}
         />

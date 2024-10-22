@@ -9,6 +9,7 @@ import { View } from "react-native";
 export interface RarityFilterProps {
   flat?: boolean;
   reset?: boolean;
+  disabled?: boolean;
   setRarityFilters: React.Dispatch<
     React.SetStateAction<MTGRarity[] | undefined>
   >;
@@ -16,8 +17,9 @@ export interface RarityFilterProps {
 
 export default function RarityFilter({
   flat,
-  setRarityFilters,
   reset,
+  disabled,
+  setRarityFilters,
 }: RarityFilterProps) {
   const { preferences } = useContext(CardPreferencesContext);
 
@@ -70,24 +72,28 @@ export default function RarityFilter({
     <View className="flex flex-row flex-wrap gap-2">
       <Chip
         text="Common"
+        disabled={disabled}
         type={commonApplied ? "default" : "outlined"}
         onClick={() => setCommonApplied(!commonApplied)}
       />
 
       <Chip
         text="Uncommon"
+        disabled={disabled}
         type={uncommonApplied ? "default" : "outlined"}
         onClick={() => setUncommonApplied(!uncommonApplied)}
       />
 
       <Chip
         text="Rare"
+        disabled={disabled}
         type={rareApplied ? "default" : "outlined"}
         onClick={() => setRareApplied(!rareApplied)}
       />
 
       <Chip
         text="Mythic"
+        disabled={disabled}
         type={mythicApplied ? "default" : "outlined"}
         onClick={() => setMythicApplied(!mythicApplied)}
       />

@@ -9,6 +9,7 @@ import { View } from "react-native";
 export interface TypeFilterProps {
   flat?: boolean;
   reset?: boolean;
+  disabled?: boolean;
   setTypeFilters: React.Dispatch<
     React.SetStateAction<MTGCardTypes[] | undefined>
   >;
@@ -16,8 +17,9 @@ export interface TypeFilterProps {
 
 export default function TypeFilter({
   flat,
-  setTypeFilters,
   reset,
+  disabled,
+  setTypeFilters,
 }: TypeFilterProps) {
   const { preferences } = useContext(CardPreferencesContext);
 
@@ -105,48 +107,56 @@ export default function TypeFilter({
     <View className="flex flex-row flex-wrap gap-2">
       <Chip
         text="Creature"
+        disabled={disabled}
         type={creatureApplied ? "default" : "outlined"}
         onClick={() => setCreatureApplied(!creatureApplied)}
       />
 
       <Chip
         text="Instant"
+        disabled={disabled}
         type={instantApplied ? "default" : "outlined"}
         onClick={() => setInstantApplied(!instantApplied)}
       />
 
       <Chip
         text="Sorcery"
+        disabled={disabled}
         type={sorceryApplied ? "default" : "outlined"}
         onClick={() => setSorceryApplied(!sorceryApplied)}
       />
 
       <Chip
         text="Artifact"
+        disabled={disabled}
         type={artifactApplied ? "default" : "outlined"}
         onClick={() => setArtifactApplied(!artifactApplied)}
       />
 
       <Chip
         text="Enchantment"
+        disabled={disabled}
         type={enchantmentApplied ? "default" : "outlined"}
         onClick={() => setEnchantmentApplied(!enchantmentApplied)}
       />
 
       <Chip
         text="Land"
+        disabled={disabled}
         type={landApplied ? "default" : "outlined"}
         onClick={() => setLandApplied(!landApplied)}
       />
 
       <Chip
         text="Planeswalker"
+        disabled={disabled}
         type={planeswalkerApplied ? "default" : "outlined"}
         onClick={() => setPlaneswalkerApplied(!planeswalkerApplied)}
       />
 
       <Chip
         text="Battle"
+        disabled={disabled}
         type={battleApplied ? "default" : "outlined"}
         onClick={() => setBattleApplied(!battleApplied)}
       />
