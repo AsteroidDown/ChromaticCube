@@ -12,18 +12,13 @@ const baseColors: MTGColorSymbol[] = ["W", "U", "B", "R", "G"];
 
 export function filterCards(cards: Card[], filters: CardFilters) {
   return cards.reduce((acc, card) => {
-    const shouldFilterCard = filterCard(card, filters);
-
-    if (shouldFilterCard) return acc;
-    else {
-      acc.push(card);
-      return acc;
-    }
+    if (filterCard(card, filters)) acc.push(card);
+    return acc;
   }, [] as Card[]);
 }
 
 export function filterCard(card: Card, filters: CardFilters) {
-  return (
+  return !(
     (filters.colorFilter?.length &&
       filterCardByColor(card, filters.colorFilter)) ||
     (filters.typeFilter?.length &&
@@ -36,65 +31,60 @@ export function filterCard(card: Card, filters: CardFilters) {
 export function filterCardByColor(card: Card, colors: MTGColor[]) {
   const filterColors = colors?.map((color) => MTGColorMap.get(color));
 
+  // Filter colorless
+  if (filterColors.includes("C") && card.colorIdentity.length === 0) {
+    return false;
+  }
+
+  // Filter mono colored cards
+  const monoColored = filterColors?.includes("1");
+  if (
+    monoColored &&
+    card.colorIdentity.length === 1 &&
+    card.colorIdentity.some((color) => filterColors?.includes(color))
+  ) {
+    return false;
+  }
+
   const filteredBaseColors = baseColors.filter((color) =>
     filterColors.includes(color)
   );
 
-  // Filter cards with a color
-  if (
-    filteredBaseColors.length &&
-    !filteredBaseColors.some((color) => card.colorIdentity.includes(color!))
-  ) {
-    return true;
-  }
-
-  // Filter multi colored cards exclusively
+  // Filter multi colored cards
   const multiColored = filterColors?.includes("M");
   if (multiColored) {
-    if (card.colorIdentity.length < 2) return true;
-
-    const multiColoredAndColor =
-      multiColored && baseColors.some((color) => filterColors?.includes(color));
-
-    if (multiColoredAndColor) {
+    // If multiple colors are selected
+    if (filteredBaseColors.length > 1) {
       if (
-        filteredBaseColors.length > 1 &&
-        (card.colorIdentity.length !== filteredBaseColors.length ||
-          !card.colorIdentity.every((color) =>
-            filteredBaseColors.includes(color)
-          ))
+        card.colorIdentity.length === filteredBaseColors.length &&
+        card.colorIdentity.every((color) => filteredBaseColors?.includes(color))
       ) {
-        return true;
-      } else if (
-        filteredBaseColors.length === 1 &&
-        !card.colorIdentity.some((color) => filteredBaseColors.includes(color))
-      ) {
-        return true;
+        return false;
       }
+      // If one color is selected
+    } else if (filteredBaseColors.length === 1) {
+      if (
+        card.colorIdentity.length > 1 &&
+        card.colorIdentity.some((color) => filteredBaseColors?.includes(color))
+      ) {
+        return false;
+      }
+      // If no colors are selected
+    } else {
+      if (card.colorIdentity.length > 1) return false;
     }
   }
 
-  // Filter mono colored cards exclusively
-  const monoColored = filterColors?.includes("1");
-  if (monoColored) {
-    if (card.colorIdentity.length !== 1) return true;
-
-    const monoColoredAndColor =
-      monoColored && baseColors.some((color) => filterColors?.includes(color));
-    if (
-      monoColoredAndColor &&
-      !card.colorIdentity.some((color) => filterColors?.includes(color))
-    ) {
-      return true;
-    }
+  // Filter base color cards with no mono or multi
+  if (
+    !monoColored &&
+    !multiColored &&
+    card.colorIdentity.some((color) => filteredBaseColors?.includes(color))
+  ) {
+    return false;
   }
 
-  // Filter colorless
-  if (filterColors.includes("C") && card.colorIdentity.length !== 0) {
-    return true;
-  }
-
-  return false;
+  return true;
 }
 
 export function filterCardByType(card: Card, types: MTGCardTypes[]) {

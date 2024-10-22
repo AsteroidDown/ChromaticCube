@@ -21,7 +21,6 @@ export function setLocalStorageCards(cards: Card[], board?: BoardType) {
 }
 
 export function saveLocalStorageCard(card: Card, count = 1, board?: BoardType) {
-  console.log(card, count, board);
   if (Platform.OS === "ios") return;
 
   const storedCards = getLocalStorageStoredCards(board);
