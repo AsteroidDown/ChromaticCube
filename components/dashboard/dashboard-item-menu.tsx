@@ -47,6 +47,8 @@ export default function DashboardItemMenu({
 
     if (item.itemType === "graph") setEditGraphFiltersOpen(true);
     else if (item.itemType === "chart") setEditChartFiltersOpen(true);
+
+    setExpanded(false);
   }
 
   function moveItemUp() {
@@ -170,21 +172,21 @@ export default function DashboardItemMenu({
             onClick={removeItem}
           />
         </Box>
-
-        <CardSaveAsGraphModal
-          item={item}
-          sectionId={sectionId}
-          open={editGraphFiltersOpen}
-          setOpen={setEditGraphFiltersOpen}
-        />
-
-        <CardSaveAsChartModal
-          item={item}
-          sectionId={sectionId}
-          open={editChartFiltersOpen}
-          setOpen={setEditChartFiltersOpen}
-        />
       </Dropdown>
+
+      <CardSaveAsGraphModal
+        item={item}
+        sectionId={sectionId}
+        open={editGraphFiltersOpen}
+        setOpen={setEditGraphFiltersOpen}
+      />
+
+      <CardSaveAsChartModal
+        item={item}
+        sectionId={sectionId}
+        open={editChartFiltersOpen}
+        setOpen={setEditChartFiltersOpen}
+      />
     </>
   );
 }
