@@ -150,6 +150,10 @@ export default function CardImportExportModal({
     } else {
       ScryfallService.getCardsFromCollection(cardIdentifiers).then(
         (newCards) => {
+          setLocalStorageCards([], "main");
+          newCards.forEach((card) => saveLocalStorageCard(card, 1, "main"));
+          setStoredCards(newCards);
+
           if (sideboard) {
             ScryfallService.getCardsFromCollection(
               sideBoardCardIdentifiers
@@ -161,10 +165,6 @@ export default function CardImportExportModal({
               setStoredCards(newSideBoardCards);
             });
           }
-
-          setLocalStorageCards([], board);
-          newCards.forEach((card) => saveLocalStorageCard(card, 1, board));
-          setStoredCards(newCards);
 
           setDisabled(false);
           setSuccess(true);
