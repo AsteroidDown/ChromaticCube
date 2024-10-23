@@ -1,10 +1,14 @@
 import Box from "@/components/ui/box/box";
 import Button from "@/components/ui/button/button";
 import SearchBar from "@/components/ui/search-bar/search-bar";
+import { SideBoardLimit } from "@/constants/mtg/limits";
 import { ActionColor } from "@/constants/ui/colors";
 import BoardContext from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
-import { saveLocalStorageCard } from "@/functions/local-storage/card-local-storage";
+import {
+  getLocalStorageStoredCards,
+  saveLocalStorageCard,
+} from "@/functions/local-storage/card-local-storage";
 import ScryfallService from "@/hooks/scryfall.service";
 import { Card } from "@/models/card/card";
 import { faEllipsisV, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -35,6 +39,11 @@ export default function CardSearch() {
   const [addMultipleOpen, setAddMultipleOpen] = useState(false);
 
   const searchedCardsPlaceholder = Array(5).fill(undefined);
+
+  const sideboardCount = getLocalStorageStoredCards("side").reduce(
+    (acc, storedCard) => acc + storedCard.count,
+    0
+  );
 
   function findCards(query?: string) {
     ScryfallService.findCards(query ?? search).then((cards) => {
@@ -128,17 +137,21 @@ export default function CardSearch() {
             squareRight
             className="flex-1"
             icon={faPlus}
-            disabled={!card}
             text={buttonText}
             action={buttonAction}
+            disabled={
+              !card || (board === "side" && sideboardCount >= SideBoardLimit)
+            }
             onClick={() => saveCard(card)}
           />
 
           <Button
             squareLeft
             icon={faEllipsisV}
-            disabled={!card}
             action={buttonAction}
+            disabled={
+              !card || (board === "side" && sideboardCount >= SideBoardLimit)
+            }
             onClick={() => setAddMultipleOpen(true)}
           />
 
@@ -156,6 +169,10 @@ export default function CardSearch() {
                   text="Add 2"
                   className="w-full"
                   icon={faPlus}
+                  disabled={
+                    !card ||
+                    (board === "side" && sideboardCount >= SideBoardLimit - 1)
+                  }
                   onClick={() => saveCard(card, 2)}
                 />
 
@@ -166,6 +183,10 @@ export default function CardSearch() {
                   text="Add 3"
                   className="w-full"
                   icon={faPlus}
+                  disabled={
+                    !card ||
+                    (board === "side" && sideboardCount >= SideBoardLimit - 2)
+                  }
                   onClick={() => saveCard(card, 3)}
                 />
 
@@ -176,6 +197,10 @@ export default function CardSearch() {
                   text="Add 4"
                   className="w-full"
                   icon={faPlus}
+                  disabled={
+                    !card ||
+                    (board === "side" && sideboardCount >= SideBoardLimit - 3)
+                  }
                   onClick={() => saveCard(card, 4)}
                 />
               </Box>

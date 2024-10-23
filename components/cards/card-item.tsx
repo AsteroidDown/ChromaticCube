@@ -3,6 +3,7 @@ import Divider from "@/components/ui/divider/divider";
 import Modal from "@/components/ui/modal/modal";
 import Text from "@/components/ui/text/text";
 import { Tooltip } from "@/components/ui/tooltip/tooltip";
+import { SideBoardLimit } from "@/constants/mtg/limits";
 import BoardContext, { BoardType } from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import {
@@ -178,6 +179,11 @@ export function CardItemFooter({
   const [print, setPrint] = React.useState(undefined as Card | undefined);
   const [moveOpen, setMoveOpen] = React.useState(false);
 
+  const sideboardCount = getLocalStorageStoredCards("side").reduce(
+    (acc, storedCard) => acc + storedCard.count,
+    0
+  );
+
   useEffect(() => {
     if (!print) return;
 
@@ -260,6 +266,7 @@ export function CardItemFooter({
                   text="Side"
                   className="w-full"
                   icon={faClipboardList}
+                  disabled={sideboardCount >= SideBoardLimit}
                   onClick={() => moveCard("side")}
                 />
               )}
@@ -324,6 +331,7 @@ export function CardItemFooter({
           className="flex-1"
           icon={faPlus}
           tabbable={expanded}
+          disabled={board === "side" && sideboardCount >= SideBoardLimit}
           onClick={() => addToCount()}
         />
       </View>

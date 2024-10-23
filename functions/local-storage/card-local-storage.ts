@@ -1,3 +1,4 @@
+import { SideBoardLimit } from "@/constants/mtg/limits";
 import { BoardType } from "@/contexts/cards/board.context";
 import { Platform } from "react-native";
 import { Card } from "../../models/card/card";
@@ -24,6 +25,14 @@ export function saveLocalStorageCard(card: Card, count = 1, board?: BoardType) {
   if (Platform.OS === "ios") return;
 
   const storedCards = getLocalStorageStoredCards(board);
+
+  if (
+    board === "side" &&
+    storedCards.reduce((acc, storedCard) => acc + storedCard.count, 0) >=
+      SideBoardLimit
+  ) {
+    return;
+  }
 
   const storedCardIndex = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
@@ -67,6 +76,14 @@ export function switchLocalStorageCardPrint(
 
 export function addToLocalStorageCardCount(card: Card, board?: BoardType) {
   const storedCards = getLocalStorageStoredCards(board);
+
+  if (
+    board === "side" &&
+    storedCards.reduce((acc, storedCard) => acc + storedCard.count, 0) >=
+      SideBoardLimit
+  ) {
+    return;
+  }
 
   const cardIndex = storedCards.findIndex(
     (storedCard) => storedCard.id === card.id
