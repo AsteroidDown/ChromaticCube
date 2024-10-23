@@ -1,6 +1,6 @@
 import { MTGColor } from "../../constants/mtg/mtg-colors";
 import { MTGRarity } from "../../constants/mtg/mtg-rarity";
-import { MTGCardTypes } from "../../constants/mtg/mtg-types";
+import { MTGCardType } from "../../constants/mtg/mtg-types";
 import { SortDirection } from "../../constants/sorting";
 import { Card } from "../card/card";
 
@@ -49,7 +49,7 @@ export interface CardsSortedByRarity {
 
 export interface CardFilters {
   colorFilter?: MTGColor[];
-  typeFilter?: MTGCardTypes[];
+  typeFilter?: MTGCardType[];
   rarityFilter?: MTGRarity[];
   manaValueSort?: SortDirection;
   priceSort?: SortDirection;

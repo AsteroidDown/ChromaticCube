@@ -7,7 +7,7 @@ import Modal from "@/components/ui/modal/modal";
 import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
-import { MTGCardTypes } from "@/constants/mtg/mtg-types";
+import { MTGCardType } from "@/constants/mtg/mtg-types";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
   addLocalStorageDashboardItem,
@@ -56,7 +56,7 @@ export default function CardSaveAsChartModal({
     item?.filters.colorFilter as MTGColor[] | undefined
   );
   const [typeFilter, setTypeFilter] = React.useState(
-    item?.filters.typeFilter as MTGCardTypes[] | undefined
+    item?.filters.typeFilter as MTGCardType[] | undefined
   );
   const [rarityFilter, setRarityFilter] = React.useState(
     item?.filters.rarityFilter as MTGRarity[] | undefined
@@ -242,7 +242,7 @@ function generateTitle(
   type: ChartType,
   colorFilter?: MTGColor[],
   rarityFilter?: MTGRarity[],
-  typeFilter?: MTGCardTypes[]
+  typeFilter?: MTGCardType[]
 ) {
   let title = "";
 
@@ -259,34 +259,47 @@ function generateTitle(
   if (rarityFilter?.length) {
     const multiple = rarityFilter.length > 1;
 
-    if (rarityFilter.includes("common"))
+    if (rarityFilter.includes("common")) {
       title += "Common" + (multiple ? ", " : " ");
-    if (rarityFilter.includes("uncommon"))
+    }
+    if (rarityFilter.includes("uncommon")) {
       title += "Uncommon" + (multiple ? ", " : " ");
-    if (rarityFilter.includes("rare"))
+    }
+    if (rarityFilter.includes("rare")) {
       title += "Rare" + (multiple ? ", " : " ");
-    if (rarityFilter.includes("mythic"))
+    }
+    if (rarityFilter.includes("mythic")) {
       title += "Mythic" + (multiple ? ", " : " ");
+    }
   }
 
   if (typeFilter?.length) {
     const multiple = typeFilter.length > 1;
 
-    if (typeFilter.includes(MTGCardTypes.CREATURE))
+    if (typeFilter.includes("creature")) {
       title += "Creature" + (multiple ? ", " : " ");
-    if (typeFilter.includes(MTGCardTypes.INSTANT))
+    }
+    if (typeFilter.includes("instant")) {
       title += "Instant" + (multiple ? ", " : " ");
-    if (typeFilter.includes(MTGCardTypes.SORCERY))
+    }
+    if (typeFilter.includes("sorcery")) {
       title += "Sorcery" + (multiple ? ", " : " ");
-    if (typeFilter.includes(MTGCardTypes.ARTIFACT))
+    }
+    if (typeFilter.includes("artifact")) {
       title += "Artifact" + (multiple ? ", " : " ");
-    if (typeFilter.includes(MTGCardTypes.ENCHANTMENT))
+    }
+    if (typeFilter.includes("enchantment")) {
       title += "Enchantment" + (multiple ? ", " : " ");
-    if (typeFilter.includes(MTGCardTypes.LAND))
+    }
+    if (typeFilter.includes("land")) {
       title += "Land" + (multiple ? ", " : " ");
-    if (typeFilter.includes(MTGCardTypes.PLANESWALKER))
+    }
+    if (typeFilter.includes("planeswalker")) {
       title += "Planeswalker" + (multiple ? ", " : " ");
-    if (typeFilter.includes(MTGCardTypes.BATTLE)) title += "Battle ";
+    }
+    if (typeFilter.includes("battle")) {
+      title += "Battle ";
+    }
   }
 
   title += "Cards by " + titleCase(type);

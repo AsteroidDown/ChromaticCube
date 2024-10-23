@@ -2,7 +2,7 @@ import Button from "@/components/ui/button/button";
 import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
-import { MTGCardTypes } from "@/constants/mtg/mtg-types";
+import { MTGCardType } from "@/constants/mtg/mtg-types";
 import { SortDirection } from "@/constants/sorting";
 import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
 import {
@@ -38,7 +38,7 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
     undefined as MTGColor[] | undefined
   );
   const [typeFilter, setTypeFilter] = React.useState(
-    undefined as MTGCardTypes[] | undefined
+    undefined as MTGCardType[] | undefined
   );
   const [rarityFilter, setRarityFilter] = React.useState(
     undefined as MTGRarity[] | undefined

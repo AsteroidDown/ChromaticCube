@@ -4,7 +4,7 @@ import {
   MTGColorSymbol,
 } from "../constants/mtg/mtg-colors";
 import { MTGRarity } from "../constants/mtg/mtg-rarity";
-import { MTGCardTypes } from "../constants/mtg/mtg-types";
+import { MTGCardType } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import { CardFilters } from "../models/sorted-cards/sorted-cards";
 
@@ -87,11 +87,11 @@ export function filterCardByColor(card: Card, colors: MTGColor[]) {
   return true;
 }
 
-export function filterCardByType(card: Card, types: MTGCardTypes[]) {
+export function filterCardByType(card: Card, types: MTGCardType[]) {
   return !types.some((type) =>
     card.faces?.front
-      ? card.faces.front.typeLine.includes(type)
-      : card.typeLine.includes(type)
+      ? card.faces.front.typeLine.toLowerCase().includes(type)
+      : card.typeLine.toLowerCase().includes(type)
   );
 }
 

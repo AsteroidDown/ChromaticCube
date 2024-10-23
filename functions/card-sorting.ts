@@ -1,4 +1,4 @@
-import { MTGCardTypes } from "../constants/mtg/mtg-types";
+import { MTGCardType, MTGCardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import {
   CardsSortedByColor,
@@ -143,29 +143,29 @@ export function sortCardsByType(cards: Card[]): CardsSortedByType {
       : getCardTypeFromTypeLine(card.typeLine);
 
     switch (cardType.toLowerCase()) {
-      case MTGCardTypes.ARTIFACT.toLowerCase():
-        sortedCards.artifact.push(card);
-        return;
-      case MTGCardTypes.ENCHANTMENT.toLowerCase():
-        sortedCards.enchantment.push(card);
-        return;
-      case MTGCardTypes.CREATURE.toLowerCase():
+      case MTGCardTypes.CREATURE:
         sortedCards.creature.push(card);
         return;
-      case MTGCardTypes.LAND.toLowerCase():
-        sortedCards.land.push(card);
+      case MTGCardTypes.INSTANT:
+        sortedCards.instant.push(card);
         return;
-      case MTGCardTypes.BATTLE.toLowerCase():
-        sortedCards.battle.push(card);
-        return;
-      case MTGCardTypes.PLANESWALKER.toLowerCase():
-        sortedCards.planeswalker.push(card);
-        return;
-      case MTGCardTypes.SORCERY.toLowerCase():
+      case MTGCardTypes.SORCERY:
         sortedCards.sorcery.push(card);
         return;
-      case MTGCardTypes.INSTANT.toLowerCase():
-        sortedCards.instant.push(card);
+      case MTGCardTypes.ARTIFACT:
+        sortedCards.artifact.push(card);
+        return;
+      case MTGCardTypes.ENCHANTMENT:
+        sortedCards.enchantment.push(card);
+        return;
+      case MTGCardTypes.LAND:
+        sortedCards.land.push(card);
+        return;
+      case MTGCardTypes.PLANESWALKER:
+        sortedCards.planeswalker.push(card);
+        return;
+      case MTGCardTypes.BATTLE:
+        sortedCards.battle.push(card);
         return;
     }
   });
@@ -206,18 +206,17 @@ export function sortCardsByRarity(cards: Card[]): CardsSortedByRarity {
  * @param typeLine the type line for a card as given by scryfall api
  * @returns the creature type as given in CardTypes const (see sorted-cards.ts) or an empty string if the type could not be discerned
  */
-function getCardTypeFromTypeLine(typeLine: string): string {
+function getCardTypeFromTypeLine(typeLine: string): MTGCardType {
   const cardTypeFromTypeLine = typeLine.split("-")[0].toLowerCase();
 
-  // creature type has priority in hybrid types so check for it first here
-  if (cardTypeFromTypeLine.includes(MTGCardTypes.CREATURE.toLowerCase())) {
-    return MTGCardTypes.CREATURE;
-  }
+  // Creature type has priority in multiple types
+  if (cardTypeFromTypeLine.includes("creature")) return "creature";
 
   for (const cardType in MTGCardTypes) {
-    if (cardTypeFromTypeLine.includes(cardType.toLowerCase())) return cardType;
+    if (cardTypeFromTypeLine.includes(cardType.toLowerCase()))
+      return cardType as MTGCardType;
   }
 
-  // card type couldn't be found
-  return "";
+  // Card type couldn't be found
+  return "creature";
 }

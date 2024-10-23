@@ -1,10 +1,20 @@
+export type MTGCardType =
+  | "creature"
+  | "instant"
+  | "sorcery"
+  | "artifact"
+  | "enchantment"
+  | "land"
+  | "planeswalker"
+  | "battle";
+
 export enum MTGCardTypes {
-  CREATURE = "Creature",
-  LAND = "Land",
-  ENCHANTMENT = "Enchantment",
-  ARTIFACT = "Artifact",
-  INSTANT = "Instant",
-  SORCERY = "Sorcery",
-  PLANESWALKER = "Planeswalker",
-  BATTLE = "Battle",
+  CREATURE = "creature",
+  INSTANT = "instant",
+  SORCERY = "sorcery",
+  ARTIFACT = "artifact",
+  ENCHANTMENT = "enchantment",
+  LAND = "land",
+  PLANESWALKER = "planeswalker",
+  BATTLE = "battle",
 }

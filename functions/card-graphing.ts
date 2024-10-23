@@ -1,5 +1,4 @@
 import { SetData } from "../components/graph/layout/graph-plot";
-import { MTGCardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import { CardsSortedByColor } from "../models/sorted-cards/sorted-cards";
 import {
@@ -159,19 +158,19 @@ export function graphCardsByType(cards: Card[]): SetData[] {
   const sortedInstants = sortCardsByColor(sortedCards.instant);
 
   const sets: SetData[] = [
-    createSetDataByColor(MTGCardTypes.CREATURE, sortedCreatures),
-    createSetDataByColor(MTGCardTypes.INSTANT, sortedInstants),
-    createSetDataByColor(MTGCardTypes.SORCERY, sortedSorceries),
-    createSetDataByColor(MTGCardTypes.ARTIFACT, sortedArtifacts),
-    createSetDataByColor(MTGCardTypes.ENCHANTMENT, sortedEnchantments),
-    createSetDataByColor(MTGCardTypes.LAND, sortedLands),
+    createSetDataByColor("Creature", sortedCreatures),
+    createSetDataByColor("Instant", sortedInstants),
+    createSetDataByColor("Sorcery", sortedSorceries),
+    createSetDataByColor("Artifact", sortedArtifacts),
+    createSetDataByColor("Enchantment", sortedEnchantments),
+    createSetDataByColor("Land", sortedLands),
   ];
 
   if (sortedCards.planeswalker.length > 0) {
-    createSetDataByColor(MTGCardTypes.PLANESWALKER, sortedPlaneswalkers);
+    createSetDataByColor("Planeswalker", sortedPlaneswalkers);
   }
   if (sortedCards.battle.length > 0) {
-    createSetDataByColor(MTGCardTypes.BATTLE, sortedBattles);
+    createSetDataByColor("Battle", sortedBattles);
   }
 
   return sets;
