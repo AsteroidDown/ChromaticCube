@@ -13,11 +13,11 @@ import {
   setLocalStoragePreferences,
 } from "@/functions/local-storage/preferences-local-storage";
 import {
-  faDownLeftAndUpRightToCenter,
+  faCompress,
+  faExpand,
   faEye,
   faEyeSlash,
   faFileArrowDown,
-  faUpRightAndDownLeftFromCenter,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { ScrollView, View } from "react-native";
@@ -91,13 +91,8 @@ export default function CardsLayout() {
               >
                 <Button
                   rounded
-                  className="-rotate-45"
                   type={condensed ? "outlined" : "clear"}
-                  icon={
-                    condensed
-                      ? faDownLeftAndUpRightToCenter
-                      : faUpRightAndDownLeftFromCenter
-                  }
+                  icon={condensed ? faCompress : faExpand}
                   onClick={() => (condensed ? expandCards() : condenseCards())}
                 />
               </Tooltip>

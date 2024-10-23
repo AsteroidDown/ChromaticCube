@@ -39,15 +39,30 @@ export default function CardItem({
   card,
   condensed = false,
   hideImage = false,
-}: CardItemProps) {
+  itemsExpanded,
+  setItemsExpanded,
+}: CardItemProps & {
+  itemsExpanded?: number;
+  setItemsExpanded: React.Dispatch<React.SetStateAction<number>>;
+}) {
   const [expanded, setExpanded] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
 
+  useEffect(
+    () => (itemsExpanded === 0 ? setExpanded(false) : undefined),
+    [itemsExpanded]
+  );
+
   return (
     <>
       <Pressable
-        onPress={() => setExpanded(!expanded)}
+        onPress={() => {
+          if (expanded) setItemsExpanded((itemsExpanded || 0) - 1);
+          else setItemsExpanded((itemsExpanded || 0) + 1);
+
+          setExpanded(!expanded);
+        }}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         className={`flex gap-2 rounded-2xl overflow-hidden transition-all duration-300 outline-none ${

@@ -23,7 +23,11 @@ import {
   CardsSortedByCost,
   CardsSortedByType,
 } from "@/models/sorted-cards/sorted-cards";
-import { faChartSimple, faTable } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartSimple,
+  faDownLeftAndUpRightToCenter,
+  faTable,
+} from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
 import Button from "../ui/button/button";
@@ -45,6 +49,8 @@ export default function CardItemGallery({
 }: CardItemGalleryProps) {
   const { board } = useContext(BoardContext);
   const { storedCards } = useContext(StoredCardsContext);
+
+  const [itemsExpanded, setItemsExpanded] = React.useState(0);
 
   const [saveAsGraphOpen, setSaveAsGraphOpen] = React.useState(false);
   const [saveAsChartOpen, setSaveAsChartOpen] = React.useState(false);
@@ -127,12 +133,26 @@ export default function CardItemGallery({
           cardCount !== 1 ? "s" : ""
         } | Total Value: $${cardsValue.toFixed(2)}`}
         end={
-          <View className="flex flex-row gap-4">
+          <View className="flex flex-row gap-2">
             <FilterBar type={type} setFilters={setFilters} />
+
+            <View
+              className={`${
+                itemsExpanded ? "max-w-10 mx-0" : "max-w-0 -ml-2"
+              } flex flex-row overflow-hidden transition-all duration-300`}
+            >
+              <Button
+                rounded
+                type="clear"
+                className="-rotate-45"
+                icon={faDownLeftAndUpRightToCenter}
+                onClick={() => setItemsExpanded(0)}
+              />
+            </View>
 
             {board === "main" && (
               <>
-                <View className="-mx-3">
+                <View className="-mx-1">
                   <CardSaveAsGraphModal
                     type={type}
                     open={saveAsGraphOpen}
@@ -147,7 +167,7 @@ export default function CardItemGallery({
                   onClick={() => setSaveAsGraphOpen(true)}
                 />
 
-                <View className="-mx-3">
+                <View className="-mx-1">
                   <CardSaveAsChartModal
                     type={type === "type" ? "type" : "cost"}
                     open={saveAsChartOpen}
@@ -173,6 +193,8 @@ export default function CardItemGallery({
             {cardsSortedByCost.zero?.length > 0 && (
               <CardItemGalleryColumn
                 title="0 Cost"
+                itemsExpanded={itemsExpanded}
+                setItemExpanded={setItemsExpanded}
                 condensed={condensed}
                 hideImages={hideImages}
                 cards={cardsSortedByCost.zero}
@@ -180,42 +202,56 @@ export default function CardItemGallery({
             )}
             <CardItemGalleryColumn
               title="1 Cost"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.one}
             />
             <CardItemGalleryColumn
               title="2 Cost"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.two}
             />
             <CardItemGalleryColumn
               title="3 Cost"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.three}
             />
             <CardItemGalleryColumn
               title="4 Cost"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.four}
             />
             <CardItemGalleryColumn
               title="5 Cost"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.five}
             />
             <CardItemGalleryColumn
               title="6 Cost"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.six}
             />
             <CardItemGalleryColumn
               title="7+ Cost"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.seven}
@@ -223,6 +259,8 @@ export default function CardItemGallery({
             {cardsSortedByCost.land?.length > 0 && (
               <CardItemGalleryColumn
                 title="Lands"
+                itemsExpanded={itemsExpanded}
+                setItemExpanded={setItemsExpanded}
                 condensed={condensed}
                 hideImages={hideImages}
                 cards={cardsSortedByCost.land}
@@ -235,48 +273,64 @@ export default function CardItemGallery({
           <View className="flex flex-row gap-4 w-full min-h-[500px]">
             <CardItemGalleryColumn
               title="White"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.white}
             />
             <CardItemGalleryColumn
               title="Blue"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.blue}
             />
             <CardItemGalleryColumn
               title="Black"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.black}
             />
             <CardItemGalleryColumn
               title="Red"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.red}
             />
             <CardItemGalleryColumn
               title="Green"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.green}
             />
             <CardItemGalleryColumn
               title="Gold"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.gold}
             />
             <CardItemGalleryColumn
               title="Colorless"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.colorless}
             />
             <CardItemGalleryColumn
               title="Land"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByColor.land}
@@ -288,36 +342,48 @@ export default function CardItemGallery({
           <View className="flex flex-row gap-4 w-full min-h-[500px]">
             <CardItemGalleryColumn
               title="Creature"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.creature}
             />
             <CardItemGalleryColumn
               title="Instant"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.instant}
             />
             <CardItemGalleryColumn
               title="Sorcery"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.sorcery}
             />
             <CardItemGalleryColumn
               title="Artifact"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.artifact}
             />
             <CardItemGalleryColumn
               title="Enchantment"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.enchantment}
             />
             <CardItemGalleryColumn
               title="Land"
+              itemsExpanded={itemsExpanded}
+              setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByType.land}
@@ -325,6 +391,8 @@ export default function CardItemGallery({
             {cardsSortedByType.planeswalker?.length > 0 && (
               <CardItemGalleryColumn
                 title="Colorless"
+                itemsExpanded={itemsExpanded}
+                setItemExpanded={setItemsExpanded}
                 condensed={condensed}
                 hideImages={hideImages}
                 cards={cardsSortedByType.planeswalker}
@@ -332,7 +400,9 @@ export default function CardItemGallery({
             )}
             {cardsSortedByType.battle?.length > 0 && (
               <CardItemGalleryColumn
-                title="Land"
+                title="Battle"
+                itemsExpanded={itemsExpanded}
+                setItemExpanded={setItemsExpanded}
                 condensed={condensed}
                 hideImages={hideImages}
                 cards={cardsSortedByType.battle}

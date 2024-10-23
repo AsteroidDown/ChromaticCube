@@ -11,6 +11,8 @@ export interface CardItemGalleryColumnProps {
   cards: Card[];
   condensed?: boolean;
   hideImages?: boolean;
+  itemsExpanded?: number;
+  setItemExpanded: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function CardItemGalleryColumn({
@@ -18,6 +20,8 @@ export default function CardItemGalleryColumn({
   cards,
   condensed = false,
   hideImages = false,
+  itemsExpanded,
+  setItemExpanded,
 }: CardItemGalleryColumnProps) {
   const cardCount = getCountOfCards(cards);
 
@@ -41,10 +45,12 @@ export default function CardItemGalleryColumn({
       <View className={`flex ${condensed ? "gap-1 mx-0" : "gap-2 mx-2"}`}>
         {cards.map((card, index) => (
           <CardItem
+            key={card.id + index}
             card={card}
             condensed={condensed}
             hideImage={hideImages}
-            key={card.id + index}
+            itemsExpanded={itemsExpanded}
+            setItemsExpanded={setItemExpanded}
           />
         ))}
       </View>
