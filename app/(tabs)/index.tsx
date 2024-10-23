@@ -18,7 +18,7 @@ export default function App() {
   const { storedCards } = useContext(StoredCardsContext);
   const { dashboard, setDashboard } = useContext(DashboardContext);
 
-  if (!dashboard?.sections) {
+  if (!dashboard?.sections && !getLocalStorageDashboard()) {
     setLocalStorageDashboard({ sections: [] });
 
     const sectionId = addLocalStorageDashboardSection("General");
