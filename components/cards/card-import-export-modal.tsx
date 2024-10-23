@@ -37,6 +37,9 @@ export default function CardImportExportModal({
   const [error, setError] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
 
+  const [copyDisabled, setCopyDisabled] = React.useState(false);
+  const [copySuccess, setCopySuccess] = React.useState(false);
+
   useEffect(() => {
     setCards(getCardsForExport());
   });
@@ -187,10 +190,11 @@ export default function CardImportExportModal({
           1 id {"\n"}1 name {"\n"}1 name (set) collection_number
         </Text>
 
-        <View className="flex flex-row justify-center gap-3">
+        <View className="flex flex-row flex-wrap justify-center gap-3">
           <Button
             rounded
             type="outlined"
+            className="flex-1 min-w-[250px]"
             disabled={disabled}
             action={success ? "success" : error ? "danger" : "primary"}
             icon={
@@ -218,10 +222,33 @@ export default function CardImportExportModal({
 
           <Button
             rounded
-            text="Copy to Clipboard"
             type="outlined"
-            icon={faFileArrowUp}
-            onClick={() => navigator.clipboard.writeText(cards)}
+            className="flex-1 min-w-[250px]"
+            disabled={copyDisabled}
+            action={copySuccess ? "success" : "primary"}
+            icon={
+              copySuccess ? faCheck : copyDisabled ? faRotate : faFileArrowUp
+            }
+            text={
+              copySuccess
+                ? "Copied to Clipboard!"
+                : copyDisabled
+                ? "Copying..."
+                : "Copy to Clipboard"
+            }
+            onClick={() => {
+              setCopyDisabled(true);
+
+              setTimeout(() => {
+                setCopyDisabled(false);
+                setCopySuccess(true);
+                navigator.clipboard.writeText(cards);
+              }, 500);
+
+              setTimeout(() => {
+                setCopySuccess(false);
+              }, 2000);
+            }}
           />
         </View>
       </View>
