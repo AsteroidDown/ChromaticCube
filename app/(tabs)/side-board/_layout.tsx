@@ -88,6 +88,13 @@ export default function SideBoardLayout() {
 
           <TabBar tabs={tabs}>
             <View className="flex flex-row gap-2 mx-4">
+              <Button
+                rounded
+                type="clear"
+                icon={faFileArrowDown}
+                onClick={() => setOpen(!open)}
+              />
+
               <Tooltip
                 title={
                   hideImages ? "Expand Card Gallery" : "Condense Card Gallery"
@@ -113,13 +120,6 @@ export default function SideBoardLayout() {
                   }
                 />
               </Tooltip>
-
-              <Button
-                rounded
-                type="clear"
-                icon={faFileArrowDown}
-                onClick={() => setOpen(!open)}
-              />
             </View>
           </TabBar>
         </View>
