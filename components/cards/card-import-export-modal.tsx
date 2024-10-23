@@ -42,7 +42,7 @@ export default function CardImportExportModal({
   });
 
   function getCardsForExport() {
-    return getLocalStorageStoredCards()
+    let decklist = getLocalStorageStoredCards()
       .map(
         (card) =>
           `${card.count} ${card.name} (${card.set?.toUpperCase()}) ${
@@ -50,13 +50,29 @@ export default function CardImportExportModal({
           }`
       )
       .join("\n");
+
+    const sideBoardCards = getLocalStorageStoredCards("side");
+    if (sideBoardCards.length > 0) {
+      decklist = "Deck\n" + decklist + "\n\nSideboard";
+
+      sideBoardCards.forEach(
+        (card) =>
+          (decklist += `\n${card.count} ${
+            card.name
+          } (${card.set?.toUpperCase()}) ${card.collectorNumber}`)
+      );
+    }
+
+    return decklist;
   }
 
   function getCardsFromImport(importText: string) {
     setDisabled(true);
 
     const cardIdentifiers: CardIdentifier[] = [];
+    const sideBoardCardIdentifiers: CardIdentifier[] = [];
 
+    let sideboard = false;
     let errorFound = false;
 
     importText.split("\n").forEach((card) => {
@@ -67,9 +83,15 @@ export default function CardImportExportModal({
 
       const cardCount = Number(cardInfo?.[0]);
       if (!cardCount) {
-        errorFound = true;
-        setError(true);
-        setDisabled(false);
+        if (cardInfo?.[0].toLowerCase() === "") return;
+
+        if (cardInfo?.[0].toLowerCase() === "deck") return;
+        else if (cardInfo?.[0].toLowerCase() === "sideboard") sideboard = true;
+        else {
+          errorFound = true;
+          setError(true);
+          setDisabled(false);
+        }
       }
 
       const identifier = cardInfo?.[infoLength - 1];
@@ -88,24 +110,33 @@ export default function CardImportExportModal({
         }
 
         for (let i = 0; i < cardCount; i++) {
-          cardIdentifiers.push({
-            set: cardSet.toLowerCase(),
-            collector_number: identifier,
-          });
+          sideboard
+            ? sideBoardCardIdentifiers.push({
+                set: cardSet,
+                collector_number: identifier,
+              })
+            : cardIdentifiers.push({
+                set: cardSet.toLowerCase(),
+                collector_number: identifier,
+              });
         }
       } else if (identifier?.split("-")?.length === 5) {
         for (let i = 0; i < cardCount; i++) {
-          cardIdentifiers.push({
-            id: identifier,
-          });
+          sideboard
+            ? sideBoardCardIdentifiers.push({ id: identifier })
+            : cardIdentifiers.push({
+                id: identifier,
+              });
         }
       } else {
         cardInfo.shift();
 
         for (let i = 0; i < cardCount; i++) {
-          cardIdentifiers.push({
-            name: cardInfo.join(" "),
-          });
+          sideboard
+            ? sideBoardCardIdentifiers.push({ name: cardInfo.join(" ") })
+            : cardIdentifiers.push({
+                name: cardInfo.join(" "),
+              });
         }
       }
     });
@@ -116,6 +147,18 @@ export default function CardImportExportModal({
     } else {
       ScryfallService.getCardsFromCollection(cardIdentifiers).then(
         (newCards) => {
+          if (sideboard) {
+            ScryfallService.getCardsFromCollection(
+              sideBoardCardIdentifiers
+            ).then((newSideBoardCards) => {
+              setLocalStorageCards([], "side");
+              newSideBoardCards.forEach((card) =>
+                saveLocalStorageCard(card, 1, "side")
+              );
+              setStoredCards(newSideBoardCards);
+            });
+          }
+
           setLocalStorageCards([], board);
           newCards.forEach((card) => saveLocalStorageCard(card, 1, board));
           setStoredCards(newCards);
