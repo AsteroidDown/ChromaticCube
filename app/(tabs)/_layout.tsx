@@ -2,6 +2,7 @@ import Text from "@/components/ui/text/text";
 import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
 import { Preferences } from "@/models/preferences/preferences";
 import {
+  faClipboardList,
   faClipboardQuestion,
   faCube,
   faLayerGroup,
@@ -74,6 +75,33 @@ export default function TabLayout() {
                     }`}
                   >
                     Main Board
+                  </Text>
+                </View>
+              ),
+            }}
+          />
+
+          <Tabs.Screen
+            name="side-board"
+            options={{
+              tabBarLabel: ({ focused }) => (
+                <View className="flex flex-row justify-center items-center gap-2">
+                  <FontAwesomeIcon
+                    icon={faClipboardList}
+                    size={"lg"}
+                    className={
+                      focused
+                        ? "color-white rounded-t-lg w-full"
+                        : "color-primary-400"
+                    }
+                  />
+
+                  <Text
+                    className={`whitespace-nowrap ${
+                      focused ? "" : "color-primary-400"
+                    }`}
+                  >
+                    Side Board
                   </Text>
                 </View>
               ),
