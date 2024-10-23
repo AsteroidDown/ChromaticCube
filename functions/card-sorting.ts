@@ -211,7 +211,9 @@ function getCardTypeFromTypeLine(typeLine: string): MTGCardType {
   const cardTypeFromTypeLine = typeLine.split("-")[0].toLowerCase();
 
   // Creature type has priority in multiple types
-  if (cardTypeFromTypeLine.includes("creature")) return "creature";
+  if (cardTypeFromTypeLine.includes(MTGCardTypes.CREATURE)) {
+    return MTGCardTypes.CREATURE;
+  }
 
   for (const cardType in MTGCardTypes) {
     if (cardTypeFromTypeLine.includes(cardType.toLowerCase()))
@@ -219,5 +221,5 @@ function getCardTypeFromTypeLine(typeLine: string): MTGCardType {
   }
 
   // Card type couldn't be found
-  return "creature";
+  return MTGCardTypes.CREATURE;
 }

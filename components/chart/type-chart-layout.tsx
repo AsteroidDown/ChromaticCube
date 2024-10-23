@@ -1,3 +1,4 @@
+import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import { sortCardsByColor, sortCardsByType } from "@/functions/card-sorting";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
@@ -77,32 +78,48 @@ export default function TypeChartLayout({
           </View>
 
           <ChartCell
-            type="creature"
             color={color}
+            type={MTGCardTypes.CREATURE}
             sortedCards={sortedCreature}
           />
-          <ChartCell type="instant" color={color} sortedCards={sortedInstant} />
-          <ChartCell type="sorcery" color={color} sortedCards={sortedSorcery} />
           <ChartCell
-            type="artifact"
             color={color}
+            type={MTGCardTypes.INSTANT}
+            sortedCards={sortedInstant}
+          />
+          <ChartCell
+            color={color}
+            type={MTGCardTypes.SORCERY}
+            sortedCards={sortedSorcery}
+          />
+          <ChartCell
+            color={color}
+            type={MTGCardTypes.ARTIFACT}
             sortedCards={sortedArtifact}
           />
           <ChartCell
-            type="enchantment"
             color={color}
+            type={MTGCardTypes.ENCHANTMENT}
             sortedCards={sortedEnchantment}
           />
-          <ChartCell type="land" color={color} sortedCards={sortedLand} />
+          <ChartCell
+            color={color}
+            type={MTGCardTypes.LAND}
+            sortedCards={sortedLand}
+          />
           {sortedCards.planeswalker?.length > 0 && (
             <ChartCell
-              type="planeswalker"
               color={color}
+              type={MTGCardTypes.PLANESWALKER}
               sortedCards={sortedPlans}
             />
           )}
           {sortedCards.battle?.length > 0 && (
-            <ChartCell type="battle" color={color} sortedCards={sortedBattle} />
+            <ChartCell
+              color={color}
+              type={MTGCardTypes.BATTLE}
+              sortedCards={sortedBattle}
+            />
           )}
 
           <ChartCell

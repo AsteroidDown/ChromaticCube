@@ -42,14 +42,14 @@ export default function TypeFilter({
 
   useEffect(() => {
     setAppliedFilters([
-      ...(creatureApplied ? ["creature"] : []),
-      ...(instantApplied ? ["instant"] : []),
-      ...(sorceryApplied ? ["sorcery"] : []),
-      ...(artifactApplied ? ["artifact"] : []),
-      ...(enchantmentApplied ? ["enchantment"] : []),
-      ...(landApplied ? ["land"] : []),
-      ...(planeswalkerApplied ? ["planeswalker"] : []),
-      ...(battleApplied ? ["battle"] : []),
+      ...(creatureApplied ? [MTGCardTypes.CREATURE] : []),
+      ...(instantApplied ? [MTGCardTypes.INSTANT] : []),
+      ...(sorceryApplied ? [MTGCardTypes.SORCERY] : []),
+      ...(artifactApplied ? [MTGCardTypes.ARTIFACT] : []),
+      ...(enchantmentApplied ? [MTGCardTypes.ENCHANTMENT] : []),
+      ...(landApplied ? [MTGCardTypes.LAND] : []),
+      ...(planeswalkerApplied ? [MTGCardTypes.PLANESWALKER] : []),
+      ...(battleApplied ? [MTGCardTypes.BATTLE] : []),
     ] as MTGCardType[]);
   }, [
     creatureApplied,
