@@ -109,6 +109,8 @@ export default function CardItem({
           expanded={expanded}
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
+          itemsExpanded={itemsExpanded}
+          setItemsExpanded={setItemsExpanded}
         />
       </Pressable>
 
@@ -172,6 +174,8 @@ export function CardItemFooter({
   expanded,
   modalOpen,
   setModalOpen,
+  itemsExpanded,
+  setItemsExpanded,
 }: any) {
   const { board } = useContext(BoardContext);
   const { setStoredCards } = useContext(StoredCardsContext);
@@ -201,6 +205,8 @@ export function CardItemFooter({
   }
 
   function removeCard() {
+    if (expanded) setItemsExpanded((itemsExpanded || 0) - 1);
+
     removeLocalStorageCard(card, board);
     setStoredCards(getLocalStorageStoredCards(board));
   }
