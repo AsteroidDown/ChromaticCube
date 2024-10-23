@@ -1,7 +1,7 @@
 import Chip from "@/components/ui/chip/chip";
 import Dropdown from "@/components/ui/dropdown/dropdown";
 import Text from "@/components/ui/text/text";
-import { MTGColor } from "@/constants/mtg/mtg-colors";
+import { MTGColor, MTGColors } from "@/constants/mtg/mtg-colors";
 import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
@@ -40,13 +40,13 @@ export default function ColorFilter({
 
   useEffect(() => {
     setAppliedFilters([
-      ...(whiteApplied ? ["white"] : []),
-      ...(blueApplied ? ["blue"] : []),
-      ...(blackApplied ? ["black"] : []),
-      ...(redApplied ? ["red"] : []),
-      ...(greenApplied ? ["green"] : []),
-      ...(goldApplied ? ["gold"] : []),
-      ...(colorlessApplied ? ["colorless"] : []),
+      ...(whiteApplied ? [MTGColors.WHITE] : []),
+      ...(blueApplied ? [MTGColors.BLUE] : []),
+      ...(blackApplied ? [MTGColors.BLACK] : []),
+      ...(redApplied ? [MTGColors.RED] : []),
+      ...(greenApplied ? [MTGColors.GREEN] : []),
+      ...(goldApplied ? [MTGColors.GOLD] : []),
+      ...(colorlessApplied ? [MTGColors.COLORLESS] : []),
       ...(monoColorApplied ? ["mono"] : []),
     ] as MTGColor[]);
   }, [
@@ -76,36 +76,38 @@ export default function ColorFilter({
 
   useEffect(() => {
     if (colorFilters?.length) {
-      if (colorFilters.includes("white")) setWhiteApplied(true);
-      if (colorFilters.includes("blue")) setBlueApplied(true);
-      if (colorFilters.includes("black")) setBlackApplied(true);
-      if (colorFilters.includes("red")) setRedApplied(true);
-      if (colorFilters.includes("green")) setGreenApplied(true);
-      if (colorFilters.includes("gold")) setGoldApplied(true);
-      if (colorFilters.includes("colorless")) setColorlessApplied(true);
+      if (colorFilters.includes(MTGColors.WHITE)) setWhiteApplied(true);
+      if (colorFilters.includes(MTGColors.BLUE)) setBlueApplied(true);
+      if (colorFilters.includes(MTGColors.BLACK)) setBlackApplied(true);
+      if (colorFilters.includes(MTGColors.RED)) setRedApplied(true);
+      if (colorFilters.includes(MTGColors.GREEN)) setGreenApplied(true);
+      if (colorFilters.includes(MTGColors.GOLD)) setGoldApplied(true);
+      if (colorFilters.includes(MTGColors.COLORLESS)) {
+        setColorlessApplied(true);
+      }
       if (colorFilters.includes("mono")) setMonoColorApplied(true);
     } else {
       if (!preferences.filters) return;
 
-      if (preferences.filters.colorFilter?.includes("white")) {
+      if (preferences.filters.colorFilter?.includes(MTGColors.WHITE)) {
         setWhiteApplied(true);
       }
-      if (preferences.filters.colorFilter?.includes("blue")) {
+      if (preferences.filters.colorFilter?.includes(MTGColors.BLUE)) {
         setBlueApplied(true);
       }
-      if (preferences.filters.colorFilter?.includes("black")) {
+      if (preferences.filters.colorFilter?.includes(MTGColors.BLACK)) {
         setBlackApplied(true);
       }
-      if (preferences.filters.colorFilter?.includes("red")) {
+      if (preferences.filters.colorFilter?.includes(MTGColors.RED)) {
         setRedApplied(true);
       }
-      if (preferences.filters.colorFilter?.includes("green")) {
+      if (preferences.filters.colorFilter?.includes(MTGColors.GREEN)) {
         setGreenApplied(true);
       }
-      if (preferences.filters.colorFilter?.includes("gold")) {
+      if (preferences.filters.colorFilter?.includes(MTGColors.GOLD)) {
         setGoldApplied(true);
       }
-      if (preferences.filters.colorFilter?.includes("colorless")) {
+      if (preferences.filters.colorFilter?.includes(MTGColors.COLORLESS)) {
         setColorlessApplied(true);
       }
       if (preferences.filters.colorFilter?.includes("mono")) {
@@ -118,56 +120,56 @@ export default function ColorFilter({
     <View className="flex flex-row flex-wrap gap-2">
       <Chip
         text="White"
-        action="white"
         disabled={disabled}
+        action={MTGColors.WHITE}
         type={whiteApplied ? "default" : "outlined"}
         onClick={() => setWhiteApplied(!whiteApplied)}
       />
 
       <Chip
         text="Blue"
-        action="blue"
         disabled={disabled}
+        action={MTGColors.BLUE}
         type={blueApplied ? "default" : "outlined"}
         onClick={() => setBlueApplied(!blueApplied)}
       />
 
       <Chip
         text="Black"
-        action="black"
         disabled={disabled}
+        action={MTGColors.BLACK}
         type={blackApplied ? "default" : "outlined"}
         onClick={() => setBlackApplied(!blackApplied)}
       />
 
       <Chip
         text="Red"
-        action="red"
         disabled={disabled}
+        action={MTGColors.RED}
         type={redApplied ? "default" : "outlined"}
         onClick={() => setRedApplied(!redApplied)}
       />
 
       <Chip
         text="Green"
-        action="green"
         disabled={disabled}
+        action={MTGColors.GREEN}
         type={greenApplied ? "default" : "outlined"}
         onClick={() => setGreenApplied(!greenApplied)}
       />
 
       <Chip
         text="Gold"
-        action="gold"
         disabled={disabled}
+        action={MTGColors.GOLD}
         type={goldApplied ? "default" : "outlined"}
         onClick={() => setGoldApplied(!goldApplied)}
       />
 
       <Chip
         text="Colorless"
-        action="colorless"
         disabled={disabled}
+        action={MTGColors.COLORLESS}
         type={colorlessApplied ? "default" : "outlined"}
         onClick={() => setColorlessApplied(!colorlessApplied)}
       />

@@ -1,6 +1,6 @@
 import DashboardSectionView from "@/components/dashboard/dashboard-section";
 import Button from "@/components/ui/button/button";
-import { MTGColor } from "@/constants/mtg/mtg-colors";
+import { MTGColor, MTGColors } from "@/constants/mtg/mtg-colors";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
@@ -25,13 +25,13 @@ export default function App() {
     if (!sectionId) return;
 
     const allColorFilter: MTGColor[] = [
-      "white",
-      "blue",
-      "black",
-      "red",
-      "green",
-      "gold",
-      "colorless",
+      MTGColors.WHITE,
+      MTGColors.BLUE,
+      MTGColors.BLACK,
+      MTGColors.RED,
+      MTGColors.GREEN,
+      MTGColors.GOLD,
+      MTGColors.COLORLESS,
     ];
 
     addLocalStorageDashboardItem(sectionId, {

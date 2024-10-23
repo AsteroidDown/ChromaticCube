@@ -1,4 +1,4 @@
-import { MTGColor } from "@/constants/mtg/mtg-colors";
+import { MTGColor, MTGColors } from "@/constants/mtg/mtg-colors";
 import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { Card } from "@/models/card/card";
 import { CardsSortedByColor } from "@/models/sorted-cards/sorted-cards";
@@ -67,21 +67,21 @@ export default function ChartCell({
 
 export function getCellBackgroundColor(color: MTGColor) {
   switch (color) {
-    case "white":
+    case MTGColors.WHITE:
       return "bg-mtg-white bg-opacity-10";
-    case "blue":
+    case MTGColors.BLUE:
       return "bg-mtg-blue bg-opacity-10";
-    case "black":
+    case MTGColors.BLACK:
       return "bg-mtg-black bg-opacity-10";
-    case "red":
+    case MTGColors.RED:
       return "bg-mtg-red bg-opacity-10";
-    case "green":
+    case MTGColors.GREEN:
       return "bg-mtg-green bg-opacity-10";
-    case "gold":
+    case MTGColors.GOLD:
       return "bg-mtg-gold bg-opacity-10";
-    case "colorless":
+    case MTGColors.COLORLESS:
       return "bg-mtg-colorless bg-opacity-10";
-    case "land":
+    case MTGColors.LAND:
       return "bg-mtg-land bg-opacity-10";
   }
 }

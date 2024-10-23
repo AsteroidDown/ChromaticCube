@@ -1,5 +1,5 @@
 import { Tooltip } from "@/components/ui/tooltip/tooltip";
-import { MTGColor } from "@/constants/mtg/mtg-colors";
+import { MTGColor, MTGColors } from "@/constants/mtg/mtg-colors";
 import { View } from "react-native";
 import { BarData } from "./bar";
 
@@ -9,14 +9,14 @@ interface GroupedBarLayoutProps {
 }
 
 export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
-  const whiteHeight = getStackHeight("white", ceiling, data);
-  const blueHeight = getStackHeight("blue", ceiling, data);
-  const blackHeight = getStackHeight("black", ceiling, data);
-  const redHeight = getStackHeight("red", ceiling, data);
-  const greenHeight = getStackHeight("green", ceiling, data);
-  const landHeight = getStackHeight("land", ceiling, data);
-  const colorlessHeight = getStackHeight("colorless", ceiling, data);
-  const goldHeight = getStackHeight("gold", ceiling, data);
+  const whiteHeight = getStackHeight(MTGColors.WHITE, ceiling, data);
+  const blueHeight = getStackHeight(MTGColors.BLUE, ceiling, data);
+  const blackHeight = getStackHeight(MTGColors.BLACK, ceiling, data);
+  const redHeight = getStackHeight(MTGColors.RED, ceiling, data);
+  const greenHeight = getStackHeight(MTGColors.GREEN, ceiling, data);
+  const landHeight = getStackHeight(MTGColors.LAND, ceiling, data);
+  const colorlessHeight = getStackHeight(MTGColors.COLORLESS, ceiling, data);
+  const goldHeight = getStackHeight(MTGColors.GOLD, ceiling, data);
 
   const baseClasses = "w-full rounded-t-lg bg-gradient-to-t";
   const containerClasses = "flex h-full flex-1";
@@ -27,10 +27,10 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         <View style={[{ height: `${100 - whiteHeight}%` }]}></View>
 
         <Tooltip
-          title={data.find((entry) => entry.color === "white")?.name}
+          title={data.find((entry) => entry.color === MTGColors.WHITE)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "white")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.WHITE)?.count || 0)
           }
           style={[{ height: `${whiteHeight}%` }]}
         >
@@ -44,10 +44,10 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         <View style={[{ height: `${100 - blueHeight}%` }]}></View>
 
         <Tooltip
-          title={data.find((entry) => entry.color === "blue")?.name}
+          title={data.find((entry) => entry.color === MTGColors.BLUE)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "blue")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.BLUE)?.count || 0)
           }
           style={[{ height: `${blueHeight}%` }]}
         >
@@ -61,10 +61,10 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         <View style={[{ height: `${100 - blackHeight}%` }]}></View>
 
         <Tooltip
-          title={data.find((entry) => entry.color === "black")?.name}
+          title={data.find((entry) => entry.color === MTGColors.BLACK)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "black")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.BLACK)?.count || 0)
           }
           style={[{ height: `${blackHeight}%` }]}
         >
@@ -78,10 +78,10 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         <View style={[{ height: `${100 - redHeight}%` }]}></View>
 
         <Tooltip
-          title={data.find((entry) => entry.color === "red")?.name}
+          title={data.find((entry) => entry.color === MTGColors.RED)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "red")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.RED)?.count || 0)
           }
           style={[{ height: `${redHeight}%` }]}
         >
@@ -95,10 +95,10 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         <View style={[{ height: `${100 - greenHeight}%` }]}></View>
 
         <Tooltip
-          title={data.find((entry) => entry.color === "green")?.name}
+          title={data.find((entry) => entry.color === MTGColors.GREEN)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "green")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.GREEN)?.count || 0)
           }
           style={[{ height: `${greenHeight}%` }]}
         >
@@ -112,10 +112,10 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
         <View style={[{ height: `${100 - goldHeight}%` }]}></View>
 
         <Tooltip
-          title={data.find((entry) => entry.color === "gold")?.name}
+          title={data.find((entry) => entry.color === MTGColors.GOLD)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "gold")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.GOLD)?.count || 0)
           }
           style={[{ height: `${goldHeight}%` }]}
         >
@@ -128,10 +128,13 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
           <View style={[{ height: `${100 - colorlessHeight}%` }]}></View>
 
           <Tooltip
-            title={data.find((entry) => entry.color === "colorless")?.name}
+            title={
+              data.find((entry) => entry.color === MTGColors.COLORLESS)?.name
+            }
             message={
               "Count: " +
-              (data.find((entry) => entry.color === "colorless")?.count || 0)
+              (data.find((entry) => entry.color === MTGColors.COLORLESS)
+                ?.count || 0)
             }
             style={[{ height: `${colorlessHeight}%` }]}
           >
@@ -145,10 +148,10 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
           <View style={[{ height: `${100 - landHeight}%` }]}></View>
 
           <Tooltip
-            title={data.find((entry) => entry.color === "land")?.name}
+            title={data.find((entry) => entry.color === MTGColors.LAND)?.name}
             message={
               "Count: " +
-              (data.find((entry) => entry.color === "land")?.count || 0)
+              (data.find((entry) => entry.color === MTGColors.LAND)?.count || 0)
             }
             style={[{ height: `${landHeight}%` }]}
           >

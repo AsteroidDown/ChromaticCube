@@ -5,7 +5,7 @@ import RarityFilter from "@/components/ui/filters/filter-types/rarity-filter";
 import TypeFilter from "@/components/ui/filters/filter-types/type-filter";
 import Modal from "@/components/ui/modal/modal";
 import Text from "@/components/ui/text/text";
-import { MTGColor } from "@/constants/mtg/mtg-colors";
+import { MTGColor, MTGColors } from "@/constants/mtg/mtg-colors";
 import { MTGRarities, MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGCardType, MTGCardTypes } from "@/constants/mtg/mtg-types";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
@@ -247,13 +247,13 @@ function generateTitle(
   let title = "";
 
   if (colorFilter?.length && colorFilter.length !== 7) {
-    if (colorFilter.includes("white")) title += "White ";
-    if (colorFilter.includes("blue")) title += "Blue ";
-    if (colorFilter.includes("black")) title += "Black ";
-    if (colorFilter.includes("red")) title += "Red ";
-    if (colorFilter.includes("green")) title += "Green ";
-    if (colorFilter.includes("gold")) title += "Gold ";
-    if (colorFilter.includes("colorless")) title += "Colorless ";
+    if (colorFilter.includes(MTGColors.WHITE)) title += "White ";
+    if (colorFilter.includes(MTGColors.BLUE)) title += "Blue ";
+    if (colorFilter.includes(MTGColors.BLACK)) title += "Black ";
+    if (colorFilter.includes(MTGColors.RED)) title += "Red ";
+    if (colorFilter.includes(MTGColors.GREEN)) title += "Green ";
+    if (colorFilter.includes(MTGColors.GOLD)) title += "Gold ";
+    if (colorFilter.includes(MTGColors.COLORLESS)) title += "Colorless ";
   }
 
   if (rarityFilter?.length) {

@@ -1,3 +1,4 @@
+import { MTGColors } from "@/constants/mtg/mtg-colors";
 import { SetData } from "../components/graph/layout/graph-plot";
 import { Card } from "../models/card/card";
 import { CardsSortedByColor } from "../models/sorted-cards/sorted-cards";
@@ -36,7 +37,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
       data: [
         {
           name: "Blue",
-          color: "blue",
+          color: MTGColors.BLUE,
           count: blueCount,
         },
       ],
@@ -46,7 +47,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
       data: [
         {
           name: "Black",
-          color: "black",
+          color: MTGColors.BLACK,
           count: blackCount,
         },
       ],
@@ -56,7 +57,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
       data: [
         {
           name: "Red",
-          color: "red",
+          color: MTGColors.RED,
           count: redCount,
         },
       ],
@@ -66,7 +67,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
       data: [
         {
           name: "Green",
-          color: "green",
+          color: MTGColors.GREEN,
           count: greenCount,
         },
       ],
@@ -79,7 +80,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
       data: [
         {
           name: "Gold",
-          color: "gold",
+          color: MTGColors.GOLD,
           count: goldCount,
         },
       ],
@@ -92,7 +93,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
       data: [
         {
           name: "Colorless",
-          color: "colorless",
+          color: MTGColors.COLORLESS,
           count: colorlessCount,
         },
       ],
@@ -105,7 +106,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
       data: [
         {
           name: "Land",
-          color: "land",
+          color: MTGColors.LAND,
           count: landCount,
         },
       ],
@@ -186,37 +187,37 @@ function createSetDataByColor(
     data: [
       {
         name: "White",
-        color: "white",
+        color: MTGColors.WHITE,
         count: getCountOfCards(sortedCards.white),
       },
       {
         name: "Blue",
-        color: "blue",
+        color: MTGColors.BLUE,
         count: getCountOfCards(sortedCards.blue),
       },
       {
         name: "Black",
-        color: "black",
+        color: MTGColors.BLACK,
         count: getCountOfCards(sortedCards.black),
       },
       {
         name: "Red",
-        color: "red",
+        color: MTGColors.RED,
         count: getCountOfCards(sortedCards.red),
       },
       {
         name: "Green",
-        color: "green",
+        color: MTGColors.GREEN,
         count: getCountOfCards(sortedCards.green),
       },
       {
         name: "Gold",
-        color: "gold",
+        color: MTGColors.GOLD,
         count: getCountOfCards(sortedCards.gold),
       },
       {
         name: "Colorless",
-        color: "colorless",
+        color: MTGColors.COLORLESS,
         count: getCountOfCards(sortedCards.colorless),
       },
     ],
@@ -225,7 +226,7 @@ function createSetDataByColor(
   if (!excludeLand) {
     graphData.data.push({
       name: "Land",
-      color: "land",
+      color: MTGColors.LAND,
       count: getCountOfCards(sortedCards.land),
     });
   }

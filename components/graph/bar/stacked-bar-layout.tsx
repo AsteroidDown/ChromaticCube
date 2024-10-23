@@ -1,5 +1,5 @@
 import { Tooltip } from "@/components/ui/tooltip/tooltip";
-import { MTGColor } from "@/constants/mtg/mtg-colors";
+import { MTGColor, MTGColors } from "@/constants/mtg/mtg-colors";
 import { DimensionValue, View } from "react-native";
 import { BarData } from "./bar";
 
@@ -16,14 +16,24 @@ export function StackedBarLayout({
   topHeight,
   barHeight,
 }: StackedBarLayoutProps) {
-  const landHeight = getStackHeight("land", total, data);
-  const colorlessHeight = getStackHeight("colorless", total, data, landHeight);
-  const goldHeight = getStackHeight("gold", total, data, colorlessHeight);
-  const greenHeight = getStackHeight("green", total, data, goldHeight);
-  const redHeight = getStackHeight("red", total, data, greenHeight);
-  const blackHeight = getStackHeight("black", total, data, redHeight);
-  const blueHeight = getStackHeight("blue", total, data, blackHeight);
-  const whiteHeight = getStackHeight("white", total, data, blueHeight);
+  const landHeight = getStackHeight(MTGColors.LAND, total, data);
+  const colorlessHeight = getStackHeight(
+    MTGColors.COLORLESS,
+    total,
+    data,
+    landHeight
+  );
+  const goldHeight = getStackHeight(
+    MTGColors.GOLD,
+    total,
+    data,
+    colorlessHeight
+  );
+  const greenHeight = getStackHeight(MTGColors.GREEN, total, data, goldHeight);
+  const redHeight = getStackHeight(MTGColors.RED, total, data, greenHeight);
+  const blackHeight = getStackHeight(MTGColors.BLACK, total, data, redHeight);
+  const blueHeight = getStackHeight(MTGColors.BLUE, total, data, blackHeight);
+  const whiteHeight = getStackHeight(MTGColors.WHITE, total, data, blueHeight);
 
   const baseClass =
     "absolute bottom-0 w-full h-full rounded-t-lg bg-gradient-to-t";
@@ -40,10 +50,10 @@ export function StackedBarLayout({
             { position: "absolute" },
             { height: `${whiteHeight}%` },
           ]}
-          title={data.find((entry) => entry.color === "white")?.name}
+          title={data.find((entry) => entry.color === MTGColors.WHITE)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "white")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.WHITE)?.count || 0)
           }
         >
           <View
@@ -58,10 +68,10 @@ export function StackedBarLayout({
             { position: "absolute" },
             { height: `${blueHeight}%` },
           ]}
-          title={data.find((entry) => entry.color === "blue")?.name}
+          title={data.find((entry) => entry.color === MTGColors.BLUE)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "blue")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.BLUE)?.count || 0)
           }
         >
           <View
@@ -76,10 +86,10 @@ export function StackedBarLayout({
             { position: "absolute" },
             { height: `${blackHeight}%` },
           ]}
-          title={data.find((entry) => entry.color === "black")?.name}
+          title={data.find((entry) => entry.color === MTGColors.BLACK)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "black")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.BLACK)?.count || 0)
           }
         >
           <View
@@ -94,10 +104,10 @@ export function StackedBarLayout({
             { position: "absolute" },
             { height: `${redHeight}%` },
           ]}
-          title={data.find((entry) => entry.color === "red")?.name}
+          title={data.find((entry) => entry.color === MTGColors.RED)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "red")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.RED)?.count || 0)
           }
         >
           <View
@@ -112,10 +122,10 @@ export function StackedBarLayout({
             { position: "absolute" },
             { height: `${greenHeight}%` },
           ]}
-          title={data.find((entry) => entry.color === "green")?.name}
+          title={data.find((entry) => entry.color === MTGColors.GREEN)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "green")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.GREEN)?.count || 0)
           }
         >
           <View
@@ -130,10 +140,10 @@ export function StackedBarLayout({
             { position: "absolute" },
             { height: `${goldHeight}%` },
           ]}
-          title={data.find((entry) => entry.color === "gold")?.name}
+          title={data.find((entry) => entry.color === MTGColors.GOLD)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "gold")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.GOLD)?.count || 0)
           }
         >
           <View
@@ -148,10 +158,13 @@ export function StackedBarLayout({
             { position: "absolute" },
             { height: `${colorlessHeight}%` },
           ]}
-          title={data.find((entry) => entry.color === "colorless")?.name}
+          title={
+            data.find((entry) => entry.color === MTGColors.COLORLESS)?.name
+          }
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "colorless")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.COLORLESS)?.count ||
+              0)
           }
         >
           <View
@@ -166,10 +179,10 @@ export function StackedBarLayout({
             { position: "absolute" },
             { height: `${landHeight}%` },
           ]}
-          title={data.find((entry) => entry.color === "land")?.name}
+          title={data.find((entry) => entry.color === MTGColors.LAND)?.name}
           message={
             "Count: " +
-            (data.find((entry) => entry.color === "land")?.count || 0)
+            (data.find((entry) => entry.color === MTGColors.LAND)?.count || 0)
           }
         >
           <View
