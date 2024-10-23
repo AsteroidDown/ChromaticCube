@@ -3,7 +3,7 @@ import Divider from "@/components/ui/divider/divider";
 import Modal from "@/components/ui/modal/modal";
 import Text from "@/components/ui/text/text";
 import { Tooltip } from "@/components/ui/tooltip/tooltip";
-import BoardContext from "@/contexts/cards/board.context";
+import BoardContext, { BoardType } from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import {
   addToLocalStorageCardCount,
@@ -16,6 +16,10 @@ import {
 import { Card } from "@/models/card/card";
 import {
   faCircleInfo,
+  faClipboardList,
+  faClipboardQuestion,
+  faList,
+  faListCheck,
   faMinus,
   faPlus,
   faRightFromBracket,
@@ -24,6 +28,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, useEffect } from "react";
 import { Linking, Pressable, View } from "react-native";
+import Box from "../ui/box/box";
+import Dropdown from "../ui/dropdown/dropdown";
 import CardCost from "./card-cost";
 import CardDetailedPreview from "./card-detailed-preview";
 import CardImage from "./card-image";
@@ -170,35 +176,35 @@ export function CardItemFooter({
   const { setStoredCards } = useContext(StoredCardsContext);
 
   const [print, setPrint] = React.useState(undefined as Card | undefined);
+  const [moveOpen, setMoveOpen] = React.useState(false);
 
   useEffect(() => {
     if (!print) return;
 
-    switchPrint(card, print);
+    switchPrint(print);
   }, [print]);
 
-  function addToCount(card: Card) {
+  function addToCount() {
     addToLocalStorageCardCount(card, board);
     setStoredCards(getLocalStorageStoredCards(board));
   }
 
-  function removeFromCount(card: Card) {
+  function removeFromCount() {
     removeFromLocalStorageCardCount(card, board);
     setStoredCards(getLocalStorageStoredCards(board));
   }
 
-  function removeCard(card: Card) {
+  function removeCard() {
     removeLocalStorageCard(card, board);
     setStoredCards(getLocalStorageStoredCards(board));
   }
 
-  function switchPrint(card: Card, print: Card) {
+  function switchPrint(print: Card) {
     switchLocalStorageCardPrint(card, print, board);
     setStoredCards(getLocalStorageStoredCards(board));
   }
 
-  function moveCard(card: Card) {
-    const moveToBoard = board === "main" ? "maybe" : "main";
+  function moveCard(moveToBoard: BoardType) {
     saveLocalStorageCard(card, card.count, moveToBoard);
     removeLocalStorageCard(card, board);
     setStoredCards(getLocalStorageStoredCards(board));
@@ -223,14 +229,66 @@ export function CardItemFooter({
           tabbable={expanded}
         />
 
-        <Tooltip title="Move to Maybe Board">
+        <Tooltip title="Swap Boards">
           <Button
             action="warning"
             className="flex-1"
             tabbable={expanded}
             icon={faRightFromBracket}
-            onClick={() => moveCard(card)}
+            onClick={() => setMoveOpen(true)}
           ></Button>
+
+          <Dropdown xOffset={-32} expanded={moveOpen} setExpanded={setMoveOpen}>
+            <Box className="flex justify-start items-start !p-0 border-2 border-primary-300 !bg-background-100 !bg-opacity-90 overflow-hidden">
+              {board !== "main" && (
+                <Button
+                  start
+                  square
+                  type="clear"
+                  text="Main"
+                  className="w-full"
+                  icon={faList}
+                  onClick={() => moveCard("main")}
+                />
+              )}
+
+              {board !== "side" && (
+                <Button
+                  start
+                  square
+                  type="clear"
+                  text="Side"
+                  className="w-full"
+                  icon={faClipboardList}
+                  onClick={() => moveCard("side")}
+                />
+              )}
+
+              {board !== "maybe" && (
+                <Button
+                  start
+                  square
+                  type="clear"
+                  text="Maybe"
+                  className="w-full"
+                  icon={faClipboardQuestion}
+                  onClick={() => moveCard("maybe")}
+                />
+              )}
+
+              {board !== "acquire" && (
+                <Button
+                  start
+                  square
+                  type="clear"
+                  text="Acquire"
+                  className="w-full"
+                  icon={faListCheck}
+                  onClick={() => moveCard("acquire")}
+                />
+              )}
+            </Box>
+          </Dropdown>
         </Tooltip>
 
         <Button
@@ -238,7 +296,7 @@ export function CardItemFooter({
           className="flex-1"
           icon={faTrash}
           tabbable={expanded}
-          onClick={() => removeCard(card)}
+          onClick={() => removeCard()}
         ></Button>
       </View>
 
@@ -251,7 +309,7 @@ export function CardItemFooter({
           className="flex-1"
           icon={faMinus}
           tabbable={expanded}
-          onClick={() => removeFromCount(card)}
+          onClick={() => removeFromCount()}
         />
 
         <View className="flex justify-center items-center px-4 h-full border-2 border-x-0 border-dark-500">
@@ -266,7 +324,7 @@ export function CardItemFooter({
           className="flex-1"
           icon={faPlus}
           tabbable={expanded}
-          onClick={() => addToCount(card)}
+          onClick={() => addToCount()}
         />
       </View>
 
