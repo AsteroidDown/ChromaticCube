@@ -1,3 +1,4 @@
+import { MTGRarities } from "@/constants/mtg/mtg-rarity";
 import { sortCardsByColor, sortCardsByRarity } from "@/functions/card-sorting";
 import { titleCase } from "@/functions/text-manipulation";
 import { Card } from "@/models/card/card";
@@ -57,18 +58,22 @@ export default function RarityChartLayout({
           </View>
 
           <ChartCell
-            rarity={"common"}
+            rarity={MTGRarities.COMMON}
             color={color}
             sortedCards={sortedCommon}
           />
           <ChartCell
-            rarity={"uncommon"}
+            rarity={MTGRarities.UNCOMMON}
             color={color}
             sortedCards={sortedUncommon}
           />
-          <ChartCell rarity={"rare"} color={color} sortedCards={sortedRare} />
           <ChartCell
-            rarity={"mythic"}
+            rarity={MTGRarities.RARE}
+            color={color}
+            sortedCards={sortedRare}
+          />
+          <ChartCell
+            rarity={MTGRarities.MYTHIC}
             color={color}
             sortedCards={sortedMythic}
           />

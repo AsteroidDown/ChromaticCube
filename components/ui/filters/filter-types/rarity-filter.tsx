@@ -1,7 +1,7 @@
 import Chip from "@/components/ui/chip/chip";
 import Dropdown from "@/components/ui/dropdown/dropdown";
 import Text from "@/components/ui/text/text";
-import { MTGRarity } from "@/constants/mtg/mtg-rarity";
+import { MTGRarities, MTGRarity } from "@/constants/mtg/mtg-rarity";
 import CardPreferencesContext from "@/contexts/cards/card-preferences.context";
 import React, { useContext, useEffect } from "react";
 import { View } from "react-native";
@@ -36,10 +36,10 @@ export default function RarityFilter({
 
   useEffect(() => {
     setAppliedFilters([
-      ...(commonApplied ? ["common"] : []),
-      ...(uncommonApplied ? ["uncommon"] : []),
-      ...(rareApplied ? ["rare"] : []),
-      ...(mythicApplied ? ["mythic"] : []),
+      ...(commonApplied ? [MTGRarities.COMMON] : []),
+      ...(uncommonApplied ? [MTGRarities.UNCOMMON] : []),
+      ...(rareApplied ? [MTGRarities.RARE] : []),
+      ...(mythicApplied ? [MTGRarities.MYTHIC] : []),
     ] as MTGRarity[]);
   }, [commonApplied, uncommonApplied, rareApplied, mythicApplied]);
 
@@ -55,23 +55,25 @@ export default function RarityFilter({
 
   useEffect(() => {
     if (rarityFilters?.length) {
-      if (rarityFilters.includes("common")) setCommonApplied(true);
-      if (rarityFilters.includes("uncommon")) setUncommonApplied(true);
-      if (rarityFilters.includes("rare")) setRareApplied(true);
-      if (rarityFilters.includes("mythic")) setMythicApplied(true);
+      if (rarityFilters.includes(MTGRarities.COMMON)) setCommonApplied(true);
+      if (rarityFilters.includes(MTGRarities.UNCOMMON)) {
+        setUncommonApplied(true);
+      }
+      if (rarityFilters.includes(MTGRarities.RARE)) setRareApplied(true);
+      if (rarityFilters.includes(MTGRarities.MYTHIC)) setMythicApplied(true);
     } else {
       if (!preferences.filters) return;
 
-      if (preferences.filters.rarityFilter?.includes("common")) {
+      if (preferences.filters.rarityFilter?.includes(MTGRarities.COMMON)) {
         setCommonApplied(true);
       }
-      if (preferences.filters.rarityFilter?.includes("uncommon")) {
+      if (preferences.filters.rarityFilter?.includes(MTGRarities.UNCOMMON)) {
         setUncommonApplied(true);
       }
-      if (preferences.filters.rarityFilter?.includes("rare")) {
+      if (preferences.filters.rarityFilter?.includes(MTGRarities.RARE)) {
         setRareApplied(true);
       }
-      if (preferences.filters.rarityFilter?.includes("mythic")) {
+      if (preferences.filters.rarityFilter?.includes(MTGRarities.MYTHIC)) {
         setMythicApplied(true);
       }
     }

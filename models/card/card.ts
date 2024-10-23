@@ -1,7 +1,6 @@
 import { MTGLegality } from "@/constants/mtg/mtg-legality";
+import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { MTGColorSymbol } from "../../constants/mtg/mtg-colors";
-
-export type Rarity = "common" | "uncommon" | "rare" | "mythic";
 
 export interface Card {
   id: string;
@@ -10,7 +9,7 @@ export interface Card {
   set: string;
   collectorNumber: string;
   cardBackId: string;
-  rarity: Rarity;
+  rarity: MTGRarity;
   cmc: number;
   colorIdentity: MTGColorSymbol[];
   manaCost: string;

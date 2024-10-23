@@ -1,3 +1,4 @@
+import { MTGRarities } from "@/constants/mtg/mtg-rarity";
 import { MTGCardType, MTGCardTypes } from "../constants/mtg/mtg-types";
 import { Card } from "../models/card/card";
 import {
@@ -183,16 +184,16 @@ export function sortCardsByRarity(cards: Card[]): CardsSortedByRarity {
 
   cards.forEach((card) => {
     switch (card.rarity) {
-      case "common":
+      case MTGRarities.COMMON:
         sortedCards.common.push(card);
         return;
-      case "uncommon":
+      case MTGRarities.UNCOMMON:
         sortedCards.uncommon.push(card);
         return;
-      case "rare":
+      case MTGRarities.RARE:
         sortedCards.rare.push(card);
         return;
-      case "mythic":
+      case MTGRarities.MYTHIC:
         sortedCards.mythic.push(card);
         return;
     }

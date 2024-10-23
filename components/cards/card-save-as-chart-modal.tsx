@@ -6,8 +6,8 @@ import TypeFilter from "@/components/ui/filters/filter-types/type-filter";
 import Modal from "@/components/ui/modal/modal";
 import Text from "@/components/ui/text/text";
 import { MTGColor } from "@/constants/mtg/mtg-colors";
-import { MTGRarity } from "@/constants/mtg/mtg-rarity";
-import { MTGCardType } from "@/constants/mtg/mtg-types";
+import { MTGRarities, MTGRarity } from "@/constants/mtg/mtg-rarity";
+import { MTGCardType, MTGCardTypes } from "@/constants/mtg/mtg-types";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
 import {
   addLocalStorageDashboardItem,
@@ -259,16 +259,16 @@ function generateTitle(
   if (rarityFilter?.length) {
     const multiple = rarityFilter.length > 1;
 
-    if (rarityFilter.includes("common")) {
+    if (rarityFilter.includes(MTGRarities.COMMON)) {
       title += "Common" + (multiple ? ", " : " ");
     }
-    if (rarityFilter.includes("uncommon")) {
+    if (rarityFilter.includes(MTGRarities.UNCOMMON)) {
       title += "Uncommon" + (multiple ? ", " : " ");
     }
-    if (rarityFilter.includes("rare")) {
+    if (rarityFilter.includes(MTGRarities.RARE)) {
       title += "Rare" + (multiple ? ", " : " ");
     }
-    if (rarityFilter.includes("mythic")) {
+    if (rarityFilter.includes(MTGRarities.MYTHIC)) {
       title += "Mythic" + (multiple ? ", " : " ");
     }
   }
@@ -276,28 +276,28 @@ function generateTitle(
   if (typeFilter?.length) {
     const multiple = typeFilter.length > 1;
 
-    if (typeFilter.includes("creature")) {
+    if (typeFilter.includes(MTGCardTypes.CREATURE)) {
       title += "Creature" + (multiple ? ", " : " ");
     }
-    if (typeFilter.includes("instant")) {
+    if (typeFilter.includes(MTGCardTypes.INSTANT)) {
       title += "Instant" + (multiple ? ", " : " ");
     }
-    if (typeFilter.includes("sorcery")) {
+    if (typeFilter.includes(MTGCardTypes.SORCERY)) {
       title += "Sorcery" + (multiple ? ", " : " ");
     }
-    if (typeFilter.includes("artifact")) {
+    if (typeFilter.includes(MTGCardTypes.ARTIFACT)) {
       title += "Artifact" + (multiple ? ", " : " ");
     }
-    if (typeFilter.includes("enchantment")) {
+    if (typeFilter.includes(MTGCardTypes.ENCHANTMENT)) {
       title += "Enchantment" + (multiple ? ", " : " ");
     }
-    if (typeFilter.includes("land")) {
+    if (typeFilter.includes(MTGCardTypes.LAND)) {
       title += "Land" + (multiple ? ", " : " ");
     }
-    if (typeFilter.includes("planeswalker")) {
+    if (typeFilter.includes(MTGCardTypes.PLANESWALKER)) {
       title += "Planeswalker" + (multiple ? ", " : " ");
     }
-    if (typeFilter.includes("battle")) {
+    if (typeFilter.includes(MTGCardTypes.BATTLE)) {
       title += "Battle ";
     }
   }
