@@ -302,7 +302,7 @@ function generateTitle(
     }
   }
 
-  title += "Cards by " + titleCase(type);
+  title += "Cards by " + (type === "cost" ? "Mana Value" : titleCase(type));
 
   return title;
 }

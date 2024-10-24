@@ -43,7 +43,7 @@ export default function App() {
     ];
 
     addLocalStorageDashboardItem(sectionId, {
-      title: "Cards by Cost",
+      title: "Cards by Mana Value",
       sortType: "cost",
       itemType: "graph",
       stacked: true,
@@ -59,7 +59,7 @@ export default function App() {
       filters: {},
     });
     addLocalStorageDashboardItem(sectionId, {
-      title: "Cards by Cost",
+      title: "Cards by Mana Value",
       sortType: "cost",
       itemType: "chart",
       smallTitles: true,

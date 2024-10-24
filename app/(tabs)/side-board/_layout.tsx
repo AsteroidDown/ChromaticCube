@@ -34,13 +34,13 @@ export default function SideBoardLayout() {
   const [condensed, setCondensed] = React.useState(false);
 
   const tabs: TabProps[] = [
-    { title: "Cards by Cost", link: "(tabs)/side-board", name: "cost" },
+    { title: "Mana Value", link: "(tabs)/side-board", name: "cost" },
     {
-      title: "Cards by Color",
+      title: "Color",
       link: "(tabs)/side-board/color",
       name: "color",
     },
-    { title: "Cards by Type", link: "(tabs)/side-board/type", name: "type" },
+    { title: "Type", link: "(tabs)/side-board/type", name: "type" },
   ];
 
   useEffect(() => {

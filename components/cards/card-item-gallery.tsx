@@ -127,7 +127,10 @@ export default function CardItemGallery({
   return (
     <Box className="!rounded-tl-none flex gap-2 px-0 overflow-hidden">
       <BoxHeader
-        title={"Cards Sorted by " + titleCase(type)}
+        title={
+          "Cards Sorted by " +
+          (type === "cost" ? "Mana Value" : titleCase(type))
+        }
         startIcon={faChartSimple}
         subtitle={`${cardCount} Card${
           cardCount !== 1 ? "s" : ""

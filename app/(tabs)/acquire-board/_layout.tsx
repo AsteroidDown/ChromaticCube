@@ -30,13 +30,17 @@ export default function AcquireBoardLayout() {
   const [condensed, setCondensed] = React.useState(false);
 
   const tabs: TabProps[] = [
-    { title: "Cards by Cost", link: "(tabs)/acquire-board", name: "cost" },
     {
-      title: "Cards by Color",
+      title: "Mana Value",
+      link: "(tabs)/acquire-board",
+      name: "cost",
+    },
+    {
+      title: "Color",
       link: "(tabs)/side-board/color",
       name: "color",
     },
-    { title: "Cards by Type", link: "(tabs)/acquire-board/type", name: "type" },
+    { title: "Type", link: "(tabs)/acquire-board/type", name: "type" },
   ];
 
   useEffect(() => {
