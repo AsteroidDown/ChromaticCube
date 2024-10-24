@@ -26,7 +26,7 @@ export default function App() {
     setCards(getLocalStorageStoredCards());
   }, [storedCards]);
 
-  if (!dashboard?.sections && !getLocalStorageDashboard()) {
+  if (!dashboard?.sections && !getLocalStorageDashboard()?.sections?.length) {
     setLocalStorageDashboard({ sections: [] });
 
     const sectionId = addLocalStorageDashboardSection("General");

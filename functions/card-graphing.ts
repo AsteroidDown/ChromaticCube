@@ -1,25 +1,23 @@
-import { MTGColors } from "@/constants/mtg/mtg-colors";
+import { BarData } from "@/components/graph/bar/bar";
+import { MTGColor, MTGColors } from "@/constants/mtg/mtg-colors";
+import { MTGRarity } from "@/constants/mtg/mtg-rarity";
+import { MTGCardTypes } from "@/constants/mtg/mtg-types";
 import { SetData } from "../components/graph/layout/graph-plot";
 import { Card } from "../models/card/card";
 import { CardsSortedByColor } from "../models/sorted-cards/sorted-cards";
 import {
+  sortCardsAlphabetically,
   sortCardsByColor,
   sortCardsByCost,
+  sortCardsByManaValue,
   sortCardsByType,
 } from "./card-sorting";
 import { getCountOfCards } from "./card-stats";
 
 export function graphCardsByColor(cards: Card[]): SetData[] {
-  const sortedCards = sortCardsByColor(cards);
-
-  const whiteCount = getCountOfCards(sortedCards.white);
-  const blueCount = getCountOfCards(sortedCards.blue);
-  const blackCount = getCountOfCards(sortedCards.black);
-  const redCount = getCountOfCards(sortedCards.red);
-  const greenCount = getCountOfCards(sortedCards.green);
-  const goldCount = getCountOfCards(sortedCards.gold);
-  const colorlessCount = getCountOfCards(sortedCards.colorless);
-  const landCount = getCountOfCards(sortedCards.land);
+  const sortedCards = sortCardsByColor(
+    sortCardsByManaValue(sortCardsAlphabetically(cards))
+  );
 
   const sets: SetData[] = [
     {
@@ -28,7 +26,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "White",
           color: "white",
-          count: whiteCount,
+          cards: sortedCards.white,
         },
       ],
     },
@@ -38,7 +36,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Blue",
           color: MTGColors.BLUE,
-          count: blueCount,
+          cards: sortedCards.blue,
         },
       ],
     },
@@ -48,7 +46,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Black",
           color: MTGColors.BLACK,
-          count: blackCount,
+          cards: sortedCards.black,
         },
       ],
     },
@@ -58,7 +56,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Red",
           color: MTGColors.RED,
-          count: redCount,
+          cards: sortedCards.red,
         },
       ],
     },
@@ -68,46 +66,46 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
         {
           name: "Green",
           color: MTGColors.GREEN,
-          count: greenCount,
+          cards: sortedCards.green,
         },
       ],
     },
   ];
 
-  if (goldCount > 0) {
+  if (getCountOfCards(sortedCards.gold) > 0) {
     sets.push({
       title: "Gold",
       data: [
         {
           name: "Gold",
           color: MTGColors.GOLD,
-          count: goldCount,
+          cards: sortedCards.gold,
         },
       ],
     });
   }
 
-  if (colorlessCount > 0) {
+  if (getCountOfCards(sortedCards.colorless) > 0) {
     sets.push({
       title: "Colorless",
       data: [
         {
           name: "Colorless",
           color: MTGColors.COLORLESS,
-          count: colorlessCount,
+          cards: sortedCards.colorless,
         },
       ],
     });
   }
 
-  if (landCount > 0) {
+  if (getCountOfCards(sortedCards.land) > 0) {
     sets.push({
       title: "Land",
       data: [
         {
           name: "Land",
           color: MTGColors.LAND,
-          count: landCount,
+          cards: sortedCards.land,
         },
       ],
     });
@@ -117,7 +115,7 @@ export function graphCardsByColor(cards: Card[]): SetData[] {
 }
 
 export function graphCardsByCost(cards: Card[]): SetData[] {
-  const sortedCards = sortCardsByCost(cards);
+  const sortedCards = sortCardsByCost(sortCardsAlphabetically(cards));
 
   const sortedZero = sortCardsByColor(sortedCards.zero);
   const sortedOne = sortCardsByColor(sortedCards.one);
@@ -130,22 +128,22 @@ export function graphCardsByCost(cards: Card[]): SetData[] {
   const sets: SetData[] = [];
 
   if (sortedCards.zero.length > 0) {
-    sets.push(createSetDataByColor("0 Cost", sortedZero));
+    sets.push(createSetDataByColor("0 Cost", sortedZero, { cost: 0 }));
   }
-  sets.push(createSetDataByColor("1 Cost", sortedOne));
-  sets.push(createSetDataByColor("2 Cost", sortedTwo));
-  sets.push(createSetDataByColor("3 Cost", sortedThree));
-  sets.push(createSetDataByColor("4 Cost", sortedFour));
-  sets.push(createSetDataByColor("5 Cost", sortedFive));
+  sets.push(createSetDataByColor("1 Cost", sortedOne, { cost: 1 }));
+  sets.push(createSetDataByColor("2 Cost", sortedTwo, { cost: 2 }));
+  sets.push(createSetDataByColor("3 Cost", sortedThree, { cost: 3 }));
+  sets.push(createSetDataByColor("4 Cost", sortedFour, { cost: 4 }));
+  sets.push(createSetDataByColor("5 Cost", sortedFive, { cost: 5 }));
   if (sortedCards.six.length > 0) {
-    sets.push(createSetDataByColor("6+ Cost", sortedSix));
+    sets.push(createSetDataByColor("6+ Cost", sortedSix, { cost: 6 }));
   }
 
   return sets;
 }
 
 export function graphCardsByType(cards: Card[]): SetData[] {
-  const sortedCards = sortCardsByType(cards);
+  const sortedCards = sortCardsByType(sortCardsAlphabetically(cards));
 
   const sortedLands = sortCardsByColor(sortedCards.land);
   const sortedEnchantments = sortCardsByColor(sortedCards.enchantment);
@@ -157,19 +155,33 @@ export function graphCardsByType(cards: Card[]): SetData[] {
   const sortedInstants = sortCardsByColor(sortedCards.instant);
 
   const sets: SetData[] = [
-    createSetDataByColor("Creature", sortedCreatures),
-    createSetDataByColor("Instant", sortedInstants),
-    createSetDataByColor("Sorcery", sortedSorceries),
-    createSetDataByColor("Artifact", sortedArtifacts),
-    createSetDataByColor("Enchantment", sortedEnchantments),
-    createSetDataByColor("Land", sortedLands),
+    createSetDataByColor("Creature", sortedCreatures, {
+      type: MTGCardTypes.CREATURE,
+    }),
+    createSetDataByColor("Instant", sortedInstants, {
+      type: MTGCardTypes.INSTANT,
+    }),
+    createSetDataByColor("Sorcery", sortedSorceries, {
+      type: MTGCardTypes.SORCERY,
+    }),
+    createSetDataByColor("Artifact", sortedArtifacts, {
+      type: MTGCardTypes.ARTIFACT,
+    }),
+    createSetDataByColor("Enchantment", sortedEnchantments, {
+      type: MTGCardTypes.ENCHANTMENT,
+    }),
+    createSetDataByColor("Land", sortedLands, { type: MTGCardTypes.LAND }),
   ];
 
   if (sortedCards.planeswalker.length > 0) {
-    createSetDataByColor("Planeswalker", sortedPlaneswalkers);
+    createSetDataByColor("Planeswalker", sortedPlaneswalkers, {
+      type: MTGCardTypes.PLANESWALKER,
+    });
   }
   if (sortedCards.battle.length > 0) {
-    createSetDataByColor("Battle", sortedBattles);
+    createSetDataByColor("Battle", sortedBattles, {
+      type: MTGCardTypes.BATTLE,
+    });
   }
 
   return sets;
@@ -178,56 +190,73 @@ export function graphCardsByType(cards: Card[]): SetData[] {
 function createSetDataByColor(
   title: string,
   sortedCards: CardsSortedByColor,
-  excludeLand?: boolean
+  data?: { cost?: number; rarity?: MTGRarity; type?: string }
 ): SetData {
   const graphData: SetData = {
     title: title,
+    cost: data?.cost,
+    rarity: data?.rarity,
+    type: data?.type,
     data: [
       {
         name: "White",
         color: MTGColors.WHITE,
-        count: getCountOfCards(sortedCards.white),
+        cards: sortedCards.white,
       },
       {
         name: "Blue",
         color: MTGColors.BLUE,
-        count: getCountOfCards(sortedCards.blue),
+        cards: sortedCards.blue,
       },
       {
         name: "Black",
         color: MTGColors.BLACK,
-        count: getCountOfCards(sortedCards.black),
+        cards: sortedCards.black,
       },
       {
         name: "Red",
         color: MTGColors.RED,
-        count: getCountOfCards(sortedCards.red),
+        cards: sortedCards.red,
       },
       {
         name: "Green",
         color: MTGColors.GREEN,
-        count: getCountOfCards(sortedCards.green),
+        cards: sortedCards.green,
       },
       {
         name: "Gold",
         color: MTGColors.GOLD,
-        count: getCountOfCards(sortedCards.gold),
+        cards: sortedCards.gold,
       },
       {
         name: "Colorless",
         color: MTGColors.COLORLESS,
-        count: getCountOfCards(sortedCards.colorless),
+        cards: sortedCards.colorless,
+      },
+      {
+        name: "Land",
+        color: MTGColors.LAND,
+        cards: sortedCards.land,
       },
     ],
   };
 
-  if (!excludeLand) {
-    graphData.data.push({
-      name: "Land",
-      color: MTGColors.LAND,
-      count: getCountOfCards(sortedCards.land),
-    });
-  }
-
   return graphData;
+}
+
+export function getBarHeight(
+  color: MTGColor,
+  ceiling: number,
+  data: BarData[],
+  additional?: number
+) {
+  const count =
+    data
+      .find((entry) => entry.color === color)
+      ?.cards.reduce((acc, card) => acc + card.count, 0) || 0;
+
+  return {
+    count,
+    height: (count / ceiling) * 100 + (additional || 0),
+  };
 }

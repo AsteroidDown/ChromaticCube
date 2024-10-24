@@ -1,22 +1,75 @@
-import { Tooltip } from "@/components/ui/tooltip/tooltip";
-import { MTGColor, MTGColors } from "@/constants/mtg/mtg-colors";
-import { View } from "react-native";
+import CardViewMultipleModal from "@/components/cards/card-view-multiple-modal";
+import { MTGColors } from "@/constants/mtg/mtg-colors";
+import { MTGRarity } from "@/constants/mtg/mtg-rarity";
+import { getBarHeight } from "@/functions/card-graphing";
+import React from "react";
+import { Pressable, View } from "react-native";
 import { BarData } from "./bar";
 
 interface GroupedBarLayoutProps {
   data: BarData[];
   ceiling: number;
+  cost?: number;
+  rarity?: MTGRarity;
+  type?: string;
 }
 
-export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
-  const whiteHeight = getStackHeight(MTGColors.WHITE, ceiling, data);
-  const blueHeight = getStackHeight(MTGColors.BLUE, ceiling, data);
-  const blackHeight = getStackHeight(MTGColors.BLACK, ceiling, data);
-  const redHeight = getStackHeight(MTGColors.RED, ceiling, data);
-  const greenHeight = getStackHeight(MTGColors.GREEN, ceiling, data);
-  const landHeight = getStackHeight(MTGColors.LAND, ceiling, data);
-  const colorlessHeight = getStackHeight(MTGColors.COLORLESS, ceiling, data);
-  const goldHeight = getStackHeight(MTGColors.GOLD, ceiling, data);
+export function GroupedBarLayout({
+  data,
+  ceiling,
+  cost,
+  rarity,
+  type,
+}: GroupedBarLayoutProps) {
+  const [whiteOpen, setWhiteOpen] = React.useState(false);
+  const [blueOpen, setBlueOpen] = React.useState(false);
+  const [blackOpen, setBlackOpen] = React.useState(false);
+  const [redOpen, setRedOpen] = React.useState(false);
+  const [greenOpen, setGreenOpen] = React.useState(false);
+  const [goldOpen, setGoldOpen] = React.useState(false);
+  const [colorlessOpen, setColorlessOpen] = React.useState(false);
+  const [landOpen, setLandOpen] = React.useState(false);
+
+  const { count: whiteCount, height: whiteHeight } = getBarHeight(
+    MTGColors.WHITE,
+    ceiling,
+    data
+  );
+  const { count: blueCount, height: blueHeight } = getBarHeight(
+    MTGColors.BLUE,
+    ceiling,
+    data
+  );
+  const { count: blackCount, height: blackHeight } = getBarHeight(
+    MTGColors.BLACK,
+    ceiling,
+    data
+  );
+  const { count: redCount, height: redHeight } = getBarHeight(
+    MTGColors.RED,
+    ceiling,
+    data
+  );
+  const { count: greenCount, height: greenHeight } = getBarHeight(
+    MTGColors.GREEN,
+    ceiling,
+    data
+  );
+  const { count: goldCount, height: goldHeight } = getBarHeight(
+    MTGColors.GOLD,
+    ceiling,
+    data
+  );
+  const { count: colorlessCount, height: colorlessHeight } = getBarHeight(
+    MTGColors.COLORLESS,
+    ceiling,
+    data
+  );
+  const { count: landCount, height: landHeight } = getBarHeight(
+    MTGColors.LAND,
+    ceiling,
+    data
+  );
 
   const baseClasses = "w-full rounded-t-lg bg-gradient-to-t";
   const containerClasses = "flex h-full flex-1";
@@ -24,149 +77,190 @@ export function GroupedBarLayout({ data, ceiling }: GroupedBarLayoutProps) {
   return (
     <View className="flex flex-row gap-1 justify-center w-full h-full px-2">
       <View className={containerClasses}>
-        <View style={[{ height: `${100 - whiteHeight}%` }]}></View>
+        <View style={[{ height: `${100 - whiteHeight}%` }]} />
 
-        <Tooltip
-          title={data.find((entry) => entry.color === MTGColors.WHITE)?.name}
-          message={
-            "Count: " +
-            (data.find((entry) => entry.color === MTGColors.WHITE)?.count || 0)
-          }
-          style={[{ height: `${whiteHeight}%` }]}
-        >
-          <View
+        <View style={[{ height: `${whiteHeight}%` }]}>
+          <Pressable
             className={`${baseClasses} h-full to-mtg-white from-mtg-white-secondary`}
-          ></View>
-        </Tooltip>
+            onPress={() => setWhiteOpen(true)}
+          />
+
+          <CardViewMultipleModal
+            open={whiteOpen}
+            setOpen={setWhiteOpen}
+            color={MTGColors.WHITE}
+            cards={
+              data.find((entry) => entry.color === MTGColors.WHITE)?.cards || []
+            }
+            cost={cost}
+            rarity={rarity}
+            type={type}
+          />
+        </View>
       </View>
 
       <View className={containerClasses}>
-        <View style={[{ height: `${100 - blueHeight}%` }]}></View>
+        <View style={[{ height: `${100 - blueHeight}%` }]} />
 
-        <Tooltip
-          title={data.find((entry) => entry.color === MTGColors.BLUE)?.name}
-          message={
-            "Count: " +
-            (data.find((entry) => entry.color === MTGColors.BLUE)?.count || 0)
-          }
-          style={[{ height: `${blueHeight}%` }]}
-        >
-          <View
+        <View style={[{ height: `${blueHeight}%` }]}>
+          <Pressable
             className={`${baseClasses} h-full to-mtg-blue from-mtg-blue-secondary`}
-          ></View>
-        </Tooltip>
+            onPress={() => setBlueOpen(true)}
+          />
+
+          <CardViewMultipleModal
+            open={blueOpen}
+            setOpen={setBlueOpen}
+            color={MTGColors.BLUE}
+            cards={
+              data.find((entry) => entry.color === MTGColors.BLUE)?.cards || []
+            }
+            cost={cost}
+            rarity={rarity}
+            type={type}
+          />
+        </View>
       </View>
 
       <View className={containerClasses}>
-        <View style={[{ height: `${100 - blackHeight}%` }]}></View>
+        <View style={[{ height: `${100 - blackHeight}%` }]} />
 
-        <Tooltip
-          title={data.find((entry) => entry.color === MTGColors.BLACK)?.name}
-          message={
-            "Count: " +
-            (data.find((entry) => entry.color === MTGColors.BLACK)?.count || 0)
-          }
-          style={[{ height: `${blackHeight}%` }]}
-        >
-          <View
+        <View style={[{ height: `${blackHeight}%` }]}>
+          <Pressable
             className={`${baseClasses} h-full to-mtg-black from-mtg-black-secondary`}
-          ></View>
-        </Tooltip>
+            onPress={() => setBlackOpen(true)}
+          />
+
+          <CardViewMultipleModal
+            open={blackOpen}
+            setOpen={setBlackOpen}
+            color={MTGColors.BLACK}
+            cards={
+              data.find((entry) => entry.color === MTGColors.BLACK)?.cards || []
+            }
+            cost={cost}
+            rarity={rarity}
+            type={type}
+          />
+        </View>
       </View>
 
       <View className={containerClasses}>
-        <View style={[{ height: `${100 - redHeight}%` }]}></View>
+        <View style={[{ height: `${100 - redHeight}%` }]} />
 
-        <Tooltip
-          title={data.find((entry) => entry.color === MTGColors.RED)?.name}
-          message={
-            "Count: " +
-            (data.find((entry) => entry.color === MTGColors.RED)?.count || 0)
-          }
-          style={[{ height: `${redHeight}%` }]}
-        >
-          <View
+        <View style={[{ height: `${redHeight}%` }]}>
+          <Pressable
             className={`${baseClasses} h-full to-mtg-red from-mtg-red-secondary`}
-          ></View>
-        </Tooltip>
+            onPress={() => setRedOpen(true)}
+          />
+
+          <CardViewMultipleModal
+            open={redOpen}
+            setOpen={setRedOpen}
+            color={MTGColors.RED}
+            cards={
+              data.find((entry) => entry.color === MTGColors.RED)?.cards || []
+            }
+            cost={cost}
+            rarity={rarity}
+            type={type}
+          />
+        </View>
       </View>
 
       <View className={containerClasses}>
-        <View style={[{ height: `${100 - greenHeight}%` }]}></View>
+        <View style={[{ height: `${100 - greenHeight}%` }]} />
 
-        <Tooltip
-          title={data.find((entry) => entry.color === MTGColors.GREEN)?.name}
-          message={
-            "Count: " +
-            (data.find((entry) => entry.color === MTGColors.GREEN)?.count || 0)
-          }
-          style={[{ height: `${greenHeight}%` }]}
-        >
-          <View
+        <View style={[{ height: `${greenHeight}%` }]}>
+          <Pressable
             className={`${baseClasses} h-full to-mtg-green from-mtg-green-secondary`}
-          ></View>
-        </Tooltip>
+            onPress={() => setGreenOpen(true)}
+          />
+
+          <CardViewMultipleModal
+            open={greenOpen}
+            setOpen={setGreenOpen}
+            color={MTGColors.GREEN}
+            cards={
+              data.find((entry) => entry.color === MTGColors.GREEN)?.cards || []
+            }
+            cost={cost}
+            rarity={rarity}
+            type={type}
+          />
+        </View>
       </View>
 
       <View className={containerClasses}>
-        <View style={[{ height: `${100 - goldHeight}%` }]}></View>
+        <View style={[{ height: `${100 - goldHeight}%` }]} />
 
-        <Tooltip
-          title={data.find((entry) => entry.color === MTGColors.GOLD)?.name}
-          message={
-            "Count: " +
-            (data.find((entry) => entry.color === MTGColors.GOLD)?.count || 0)
-          }
-          style={[{ height: `${goldHeight}%` }]}
-        >
-          <View
+        <View style={[{ height: `${goldHeight}%` }]}>
+          <Pressable
             className={`${baseClasses} h-full to-mtg-gold from-mtg-gold-secondary`}
-          ></View>
-        </Tooltip>
+            onPress={() => setGoldOpen(true)}
+          />
 
-        <View className={containerClasses}>
-          <View style={[{ height: `${100 - colorlessHeight}%` }]}></View>
-
-          <Tooltip
-            title={
-              data.find((entry) => entry.color === MTGColors.COLORLESS)?.name
+          <CardViewMultipleModal
+            open={goldOpen}
+            setOpen={setGoldOpen}
+            color={MTGColors.GOLD}
+            cards={
+              data.find((entry) => entry.color === MTGColors.GOLD)?.cards || []
             }
-            message={
-              "Count: " +
-              (data.find((entry) => entry.color === MTGColors.COLORLESS)
-                ?.count || 0)
-            }
-            style={[{ height: `${colorlessHeight}%` }]}
-          >
-            <View
-              className={`${baseClasses} h-full to-mtg-colorless from-mtg-colorless-secondary`}
-            ></View>
-          </Tooltip>
+            cost={cost}
+            rarity={rarity}
+            type={type}
+          />
         </View>
 
         <View className={containerClasses}>
-          <View style={[{ height: `${100 - landHeight}%` }]}></View>
+          <View style={[{ height: `${100 - colorlessHeight}%` }]} />
 
-          <Tooltip
-            title={data.find((entry) => entry.color === MTGColors.LAND)?.name}
-            message={
-              "Count: " +
-              (data.find((entry) => entry.color === MTGColors.LAND)?.count || 0)
-            }
-            style={[{ height: `${landHeight}%` }]}
-          >
-            <View
+          <View style={[{ height: `${colorlessHeight}%` }]}>
+            <Pressable
+              className={`${baseClasses} h-full to-mtg-colorless from-mtg-colorless-secondary`}
+              onPress={() => setColorlessOpen(true)}
+            />
+
+            <CardViewMultipleModal
+              open={colorlessOpen}
+              setOpen={setColorlessOpen}
+              color={MTGColors.COLORLESS}
+              cards={
+                data.find((entry) => entry.color === MTGColors.COLORLESS)
+                  ?.cards || []
+              }
+              cost={cost}
+              rarity={rarity}
+              type={type}
+            />
+          </View>
+        </View>
+
+        <View className={containerClasses}>
+          <View style={[{ height: `${100 - landHeight}%` }]} />
+
+          <View style={[{ height: `${landHeight}%` }]}>
+            <Pressable
               className={`${baseClasses} h-full to-mtg-land from-mtg-land-secondary`}
-            ></View>
-          </Tooltip>
+              onPress={() => setLandOpen(true)}
+            />
+
+            <CardViewMultipleModal
+              open={landOpen}
+              setOpen={setLandOpen}
+              color={MTGColors.LAND}
+              cards={
+                data.find((entry) => entry.color === MTGColors.LAND)?.cards ||
+                []
+              }
+              cost={cost}
+              rarity={rarity}
+              type={type}
+            />
+          </View>
         </View>
       </View>
     </View>
-  );
-}
-
-function getStackHeight(color: MTGColor, ceiling: number, data: BarData[]) {
-  return (
-    ((data.find((entry) => entry.color === color)?.count || 0) / ceiling) * 100
   );
 }

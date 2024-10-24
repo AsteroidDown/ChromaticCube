@@ -40,20 +40,21 @@ export default function CardViewMultipleModal({
     cellType === "cost"
       ? cost
         ? cost === 6
-          ? "6+ Cost"
-          : cost + " Cost"
-        : ""
+          ? "6+ Cost "
+          : cost + " Cost "
+        : " "
       : cellType === "rarity"
       ? rarity
-        ? titleCase(rarity)
-        : ""
-      : titleCase(type)
-  } Cards`;
+        ? titleCase(rarity) + " "
+        : " "
+      : type
+      ? titleCase(type) + " "
+      : ""
+  }Cards`;
 
-  const subtitle = `${cards.reduce(
-    (acc, card) => acc + card.count,
-    0
-  )} Cards | Total Value: ${currency(
+  const subtitle = `${cards.reduce((acc, card) => acc + card.count, 0)} Card${
+    cards.length !== 1 ? "s" : ""
+  } | Total Value: ${currency(
     cards.reduce(
       (acc, card) => acc + (card.prices?.usd || card.prices?.eur || 0),
       0
@@ -64,7 +65,7 @@ export default function CardViewMultipleModal({
     <Modal open={open} setOpen={setOpen}>
       <BoxHeader title={title} subtitle={subtitle} />
 
-      <Box className="flex flex-row flex-wrap gap-2 min-h-[350px] max-h-[80vh] w-fit min-w-[228px] max-w-[1000px] !px-0 overflow-x-auto">
+      <Box className="flex flex-row justify-center flex-wrap gap-2 min-h-[350px] max-h-[80vh] w-fit min-w-[228px] max-w-[1000px] !px-0 overflow-x-auto">
         {cards?.map((card: Card, index: number) => (
           <Box
             key={card.id + index}

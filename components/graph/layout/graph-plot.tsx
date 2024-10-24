@@ -1,9 +1,13 @@
+import { MTGRarity } from "@/constants/mtg/mtg-rarity";
 import { View, ViewProps } from "react-native";
 import { Bar, BarData } from "../bar/bar";
 
 export interface SetData {
   title: string;
   data: BarData[];
+  cost?: number;
+  rarity?: MTGRarity;
+  type?: string;
 }
 
 export type GraphPlotProps = ViewProps & {
@@ -44,7 +48,14 @@ export function GraphPlot({
             key={set.title + index}
             className="flex flex-1 justify-end h-full items-center animate-bottomToTopGrow mt-auto"
           >
-            <Bar data={set.data} ceiling={ceiling} stacked={stacked}></Bar>
+            <Bar
+              data={set.data}
+              ceiling={ceiling}
+              stacked={stacked}
+              cost={set.cost}
+              rarity={set.rarity}
+              type={set.type}
+            ></Bar>
           </View>
         ))}
       </View>

@@ -31,9 +31,15 @@ export default function Graph({
 }: GraphProps) {
   const maxValue = sets.reduce((acc, set) => {
     const setValue = stacked
-      ? set.data.reduce((acc, entry) => acc + entry.count, 0)
+      ? set.data.reduce(
+          (acc, entry) =>
+            acc + entry.cards.reduce((acc, card) => acc + card.count, 0),
+          0
+        )
       : set.data.reduce((acc, entry) => {
-          if (entry.count > acc) return entry.count;
+          const count = entry.cards.reduce((acc, card) => acc + card.count, 0);
+
+          if (count > acc) return count;
           return acc;
         }, 0);
 
