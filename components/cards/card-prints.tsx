@@ -44,6 +44,7 @@ export default function CardPrints({
   return (
     <>
       <Button
+        className="flex-1"
         icon={faPalette}
         tabbable={tabbable}
         text={iconOnly ? undefined : "Select Print"}

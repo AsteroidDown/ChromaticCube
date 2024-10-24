@@ -2,7 +2,6 @@ import Button from "@/components/ui/button/button";
 import Divider from "@/components/ui/divider/divider";
 import Modal from "@/components/ui/modal/modal";
 import Text from "@/components/ui/text/text";
-import { Tooltip } from "@/components/ui/tooltip/tooltip";
 import { SideBoardLimit } from "@/constants/mtg/limits";
 import BoardContext, { BoardType } from "@/contexts/cards/board.context";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
@@ -225,13 +224,15 @@ export function CardItemFooter({
   return (
     <View className="flex gap-2">
       <View className="flex flex-row justify-center items-center gap-2 px-2">
-        <Button
-          action="info"
-          className="flex-1"
-          tabbable={expanded}
-          icon={faCircleInfo}
-          onClick={() => setModalOpen(!modalOpen)}
-        ></Button>
+        {setItemsExpanded && (
+          <Button
+            action="info"
+            className="flex-1"
+            tabbable={expanded}
+            icon={faCircleInfo}
+            onClick={() => setModalOpen(!modalOpen)}
+          ></Button>
+        )}
 
         <CardPrints
           iconOnly
@@ -241,68 +242,66 @@ export function CardItemFooter({
           tabbable={expanded}
         />
 
-        <Tooltip title="Swap Boards">
-          <Button
-            action="warning"
-            className="flex-1"
-            tabbable={expanded}
-            icon={faRightFromBracket}
-            onClick={() => setMoveOpen(true)}
-          ></Button>
+        <Button
+          action="warning"
+          className="flex-1"
+          tabbable={expanded}
+          icon={faRightFromBracket}
+          onClick={() => setMoveOpen(true)}
+        ></Button>
 
-          <Dropdown xOffset={-32} expanded={moveOpen} setExpanded={setMoveOpen}>
-            <Box className="flex justify-start items-start !p-0 border-2 border-primary-300 !bg-background-100 !bg-opacity-90 overflow-hidden">
-              {board !== "main" && (
-                <Button
-                  start
-                  square
-                  type="clear"
-                  text="Main"
-                  className="w-full"
-                  icon={faList}
-                  onClick={() => moveCard("main")}
-                />
-              )}
+        <Dropdown xOffset={-32} expanded={moveOpen} setExpanded={setMoveOpen}>
+          <Box className="flex justify-start items-start !p-0 border-2 border-primary-300 !bg-background-100 !bg-opacity-90 overflow-hidden">
+            {board !== "main" && (
+              <Button
+                start
+                square
+                type="clear"
+                text="Main"
+                className="w-full"
+                icon={faList}
+                onClick={() => moveCard("main")}
+              />
+            )}
 
-              {board !== "side" && (
-                <Button
-                  start
-                  square
-                  type="clear"
-                  text="Side"
-                  className="w-full"
-                  icon={faClipboardList}
-                  disabled={sideboardCount >= SideBoardLimit}
-                  onClick={() => moveCard("side")}
-                />
-              )}
+            {board !== "side" && (
+              <Button
+                start
+                square
+                type="clear"
+                text="Side"
+                className="w-full"
+                icon={faClipboardList}
+                disabled={sideboardCount >= SideBoardLimit}
+                onClick={() => moveCard("side")}
+              />
+            )}
 
-              {board !== "maybe" && (
-                <Button
-                  start
-                  square
-                  type="clear"
-                  text="Maybe"
-                  className="w-full"
-                  icon={faClipboardQuestion}
-                  onClick={() => moveCard("maybe")}
-                />
-              )}
+            {board !== "maybe" && (
+              <Button
+                start
+                square
+                type="clear"
+                text="Maybe"
+                className="w-full"
+                icon={faClipboardQuestion}
+                onClick={() => moveCard("maybe")}
+              />
+            )}
 
-              {board !== "acquire" && (
-                <Button
-                  start
-                  square
-                  type="clear"
-                  text="Acquire"
-                  className="w-full"
-                  icon={faListCheck}
-                  onClick={() => moveCard("acquire")}
-                />
-              )}
-            </Box>
-          </Dropdown>
-        </Tooltip>
+            {board !== "acquire" && (
+              <Button
+                start
+                square
+                type="clear"
+                text="Acquire"
+                className="w-full"
+                icon={faListCheck}
+                onClick={() => moveCard("acquire")}
+              />
+            )}
+          </Box>
+        </Dropdown>
 
         <Button
           action="danger"
