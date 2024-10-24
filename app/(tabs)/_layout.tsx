@@ -38,7 +38,7 @@ export default function TabLayout() {
             options={{
               title: "Dashboard",
               tabBarLabel: ({ focused }) => (
-                <View className="flex flex-row justify-center items-center gap-2">
+                <View className="flex flex-row justify-center items-center gap-2 ">
                   <FontAwesomeIcon
                     icon={faCube}
                     size={"lg"}
@@ -58,16 +58,12 @@ export default function TabLayout() {
             options={{
               tabBarLabel: ({ focused }) => (
                 <View
-                  className={`flex flex-row justify-center items-center gap-2`}
+                  className={`flex flex-row justify-center items-center gap-2 `}
                 >
                   <FontAwesomeIcon
                     icon={faList}
                     size={"lg"}
-                    className={
-                      focused
-                        ? "color-white rounded-t-lg w-full"
-                        : "color-primary-400"
-                    }
+                    className={focused ? "color-white" : "color-primary-400"}
                   />
 
                   <Text
@@ -86,15 +82,11 @@ export default function TabLayout() {
             name="side-board"
             options={{
               tabBarLabel: ({ focused }) => (
-                <View className="flex flex-row justify-center items-center gap-2">
+                <View className="flex flex-row justify-center items-center gap-2 ">
                   <FontAwesomeIcon
                     icon={faClipboardList}
                     size={"lg"}
-                    className={
-                      focused
-                        ? "color-white rounded-t-lg w-full"
-                        : "color-primary-400"
-                    }
+                    className={focused ? "color-white" : "color-primary-400"}
                   />
 
                   <Text
@@ -113,15 +105,11 @@ export default function TabLayout() {
             name="maybe-board"
             options={{
               tabBarLabel: ({ focused }) => (
-                <View className="flex flex-row justify-center items-center gap-2">
+                <View className="flex flex-row justify-center items-center gap-2 ">
                   <FontAwesomeIcon
                     icon={faClipboardQuestion}
                     size={"lg"}
-                    className={
-                      focused
-                        ? "color-white rounded-t-lg w-full"
-                        : "color-primary-400"
-                    }
+                    className={focused ? "color-white" : "color-primary-400"}
                   />
 
                   <Text
@@ -140,15 +128,11 @@ export default function TabLayout() {
             name="acquire-board"
             options={{
               tabBarLabel: ({ focused }) => (
-                <View className="flex flex-row justify-center items-center gap-2">
+                <View className="flex flex-row justify-center items-center gap-2 ">
                   <FontAwesomeIcon
                     icon={faListCheck}
                     size={"lg"}
-                    className={
-                      focused
-                        ? "color-white rounded-t-lg w-full"
-                        : "color-primary-400"
-                    }
+                    className={focused ? "color-white" : "color-primary-400"}
                   />
 
                   <Text
