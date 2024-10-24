@@ -126,7 +126,6 @@ export function graphCardsByCost(cards: Card[]): SetData[] {
   const sortedFour = sortCardsByColor(sortedCards.four);
   const sortedFive = sortCardsByColor(sortedCards.five);
   const sortedSix = sortCardsByColor(sortedCards.six);
-  const sortedSeven = sortCardsByColor(sortedCards.seven);
 
   const sets: SetData[] = [];
 
@@ -138,9 +137,8 @@ export function graphCardsByCost(cards: Card[]): SetData[] {
   sets.push(createSetDataByColor("3 Cost", sortedThree));
   sets.push(createSetDataByColor("4 Cost", sortedFour));
   sets.push(createSetDataByColor("5 Cost", sortedFive));
-  sets.push(createSetDataByColor("6 Cost", sortedSix));
-  if (sortedCards.seven.length > 0) {
-    sets.push(createSetDataByColor("7+ Cost", sortedSeven));
+  if (sortedCards.six.length > 0) {
+    sets.push(createSetDataByColor("6+ Cost", sortedSix));
   }
 
   return sets;

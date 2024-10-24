@@ -241,20 +241,12 @@ export default function CardItemGallery({
               cards={cardsSortedByCost.five}
             />
             <CardItemGalleryColumn
-              title="6 Cost"
+              title="6+ Cost"
               itemsExpanded={itemsExpanded}
               setItemExpanded={setItemsExpanded}
               condensed={condensed}
               hideImages={hideImages}
               cards={cardsSortedByCost.six}
-            />
-            <CardItemGalleryColumn
-              title="7+ Cost"
-              itemsExpanded={itemsExpanded}
-              setItemExpanded={setItemsExpanded}
-              condensed={condensed}
-              hideImages={hideImages}
-              cards={cardsSortedByCost.seven}
             />
             {cardsSortedByCost.land?.length > 0 && (
               <CardItemGalleryColumn

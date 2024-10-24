@@ -84,7 +84,6 @@ export function sortCardsByCost(cards: Card[]): CardsSortedByCost {
     four: [],
     five: [],
     six: [],
-    seven: [],
     land: [],
   };
 
@@ -95,7 +94,7 @@ export function sortCardsByCost(cards: Card[]): CardsSortedByCost {
         : card.typeLine.includes("Land")
     ) {
       sortedCards.land.push(card);
-    } else if (card.cmc >= 7) sortedCards.seven.push(card);
+    } else if (card.cmc >= 6) sortedCards.six.push(card);
     else {
       switch (card.cmc) {
         case 0:
@@ -115,9 +114,6 @@ export function sortCardsByCost(cards: Card[]): CardsSortedByCost {
           return;
         case 5:
           sortedCards.five.push(card);
-          return;
-        case 6:
-          sortedCards.six.push(card);
           return;
       }
     }

@@ -39,8 +39,8 @@ export default function CardViewMultipleModal({
   const title = `${titleCase(color)} ${
     cellType === "cost"
       ? cost
-        ? cost === 7
-          ? "7+ Cost"
+        ? cost === 6
+          ? "6+ Cost"
           : cost + " Cost"
         : ""
       : cellType === "rarity"

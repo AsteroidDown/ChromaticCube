@@ -31,7 +31,6 @@ export default function CostChartLayout({
   const sortedFour = sortCardsByColor(sortedCards.four);
   const sortedFive = sortCardsByColor(sortedCards.five);
   const sortedSix = sortCardsByColor(sortedCards.six);
-  const sortedSeven = sortCardsByColor(sortedCards.seven);
 
   return (
     <>
@@ -64,14 +63,10 @@ export default function CostChartLayout({
           smallTitles={smallTitles}
           title={smallTitles ? "5" : "Five"}
         />
-        <ChartColumnHeading
-          smallTitles={smallTitles}
-          title={smallTitles ? "6" : "Six"}
-        />
-        {sortedCards.seven.length > 0 && (
+        {sortedCards.six.length > 0 && (
           <ChartColumnHeading
             smallTitles={smallTitles}
-            title={smallTitles ? "7" : "Seven"}
+            title={smallTitles ? "6+" : "Six +"}
           />
         )}
         <ChartColumnHeading smallTitles={smallTitles} double title="Total" />
@@ -95,14 +90,8 @@ export default function CostChartLayout({
           <ChartCell cost={3} color={color} sortedCards={sortedThree} />
           <ChartCell cost={4} color={color} sortedCards={sortedFour} />
           <ChartCell cost={5} color={color} sortedCards={sortedFive} />
-          <ChartCell cost={6} color={color} sortedCards={sortedSix} />
-          {sortedCards.seven?.length > 0 && (
-            <ChartCell
-              double
-              cost={7}
-              color={color}
-              sortedCards={sortedSeven}
-            />
+          {sortedCards.six?.length > 0 && (
+            <ChartCell cost={6} color={color} sortedCards={sortedSix} />
           )}
 
           <ChartCell
