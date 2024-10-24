@@ -52,4 +52,5 @@ export interface CardFilters {
   rarityFilter?: MTGRarity[];
   manaValueSort?: SortDirection;
   priceSort?: SortDirection;
+  alphabeticalSort?: SortDirection;
 }

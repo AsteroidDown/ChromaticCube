@@ -84,14 +84,29 @@ export default function CardItemGallery({
   useEffect(() => {
     let sortedCards: Card[] = [];
 
-    if (filters.priceSort || filters.manaValueSort) {
+    if (
+      filters.priceSort ||
+      filters.manaValueSort ||
+      filters.alphabeticalSort
+    ) {
+      if (filters.alphabeticalSort) {
+        sortedCards =
+          filters.alphabeticalSort === "ASC"
+            ? sortCardsAlphabetically(cards)
+            : filters.alphabeticalSort === "DESC"
+            ? sortCardsAlphabetically(cards, false)
+            : cards;
+      }
+
       if (filters.priceSort) {
+        const cardsToSort: Card[] = sortedCards?.length ? sortedCards : cards;
+
         sortedCards =
           filters.priceSort === "ASC"
-            ? sortCardsByPrice(cards)
+            ? sortCardsByPrice(cardsToSort)
             : filters.priceSort === "DESC"
-            ? sortCardsByPrice(cards, false)
-            : cards;
+            ? sortCardsByPrice(cardsToSort, false)
+            : cardsToSort;
       }
 
       if (filters.manaValueSort) {

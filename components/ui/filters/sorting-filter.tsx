@@ -1,14 +1,20 @@
 import Chip from "@/components/ui/chip/chip";
 import { SortDirection } from "@/constants/sorting";
 import { ActionColor } from "@/constants/ui/colors";
-import { faDownLong, faUpLong } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownLong,
+  faUpLong,
+  IconDefinition,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { View, ViewProps } from "react-native";
 import { getFilterTextColor } from "./filter";
 
 export type SortingFilterProps = ViewProps & {
-  title: string;
+  title?: string;
+  startIcon?: IconDefinition;
+  endIcon?: IconDefinition;
   action?: ActionColor;
   disabled?: boolean;
 
@@ -19,6 +25,8 @@ export type SortingFilterProps = ViewProps & {
 
 export default function SortingFilter({
   title,
+  startIcon,
+  endIcon,
   action = "primary",
   disabled = false,
   reset,
@@ -41,6 +49,8 @@ export default function SortingFilter({
     <Chip
       type="outlined"
       text={title}
+      startIcon={startIcon}
+      endIcon={endIcon}
       style={style}
       action={action}
       className={className}

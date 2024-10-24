@@ -8,8 +8,10 @@ import {
   CardsSortedByType,
 } from "../models/sorted-cards/sorted-cards";
 
-export function sortCardsAlphabetically(cards: Card[]) {
-  return cards.sort((a, b) => a.name.localeCompare(b.name));
+export function sortCardsAlphabetically(cards: Card[], ascending = true) {
+  return cards.sort((a, b) =>
+    ascending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+  );
 }
 
 export function sortCardsByManaValue(cards: Card[], ascending = true) {

@@ -48,6 +48,9 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
   const [manaValueSort, setManaValueSort] = React.useState(
     null as SortDirection
   );
+  const [alphabeticalSort, setAlphabeticalSort] = React.useState(
+    null as SortDirection
+  );
 
   useEffect(() => {
     const filters: CardFilters = {
@@ -56,6 +59,7 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
       rarityFilter,
       priceSort,
       manaValueSort,
+      alphabeticalSort,
     };
     setFilters(filters);
 
@@ -69,7 +73,14 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
       setLocalStoragePreferences({ filters });
       setPreferences(getLocalStoragePreferences() || {});
     }
-  }, [colorFilter, typeFilter, rarityFilter, manaValueSort, priceSort]);
+  }, [
+    colorFilter,
+    typeFilter,
+    rarityFilter,
+    manaValueSort,
+    priceSort,
+    alphabeticalSort,
+  ]);
 
   function clearFilters() {
     setColorFilter([]);
@@ -149,6 +160,13 @@ export default function FilterBar({ setFilters, type }: FilterBarProps) {
           reset={resetFilters}
           sortDirection={priceSort}
           setSortDirection={setPriceSort}
+        />
+
+        <SortingFilter
+          title="Name"
+          reset={resetFilters}
+          sortDirection={alphabeticalSort}
+          setSortDirection={setAlphabeticalSort}
         />
       </View>
     </View>
