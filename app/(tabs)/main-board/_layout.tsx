@@ -77,9 +77,9 @@ export default function CardsLayout() {
   }
 
   return (
-    <ScrollView>
+    <ScrollView className="bg-background-100">
       <BoardContext.Provider value={{ board, setBoard }}>
-        <View className="flex gap-4 px-6 py-4 w-full h-[100vh] pb-4 bg-background-100 overflow-y-scroll">
+        <View className="flex gap-4 px-6 py-4 w-full h-[100vh] pb-4">
           <CardSearch />
 
           <TabBar tabs={tabs}>
