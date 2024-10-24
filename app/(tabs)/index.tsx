@@ -3,20 +3,28 @@ import Button from "@/components/ui/button/button";
 import { MTGColor, MTGColors } from "@/constants/mtg/mtg-colors";
 import StoredCardsContext from "@/contexts/cards/stored-cards.context";
 import DashboardContext from "@/contexts/dashboard/dashboard.context";
+import { getLocalStorageStoredCards } from "@/functions/local-storage/card-local-storage";
 import {
   addLocalStorageDashboardItem,
   addLocalStorageDashboardSection,
   getLocalStorageDashboard,
   setLocalStorageDashboard,
 } from "@/functions/local-storage/dashboard-local-storage";
+import { Card } from "@/models/card/card";
 import { faTableCellsLarge } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
   const { storedCards } = useContext(StoredCardsContext);
   const { dashboard, setDashboard } = useContext(DashboardContext);
+
+  const [cards, setCards] = React.useState([] as Card[]);
+
+  useEffect(() => {
+    setCards(getLocalStorageStoredCards());
+  }, [storedCards]);
 
   if (!dashboard?.sections && !getLocalStorageDashboard()) {
     setLocalStorageDashboard({ sections: [] });
@@ -95,7 +103,7 @@ export default function App() {
         <View className="flex-1 flex flex-row flex-wrap gap-6 px-6 justify-center items-center">
           {dashboard?.sections.map((section, index) => (
             <DashboardSectionView
-              cards={storedCards}
+              cards={cards}
               sectionId={section.id}
               key={section.title + index}
             />
