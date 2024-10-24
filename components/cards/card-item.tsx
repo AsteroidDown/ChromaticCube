@@ -54,6 +54,9 @@ export default function CardItem({
   const [expanded, setExpanded] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
+  const [hovered, setHovered] = React.useState(false);
+
+  let leftHover = false;
 
   useEffect(
     () => (itemsExpanded === 0 ? setExpanded(false) : undefined),
@@ -63,14 +66,25 @@ export default function CardItem({
   return (
     <>
       <Pressable
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        onPointerEnter={() => {
+          leftHover = false;
+
+          setTimeout(() => {
+            if (!expanded && !hovered && !leftHover) setHovered(true);
+          }, 500);
+        }}
+        onPointerLeave={() => {
+          setHovered(false);
+          leftHover = true;
+        }}
         onPress={() => {
           if (expanded) setItemsExpanded((itemsExpanded || 0) - 1);
           else setItemsExpanded((itemsExpanded || 0) + 1);
 
           setExpanded(!expanded);
         }}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
         className={`flex gap-2 rounded-2xl overflow-hidden transition-all duration-300 outline-none ${
           expanded
             ? "max-h-[1000px] "
@@ -118,6 +132,40 @@ export default function CardItem({
           <CardItemFooter card={card} />
         </CardDetailedPreview>
       </Modal>
+
+      <View className="relative w-full h-0 z-10 max-w-full">
+        <View
+          className={`absolute top-0 left-0 flex gap-2 w-full !bg-background-100 rounded-xl overflow-hidden transition-all duration-300 z-10 ${
+            hovered ? "max-h-[412px]" : "max-h-0"
+          }`}
+        >
+          <CardImage card={card} />
+
+          <View className="flex flex-row gap-2 px-2 pb-3">
+            <Button
+              size="xs"
+              action="info"
+              className="flex-1"
+              icon={faShop}
+              text={`$${card.prices?.usd}`}
+              onClick={async () =>
+                await Linking.openURL(card.priceUris.tcgplayer)
+              }
+            />
+
+            <Button
+              size="xs"
+              action="info"
+              className="flex-1"
+              icon={faShop}
+              text={`€${card.prices?.eur}`}
+              onClick={async () =>
+                await Linking.openURL(card.priceUris.cardmarket)
+              }
+            />
+          </View>
+        </View>
+      </View>
     </>
   );
 }
