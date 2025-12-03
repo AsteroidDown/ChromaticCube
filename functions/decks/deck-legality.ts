@@ -10,7 +10,6 @@ import {
   MTGBasicLands,
   MTGLegalities,
 } from "@/constants/mtg/mtg-legality";
-import { MTGRarities } from "@/constants/mtg/mtg-rarity";
 import { Card } from "@/models/card/card";
 import { Deck } from "@/models/deck/deck";
 import { titleCase } from "../text-manipulation";
@@ -79,21 +78,11 @@ export function evaluateDeckLegality(deck: Deck): LegalityEvaluation {
     );
   }
 
-  if (restrictions?.maxRarity) {
+  if (restrictions?.maxRarity && (deck.format as any) === MTGFormats.CUBE) {
     legality.rarity = deck.main.every((card) => {
-      if (restrictions.maxRarity === MTGRarities.COMMON) {
-        return card.rarity === MTGRarities.COMMON;
-      } else if (restrictions.maxRarity === MTGRarities.UNCOMMON) {
-        return [MTGRarities.COMMON, MTGRarities.UNCOMMON].includes(
-          card.rarity as any
-        );
-      } else if (restrictions.maxRarity === MTGRarities.RARE) {
-        return [
-          MTGRarities.COMMON,
-          MTGRarities.UNCOMMON,
-          MTGRarities.RARE,
-        ].includes(card.rarity as any);
-      } else return true;
+      if (deck.format === MTGFormats.CUBE) return;
+
+      return card.legalities[deck.format] === MTGLegalities.LEGAL;
     });
   }
 
